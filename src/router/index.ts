@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
 import CommandPage from '@/pages/CommandPage.vue'
 import DirectoriesPage from '@/pages/DirectoriesPage.vue'
-import DirectoryPage from '@/pages/DirectoryPage.vue'
 
 const routes = [
   {
@@ -19,11 +18,6 @@ const routes = [
     path: '/directories',
     name: 'directories',
     component: DirectoriesPage,
-  },
-  {
-    path: '/directory/:shortName',
-    name: 'directory',
-    component: DirectoryPage,
   },
 ]
 
