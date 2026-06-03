@@ -42,6 +42,14 @@
       <component :is="icons[cat.icon as keyof typeof icons]" :size="18" />
       <span>{{ cat.name }}</span>
     </button>
+    <div class="h-px bg-[#30363D] my-1 mx-2" />
+    <router-link
+      to="/directories"
+      class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 text-gray-400 hover:text-[#BC8CFF] hover:bg-[#161B22]"
+    >
+      <component :is="icons.FolderTree" :size="18" />
+      <span>目录结构</span>
+    </router-link>
   </nav>
 </template>
 
@@ -60,6 +68,7 @@ import {
   Package,
   LayoutGrid,
   Star,
+  FolderTree,
 } from 'lucide-vue-next'
 import { categories } from '@/data/commands'
 import { useFavorites } from '@/composables/useFavorites'
@@ -77,6 +86,7 @@ const icons = {
   Package,
   LayoutGrid,
   Star,
+  FolderTree,
 }
 
 defineProps<{

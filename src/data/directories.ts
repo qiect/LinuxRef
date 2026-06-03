@@ -1,0 +1,263 @@
+export interface KeyFile {
+  path: string;
+  description: string;
+}
+
+export interface LinuxDirectory {
+  path: string;
+  name: string;
+  shortName: string;
+  origin: string;
+  description: string;
+  keyFiles: KeyFile[];
+  importance: "core" | "common" | "supplementary";
+  tips?: string;
+  relatedCommands: string[];
+}
+
+export const directories: LinuxDirectory[] = [
+  {
+    path: "/etc",
+    name: "系统配置文件大本营",
+    shortName: "etc",
+    origin: "etcetera（等等、附加物）",
+    description:
+      "这是 Linux 最核心的目录之一，存放所有系统级的配置文件。你做 Linux 运维，大部分时间改配置，都是在改 /etc 里的文件。就像一个小区的物业办公室，所有住户的配置信息、门禁规则、服务设置都集中管理在这里。",
+    keyFiles: [
+      { path: "/etc/hosts", description: "域名与 IP 映射" },
+      { path: "/etc/resolv.conf", description: "DNS 配置" },
+      { path: "/etc/passwd", description: "所有用户信息" },
+      { path: "/etc/shadow", description: "加密后的用户密码" },
+      { path: "/etc/ssh/", description: "SSH 服务配置目录" },
+      { path: "/etc/nginx/", description: "Nginx 配置目录" },
+      { path: "/etc/docker/", description: "Docker 配置目录" },
+    ],
+    importance: "core",
+    tips: "生产环境修改前一定要做好备份，这个目录的重要性怎么强调都不为过。",
+    relatedCommands: ["cat", "vim", "nano", "cp", "grep"],
+  },
+  {
+    path: "/var",
+    name: "动态变化的数据",
+    shortName: "var",
+    origin: "variable（可变的）",
+    description:
+      "专门存放系统运行过程中经常变化的数据，就像一个仓库的「流动区」，东西进进出出，随时在变。这也是服务器出问题时排查的核心目录。",
+    keyFiles: [
+      { path: "/var/log/", description: "系统和服务的日志默认存放位置" },
+      { path: "/var/log/messages", description: "系统核心日志" },
+      { path: "/var/log/nginx/", description: "Nginx 访问日志" },
+      { path: "/var/lib/mysql/", description: "MySQL 数据默认存储位置" },
+      { path: "/var/cache/", description: "应用缓存目录" },
+    ],
+    importance: "core",
+    tips: "服务器磁盘突然爆满，十有八九是 /var 分区满了——尤其是日志没有做轮转清理，日积月累直接把磁盘占满 100%。",
+    relatedCommands: ["tail", "grep", "du", "df", "logrotate"],
+  },
+  {
+    path: "/home",
+    name: "普通用户的家",
+    shortName: "home",
+    origin: "home（家）",
+    description:
+      "类似 Windows 里的 C:\\Users\\用户名 目录，每个普通用户登录系统后，默认都会有一个自己的家目录。就像一栋公寓楼，每个住户都有自己的房间，默认只有自己和房东（root）能进出。",
+    keyFiles: [
+      { path: "/home/用户名/", description: "每个用户的个人目录" },
+      { path: "/home/用户名/.bashrc", description: "用户的 Bash 配置" },
+      { path: "/home/用户名/.ssh/", description: "用户的 SSH 密钥" },
+    ],
+    importance: "core",
+    relatedCommands: ["cd", "ls", "chmod", "chown"],
+  },
+  {
+    path: "/root",
+    name: "root 管理员的家",
+    shortName: "root",
+    origin: "root（根/管理员）",
+    description:
+      "注意：/root 并不是根目录！真正的根目录是单独的 /，/root 只是 root 管理员用户专属的家目录。为什么不放在 /home/root？因为 /home 有时会作为单独分区挂载，系统单用户维护时保证 root 目录在根分区上更可靠。",
+    keyFiles: [
+      { path: "/root/.bashrc", description: "root 用户的 Bash 配置" },
+      { path: "/root/.ssh/", description: "root 用户的 SSH 密钥" },
+    ],
+    importance: "core",
+    tips: "不要把 /root 和根目录 / 搞混，这是初学者最常见的误区。",
+    relatedCommands: ["cd", "su", "sudo"],
+  },
+  {
+    path: "/tmp",
+    name: "临时文件目录",
+    shortName: "tmp",
+    origin: "temporary（临时的）",
+    description:
+      "专门存放程序运行产生的临时文件，就像一张「便签纸」，用完就扔。系统会自动定期清理，大部分发行版重启后都会清空。",
+    keyFiles: [
+      { path: "/tmp/", description: "程序运行产生的临时文件" },
+    ],
+    importance: "core",
+    tips: "千万不要把重要文件放在 /tmp 下面，重启后说没就没了！",
+    relatedCommands: ["mktemp", "rm", "find"],
+  },
+  {
+    path: "/bin",
+    name: "基础核心命令",
+    shortName: "bin",
+    origin: "binary（二进制）",
+    description:
+      "存放系统最基础、最核心的可执行命令，就像工具箱里最常用的那几把工具。ls、cp、mv、rm、cat、ping 这些命令，本质都是编译好的二进制程序，大部分都放在 /bin 下面。因为已加入 PATH 环境变量，所以输入命令就能直接执行。",
+    keyFiles: [
+      { path: "/bin/ls", description: "列出目录内容" },
+      { path: "/bin/cp", description: "复制文件" },
+      { path: "/bin/mv", description: "移动/重命名文件" },
+      { path: "/bin/rm", description: "删除文件" },
+      { path: "/bin/cat", description: "查看文件内容" },
+    ],
+    importance: "core",
+    tips: "很多发行版现在已经把 /bin 链接到 /usr/bin 了，区分越来越模糊。",
+    relatedCommands: ["ls", "cp", "mv", "rm", "cat", "which"],
+  },
+  {
+    path: "/sbin",
+    name: "系统管理级命令",
+    shortName: "sbin",
+    origin: "system binary（系统二进制）",
+    description:
+      "存放偏系统管理的命令，一般需要 root 权限才能执行。和 /bin 的核心区分：一个给普通用户用基础命令，一个给管理员用系统级命令。",
+    keyFiles: [
+      { path: "/sbin/reboot", description: "重启系统" },
+      { path: "/sbin/shutdown", description: "关机" },
+      { path: "/sbin/fdisk", description: "磁盘分区" },
+      { path: "/sbin/ifconfig", description: "网络配置" },
+    ],
+    importance: "core",
+    relatedCommands: ["reboot", "shutdown", "fdisk", "ifconfig", "sudo"],
+  },
+  {
+    path: "/usr",
+    name: "用户安装的软件和资源",
+    shortName: "usr",
+    origin: "Unix System Resources（Unix 系统资源）",
+    description:
+      "Linux 里最大的目录之一，几乎所有用户安装的软件、工具、资源都放在这里面。就像一个大型商场，各种商品（软件）都按类别摆放在不同楼层（子目录）。",
+    keyFiles: [
+      { path: "/usr/bin/", description: "用户安装的普通命令" },
+      { path: "/usr/sbin/", description: "用户安装的系统管理命令" },
+      { path: "/usr/lib/", description: "软件依赖的库文件" },
+      { path: "/usr/share/", description: "共享资源（文档、图标等）" },
+      { path: "/usr/local/", description: "手动编译安装的第三方软件" },
+    ],
+    importance: "core",
+    tips: "手动编译安装的软件默认装到 /usr/local，不会和系统自带的软件混在一起。",
+    relatedCommands: ["apt", "yum", "pip", "npm"],
+  },
+  {
+    path: "/dev",
+    name: "硬件抽象成文件",
+    shortName: "dev",
+    origin: "device（设备）",
+    description:
+      "Linux 最有特色的目录之一，里面存放的都是设备文件——硬件设备会被抽象成文件放在这里，你操作这个文件就是操作硬件。就像一个万能遥控器，不管什么设备，都用同一套按钮来控制。",
+    keyFiles: [
+      { path: "/dev/sda", description: "第一块 SATA 硬盘" },
+      { path: "/dev/sda1", description: "第一块硬盘的第一个分区" },
+      { path: "/dev/tty", description: "当前终端设备" },
+      { path: "/dev/null", description: "空设备，写入的数据全被丢弃" },
+      { path: "/dev/random", description: "内核提供的随机数设备" },
+    ],
+    importance: "core",
+    tips: "/dev/null 常用于丢弃输出：>/dev/null 2>&1 表示把标准输出和错误都丢掉。",
+    relatedCommands: ["mount", "fdisk", "lsblk", "dd"],
+  },
+  {
+    path: "/proc",
+    name: "内核信息窗口",
+    shortName: "proc",
+    origin: "process（进程）",
+    description:
+      "Linux 最神奇的目录之一，里面的内容都不是真实存在于硬盘上的文件，而是内核在内存中实时生成的虚拟文件系统。就像一个「实时监控面板」，你想知道系统现在的 CPU、内存、进程状态，读这个目录下面的文件就行。",
+    keyFiles: [
+      { path: "/proc/cpuinfo", description: "CPU 信息（核心数、主频、型号）" },
+      { path: "/proc/meminfo", description: "内存信息（总量、已用、剩余）" },
+      { path: "/proc/进程PID/", description: "每个进程的运行信息" },
+      { path: "/proc/mounts", description: "系统挂载的文件系统" },
+    ],
+    importance: "core",
+    tips: "几乎所有的监控工具（top、free、ps）本质都是读取 /proc 下面的信息。",
+    relatedCommands: ["cat", "top", "free", "ps", "lsof"],
+  },
+  {
+    path: "/boot",
+    name: "系统启动文件",
+    shortName: "boot",
+    origin: "boot（启动）",
+    description:
+      "存放系统启动相关的文件，比如内核镜像、Grub 引导配置。就像汽车的「点火系统」，只在启动的时候用到，平时很少动。",
+    keyFiles: [
+      { path: "/boot/vmlinuz-*", description: "内核镜像文件" },
+      { path: "/boot/grub/", description: "Grub 引导配置目录" },
+    ],
+    importance: "common",
+    tips: "这个目录一般启动的时候就会用到，平时很少需要手动修改。",
+    relatedCommands: ["grub-install", "update-grub", "uname"],
+  },
+  {
+    path: "/sys",
+    name: "内核和硬件信息",
+    shortName: "sys",
+    origin: "system（系统）",
+    description:
+      "和 /proc 类似，也是一个虚拟文件系统，用来暴露内核和硬件设备的信息。现在很多驱动的信息都放在 /sys 下面，就像 /proc 的「兄弟」，分工不同。",
+    keyFiles: [
+      { path: "/sys/class/", description: "设备分类信息" },
+      { path: "/sys/devices/", description: "设备详细属性" },
+      { path: "/sys/block/", description: "块设备信息" },
+    ],
+    importance: "common",
+    relatedCommands: ["cat", "udevadm", "lspci"],
+  },
+  {
+    path: "/lib",
+    name: "核心库文件",
+    shortName: "lib",
+    origin: "library（库）",
+    description:
+      "存放系统最核心的库文件，/bin 和 /sbin 下面的命令会用到这些库。就像工具箱里的「电池」和「螺丝」，工具本身需要这些基础零件才能工作。",
+    keyFiles: [
+      { path: "/lib/modules/", description: "内核模块" },
+      { path: "/lib/systemd/", description: "Systemd 服务单元" },
+    ],
+    importance: "common",
+    tips: "很多发行版已将 /lib 链接到 /usr/lib。",
+    relatedCommands: ["ldconfig", "ldd"],
+  },
+  {
+    path: "/mnt",
+    name: "临时挂载点",
+    shortName: "mnt",
+    origin: "mount（挂载）",
+    description:
+      "传统上用来临时挂载其他文件系统，比如你插了 U 盘，很多系统默认会挂载到 /mnt 下面。就像一个「临时停车场」，外来的设备暂时停在这里。",
+    keyFiles: [
+      { path: "/mnt/usb/", description: "U 盘挂载点" },
+      { path: "/mnt/cdrom/", description: "光驱挂载点" },
+    ],
+    importance: "common",
+    tips: "现代 Linux 发行版通常会自动挂载到 /media 或 /run/media 下。",
+    relatedCommands: ["mount", "umount", "fdisk", "blkid"],
+  },
+  {
+    path: "/opt",
+    name: "第三方大型软件",
+    shortName: "opt",
+    origin: "optional（可选的）",
+    description:
+      "用来存放第三方大型软件，比如有些商业软件会安装在这里。现在用的不如 /usr/local 多，但某些企业级软件仍默认安装到此目录。",
+    keyFiles: [
+      { path: "/opt/google/", description: "Google Chrome 等" },
+      { path: "/opt/oracle/", description: "Oracle 数据库等" },
+    ],
+    importance: "supplementary",
+    tips: "一般只有商业软件或大型第三方软件才会装在这里。",
+    relatedCommands: ["ls", "du", "apt"],
+  },
+];
