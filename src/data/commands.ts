@@ -47,7 +47,8 @@ export const commands: Command[] = [
       { description: "列出当前目录下的所有文件和文件夹", code: "ls", output: "Documents  Downloads  Pictures  README.md" },
       { description: "以详细列表形式显示（含权限、大小、时间）", code: "ls -l", output: "drwxr-xr-x 2 user user 4096 Jan 15 10:30 Documents\n-rw-r--r-- 1 user user 1234 Jan 14 09:00 README.md" },
       { description: "显示隐藏文件（以点开头的文件）", code: "ls -la" },
-      { description: "按文件大小从大到小排序显示", code: "ls -lhS" }
+      { description: "按文件大小从大到小排序显示", code: "ls -lhS" },
+      { description: "查看帮助文档", code: "ls --help" }
     ],
     relatedCommands: ["cd", "pwd", "tree", "find"]
   },
@@ -61,7 +62,8 @@ export const commands: Command[] = [
       { description: "进入 Documents 目录", code: "cd ~/Documents" },
       { description: "回到上一级目录", code: "cd .." },
       { description: "直接回到家目录", code: "cd ~" },
-      { description: "回到上次所在的目录", code: "cd -" }
+      { description: "回到上次所在的目录", code: "cd -" },
+      { description: "查看帮助文档", code: "help cd" }
     ],
     relatedCommands: ["ls", "pwd", "mkdir", "pushd"]
   },
@@ -75,7 +77,8 @@ export const commands: Command[] = [
       { description: "复制一个文件到指定目录", code: "cp report.txt /home/user/backup/" },
       { description: "复制并重命名新文件", code: "cp old_config.txt new_config.txt" },
       { description: "递归复制整个文件夹", code: "cp -r project_folder/ /home/user/backup/" },
-      { description: "复制时保留文件属性", code: "cp -a important_data /backup/" }
+      { description: "复制时保留文件属性", code: "cp -a important_data /backup/" },
+      { description: "查看帮助文档", code: "cp --help" }
     ],
     relatedCommands: ["mv", "rsync", "scp", "ln"]
   },
@@ -89,7 +92,8 @@ export const commands: Command[] = [
       { description: "将文件移动到另一个目录", code: "mv download.pdf ~/Documents/" },
       { description: "给文件改个名字", code: "mv old_name.txt new_name.txt" },
       { description: "移动前先询问确认", code: "mv -i important_file /tmp/" },
-      { description: "批量移动所有 txt 文件", code: "mv *.txt ~/text_files/" }
+      { description: "批量移动所有 txt 文件", code: "mv *.txt ~/text_files/" },
+      { description: "查看帮助文档", code: "mv --help" }
     ],
     relatedCommands: ["cp", "rm", "rename", "ln"]
   },
@@ -103,7 +107,8 @@ export const commands: Command[] = [
       { description: "删除一个普通文件", code: "rm temp_file.txt" },
       { description: "删除前逐一询问确认", code: "rm -i *.log" },
       { description: "强制删除且递归删除整个目录（慎用！）", code: "rm -rf old_project/" },
-      { description: "删除空目录", code: "rmdir empty_folder/" }
+      { description: "删除空目录", code: "rmdir empty_folder/" },
+      { description: "查看帮助文档", code: "rm --help" }
     ],
     relatedCommands: ["cp", "mv", "trash", "shred"],
     dangerLevel: "danger",
@@ -118,7 +123,8 @@ export const commands: Command[] = [
       { description: "创建一个名为 photos 的目录", code: "mkdir photos" },
       { description: "同时创建多层嵌套目录", code: "mkdir -p project/src/components/utils" },
       { description: "创建目录并设置权限", code: "mkdir -m 755 public_html" },
-      { description: "一次创建多个目录", code: "mkdir dir1 dir2 dir3" }
+      { description: "一次创建多个目录", code: "mkdir dir1 dir2 dir3" },
+      { description: "查看帮助文档", code: "mkdir --help" }
     ],
     relatedCommands: ["ls", "cd", "rmdir", "tree"]
   },
@@ -132,7 +138,8 @@ export const commands: Command[] = [
       { description: "创建一个空的 notes.txt 文件", code: "touch notes.txt" },
       { description: "同时创建多个空文件", code: "touch file1.log file2.log file3.log" },
       { description: "更新已有文件的时间戳", code: "touch existing_file.md" },
-      { description: "将文件时间戳设为指定时间", code: "touch -t 202501011200.00 archive.txt" }
+      { description: "将文件时间戳设为指定时间", code: "touch -t 202501011200.00 archive.txt" },
+      { description: "查看帮助文档", code: "touch --help" }
     ],
     relatedCommands: ["ls", "stat", "mkdir", "cat"]
   },
@@ -146,7 +153,8 @@ export const commands: Command[] = [
       { description: "在当前目录下查找所有 txt 文件", code: "find . -name \"*.txt\"", output: "./notes.txt\n./report.txt\n./data/summary.txt" },
       { description: "查找大于 100MB 的文件", code: "find /home -size +100M" },
       { description: "查找 7 天内被修改过的文件", code: "find ./project -mtime -7" },
-      { description: "找到后执行删除操作（慎用）", code: "find /tmp -name \"*.tmp\" -delete" }
+      { description: "找到后执行删除操作（慎用）", code: "find /tmp -name \"*.tmp\" -delete" },
+      { description: "查看帮助文档", code: "find --help" }
     ],
     relatedCommands: ["locate", "grep", "which", "whereis"]
   },
@@ -160,7 +168,8 @@ export const commands: Command[] = [
       { description: "创建软链接（类似快捷方式）", code: "ln -s /opt/app/config.yml ~/config_link" },
       { description: "创建硬链接", code: "ln original.txt hardlink.txt" },
       { description: "覆盖已存在的链接", code: "ln -sf /new/path target_link" },
-      { description: "在当前目录为远程文件创建链接", code: "ln -s /var/log/syslog ./syslog_link" }
+      { description: "在当前目录为远程文件创建链接", code: "ln -s /var/log/syslog ./syslog_link" },
+      { description: "查看帮助文档", code: "ln --help" }
     ],
     relatedCommands: ["cp", "mv", "readlink", "stat"]
   },
@@ -172,7 +181,8 @@ export const commands: Command[] = [
     detailExplain: "就像你走进一栋大楼迷路了，看看墙上的门牌号就知道自己目前在几楼几号房间。pwd 会打印出你当前所在目录的完整路径，让你不会在层层嵌套的文件夹中迷失方向。",
     examples: [
       { description: "显示当前工作目录的完整路径", code: "pwd", output: "/home/user/Documents/project" },
-      { description: "显示物理路径（解析掉符号链接）", code: "pwd -P" }
+      { description: "显示物理路径（解析掉符号链接）", code: "pwd -P" },
+      { description: "查看帮助文档", code: "help pwd" }
     ],
     relatedCommands: ["cd", "ls", "dirname", "basename"]
   },
@@ -186,7 +196,8 @@ export const commands: Command[] = [
       { description: "以树形结构展示当前目录", code: "tree", output: ".\n├── src/\n│   ├── main.ts\n│   └── utils.ts\n├── package.json\n└── README.md" },
       { description: "只显示目录，不显示文件", code: "tree -d" },
       { description: "限制显示深度为 2 层", code: "tree -L 2" },
-      { description: "显示每个文件的大小", code: "tree -h" }
+      { description: "显示每个文件的大小", code: "tree -h" },
+      { description: "查看帮助文档", code: "tree --help" }
     ],
     relatedCommands: ["ls", "find", "pwd", "du"]
   },
@@ -199,7 +210,8 @@ export const commands: Command[] = [
     examples: [
       { description: "删除空目录", code: "rmdir empty_folder" },
       { description: "连同空的父目录一起删除", code: "rmdir -p a/b/c/empty_dir" },
-      { description: "忽略非空目录的错误提示", code: "rmdir --ignore-fail-on-non-empty folder*" }
+      { description: "忽略非空目录的错误提示", code: "rmdir --ignore-fail-on-non-empty folder*" },
+      { description: "查看帮助文档", code: "rmdir --help" }
     ],
     relatedCommands: ["rm", "mkdir", "ls", "tree"]
   },
@@ -212,7 +224,8 @@ export const commands: Command[] = [
     examples: [
       { description: "查看文件的完整元信息", code: "stat report.pdf", output: "  File: report.pdf\n  Size: 1048576\tBlocks: 2048\nModify: 2025-01-15 10:30:00" },
       { description: "只显示文件系统信息", code: "stat -f /dev/sda1" },
-      { description: "以简洁格式显示", code: "stat -c '%n %s %y' *.txt" }
+      { description: "以简洁格式显示", code: "stat -c '%n %s %y' *.txt" },
+      { description: "查看帮助文档", code: "stat --help" }
     ],
     relatedCommands: ["ls", "file", "touch", "wc"]
   },
@@ -226,7 +239,8 @@ export const commands: Command[] = [
       { description: "识别文件的类型", code: "file mystery_file", output: "mystery_file: PNG image data, 1920 x 1080" },
       { description: "批量识别多个文件类型", code: "file *" },
       { description: "显示 MIME 类型", code: "file --mime document.pdf", output: "document.pdf: application/pdf; charset=binary" },
-      { description: "不解压直接识别压缩包内文件类型", code: "file -z backup.tar.gz" }
+      { description: "不解压直接识别压缩包内文件类型", code: "file -z backup.tar.gz" },
+      { description: "查看帮助文档", code: "file --help" }
     ],
     relatedCommands: ["stat", "ls", "xdg-mime", "mimetype"]
   },
@@ -240,7 +254,8 @@ export const commands: Command[] = [
       { description: "把所有 .htm 文件后缀改为 .html", code: "rename 's/.htm$/.html/' *.htm" },
       { description: "在所有文件名前加上日期前缀", code: "rename 's/^/2025-01-15-/' *.jpg" },
       { description: "把文件名中的空格替换为下划线", code: "rename 's/ /_/g' *\\ *" },
-      { description: "预览改名效果（不实际执行）", code: "rename -n 's/.JPG$/.jpg/' *" }
+      { description: "预览改名效果（不实际执行）", code: "rename -n 's/.JPG$/.jpg/' *" },
+      { description: "查看帮助文档", code: "rename --help" }
     ],
     relatedCommands: ["mv", "mmv", "ln", "basename"]
   },
@@ -254,7 +269,8 @@ export const commands: Command[] = [
       { description: "快速查找所有包含 config 的文件", code: "locate config", output: "/etc/config.conf\n/home/user/.config\n/usr/local/etc/nginx/config" },
       { description: "统计匹配到的文件数量", code: "locate -c nginx" },
       { description: "使用正则表达式搜索", code: "locate -r '\\.log$'" },
-      { description: "忽略大小写搜索", code: "locate -i README" }
+      { description: "忽略大小写搜索", code: "locate -i README" },
+      { description: "查看帮助文档", code: "locate --help" }
     ],
     relatedCommands: ["find", "updatedb", "which", "whereis"]
   },
@@ -267,7 +283,8 @@ export const commands: Command[] = [
     examples: [
       { description: "查找 python3 的安装路径", code: "which python3", output: "/usr/bin/python3" },
       { description: "查找所有匹配的位置", code: "which -a node", output: "/usr/local/bin/node\n/home/user/.nvm/versions/node/bin/node" },
-      { description: "查找 git 的位置", code: "which git", output: "/usr/bin/git" }
+      { description: "查找 git 的位置", code: "which git", output: "/usr/bin/git" },
+      { description: "查看帮助文档", code: "which --help" }
     ],
     relatedCommands: ["whereis", "type", "locate", "find"]
   },
@@ -281,7 +298,8 @@ export const commands: Command[] = [
       { description: "查找 gcc 相关的所有文件", code: "whereis gcc", output: "gcc: /usr/bin/gcc /usr/lib/gcc /usr/share/man/man1/gcc.1.gz" },
       { description: "只查找二进制程序", code: "whereis -b python" },
       { description: "只查找帮助手册", code: "whereis -m curl" },
-      { description: "只查找源代码文件", code: "whereis -s apache2" }
+      { description: "只查找源代码文件", code: "whereis -s apache2" },
+      { description: "查看帮助文档", code: "whereis --help" }
     ],
     relatedCommands: ["which", "type", "find", "locate"]
   },
@@ -295,7 +313,8 @@ export const commands: Command[] = [
       { description: "提取路径中的文件名", code: "basename /home/user/docs/report.txt", output: "report.txt" },
       { description: "提取文件名并去掉后缀", code: "basename /home/user/docs/report.txt .txt", output: "report" },
       { description: "提取目录路径的最后一级", code: "basename /var/log/nginx/", output: "nginx" },
-      { description: "处理多个路径", code: "basename -a /usr/bin/python3 /usr/bin/git", output: "python3\ngit" }
+      { description: "处理多个路径", code: "basename -a /usr/bin/python3 /usr/bin/git", output: "python3\ngit" },
+      { description: "查看帮助文档", code: "basename --help" }
     ],
     relatedCommands: ["dirname", "realpath", "readlink", "pwd"]
   },
@@ -309,7 +328,8 @@ export const commands: Command[] = [
       { description: "提取路径中的目录部分", code: "dirname /home/user/docs/report.txt", output: "/home/user/docs" },
       { description: "处理当前目录下的文件", code: "dirname config.yaml", output: "." },
       { description: "处理多级路径", code: "dirname /var/log/nginx/access.log", output: "/var/log/nginx" },
-      { description: "处理末尾有斜杠的路径", code: "dirname /home/user/", output: "/home" }
+      { description: "处理末尾有斜杠的路径", code: "dirname /home/user/", output: "/home" },
+      { description: "查看帮助文档", code: "dirname --help" }
     ],
     relatedCommands: ["basename", "realpath", "pwd", "cd"]
   },
@@ -323,7 +343,8 @@ export const commands: Command[] = [
       { description: "显示文件的真实绝对路径", code: "realpath ../neighbor/config.ini", output: "/home/user/project/config.ini" },
       { description: "解析符号链接的真实路径", code: "realpath /usr/bin/python3", output: "/usr/bin/python3.10" },
       { description: "去除路径中的 . 和 ..", code: "realpath ./src/../lib/./utils.js", output: "/home/user/project/lib/utils.js" },
-      { description: "检查多个文件的真实路径", code: "realpath file1.txt file2.txt" }
+      { description: "检查多个文件的真实路径", code: "realpath file1.txt file2.txt" },
+      { description: "查看帮助文档", code: "realpath --help" }
     ],
     relatedCommands: ["readlink", "basename", "dirname", "pwd"]
   },
@@ -337,7 +358,8 @@ export const commands: Command[] = [
       { description: "查看符号链接指向的目标", code: "readlink /usr/bin/python", output: "/usr/bin/python3" },
       { description: "递归解析多层符号链接", code: "readlink -f /usr/bin/python", output: "/usr/bin/python3.10" },
       { description: "查看多个链接的目标", code: "readlink link1 link2 link3" },
-      { description: "显示链接的详细信息", code: "readlink -e /usr/bin/python3" }
+      { description: "显示链接的详细信息", code: "readlink -e /usr/bin/python3" },
+      { description: "查看帮助文档", code: "readlink --help" }
     ],
     relatedCommands: ["ln", "realpath", "ls", "stat"]
   },
@@ -351,7 +373,8 @@ export const commands: Command[] = [
       { description: "复制文件并设置权限为755", code: "install -m 755 myapp /usr/local/bin/" },
       { description: "复制文件并设置所有者", code: "install -o root -g root script.sh /usr/local/bin/" },
       { description: "创建目录并设置权限", code: "install -d -m 750 /etc/myapp/config" },
-      { description: "备份目标文件后再复制", code: "install -b -m 644 config.ini /etc/myapp/" }
+      { description: "备份目标文件后再复制", code: "install -b -m 644 config.ini /etc/myapp/" },
+      { description: "查看帮助文档", code: "install --help" }
     ],
     relatedCommands: ["cp", "chmod", "chown", "mkdir"]
   },
@@ -365,7 +388,8 @@ export const commands: Command[] = [
       { description: "安全删除文件（覆写3次后删除）", code: "shred -u secret.txt" },
       { description: "覆写25次后删除", code: "shred -v -n 25 -u secret.txt" },
       { description: "只覆写不删除文件", code: "shred -n 5 important.dat" },
-      { description: "安全删除整个分区数据", code: "shred -vfz /dev/sdb1" }
+      { description: "安全删除整个分区数据", code: "shred -vfz /dev/sdb1" },
+      { description: "查看帮助文档", code: "shred --help" }
     ],
     relatedCommands: ["rm", "dd", "wipe", "cp"],
     dangerLevel: "danger"
@@ -380,7 +404,8 @@ export const commands: Command[] = [
       { description: "切换到新根目录并运行shell", code: "chroot /mnt/sysroot /bin/bash" },
       { description: "在新根目录中执行指定命令", code: "chroot /mnt/sysroot apt update" },
       { description: "指定用户和组运行", code: "chroot --userspec=user:group /mnt/newroot /bin/sh" },
-      { description: "切换根目录进行系统修复", code: "chroot /mnt/recovery /bin/bash" }
+      { description: "切换根目录进行系统修复", code: "chroot /mnt/recovery /bin/bash" },
+      { description: "查看帮助文档", code: "chroot --help" }
     ],
     relatedCommands: ["mount", "su", "docker", "ssh"],
     dangerLevel: "warning"
@@ -395,7 +420,8 @@ export const commands: Command[] = [
       { description: "切换到新目录并保存当前目录", code: "pushd /var/log", output: "/var/log ~" },
       { description: "与当前目录交换", code: "pushd +1" },
       { description: "切换到项目目录", code: "pushd ~/projects/myapp" },
-      { description: "在多个目录间快速切换", code: "pushd /etc/nginx" }
+      { description: "在多个目录间快速切换", code: "pushd /etc/nginx" },
+      { description: "查看帮助文档", code: "help pushd" }
     ],
     relatedCommands: ["popd", "dirs", "cd", "pwd"]
   },
@@ -409,7 +435,8 @@ export const commands: Command[] = [
       { description: "返回上一个pushd保存的目录", code: "popd", output: "~" },
       { description: "跳转到栈中第2个目录", code: "popd +1" },
       { description: "删除栈顶目录但不切换", code: "popd -n" },
-      { description: "与pushd配合在多个目录间跳转", code: "popd" }
+      { description: "与pushd配合在多个目录间跳转", code: "popd" },
+      { description: "查看帮助文档", code: "help popd" }
     ],
     relatedCommands: ["pushd", "dirs", "cd", "pwd"]
   },
@@ -423,7 +450,8 @@ export const commands: Command[] = [
       { description: "显示目录栈", code: "dirs", output: "~ /var/log /etc/nginx" },
       { description: "每行显示一个目录", code: "dirs -p", output: "~\n/var/log\n/etc/nginx" },
       { description: "显示目录栈中的索引号", code: "dirs -v", output: "0  ~\n1  /var/log\n2  /etc/nginx" },
-      { description: "只显示第N个目录", code: "dirs +1" }
+      { description: "只显示第N个目录", code: "dirs +1" },
+      { description: "查看帮助文档", code: "help dirs" }
     ],
     relatedCommands: ["pushd", "popd", "cd", "pwd"]
   },
@@ -437,7 +465,8 @@ export const commands: Command[] = [
       { description: "计算文件的MD5值", code: "md5sum ubuntu-22.04.iso", output: "a4acf81002b7c7ce2e2e5f1b2c5c5c5c  ubuntu-22.04.iso" },
       { description: "校验文件与MD5值是否匹配", code: "md5sum -c checksum.md5", output: "ubuntu-22.04.iso: OK" },
       { description: "计算多个文件的MD5", code: "md5sum file1.txt file2.txt > checksums.md5" },
-      { description: "从标准输入计算MD5", code: "echo \"hello\" | md5sum", output: "b1946ac92492d2347c6235b4d2611184  -" }
+      { description: "从标准输入计算MD5", code: "echo \"hello\" | md5sum", output: "b1946ac92492d2347c6235b4d2611184  -" },
+      { description: "查看帮助文档", code: "md5sum --help" }
     ],
     relatedCommands: ["sha256sum", "cksum", "sha1sum", "file"]
   },
@@ -451,7 +480,8 @@ export const commands: Command[] = [
       { description: "计算文件的SHA256值", code: "sha256sum ubuntu-22.04.iso", output: "ab4acf81002b7c7ce2e2e5f1b2c5c5c5c...  ubuntu-22.04.iso" },
       { description: "校验文件完整性", code: "sha256sum -c SHA256SUMS", output: "ubuntu-22.04.iso: OK" },
       { description: "计算多个文件的SHA256", code: "sha256sum *.tar.gz > checksums.sha256" },
-      { description: "从标准输入计算SHA256", code: "echo \"hello\" | sha256sum" }
+      { description: "从标准输入计算SHA256", code: "echo \"hello\" | sha256sum" },
+      { description: "查看帮助文档", code: "sha256sum --help" }
     ],
     relatedCommands: ["md5sum", "cksum", "sha1sum", "gpg"]
   },
@@ -465,7 +495,8 @@ export const commands: Command[] = [
       { description: "查找并删除所有.log文件", code: "find . -name \"*.log\" | xargs rm" },
       { description: "每行一个参数执行命令", code: "find . -name \"*.txt\" | xargs -I {} cp {} /backup/" },
       { description: "限制每次传递的参数数量", code: "echo \"a b c d e\" | xargs -n 2 echo", output: "a b\nc d\ne" },
-      { description: "并行执行任务", code: "find . -name \"*.jpg\" | xargs -P 4 -I {} convert {} {}.png" }
+      { description: "并行执行任务", code: "find . -name \"*.jpg\" | xargs -P 4 -I {} convert {} {}.png" },
+      { description: "查看帮助文档", code: "xargs --help" }
     ],
     relatedCommands: ["find", "grep", "exec", "parallel"]
   },
@@ -481,7 +512,8 @@ export const commands: Command[] = [
       { description: "显示文件的全部内容", code: "cat config.json" },
       { description: "显示多个文件并合并输出", code: "cat header.txt body.txt footer.txt > full_doc.txt" },
       { description: "带行号显示文件内容", code: "cat -n main.py" },
-      { description: "压缩连续空行为一行", code: "cat -s messy_text.txt" }
+      { description: "压缩连续空行为一行", code: "cat -s messy_text.txt" },
+      { description: "查看帮助文档", code: "cat --help" }
     ],
     relatedCommands: ["less", "more", "head", "tail"]
   },
@@ -496,7 +528,8 @@ export const commands: Command[] = [
       { description: "忽略大小写搜索", code: "grep -i \"warning\" system.log" },
       { description: "显示匹配行的行号", code: "grep -n \"TODO\" src/*.ts" },
       { description: "递归搜索目录下所有文件", code: "grep -r \"function\" ./src/" },
-      { description: "反向匹配：显示不包含该词的行", code: "grep -v \"^#\" config.ini" }
+      { description: "反向匹配：显示不包含该词的行", code: "grep -v \"^#\" config.ini" },
+      { description: "查看帮助文档", code: "grep --help" }
     ],
     relatedCommands: ["egrep", "fgrep", "sed", "awk"]
   },
@@ -510,7 +543,8 @@ export const commands: Command[] = [
       { description: "将文件中的 foo 替换为 bar 并输出", code: "sed 's/foo/bar/g' input.txt" },
       { description: "直接修改文件内容（原地替换）", code: "sed -i 's/old_domain.com/new_domain.com/g' *.html" },
       { description: "删除第 2 到第 5 行", code: "sed '2,5d' data.csv" },
-      { description: "只显示匹配的行", code: "sed -n '/error/p' logfile" }
+      { description: "只显示匹配的行", code: "sed -n '/error/p' logfile" },
+      { description: "查看帮助文档", code: "sed --help" }
     ],
     relatedCommands: ["grep", "awk", "tr", "perl"]
   },
@@ -524,7 +558,8 @@ export const commands: Command[] = [
       { description: "打印文件的第 1 列和第 3 列", code: "awk '{print $1, $3}' data.txt" },
       { description: "以冒号为分隔符，打印用户名", code: "awk -F: '{print $1}' /etc/passwd", output: "root\ndaemon\nbin\nsys\nuser" },
       { description: "计算第二列数值的总和", code: "awk '{sum+=$2} END {print sum}' numbers.txt" },
-      { description: "过滤第三列大于 50 的行", code: "awk '$3 > 50' scores.csv" }
+      { description: "过滤第三列大于 50 的行", code: "awk '$3 > 50' scores.csv" },
+      { description: "查看帮助文档", code: "awk --help" }
     ],
     relatedCommands: ["sed", "grep", "cut", "sort"]
   },
@@ -538,7 +573,8 @@ export const commands: Command[] = [
       { description: "显示文件前 10 行（默认）", code: "head server.log" },
       { description: "只显示前 5 行", code: "head -n 5 config.yaml" },
       { description: "显示前 20 个字节", code: "head -c 20 binary.dat" },
-      { description: "同时显示多个文件的开头", code: "head -n 3 *.txt" }
+      { description: "同时显示多个文件的开头", code: "head -n 3 *.txt" },
+      { description: "查看帮助文档", code: "head --help" }
     ],
     relatedCommands: ["tail", "cat", "less", "tac"]
   },
@@ -552,7 +588,8 @@ export const commands: Command[] = [
       { description: "显示文件末尾 10 行（默认）", code: "tail access.log" },
       { description: "实时跟踪日志文件的新增内容", code: "tail -f /var/log/syslog" },
       { description: "显示最后 20 行", code: "tail -n 20 debug.log" },
-      { description: "从第 100 行开始显示到末尾", code: "tail -n +100 bigfile.txt" }
+      { description: "从第 100 行开始显示到末尾", code: "tail -n +100 bigfile.txt" },
+      { description: "查看帮助文档", code: "tail --help" }
     ],
     relatedCommands: ["head", "less", "tailf", "multitail"]
   },
@@ -567,7 +604,8 @@ export const commands: Command[] = [
       { description: "按数字大小排序", code: "sort -n scores.txt" },
       { description: "倒序排列（从大到小）", code: "sort -r dates.txt" },
       { description: "按第 2 列排序", code: "sort -k2 -n data.csv" },
-      { description: "去除重复行后排序", code: "sort -u list.txt" }
+      { description: "去除重复行后排序", code: "sort -u list.txt" },
+      { description: "查看帮助文档", code: "sort --help" }
     ],
     relatedCommands: ["uniq", "awk", "cut", "wc"]
   },
@@ -581,7 +619,8 @@ export const commands: Command[] = [
       { description: "去除相邻重复行", code: "uniq raw_log.txt" },
       { description: "显示重复出现的行及出现次数", code: "uniq -c access.log", output: "   3  192.168.1.1\n   7  10.0.0.5\n   1  172.16.0.1" },
       { description: "只显示重复的行", code: "uniq -d users.txt" },
-      { description: "只显示不重复的唯一行", code: "uniq -u items.txt" }
+      { description: "只显示不重复的唯一行", code: "uniq -u items.txt" },
+      { description: "查看帮助文档", code: "uniq --help" }
     ],
     relatedCommands: ["sort", "awk", "tr", "wc"]
   },
@@ -595,7 +634,8 @@ export const commands: Command[] = [
       { description: "统计文件的行数、单词数和字符数", code: "wc essay.txt", output: "  25  180  1056 essay.txt" },
       { description: "只统计行数", code: "wc -l large_file.csv", output: "10000 large_file.csv" },
       { description: "只统计字符数", code: "wc -m message.txt" },
-      { description: "统计多个文件并显示总计", code: "wc *.py" }
+      { description: "统计多个文件并显示总计", code: "wc *.py" },
+      { description: "查看帮助文档", code: "wc --help" }
     ],
     relatedCommands: ["cat", "nl", "sort", "uniq"]
   },
@@ -609,7 +649,8 @@ export const commands: Command[] = [
       { description: "提取每行的第 1-3 个字符", code: "cut -c1-3 codes.txt" },
       { description: "以冒号为分隔符，提取第 1 和第 6 列", code: "cut -d: -f1,6 /etc/passwd", output: "root:/root\nbin:/bin\ndaemon:/sbin" },
       { description: "以逗号分隔，提取第 2 列", code: "cut -d',' -f2 data.csv" },
-      { description: "提取除第 1 列外的所有列", code: "cut -d'\t' -f2- tabbed.tsv" }
+      { description: "提取除第 1 列外的所有列", code: "cut -d'\t' -f2- tabbed.tsv" },
+      { description: "查看帮助文档", code: "cut --help" }
     ],
     relatedCommands: ["awk", "paste", "sort", "join"]
   },
@@ -623,7 +664,8 @@ export const commands: Command[] = [
       { description: "把小写字母转换为大写", code: "echo \"hello world\" | tr 'a-z' 'A-Z'", output: "HELLO WORLD" },
       { description: "删除所有数字字符", code: "echo \"abc123def456\" | tr -d '0-9'", output: "abcdef" },
       { description: "把连续的空格压缩为一个", code: "echo \"hello    world\" | tr -s ' '", output: "hello world" },
-      { description: "把换行符替换为空格", code: "tr '\\n' ' ' < multiline.txt" }
+      { description: "把换行符替换为空格", code: "tr '\\n' ' ' < multiline.txt" },
+      { description: "查看帮助文档", code: "tr --help" }
     ],
     relatedCommands: ["sed", "awk", "fold", "expand"]
   },
@@ -637,7 +679,8 @@ export const commands: Command[] = [
       { description: "比较两个文件的差异", code: "diff file_v1.txt file_v2.txt" },
       { description: "以统一的 diff 格式显示差异", code: "diff -u original.py modified.py" },
       { description: "递归比较两个目录的差异", code: "diff -r dir_a/ dir_b/" },
-      { description: "忽略空格差异进行比较", code: "diff -w config_old.ini config_new.ini" }
+      { description: "忽略空格差异进行比较", code: "diff -w config_old.ini config_new.ini" },
+      { description: "查看帮助文档", code: "diff --help" }
     ],
     relatedCommands: ["cmp", "vimdiff", "patch", "sdiff"]
   },
@@ -651,7 +694,8 @@ export const commands: Command[] = [
       { description: "保存输出到文件的同时显示在屏幕", code: "echo \"important log\" | tee logfile.txt", output: "important log" },
       { description: "追加写入而非覆盖", code: "ping google.com | tee -a ping_result.txt" },
       { description: "同时写入多个文件", code: "cat data.csv | tee backup1.csv backup2.csv | sort" },
-      { description: "配合 sudo 写入需要权限的文件", code: "echo \"setting\" | sudo tee /etc/config.d/new.conf" }
+      { description: "配合 sudo 写入需要权限的文件", code: "echo \"setting\" | sudo tee /etc/config.d/new.conf" },
+      { description: "查看帮助文档", code: "tee --help" }
     ],
     relatedCommands: ["cat", "redirect", "pipe", "script"]
   },
@@ -665,7 +709,8 @@ export const commands: Command[] = [
       { description: "分页浏览大日志文件", code: "less /var/log/syslog" },
       { description: "打开时直接跳到文件末尾", code: "less +G huge_log.txt" },
       { description: "显示行号", code: "less -N source_code.c" },
-      { description: "打开后直接搜索关键词", code: "less +/error app.log" }
+      { description: "打开后直接搜索关键词", code: "less +/error app.log" },
+      { description: "查看帮助文档", code: "less --help" }
     ],
     relatedCommands: ["more", "cat", "head", "tail"]
   },
@@ -679,7 +724,8 @@ export const commands: Command[] = [
       { description: "分页显示文件内容", code: "more readme.txt" },
       { description: "每屏显示 15 行", code: "more -15 long_text.txt" },
       { description: "从第 20 行开始显示", code: "more +20 document.txt" },
-      { description: "清除屏幕后显示", code: "more -c file.txt" }
+      { description: "清除屏幕后显示", code: "more -c file.txt" },
+      { description: "查看帮助文档", code: "more --help" }
     ],
     relatedCommands: ["less", "cat", "pg", "most"]
   },
@@ -693,7 +739,8 @@ export const commands: Command[] = [
       { description: "将两个文件按行合并", code: "paste names.txt ages.txt", output: "Alice\t25\nBob\t30\nCharlie\t28" },
       { description: "用逗号作为分隔符合并", code: "paste -d',' ids.txt cities.txt" },
       { description: "合并多个文件", code: "paste -d'|' col1.txt col2.txt col3.txt" },
-      { description: "将标准输入的行转为单行", code: "ls | paste -d' ' -s" }
+      { description: "将标准输入的行转为单行", code: "ls | paste -d' ' -s" },
+      { description: "查看帮助文档", code: "paste --help" }
     ],
     relatedCommands: ["cut", "join", "pr", "awk"]
   },
@@ -707,7 +754,8 @@ export const commands: Command[] = [
       { description: "格式化段落（默认宽度 75 字符）", code: "fmt paragraph.txt" },
       { description: "设置每行宽度为 50 字符", code: "fmt -w 50 long_line.txt" },
       { description: "缩进每行 4 个空格", code: "fmt -p '    ' indented.txt" },
-      { description: "合并短行并均匀分割", code: "fmt -s short_lines.txt" }
+      { description: "合并短行并均匀分割", code: "fmt -s short_lines.txt" },
+      { description: "查看帮助文档", code: "fmt --help" }
     ],
     relatedCommands: ["fold", "par", "pr", "nl"]
   },
@@ -721,7 +769,8 @@ export const commands: Command[] = [
       { description: "给文件添加行号", code: "nl source.py" },
       { description: "自定义行号格式", code: "nl -nrz -w3 data.txt" },
       { description: "行号从 10 开始，每次加 5", code: "nl -v10 -i5 list.txt" },
-      { description: "不给空行编号", code: "nl -bt mixed.txt" }
+      { description: "不给空行编号", code: "nl -bt mixed.txt" },
+      { description: "查看帮助文档", code: "nl --help" }
     ],
     relatedCommands: ["cat", "wc", "pr", "fmt"]
   },
@@ -733,7 +782,8 @@ export const commands: Command[] = [
     detailExplain: "cat 是从头读到尾，tac 恰恰反过来——从最后一行读到第一行。名字就是把 cat 倒过来拼写，很好记。当你想看日志文件的最新内容在最上面时，tac 特别好用。",
     examples: [
       { description: "倒序显示文件内容", code: "tac access.log" },
-      { description: "倒序显示并用分隔符连接", code: "tac -s ',' csv_data.txt" }
+      { description: "倒序显示并用分隔符连接", code: "tac -s ',' csv_data.txt" },
+      { description: "查看帮助文档", code: "tac --help" }
     ],
     relatedCommands: ["cat", "tail", "rev", "sort -r"]
   },
@@ -746,7 +796,8 @@ export const commands: Command[] = [
     examples: [
       { description: "反转每行中的字符顺序", code: "echo \"hello world\" | rev", output: "dlrow olleh" },
       { description: "反转文件中每一行", code: "rev palindrome_test.txt" },
-      { description: "检查是否为回文字符串", code: "echo \"level\" | rev", output: "level" }
+      { description: "检查是否为回文字符串", code: "echo \"level\" | rev", output: "level" },
+      { description: "查看帮助文档", code: "rev --help" }
     ],
     relatedCommands: ["tac", "tr", "sed", "perl"]
   },
@@ -760,7 +811,8 @@ export const commands: Command[] = [
       { description: "在当前目录递归搜索关键词", code: "rg \"TODO\" .", output: "src/main.rs:10:// TODO: refactor this" },
       { description: "只搜索特定类型的文件", code: "rg -t py \"import os\" ." },
       { description: "显示匹配行的上下文", code: "rg -C 3 \"error\" app.log" },
-      { description: "只显示匹配的文件名", code: "rg -l \"function\" src/" }
+      { description: "只显示匹配的文件名", code: "rg -l \"function\" src/" },
+      { description: "查看帮助文档", code: "rg --help" }
     ],
     relatedCommands: ["grep", "ag", "find", "sed"]
   },
@@ -774,7 +826,8 @@ export const commands: Command[] = [
       { description: "在代码中搜索函数定义", code: "ag \"def handle_request\" ." },
       { description: "忽略大小写搜索", code: "ag -i \"error\" /var/log/" },
       { description: "只搜索Python文件", code: "ag -G \"\\.py$\" \"import\" ." },
-      { description: "显示匹配行号和上下文", code: "ag -C 2 \"class User\" src/" }
+      { description: "显示匹配行号和上下文", code: "ag -C 2 \"class User\" src/" },
+      { description: "查看帮助文档", code: "ag --help" }
     ],
     relatedCommands: ["rg", "grep", "find", "ack"]
   },
@@ -788,7 +841,8 @@ export const commands: Command[] = [
       { description: "提取JSON中的某个字段", code: "echo '{\"name\":\"Tom\",\"age\":25}' | jq '.name'", output: "\"Tom\"" },
       { description: "格式化压缩的JSON", code: "curl -s api.example.com/data | jq ." },
       { description: "提取数组中的所有元素", code: "jq '.users[].name' users.json" },
-      { description: "筛选满足条件的对象", code: "jq '.[] | select(.age > 18)' people.json" }
+      { description: "筛选满足条件的对象", code: "jq '.[] | select(.age > 18)' people.json" },
+      { description: "查看帮助文档", code: "jq --help" }
     ],
     relatedCommands: ["grep", "sed", "awk", "python"]
   },
@@ -802,7 +856,8 @@ export const commands: Command[] = [
       { description: "按冒号分隔并整齐显示", code: "column -t -s ':' /etc/passwd" },
       { description: "将文本排成多列显示", code: "seq 1 10 | column" },
       { description: "指定输出宽度为80字符", code: "column -c 80 filelist.txt" },
-      { description: "按制表符分隔对齐", code: "column -t -s $'\\t' data.tsv" }
+      { description: "按制表符分隔对齐", code: "column -t -s $'\\t' data.tsv" },
+      { description: "查看帮助文档", code: "column --help" }
     ],
     relatedCommands: ["sort", "paste", "awk", "pr"]
   },
@@ -816,7 +871,8 @@ export const commands: Command[] = [
       { description: "将Tab转换为空格", code: "expand code.py" },
       { description: "指定Tab宽度为4个空格", code: "expand -t 4 code.py" },
       { description: "转换后保存到新文件", code: "expand -t 2 indent.ts > indent_spaces.ts" },
-      { description: "只转换行首的Tab", code: "expand -i Makefile" }
+      { description: "只转换行首的Tab", code: "expand -i Makefile" },
+      { description: "查看帮助文档", code: "expand --help" }
     ],
     relatedCommands: ["unexpand", "tr", "sed", "cut"]
   },
@@ -830,7 +886,8 @@ export const commands: Command[] = [
       { description: "将空格转换为Tab", code: "unexpand code.py" },
       { description: "指定Tab宽度为4", code: "unexpand -t 4 code.py" },
       { description: "只转换行首的空格", code: "unexpand --first-only code.py" },
-      { description: "转换后保存到新文件", code: "unexpand -t 2 spaces.txt > tabs.txt" }
+      { description: "转换后保存到新文件", code: "unexpand -t 2 spaces.txt > tabs.txt" },
+      { description: "查看帮助文档", code: "unexpand --help" }
     ],
     relatedCommands: ["expand", "tr", "sed", "cut"]
   },
@@ -844,7 +901,8 @@ export const commands: Command[] = [
       { description: "随机打乱文件中的行", code: "shuf names.txt" },
       { description: "随机抽取3行", code: "shuf -n 3 names.txt" },
       { description: "生成1到10的随机数", code: "shuf -i 1-10 -n 1", output: "7" },
-      { description: "从命令行参数中随机选一个", code: "shuf -e apple banana cherry -n 1", output: "banana" }
+      { description: "从命令行参数中随机选一个", code: "shuf -e apple banana cherry -n 1", output: "banana" },
+      { description: "查看帮助文档", code: "shuf --help" }
     ],
     relatedCommands: ["sort", "head", "tail", "seq"]
   },
@@ -858,7 +916,8 @@ export const commands: Command[] = [
       { description: "比较两个文件的异同", code: "comm file1.txt file2.txt" },
       { description: "只显示两个文件共有的行", code: "comm -12 file1.txt file2.txt" },
       { description: "只显示文件1独有的行", code: "comm -23 file1.txt file2.txt" },
-      { description: "只显示文件2独有的行", code: "comm -13 file1.txt file2.txt" }
+      { description: "只显示文件2独有的行", code: "comm -13 file1.txt file2.txt" },
+      { description: "查看帮助文档", code: "comm --help" }
     ],
     relatedCommands: ["diff", "sort", "join", "uniq"]
   },
@@ -872,7 +931,8 @@ export const commands: Command[] = [
       { description: "按第一列合并两个文件", code: "join names.txt scores.txt" },
       { description: "指定合并的字段列", code: "join -1 2 -2 1 file1.txt file2.txt" },
       { description: "显示未匹配的行", code: "join -a 1 names.txt scores.txt" },
-      { description: "指定字段分隔符", code: "join -t ',' data1.csv data2.csv" }
+      { description: "指定字段分隔符", code: "join -t ',' data1.csv data2.csv" },
+      { description: "查看帮助文档", code: "join --help" }
     ],
     relatedCommands: ["comm", "sort", "paste", "awk"]
   },
@@ -886,7 +946,8 @@ export const commands: Command[] = [
       { description: "按默认1000行分割文件", code: "split large_log.txt" },
       { description: "每100行分割一次", code: "split -l 100 data.txt chunk_" },
       { description: "按大小分割（每个50MB）", code: "split -b 50M bigfile.zip part_" },
-      { description: "分割时使用数字后缀", code: "split -d -l 500 data.txt part_" }
+      { description: "分割时使用数字后缀", code: "split -d -l 500 data.txt part_" },
+      { description: "查看帮助文档", code: "split --help" }
     ],
     relatedCommands: ["csplit", "cat", "wc", "head"]
   },
@@ -900,7 +961,8 @@ export const commands: Command[] = [
       { description: "按空行分割文件", code: "csplit file.txt /^$/" },
       { description: "按指定行号分割", code: "csplit data.txt 100 200 300" },
       { description: "按章节标题分割", code: "csplit book.txt '/^Chapter/' '{*}'" },
-      { description: "保留分割后的文件（不自动删除）", code: "csplit -k log.txt '/^--/' '{*}'" }
+      { description: "保留分割后的文件（不自动删除）", code: "csplit -k log.txt '/^--/' '{*}'" },
+      { description: "查看帮助文档", code: "csplit --help" }
     ],
     relatedCommands: ["split", "cat", "head", "tail"]
   },
@@ -914,7 +976,8 @@ export const commands: Command[] = [
       { description: "将GBK编码转换为UTF-8", code: "iconv -f GBK -t UTF-8 readme.txt" },
       { description: "转换后保存到新文件", code: "iconv -f GB18030 -t UTF-8 input.txt -o output.txt" },
       { description: "列出所有支持的编码", code: "iconv -l" },
-      { description: "转换时忽略无法识别的字符", code: "iconv -f GBK -t UTF-8//IGNORE messy.txt" }
+      { description: "转换时忽略无法识别的字符", code: "iconv -f GBK -t UTF-8//IGNORE messy.txt" },
+      { description: "查看帮助文档", code: "iconv --help" }
     ],
     relatedCommands: ["dos2unix", "unix2dos", "file", "sed"]
   },
@@ -928,7 +991,8 @@ export const commands: Command[] = [
       { description: "转换Windows文件为Unix格式", code: "dos2unix script.sh" },
       { description: "批量转换所有sh文件", code: "dos2unix *.sh" },
       { description: "只显示哪些文件需要转换", code: "dos2unix -i *.txt" },
-      { description: "保留原文件并转换到新文件", code: "dos2unix -n input.txt output.txt" }
+      { description: "保留原文件并转换到新文件", code: "dos2unix -n input.txt output.txt" },
+      { description: "查看帮助文档", code: "dos2unix --help" }
     ],
     relatedCommands: ["unix2dos", "iconv", "sed", "tr"]
   },
@@ -942,7 +1006,8 @@ export const commands: Command[] = [
       { description: "转换Unix文件为Windows格式", code: "unix2dos readme.txt" },
       { description: "批量转换", code: "unix2dos *.txt" },
       { description: "保留原文件并转换到新文件", code: "unix2dos -n input.txt output.txt" },
-      { description: "只显示文件信息不转换", code: "unix2dos -i *.txt" }
+      { description: "只显示文件信息不转换", code: "unix2dos -i *.txt" },
+      { description: "查看帮助文档", code: "unix2dos --help" }
     ],
     relatedCommands: ["dos2unix", "iconv", "sed", "tr"]
   },
@@ -956,7 +1021,8 @@ export const commands: Command[] = [
       { description: "编码字符串", code: "echo -n \"hello\" | base64", output: "aGVsbG8=" },
       { description: "解码Base64字符串", code: "echo \"aGVsbG8=\" | base64 -d", output: "hello" },
       { description: "编码文件内容", code: "base64 image.png > image_b64.txt" },
-      { description: "解码Base64文件", code: "base64 -d image_b64.txt > image.png" }
+      { description: "解码Base64文件", code: "base64 -d image_b64.txt > image.png" },
+      { description: "查看帮助文档", code: "base64 --help" }
     ],
     relatedCommands: ["xxd", "od", "hexdump", "openssl"]
   },
@@ -970,7 +1036,8 @@ export const commands: Command[] = [
       { description: "从二进制文件中提取可读文本", code: "strings /usr/bin/ls" },
       { description: "只提取至少10个字符的文本", code: "strings -n 10 program.bin" },
       { description: "在二进制文件中搜索特定字符串", code: "strings app.bin | grep \"password\"" },
-      { description: "提取并显示偏移地址", code: "strings -t x library.so" }
+      { description: "提取并显示偏移地址", code: "strings -t x library.so" },
+      { description: "查看帮助文档", code: "strings --help" }
     ],
     relatedCommands: ["grep", "xxd", "od", "hexdump"]
   },
@@ -984,7 +1051,8 @@ export const commands: Command[] = [
       { description: "按默认80列折叠长行", code: "fold long_text.txt" },
       { description: "指定每行40个字符", code: "fold -w 40 readme.txt" },
       { description: "按字节宽度折叠（不截断多字节字符）", code: "fold -s -w 60 article.txt" },
-      { description: "在空格处折行", code: "fold -s -w 50 paragraph.txt" }
+      { description: "在空格处折行", code: "fold -s -w 50 paragraph.txt" },
+      { description: "查看帮助文档", code: "fold --help" }
     ],
     relatedCommands: ["fmt", "pr", "column", "cut"]
   },
@@ -1000,7 +1068,8 @@ export const commands: Command[] = [
       { description: "显示当前用户的进程", code: "ps" },
       { description: "显示所有进程的详细信息", code: "ps aux" },
       { description: "以树形结构显示进程关系", code: "ps auxf" },
-      { description: "显示指定 PID 的进程信息", code: "ps -p 1234 -o pid,user,cmd" }
+      { description: "显示指定 PID 的进程信息", code: "ps -p 1234 -o pid,user,cmd" },
+      { description: "查看帮助文档", code: "ps --help" }
     ],
     relatedCommands: ["top", "pstree", "pgrep", "kill"]
   },
@@ -1014,7 +1083,8 @@ export const commands: Command[] = [
       { description: "启动 top 实时监控界面", code: "top" },
       { description: "只显示特定用户的进程", code: "top -u www-data" },
       { description: "每 5 秒刷新一次", code: "top -d 5" },
-      { description: "只显示 3 次刷新后退出", code: "top -n 3 -b" }
+      { description: "只显示 3 次刷新后退出", code: "top -n 3 -b" },
+      { description: "查看帮助文档", code: "top --help" }
     ],
     relatedCommands: ["htop", "ps", "vmstat", "mpstat"]
   },
@@ -1028,7 +1098,8 @@ export const commands: Command[] = [
       { description: "启动 htop 交互式界面", code: "htop" },
       { description: "按 CPU 使用率排序", code: "htop --sort-key PERCENT_CPU" },
       { description: "只显示指定 PID 的进程树", code: "htop -p 1234,5678" },
-      { description: "启动时延迟 2 秒再显示", code: "htop -d 2" }
+      { description: "启动时延迟 2 秒再显示", code: "htop -d 2" },
+      { description: "查看帮助文档", code: "htop --help" }
     ],
     relatedCommands: ["top", "ps", "glances", "atop"]
   },
@@ -1042,7 +1113,8 @@ export const commands: Command[] = [
       { description: "礼貌地请求进程终止", code: "kill 1234" },
       { description: "强制杀死进程", code: "kill -9 5678" },
       { description: "发送挂起信号（暂停但不结束）", code: "kill -STOP 9012" },
-      { description: "发送继续信号（恢复被暂停的进程）", code: "kill -CONT 9012" }
+      { description: "发送继续信号（恢复被暂停的进程）", code: "kill -CONT 9012" },
+      { description: "查看帮助文档", code: "kill --help" }
     ],
     relatedCommands: ["killall", "pkill", "pgrep", "jobs"],
     dangerLevel: "warning",
@@ -1055,7 +1127,8 @@ export const commands: Command[] = [
     detailExplain: "就像你在前台接待客人时，把一些不需要立刻完成的工作交代给后台部门去慢慢处理——前台终端解放出来可以继续接受其他命令，后台的工作在默默进行。通常配合 Ctrl+Z 先暂停任务再用 bg 放到后台。",
     examples: [
       { description: "把最近一个暂停的作业放到后台运行", code: "bg" },
-      { description: "把指定作业号的进程放到后台", code: "bg %2" }
+      { description: "把指定作业号的进程放到后台", code: "bg %2" },
+      { description: "查看帮助文档", code: "help bg" }
     ],
     relatedCommands: ["fg", "jobs", "nohup", "Ctrl+Z"]
   },
@@ -1067,7 +1140,8 @@ export const commands: Command[] = [
     detailExplain: "就像你之前把一项工作交给了后台部门（bg），现在想亲自过问一下，就用 fg 把它重新调回前台终端。此时终端就被这个任务占据，直到它完成或再次被你放到后台。",
     examples: [
       { description: "把最近的后台作业拉回前台", code: "fg" },
-      { description: "把 2 号作业拉回前台", code: "fg %2" }
+      { description: "把 2 号作业拉回前台", code: "fg %2" },
+      { description: "查看帮助文档", code: "help fg" }
     ],
     relatedCommands: ["bg", "jobs", "Ctrl+Z", "nohup"]
   },
@@ -1081,7 +1155,8 @@ export const commands: Command[] = [
       { description: "列出当前 shell 的所有后台作业", code: "jobs", output: "[1]   Running    python train.py &\n[2]-  Stopped    vim notes.txt\n[3]+  Running    npm start &" },
       { description: "列出作业的同时显示 PID", code: "jobs -l" },
       { description: "只列出正在运行的作业", code: "jobs -r" },
-      { description: "只列出已暂停的作业", code: "jobs -s" }
+      { description: "只列出已暂停的作业", code: "jobs -s" },
+      { description: "查看帮助文档", code: "help jobs" }
     ],
     relatedCommands: ["fg", "bg", "Ctrl+Z", "nohup"]
   },
@@ -1094,7 +1169,8 @@ export const commands: Command[] = [
     examples: [
       { description: "让脚本在后台持续运行", code: "nohup ./backup.sh &" },
       { description: "自定义输出日志文件", code: "nohup python model_train.py > training.log 2>&1 &" },
-      { description: "配合 nice 降低优先级运行", code: "nohup nice -n 19 ./heavy_computation.sh &" }
+      { description: "配合 nice 降低优先级运行", code: "nohup nice -n 19 ./heavy_computation.sh &" },
+      { description: "查看帮助文档", code: "nohup --help" }
     ],
     relatedCommands: ["bg", "screen", "tmux", "disown"]
   },
@@ -1107,7 +1183,8 @@ export const commands: Command[] = [
     examples: [
       { description: "以低优先级运行耗时任务", code: "nice -n 10 ./compile_project.sh" },
       { description: "以较高优先级运行关键任务", code: "nice -n -5 ./critical_service" },
-      { description: "查看当前 nice 默认值", code: "nice", output: "0" }
+      { description: "查看当前 nice 默认值", code: "nice", output: "0" },
+      { description: "查看帮助文档", code: "nice --help" }
     ],
     relatedCommands: ["renice", "ionice", "nohup", "chrt"]
   },
@@ -1121,7 +1198,8 @@ export const commands: Command[] = [
       { description: "降低 PID 为 1234 的进程优先级", code: "renice +10 1234" },
       { description: "提高某个进程的优先级", code: "renice -5 5678" },
       { description: "修改用户所有进程的优先级", code: "renice +5 -u www-data" },
-      { description: "修改进程组所有进程的优先级", code: "renice +10 -g 1001" }
+      { description: "修改进程组所有进程的优先级", code: "renice +10 -g 1001" },
+      { description: "查看帮助文档", code: "renice --help" }
     ],
     relatedCommands: ["nice", "top", "ps", "ionice"]
   },
@@ -1135,7 +1213,8 @@ export const commands: Command[] = [
       { description: "查找 nginx 进程的 PID", code: "pgrep nginx", output: "1234\n1235" },
       { description: "查找并显示进程名", code: "pgrep -a python", output: "5678 python train.py\n5690 python serve.py" },
       { description: "查找属于指定用户的进程", code: "pgrep -u root sshd" },
-      { description: "查找最老的匹配进程", code: "pgrep -o firefox" }
+      { description: "查找最老的匹配进程", code: "pgrep -o firefox" },
+      { description: "查看帮助文档", code: "pgrep --help" }
     ],
     relatedCommands: ["pkill", "ps", "pidof", "kill"]
   },
@@ -1149,7 +1228,8 @@ export const commands: Command[] = [
       { description: "杀死所有名为 chrome 的进程", code: "pkill chrome" },
       { description: "向指定用户的进程发送终止信号", code: "pkill -u bob sleep" },
       { description: "强制杀死匹配的进程", code: "pkill -9 hung_process" },
-      { description: "先模拟执行", code: "pkill -l python" }
+      { description: "先模拟执行", code: "pkill -l python" },
+      { description: "查看帮助文档", code: "pkill --help" }
     ],
     relatedCommands: ["pgrep", "kill", "killall", "ps"],
     dangerLevel: "warning",
@@ -1164,7 +1244,8 @@ export const commands: Command[] = [
       { description: "杀死所有 Firefox 进程", code: "killall firefox" },
       { description: "优雅地等待进程自行关闭", code: "killall -w nginx" },
       { description: "按信号名发送信号", code: "killall -HUP apache2" },
-      { description: "交互式确认后才杀死进程", code: "killall -i chrome" }
+      { description: "交互式确认后才杀死进程", code: "killall -i chrome" },
+      { description: "查看帮助文档", code: "killall --help" }
     ],
     relatedCommands: ["kill", "pkill", "pgrep", "xkill"],
     dangerLevel: "warning",
@@ -1179,7 +1260,8 @@ export const commands: Command[] = [
       { description: "每 2 秒刷新显示内存使用情况", code: "watch -n 2 free -h" },
       { description: "高亮显示变化的区域", code: "watch -d 'ls -l /tmp'" },
       { description: "遇到错误时不中断继续执行", code: "watch -e ping google.com" },
-      { description: "执行前先清除屏幕", code: "watch -t date" }
+      { description: "执行前先清除屏幕", code: "watch -t date" },
+      { description: "查看帮助文档", code: "watch --help" }
     ],
     relatedCommands: ["top", "cron", "sleep", "loop"]
   },
@@ -1193,7 +1275,8 @@ export const commands: Command[] = [
       { description: "创建一个新的 screen 会话", code: "screen -S mysession" },
       { description: "脱离会话（任务继续在后台运行）", code: "Ctrl+A, D" },
       { description: "重新连接到已有的会话", code: "screen -r mysession" },
-      { description: "列出所有 screen 会话", code: "screen -ls" }
+      { description: "列出所有 screen 会话", code: "screen -ls" },
+      { description: "查看帮助文档", code: "screen --help" }
     ],
     relatedCommands: ["tmux", "nohup", "bg", "byobu"]
   },
@@ -1208,7 +1291,8 @@ export const commands: Command[] = [
       { description: "水平分割当前窗格", code: "Ctrl+B, %" },
       { description: "垂直分割当前窗格", code: "Ctrl+B, \"" },
       { description: "列出所有会话", code: "tmux list-sessions" },
-      { description: "重新连接会话", code: "tmux attach -t work" }
+      { description: "重新连接会话", code: "tmux attach -t work" },
+      { description: "查看帮助文档", code: "tmux --help" }
     ],
     relatedCommands: ["screen", "nohup", "byobu", "zellij"]
   },
@@ -1222,7 +1306,8 @@ export const commands: Command[] = [
       { description: "编辑当前用户的定时任务", code: "crontab -e" },
       { description: "列出当前的定时任务", code: "crontab -l", output: "0 2 * * * /home/user/backup.sh\n*/5 * * * * /usr/bin/check_health.sh" },
       { description: "删除所有定时任务", code: "crontab -r" },
-      { description: "为其他用户编辑 crontab", code: "crontab -u www-data -e" }
+      { description: "为其他用户编辑 crontab", code: "crontab -u www-data -e" },
+      { description: "查看帮助文档", code: "crontab --help" }
     ],
     relatedCommands: ["at", "systemctl timer", "anacron", "fcron"]
   },
@@ -1238,7 +1323,8 @@ export const commands: Command[] = [
       { description: "重启 nginx 服务", code: "systemctl restart nginx" },
       { description: "查看服务状态", code: "systemctl status nginx" },
       { description: "设置开机自启", code: "systemctl enable nginx" },
-      { description: "查看所有正在运行的服务", code: "systemctl list-units --type=service --state=running" }
+      { description: "查看所有正在运行的服务", code: "systemctl list-units --type=service --state=running" },
+      { description: "查看帮助文档", code: "systemctl --help" }
     ],
     relatedCommands: ["service", "journalctl", "initctl", "chkconfig"]
   },
@@ -1252,7 +1338,8 @@ export const commands: Command[] = [
       { description: "启动 Apache 服务", code: "service apache2 start" },
       { description: "查看 MySQL 服务状态", code: "service mysql status" },
       { description: "重启防火墙服务", code: "service iptables restart" },
-      { description: "列出所有服务及其状态", code: "service --status-all" }
+      { description: "列出所有服务及其状态", code: "service --status-all" },
+      { description: "查看帮助文档", code: "service --help" }
     ],
     relatedCommands: ["systemctl", "chkconfig", "update-rc.d", "initctl"]
   },
@@ -1266,7 +1353,8 @@ export const commands: Command[] = [
       { description: "在今天下午 3 点执行备份脚本", code: "echo '/home/user/backup.sh' | at 15:00" },
       { description: "在 10 分钟后执行命令", code: "echo 'echo Time is up!' | at now + 10 minutes" },
       { description: "查看待执行的 at 任务队列", code: "atq" },
-      { description: "删除指定编号的 at 任务", code: "atrm 1" }
+      { description: "删除指定编号的 at 任务", code: "atrm 1" },
+      { description: "查看帮助文档", code: "at --help" }
     ],
     relatedCommands: ["crontab", "batch", "timeout", "sleep"]
   },
@@ -1280,7 +1368,8 @@ export const commands: Command[] = [
       { description: "查找 nginx 进程的 PID", code: "pidof nginx", output: "1234 1233" },
       { description: "查找 sshd 进程的 PID", code: "pidof sshd" },
       { description: "只显示一个 PID（最新的）", code: "pidof -s nginx" },
-      { description: "查找指定脚本进程的 PID", code: "pidof -x myscript.sh" }
+      { description: "查找指定脚本进程的 PID", code: "pidof -x myscript.sh" },
+      { description: "查看帮助文档", code: "pidof --help" }
     ],
     relatedCommands: ["pgrep", "ps", "pkill", "kill"]
   },
@@ -1294,7 +1383,8 @@ export const commands: Command[] = [
       { description: "查看 80 端口被哪个进程占用", code: "lsof -i :80", output: "nginx  1234  root  6u  IPv4  12345  0t0  TCP *:http (LISTEN)" },
       { description: "查看某个用户打开的所有文件", code: "lsof -u www-data" },
       { description: "查看某个进程打开的文件", code: "lsof -p 1234" },
-      { description: "查看被删除但仍被进程占用的文件", code: "lsof | grep deleted" }
+      { description: "查看被删除但仍被进程占用的文件", code: "lsof | grep deleted" },
+      { description: "查看帮助文档", code: "lsof --help" }
     ],
     relatedCommands: ["fuser", "ss", "netstat", "ps"]
   },
@@ -1308,7 +1398,8 @@ export const commands: Command[] = [
       { description: "跟踪 ls 命令的所有系统调用", code: "strace ls" },
       { description: "只跟踪文件相关的系统调用", code: "strace -e trace=file cat test.txt" },
       { description: "跟踪正在运行的进程（按PID）", code: "strace -p 1234" },
-      { description: "统计各系统调用的次数和时间", code: "strace -c ls" }
+      { description: "统计各系统调用的次数和时间", code: "strace -c ls" },
+      { description: "查看帮助文档", code: "strace --help" }
     ],
     relatedCommands: ["ltrace", "lsof", "gdb", "perf"]
   },
@@ -1322,7 +1413,8 @@ export const commands: Command[] = [
       { description: "跟踪 ls 命令的库函数调用", code: "ltrace ls" },
       { description: "只跟踪 malloc 和 free 调用", code: "ltrace -e malloc,free ./myapp" },
       { description: "跟踪正在运行的进程", code: "ltrace -p 1234" },
-      { description: "统计各库函数调用次数", code: "ltrace -c ./myapp" }
+      { description: "统计各库函数调用次数", code: "ltrace -c ./myapp" },
+      { description: "查看帮助文档", code: "ltrace --help" }
     ],
     relatedCommands: ["strace", "lsof", "gdb", "nm"]
   },
@@ -1336,7 +1428,8 @@ export const commands: Command[] = [
       { description: "以最低优先级运行备份任务", code: "ionice -c 3 tar czf backup.tar.gz /data" },
       { description: "以最高优先级运行数据库", code: "ionice -c 1 -n 0 mysqld" },
       { description: "查看进程的 IO 调度类别", code: "ionice -p 1234" },
-      { description: "以尽力而为模式运行编译任务", code: "ionice -c 2 -n 7 make" }
+      { description: "以尽力而为模式运行编译任务", code: "ionice -c 2 -n 7 make" },
+      { description: "查看帮助文档", code: "ionice --help" }
     ],
     relatedCommands: ["nice", "renice", "taskset", "chrt"]
   },
@@ -1350,7 +1443,8 @@ export const commands: Command[] = [
       { description: "将命令绑定到 CPU 0 上运行", code: "taskset 0x1 ./myapp" },
       { description: "将命令绑定到 CPU 0 和 CPU 1 上运行", code: "taskset 0x3 ./myapp" },
       { description: "查看进程的 CPU 亲和性", code: "taskset -p 1234" },
-      { description: "修改已运行进程的 CPU 绑定", code: "taskset -p 0x2 1234" }
+      { description: "修改已运行进程的 CPU 绑定", code: "taskset -p 0x2 1234" },
+      { description: "查看帮助文档", code: "taskset --help" }
     ],
     relatedCommands: ["nice", "ionice", "chrt", "ps"]
   },
@@ -1364,7 +1458,8 @@ export const commands: Command[] = [
       { description: "查看进程的所有资源限制", code: "prlimit -p 1234" },
       { description: "将最大打开文件数设为 65535", code: "prlimit --nofile=65535 -p 1234" },
       { description: "限制进程最大内存为 2GB", code: "prlimit --as=2147483648 -p 1234" },
-      { description: "设置进程最大 CPU 时间为 60 秒", code: "prlimit --cpu=60 -p 1234" }
+      { description: "设置进程最大 CPU 时间为 60 秒", code: "prlimit --cpu=60 -p 1234" },
+      { description: "查看帮助文档", code: "prlimit --help" }
     ],
     relatedCommands: ["ulimit", "nice", "ionice", "ps"]
   },
@@ -1378,7 +1473,8 @@ export const commands: Command[] = [
       { description: "以实时调度策略运行程序（优先级99）", code: "chrt -f 99 ./realtime_app" },
       { description: "以公平调度策略运行程序", code: "chrt -b 0 ./background_task" },
       { description: "查看进程的调度策略", code: "chrt -p 1234" },
-      { description: "修改已运行进程的调度策略为实时", code: "chrt -f -p 50 1234" }
+      { description: "修改已运行进程的调度策略为实时", code: "chrt -f -p 50 1234" },
+      { description: "查看帮助文档", code: "chrt --help" }
     ],
     relatedCommands: ["nice", "ionice", "taskset", "renice"]
   },
@@ -1391,7 +1487,8 @@ export const commands: Command[] = [
     examples: [
       { description: "查看 PID 为 1234 的进程工作目录", code: "pwdx 1234", output: "1234: /home/user/project" },
       { description: "查看 nginx 主进程的工作目录", code: "pwdx $(pidof nginx | awk '{print $1}')" },
-      { description: "查看所有 bash 进程的工作目录", code: "pgrep bash | xargs pwdx" }
+      { description: "查看所有 bash 进程的工作目录", code: "pgrep bash | xargs pwdx" },
+      { description: "查看帮助文档", code: "pwdx --help" }
     ],
     relatedCommands: ["pwd", "ps", "lsof", "pgrep"]
   },
@@ -1405,7 +1502,8 @@ export const commands: Command[] = [
       { description: "显示所有进程的树形结构", code: "pstree" },
       { description: "显示进程的 PID", code: "pstree -p" },
       { description: "以某进程为根显示子进程树", code: "pstree 1234" },
-      { description: "高亮当前进程", code: "pstree -h" }
+      { description: "高亮当前进程", code: "pstree -h" },
+      { description: "查看帮助文档", code: "pstree --help" }
     ],
     relatedCommands: ["ps", "pgrep", "top", "htop"]
   },
@@ -1419,7 +1517,8 @@ export const commands: Command[] = [
       { description: "脚本退出时执行清理命令", code: "trap 'rm -f /tmp/mylock' EXIT" },
       { description: "忽略 Ctrl+C 中断信号", code: "trap '' INT" },
       { description: "捕获多个信号并执行不同操作", code: "trap 'echo 挂起了' SIGHUP" },
-      { description: "查看当前设置的所有 trap", code: "trap -p" }
+      { description: "查看当前设置的所有 trap", code: "trap -p" },
+      { description: "查看帮助文档", code: "help trap" }
     ],
     relatedCommands: ["kill", "nohup", "signal", "ps"]
   },
@@ -1435,7 +1534,8 @@ export const commands: Command[] = [
       { description: "测试与 Google 的网络连通性", code: "ping google.com" },
       { description: "只发送 4 个数据包后停止", code: "ping -c 4 baidu.com" },
       { description: "每秒发送一个包", code: "ping -i 1 192.168.1.1" },
-      { description: "指定数据包大小", code: "ping -s 1024 server.local" }
+      { description: "指定数据包大小", code: "ping -s 1024 server.local" },
+      { description: "查看帮助文档", code: "ping --help" }
     ],
     relatedCommands: ["traceroute", "mtr", "arping", "fping"]
   },
@@ -1449,7 +1549,8 @@ export const commands: Command[] = [
       { description: "显示所有网络接口的信息", code: "ifconfig -a" },
       { description: "启用网络接口", code: "ifconfig eth0 up" },
       { description: "禁用网络接口", code: "ifconfig eth0 down" },
-      { description: "为接口分配 IP 地址", code: "ifconfig eth0 192.168.1.50 netmask 255.255.255.0" }
+      { description: "为接口分配 IP 地址", code: "ifconfig eth0 192.168.1.50 netmask 255.255.255.0" },
+      { description: "查看帮助文档", code: "ifconfig --help" }
     ],
     relatedCommands: ["ip", "ip addr", "netstat", "iwconfig"]
   },
@@ -1463,7 +1564,8 @@ export const commands: Command[] = [
       { description: "获取网页内容", code: "curl https://example.com" },
       { description: "发送 POST 请求（JSON 数据）", code: "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"test\"}' https://api.example.com/users" },
       { description: "下载文件并保存", code: "curl -O https://example.com/file.zip" },
-      { description: "只显示响应头信息", code: "curl -I https://google.com" }
+      { description: "只显示响应头信息", code: "curl -I https://google.com" },
+      { description: "查看帮助文档", code: "curl --help" }
     ],
     relatedCommands: ["wget", "httpie", "axios", "httpie"]
   },
@@ -1477,7 +1579,8 @@ export const commands: Command[] = [
       { description: "下载单个文件", code: "wget https://example.com/large_file.iso" },
       { description: "断点续传", code: "wget -c https://example.com/big_file.zip" },
       { description: "递归下载整个网站", code: "wget -r -np https://docs.example.com/" },
-      { description: "限制下载速度", code: "wget --limit-rate=200k http://example.com/file.tar.gz" }
+      { description: "限制下载速度", code: "wget --limit-rate=200k http://example.com/file.tar.gz" },
+      { description: "查看帮助文档", code: "wget --help" }
     ],
     relatedCommands: ["curl", "axel", "aria2c", "lftp"]
   },
@@ -1491,7 +1594,8 @@ export const commands: Command[] = [
       { description: "远程登录到服务器", code: "ssh user@192.168.1.100" },
       { description: "指定端口登录", code: "ssh -p 2222 user@example.com" },
       { description: "使用密钥文件登录", code: "ssh -i ~/.ssh/id_rsa admin@server.com" },
-      { description: "在远程服务器上执行一条命令", code: "ssh user@host 'df -h && free -m'" }
+      { description: "在远程服务器上执行一条命令", code: "ssh user@host 'df -h && free -m'" },
+      { description: "查看帮助文档", code: "ssh --help" }
     ],
     relatedCommands: ["scp", "sftp", "telnet", "mosh"]
   },
@@ -1505,7 +1609,8 @@ export const commands: Command[] = [
       { description: "上传本地文件到远程服务器", code: "scp localfile.txt user@remote:/home/user/" },
       { description: "从远程服务器下载文件到本地", code: "scp user@remote:/path/file.txt ./local_dir/" },
       { description: "递归复制整个目录", code: "scp -r ./project/ user@server:/opt/apps/" },
-      { description: "指定端口传输", code: "scp -P 2222 config.yml deploy@host:/etc/app/" }
+      { description: "指定端口传输", code: "scp -P 2222 config.yml deploy@host:/etc/app/" },
+      { description: "查看帮助文档", code: "scp --help" }
     ],
     relatedCommands: ["ssh", "rsync", "sftp", "ftp"]
   },
@@ -1519,7 +1624,8 @@ export const commands: Command[] = [
       { description: "显示所有 TCP 连接", code: "netstat -tn" },
       { description: "显示所有监听的端口", code: "netstat -tlnp" },
       { description: "显示路由表", code: "netstat -rn" },
-      { description: "持续显示网络接口统计信息", code: "netstat -c" }
+      { description: "持续显示网络接口统计信息", code: "netstat -c" },
+      { description: "查看帮助文档", code: "netstat --help" }
     ],
     relatedCommands: ["ss", "lsof", "ip", "nmap"]
   },
@@ -1533,7 +1639,8 @@ export const commands: Command[] = [
       { description: "显示所有 TCP 连接", code: "ss -tn" },
       { description: "显示所有监听端口及对应进程", code: "ss -tlnp" },
       { description: "显示 UDP 连接", code: "ss -uln" },
-      { description: "统计各状态下的连接数量", code: "ss -s" }
+      { description: "统计各状态下的连接数量", code: "ss -s" },
+      { description: "查看帮助文档", code: "ss --help" }
     ],
     relatedCommands: ["netstat", "lsof", "ip", "nmap"]
   },
@@ -1547,7 +1654,8 @@ export const commands: Command[] = [
       { description: "查询域名的 IP 地址", code: "nslookup google.com" },
       { description: "指定 DNS 服务器查询", code: "nslookup example.com 114.114.114.114" },
       { description: "查询 MX 记录", code: "nslookup -type=MX gmail.com" },
-      { description: "交互模式查询", code: "nslookup" }
+      { description: "交互模式查询", code: "nslookup" },
+      { description: "查看帮助文档", code: "nslookup --help" }
     ],
     relatedCommands: ["dig", "host", "whois", "route"]
   },
@@ -1561,7 +1669,8 @@ export const commands: Command[] = [
       { description: "查询域名的 A 记录", code: "dig example.com" },
       { description: "简洁输出", code: "dig +short google.com", output: "142.250.80.46" },
       { description: "追踪完整的 DNS 解析链路", code: "dig +trace example.com" },
-      { description: "查询指定类型的 DNS 记录", code: "dig TXT _dmarc.google.com" }
+      { description: "查询指定类型的 DNS 记录", code: "dig TXT _dmarc.google.com" },
+      { description: "查看帮助文档", code: "dig --help" }
     ],
     relatedCommands: ["nslookup", "host", "whois", "dnstracer"]
   },
@@ -1575,7 +1684,8 @@ export const commands: Command[] = [
       { description: "追踪到目标主机的完整路径", code: "traceroute google.com" },
       { description: "使用 ICMP 进行追踪", code: "traceroute -I baidu.com" },
       { description: "指定最大跳数", code: "traceroute -m 15 example.com" },
-      { description: "不进行 DNS 反解", code: "traceroute -n target.host" }
+      { description: "不进行 DNS 反解", code: "traceroute -n target.host" },
+      { description: "查看帮助文档", code: "traceroute --help" }
     ],
     relatedCommands: ["ping", "mtr", "tracepath", "pathping"]
   },
@@ -1589,7 +1699,8 @@ export const commands: Command[] = [
       { description: "显示内核路由表", code: "route -n" },
       { description: "添加默认网关", code: "route add default gw 192.168.1.1" },
       { description: "添加到指定网段的路由", code: "route add -net 10.0.0.0 netmask 255.255.0.0 gw 192.168.1.254" },
-      { description: "删除路由条目", code: "route del -net 192.168.2.0 netmask 255.255.255.0" }
+      { description: "删除路由条目", code: "route del -net 192.168.2.0 netmask 255.255.255.0" },
+      { description: "查看帮助文档", code: "route --help" }
     ],
     relatedCommands: ["ip route", "ifconfig", "netstat", "arp"]
   },
@@ -1603,7 +1714,8 @@ export const commands: Command[] = [
       { description: "显示所有网络接口的 IP 地址", code: "ip addr show" },
       { description: "显示路由表", code: "ip route show" },
       { description: "启用/禁用网络接口", code: "ip link set eth0 up" },
-      { description: "添加 IP 地址到接口", code: "ip addr add 192.168.1.50/24 dev eth0" }
+      { description: "添加 IP 地址到接口", code: "ip addr add 192.168.1.50/24 dev eth0" },
+      { description: "查看帮助文档", code: "ip --help" }
     ],
     relatedCommands: ["ifconfig", "route", "netstat", "ss"]
   },
@@ -1617,7 +1729,8 @@ export const commands: Command[] = [
       { description: "扫描端口是否开放", code: "nc -zv google.com 80" },
       { description: "在本机 8888 端口启动简易聊天服务器", code: "nc -l -p 8888" },
       { description: "连接到聊天服务器", code: "nc localhost 8888" },
-      { description: "在两台机器间传输文件（接收端）", code: "nc -l -p 9999 > received_file.zip" }
+      { description: "在两台机器间传输文件（接收端）", code: "nc -l -p 9999 > received_file.zip" },
+      { description: "查看帮助文档", code: "nc --help" }
     ],
     relatedCommands: ["socat", "nmap", "telnet", "curl"]
   },
@@ -1631,7 +1744,8 @@ export const commands: Command[] = [
       { description: "连接到 FTP 服务器", code: "ftp ftp.example.com" },
       { description: "下载文件", code: "get remote_file.txt" },
       { description: "上传文件", code: "put local_file.txt" },
-      { description: "匿名登录 FTP 服务器", code: "ftp anonymous@ftp.gnu.org" }
+      { description: "匿名登录 FTP 服务器", code: "ftp anonymous@ftp.gnu.org" },
+      { description: "查看帮助文档", code: "ftp --help" }
     ],
     relatedCommands: ["sftp", "lftp", "curl", "wget"]
   },
@@ -1645,7 +1759,8 @@ export const commands: Command[] = [
       { description: "显示 ARP 缓存表", code: "arp -a" },
       { description: "删除指定的 ARP 条目", code: "arp -d 192.168.1.5" },
       { description: "手动添加 ARP 条目", code: "arp -s 192.168.1.100 00:aa:bb:cc:dd:ee" },
-      { description: "显示 ARP 表的数值格式", code: "arp -vn" }
+      { description: "显示 ARP 表的数值格式", code: "arp -vn" },
+      { description: "查看帮助文档", code: "arp --help" }
     ],
     relatedCommands: ["ip neigh", "arping", "ifconfig", "netstat"]
   },
@@ -1659,7 +1774,8 @@ export const commands: Command[] = [
       { description: "查询域名的 IP 地址", code: "host google.com" },
       { description: "反向查询（IP 查域名）", code: "host 8.8.8.8" },
       { description: "查询 MX 记录", code: "host -t MX gmail.com" },
-      { description: "查询 SOA 记录", code: "host -t SOA example.com" }
+      { description: "查询 SOA 记录", code: "host -t SOA example.com" },
+      { description: "查看帮助文档", code: "host --help" }
     ],
     relatedCommands: ["dig", "nslookup", "whois", "dnsmasq"]
   },
@@ -1673,7 +1789,8 @@ export const commands: Command[] = [
       { description: "查询域名的注册信息", code: "whois example.com" },
       { description: "查询 IP 地址的归属信息", code: "whois 8.8.8.8" },
       { description: "查询结果只显示简要信息", code: "whois -H github.com" },
-      { description: "使用指定的 whois 服务器查询", code: "whois -h whois.apnic.net 202.100.1.1" }
+      { description: "使用指定的 whois 服务器查询", code: "whois -h whois.apnic.net 202.100.1.1" },
+      { description: "查看帮助文档", code: "whois --help" }
     ],
     relatedCommands: ["dig", "nslookup", "host", "nicinfo"]
   },
@@ -1687,7 +1804,8 @@ export const commands: Command[] = [
       { description: "扫描常见端口", code: "nmap -F 192.168.1.1" },
       { description: "全面扫描所有端口并检测操作系统", code: "nmap -O -sS -p- target.com" },
       { description: "扫描整个子网的主机存活情况", code: "nmap -sn 192.168.1.0/24" },
-      { description: "扫描并尝试检测服务版本", code: "nmap -sV 127.0.0.1" }
+      { description: "扫描并尝试检测服务版本", code: "nmap -sV 127.0.0.1" },
+      { description: "查看帮助文档", code: "nmap --help" }
     ],
     relatedCommands: ["nc", "masscan", "zenmap", "arp-scan"]
   },
@@ -1701,7 +1819,8 @@ export const commands: Command[] = [
       { description: "查看当前防火墙规则", code: "iptables -L -n -v" },
       { description: "允许 SSH 入站连接", code: "iptables -A INPUT -p tcp --dport 22 -j ACCEPT" },
       { description: "禁止来自某 IP 的所有访问", code: "iptables -A INPUT -s 1.2.3.4 -j DROP" },
-      { description: "设置默认策略为拒绝所有入站流量", code: "iptables -P INPUT DROP" }
+      { description: "设置默认策略为拒绝所有入站流量", code: "iptables -P INPUT DROP" },
+      { description: "查看帮助文档", code: "iptables --help" }
     ],
     relatedCommands: ["ufw", "firewalld", "nftables", "shorewall"],
     dangerLevel: "danger",
@@ -1716,7 +1835,8 @@ export const commands: Command[] = [
       { description: "将本地目录同步到远程服务器", code: "rsync -avz ./project/ user@server:/backup/project/" },
       { description: "从远程服务器拉取文件到本地", code: "rsync -avz user@server:/var/log/ ./logs/" },
       { description: "本地目录间同步（删除目标多余文件）", code: "rsync -avz --delete ./src/ ./dst/" },
-      { description: "显示传输进度和速度", code: "rsync -avz --progress ./data/ user@server:/data/" }
+      { description: "显示传输进度和速度", code: "rsync -avz --progress ./data/ user@server:/data/" },
+      { description: "查看帮助文档", code: "rsync --help" }
     ],
     relatedCommands: ["scp", "ssh", "wget", "cp"]
   },
@@ -1729,7 +1849,8 @@ export const commands: Command[] = [
     examples: [
       { description: "连接到远程服务器", code: "mosh user@server.com" },
       { description: "指定 SSH 端口连接", code: "mosh --ssh='ssh -p 2222' user@server.com" },
-      { description: "指定 mosh 的 UDP 端口范围", code: "mosh --port=60001 user@server.com" }
+      { description: "指定 mosh 的 UDP 端口范围", code: "mosh --port=60001 user@server.com" },
+      { description: "查看帮助文档", code: "mosh --help" }
     ],
     relatedCommands: ["ssh", "screen", "tmux", "scp"]
   },
@@ -1743,7 +1864,8 @@ export const commands: Command[] = [
       { description: "连接到远程 SFTP 服务器", code: "sftp user@server.com" },
       { description: "上传本地文件到远程", code: "sftp> put local.txt /remote/path/" },
       { description: "从远程下载文件到本地", code: "sftp> get /remote/file.txt ./local/" },
-      { description: "查看远程目录内容", code: "sftp> ls /var/log/" }
+      { description: "查看远程目录内容", code: "sftp> ls /var/log/" },
+      { description: "查看帮助文档", code: "sftp --help" }
     ],
     relatedCommands: ["scp", "ssh", "ftp", "rsync"]
   },
@@ -1757,7 +1879,8 @@ export const commands: Command[] = [
       { description: "监听 8080 端口", code: "ncat -l 8080" },
       { description: "连接到远程主机的 80 端口", code: "ncat example.com 80" },
       { description: "使用 SSL 加密连接", code: "ncat --ssl server.com 443" },
-      { description: "在两台机器间传输文件", code: "ncat -l 1234 > file.txt  # 接收方\nncat sender-ip 1234 < file.txt  # 发送方" }
+      { description: "在两台机器间传输文件", code: "ncat -l 1234 > file.txt  # 接收方\nncat sender-ip 1234 < file.txt  # 发送方" },
+      { description: "查看帮助文档", code: "ncat --help" }
     ],
     relatedCommands: ["nc", "socat", "telnet", "curl"]
   },
@@ -1770,7 +1893,8 @@ export const commands: Command[] = [
     examples: [
       { description: "将本地 8080 端口转发到远程 80 端口", code: "socat TCP-LISTEN:8080,fork TCP:remote-server:80" },
       { description: "通过 SOCKS5 代理连接", code: "socat TCP:target:80 SOCKS5:proxy:target:80" },
-      { description: "将 UNIX 套接字暴露为 TCP 端口", code: "socat TCP-LISTEN:9000,fork UNIX-CONNECT:/var/run/docker.sock" }
+      { description: "将 UNIX 套接字暴露为 TCP 端口", code: "socat TCP-LISTEN:9000,fork UNIX-CONNECT:/var/run/docker.sock" },
+      { description: "查看帮助文档", code: "socat --help" }
     ],
     relatedCommands: ["ncat", "nc", "ssh", "iptables"]
   },
@@ -1784,7 +1908,8 @@ export const commands: Command[] = [
       { description: "抓取 eth0 网卡上的所有数据包", code: "tcpdump -i eth0" },
       { description: "只抓取 80 端口的 HTTP 流量", code: "tcpdump -i eth0 port 80" },
       { description: "抓取并保存到文件（用 Wireshark 分析）", code: "tcpdump -i eth0 -w capture.pcap" },
-      { description: "抓取来自特定 IP 的数据包", code: "tcpdump -i eth0 src 192.168.1.100" }
+      { description: "抓取来自特定 IP 的数据包", code: "tcpdump -i eth0 src 192.168.1.100" },
+      { description: "查看帮助文档", code: "tcpdump --help" }
     ],
     relatedCommands: ["wireshark", "nmap", "ss", "netstat"]
   },
@@ -1798,7 +1923,8 @@ export const commands: Command[] = [
       { description: "实时显示各进程的网络流量", code: "nethogs" },
       { description: "监控指定网卡", code: "nethogs eth0" },
       { description: "设置刷新间隔为 2 秒", code: "nethogs -d 2" },
-      { description: "以 KB 为单位显示流量", code: "nethogs -k" }
+      { description: "以 KB 为单位显示流量", code: "nethogs -k" },
+      { description: "查看帮助文档", code: "nethogs --help" }
     ],
     relatedCommands: ["iftop", "nload", "ss", "netstat"]
   },
@@ -1811,7 +1937,8 @@ export const commands: Command[] = [
     examples: [
       { description: "实时显示 eth0 网卡的流量", code: "iftop -i eth0" },
       { description: "不解析主机名（显示IP）", code: "iftop -n" },
-      { description: "按流量排序显示", code: "iftop -B" }
+      { description: "按流量排序显示", code: "iftop -B" },
+      { description: "查看帮助文档", code: "iftop --help" }
     ],
     relatedCommands: ["nethogs", "nload", "ip", "ss"]
   },
@@ -1825,7 +1952,8 @@ export const commands: Command[] = [
       { description: "查看网卡的基本信息", code: "ethtool eth0", output: "Speed: 1000Mb/s\nDuplex: Full\nAuto-negotiation: on" },
       { description: "查看网卡驱动和固件信息", code: "ethtool -i eth0" },
       { description: "查看网卡统计信息（丢包等）", code: "ethtool -S eth0" },
-      { description: "关闭网卡的自动协商并设为千兆全双工", code: "ethtool -s eth0 autoneg off speed 1000 duplex full" }
+      { description: "关闭网卡的自动协商并设为千兆全双工", code: "ethtool -s eth0 autoneg off speed 1000 duplex full" },
+      { description: "查看帮助文档", code: "ethtool --help" }
     ],
     relatedCommands: ["ip", "ifconfig", "mii-tool", "iwconfig"]
   },
@@ -1839,7 +1967,8 @@ export const commands: Command[] = [
       { description: "诊断到目标主机的网络路径", code: "mtr google.com" },
       { description: "以报告模式输出（发送10个包）", code: "mtr -r -c 10 google.com" },
       { description: "不解析主机名（显示IP）", code: "mtr -n google.com" },
-      { description: "使用 TCP 协议探测", code: "mtr --tcp google.com" }
+      { description: "使用 TCP 协议探测", code: "mtr --tcp google.com" },
+      { description: "查看帮助文档", code: "mtr --help" }
     ],
     relatedCommands: ["ping", "traceroute", "tracepath", "nmap"]
   },
@@ -1853,7 +1982,8 @@ export const commands: Command[] = [
       { description: "查看所有无线网卡状态", code: "iwconfig" },
       { description: "查看指定无线网卡信息", code: "iwconfig wlan0" },
       { description: "连接到指定 WiFi 网络", code: "iwconfig wlan0 essid 'MyWiFi'" },
-      { description: "设置无线网卡为监听模式", code: "iwconfig wlan0 mode monitor" }
+      { description: "设置无线网卡为监听模式", code: "iwconfig wlan0 mode monitor" },
+      { description: "查看帮助文档", code: "iwconfig --help" }
     ],
     relatedCommands: ["ifconfig", "ip", "ethtool", "iw"]
   },
@@ -1867,7 +1997,8 @@ export const commands: Command[] = [
       { description: "发送 1000 个请求，并发 100", code: "ab -n 1000 -c 100 http://example.com/" },
       { description: "带自定义 Header 的压力测试", code: "ab -n 500 -c 50 -H 'Authorization: Bearer token' http://api.example.com/" },
       { description: "测试 POST 请求", code: "ab -n 100 -c 10 -p data.json -T 'application/json' http://api.example.com/submit" },
-      { description: "设置请求超时时间", code: "ab -n 1000 -c 100 -t 30 http://example.com/" }
+      { description: "设置请求超时时间", code: "ab -n 1000 -c 100 -t 30 http://example.com/" },
+      { description: "查看帮助文档", code: "ab --help" }
     ],
     relatedCommands: ["curl", "wget", "wrk", "siege"]
   },
@@ -1881,7 +2012,8 @@ export const commands: Command[] = [
       { description: "运行网速测试", code: "speedtest-cli", output: "Download: 95.23 Mbit/s\nUpload: 48.67 Mbit/s" },
       { description: "以字节为单位显示结果", code: "speedtest-cli --bytes" },
       { description: "只测试下载速度", code: "speedtest-cli --no-upload" },
-      { description: "生成分享结果图片链接", code: "speedtest-cli --share" }
+      { description: "生成分享结果图片链接", code: "speedtest-cli --share" },
+      { description: "查看帮助文档", code: "speedtest-cli --help" }
     ],
     relatedCommands: ["ping", "curl", "wget", "iftop"]
   },
@@ -1897,7 +2029,8 @@ export const commands: Command[] = [
       { description: "给脚本添加执行权限", code: "chmod +x run.sh" },
       { description: "设置为 755 权限", code: "chmod 755 app.js" },
       { description: "移除其他用户的写权限", code: "chmod o-w sensitive.txt" },
-      { description: "递归修改目录及内部所有文件的权限", code: "chmod -R 644 public_html/" }
+      { description: "递归修改目录及内部所有文件的权限", code: "chmod -R 644 public_html/" },
+      { description: "查看帮助文档", code: "chmod --help" }
     ],
     relatedCommands: ["chown", "chgrp", "umask", "stat"],
     dangerLevel: "warning",
@@ -1912,7 +2045,8 @@ export const commands: Command[] = [
       { description: "将文件所有者改为 www-data 用户", code: "chown www-data:www-data /var/www/html/index.html" },
       { description: "只改变所有者不变组", code: "chown alice project.tar.gz" },
       { description: "递归改变目录下所有文件的所有者", code: "chown -R mysql:mysql /var/lib/mysql/" },
-      { description: "参照另一个文件设置所有权", code: "chown --reference=config.old config.new" }
+      { description: "参照另一个文件设置所有权", code: "chown --reference=config.old config.new" },
+      { description: "查看帮助文档", code: "chown --help" }
     ],
     relatedCommands: ["chmod", "chgrp", "usermod", "stat"],
     dangerLevel: "warning",
@@ -1926,7 +2060,8 @@ export const commands: Command[] = [
     examples: [
       { description: "将文件所属组改为 developers", code: "chgrp developers app.js" },
       { description: "递归改变目录的所属组", code: "chgrp -R docker /opt/container/" },
-      { description: "使用 GID 来指定组", code: "chgrp 1001 shared_file.txt" }
+      { description: "使用 GID 来指定组", code: "chgrp 1001 shared_file.txt" },
+      { description: "查看帮助文档", code: "chgrp --help" }
     ],
     relatedCommands: ["chown", "chmod", "groups", "groupmod"]
   },
@@ -1940,7 +2075,8 @@ export const commands: Command[] = [
       { description: "以 root 权限更新系统软件包", code: "sudo apt update" },
       { description: "以 root 身份切换到指定用户执行命令", code: "sudo -u postgres pg_dump database" },
       { description: "以 root 身份打开一个交互式 shell", code: "sudo -i" },
-      { description: "查看当前用户的 sudo 权限", code: "sudo -l" }
+      { description: "查看当前用户的 sudo 权限", code: "sudo -l" },
+      { description: "查看帮助文档", code: "sudo --help" }
     ],
     relatedCommands: ["su", "doas", "pkexec", "run0"]
   },
@@ -1954,7 +2090,8 @@ export const commands: Command[] = [
       { description: "切换到 root 用户", code: "su -" },
       { description: "切换到指定用户", code: "su - postgres" },
       { description: "以指定用户身份执行一条命令", code: "su -c 'whoami' mysql" },
-      { description: "切换用户但不加载环境变量", code: "su testuser" }
+      { description: "切换用户但不加载环境变量", code: "su testuser" },
+      { description: "查看帮助文档", code: "su --help" }
     ],
     relatedCommands: ["sudo", "login", "newgrp", "runuser"]
   },
@@ -1968,7 +2105,8 @@ export const commands: Command[] = [
       { description: "查看当前的 umask 设置", code: "umask", output: "0022" },
       { description: "设置新建文件默认权限为 600", code: "umask 077" },
       { description: "临时设置 umask 并创建文件测试", code: "umask 077; touch secret.txt" },
-      { description: "用符号方式设置 umask", code: "umask u=rwx,g=rx,o=" }
+      { description: "用符号方式设置 umask", code: "umask u=rwx,g=rx,o=" },
+      { description: "查看帮助文档", code: "umask --help" }
     ],
     relatedCommands: ["chmod", "chown", "install", "mknod"]
   },
@@ -1982,7 +2120,8 @@ export const commands: Command[] = [
       { description: "设置文件为不可变", code: "chattr +i /etc/resolv.conf" },
       { description: "移除不可变属性", code: "chattr -i /etc/resolv.conf" },
       { description: "设置只允许追加内容（适合日志文件）", code: "chattr +a /var/log/important.log" },
-      { description: "递归设置目录属性", code: "chattr -R +i /critical/system/files/" }
+      { description: "递归设置目录属性", code: "chattr -R +i /critical/system/files/" },
+      { description: "查看帮助文档", code: "chattr --help" }
     ],
     relatedCommands: ["lsattr", "chmod", "chown", "setfacl"]
   },
@@ -1996,7 +2135,8 @@ export const commands: Command[] = [
       { description: "查看文件的特殊属性", code: "lsattr /etc/passwd" },
       { description: "递归显示目录下所有文件的属性", code: "lsattr -R /boot/" },
       { description: "以长格式显示", code: "lsattr -v /etc/shadow" },
-      { description: "只显示具有指定属性的文件", code: "lsattr -a" }
+      { description: "只显示具有指定属性的文件", code: "lsattr -a" },
+      { description: "查看帮助文档", code: "lsattr --help" }
     ],
     relatedCommands: ["chattr", "stat", "getfacl", "file"]
   },
@@ -2010,7 +2150,8 @@ export const commands: Command[] = [
       { description: "查看文件的 ACL 权限详情", code: "getfacl project.doc" },
       { description: "递归查看目录 ACL", code: "getfacl -R shared_dir/" },
       { description: "不显示注释头信息", code: "getfacl -q /etc/config" },
-      { description: "只显示有效的 ACL 条目", code: "getfacl -e sensitive_file" }
+      { description: "只显示有效的 ACL 条目", code: "getfacl -e sensitive_file" },
+      { description: "查看帮助文档", code: "getfacl --help" }
     ],
     relatedCommands: ["setfacl", "chmod", "chacl", "lsattr"]
   },
@@ -2024,7 +2165,8 @@ export const commands: Command[] = [
       { description: "为用户 bob 单独授予读权限", code: "setfacl -m u:bob:r report.pdf" },
       { description: "为 test 组授予读写权限", code: "setfacl -m g:test:rw shared_data/" },
       { description: "递归设置目录的 ACL", code: "setfacl -R -m g:devteam:rwx /opt/project/" },
-      { description: "删除指定用户的 ACL 条目", code: "setfacl -x u:bob report.pdf" }
+      { description: "删除指定用户的 ACL 条目", code: "setfacl -x u:bob report.pdf" },
+      { description: "查看帮助文档", code: "setfacl --help" }
     ],
     relatedCommands: ["getfacl", "chmod", "chacl", "chown"]
   },
@@ -2038,7 +2180,8 @@ export const commands: Command[] = [
       { description: "编辑 sudoers 文件", code: "sudo visudo" },
       { description: "检查 sudoers 文件语法", code: "sudo visudo -c" },
       { description: "使用指定编辑器打开", code: "sudo EDITOR=vim visudo" },
-      { description: "编辑指定的 sudoers 片段文件", code: "sudo visudo -f /etc/sudoers.d/custom" }
+      { description: "编辑指定的 sudoers 片段文件", code: "sudo visudo -f /etc/sudoers.d/custom" },
+      { description: "查看帮助文档", code: "visudo --help" }
     ],
     relatedCommands: ["sudo", "su", "chmod", "chown"]
   },
@@ -2052,7 +2195,8 @@ export const commands: Command[] = [
       { description: "查看当前进程的所有能力", code: "capsh --print" },
       { description: "以指定能力运行命令", code: "sudo capsh --caps='cap_net_raw+eip' -- -c 'ping 8.8.8.8'" },
       { description: "丢弃所有能力后运行 Shell", code: "capsh --drop=all -- -c 'id'" },
-      { description: "查看支持的所有能力", code: "capsh --supports" }
+      { description: "查看支持的所有能力", code: "capsh --supports" },
+      { description: "查看帮助文档", code: "capsh --help" }
     ],
     relatedCommands: ["sudo", "chmod", "setfacl", "selinux"]
   },
@@ -2066,7 +2210,8 @@ export const commands: Command[] = [
       { description: "查看所有端口策略", code: "sudo semanage port -l" },
       { description: "给 HTTP 服务添加自定义端口", code: "sudo semanage port -a -t http_port_t -p tcp 8080" },
       { description: "查看文件上下文策略", code: "sudo semanage fcontext -l" },
-      { description: "删除自定义端口规则", code: "sudo semanage port -d -t http_port_t -p tcp 8080" }
+      { description: "删除自定义端口规则", code: "sudo semanage port -d -t http_port_t -p tcp 8080" },
+      { description: "查看帮助文档", code: "semanage --help" }
     ],
     relatedCommands: ["selinux", "getenforce", "chcon", "restorecon"]
   },
@@ -2082,7 +2227,8 @@ export const commands: Command[] = [
       { description: "显示所有系统信息", code: "uname -a" },
       { description: "只显示内核名称", code: "uname -s", output: "Linux" },
       { description: "显示内核版本号", code: "uname -r" },
-      { description: "显示处理器架构", code: "uname -m", output: "x86_64" }
+      { description: "显示处理器架构", code: "uname -m", output: "x86_64" },
+      { description: "查看帮助文档", code: "uname --help" }
     ],
     relatedCommands: ["hostname", "lsb_release", "arch", "cat /proc/version"]
   },
@@ -2096,7 +2242,8 @@ export const commands: Command[] = [
       { description: "查看当前主机名", code: "hostname", output: "my-server-01" },
       { description: "查看完整域名", code: "hostname -f" },
       { description: "查看主机所有 IP 地址", code: "hostname -I" },
-      { description: "临时修改主机名", code: "hostname new-name" }
+      { description: "临时修改主机名", code: "hostname new-name" },
+      { description: "查看帮助文档", code: "hostname --help" }
     ],
     relatedCommands: ["uname", "hostnamectl", "dnsdomainname", "nisdomainname"]
   },
@@ -2109,7 +2256,8 @@ export const commands: Command[] = [
     examples: [
       { description: "显示系统运行时间和负载", code: "uptime" },
       { description: "只显示自启动以来的秒数", code: "uptime -s" },
-      { description: "以简洁格式显示", code: "uptime -p" }
+      { description: "以简洁格式显示", code: "uptime -p" },
+      { description: "查看帮助文档", code: "uptime --help" }
     ],
     relatedCommands: ["w", "top", "free", "who"]
   },
@@ -2123,7 +2271,8 @@ export const commands: Command[] = [
       { description: "以人类友好的格式显示内存信息", code: "free -h" },
       { description: "以 MB 为单位显示", code: "free -m" },
       { description: "每秒刷新显示", code: "free -s 2" },
-      { description: "显示总汇总信息", code: "free -t" }
+      { description: "显示总汇总信息", code: "free -t" },
+      { description: "查看帮助文档", code: "free --help" }
     ],
     relatedCommands: ["top", "vmstat", "ps", "pmap"]
   },
@@ -2137,7 +2286,8 @@ export const commands: Command[] = [
       { description: "以人类易读格式显示磁盘使用情况", code: "df -h" },
       { description: "显示 inode 使用情况", code: "df -hi" },
       { description: "只显示本地文件系统", code: "df -hl" },
-      { description: "指定显示某种文件系统类型", code: "df -t ext4" }
+      { description: "指定显示某种文件系统类型", code: "df -t ext4" },
+      { description: "查看帮助文档", code: "df --help" }
     ],
     relatedCommands: ["du", "lsblk", "fdisk", "mount"]
   },
@@ -2151,7 +2301,8 @@ export const commands: Command[] = [
       { description: "以人类易读格式显示当前目录总大小", code: "du -sh ." },
       { description: "显示每个子目录的大小并排序", code: "du -sh * | sort -rh | head -10" },
       { description: "递归显示所有文件和目录的大小", code: "du -ah /var/log/" },
-      { description: "排除某些目录不计入统计", code: "du -sh --exclude='*.git' project/" }
+      { description: "排除某些目录不计入统计", code: "du -sh --exclude='*.git' project/" },
+      { description: "查看帮助文档", code: "du --help" }
     ],
     relatedCommands: ["df", "ncdu", "ls", "find"]
   },
@@ -2165,7 +2316,8 @@ export const commands: Command[] = [
       { description: "显示当前所有登录用户", code: "who" },
       { description: "显示系统启动时间", code: "who -b" },
       { description: "显示死掉的进程", code: "who -d" },
-      { description: "显示所有登录用户的计数", code: "who -q" }
+      { description: "显示所有登录用户的计数", code: "who -q" },
+      { description: "查看帮助文档", code: "who --help" }
     ],
     relatedCommands: ["w", "users", "last", "finger"]
   },
@@ -2179,7 +2331,8 @@ export const commands: Command[] = [
       { description: "显示所有登录用户及其活动", code: "w" },
       { description: "不显示头部信息", code: "w -h" },
       { description: "只显示指定用户的信息", code: "w alice" },
-      { description: "以旧格式输出", code: "w -o" }
+      { description: "以旧格式输出", code: "w -o" },
+      { description: "查看帮助文档", code: "w --help" }
     ],
     relatedCommands: ["who", "uptime", "users", "finger"]
   },
@@ -2193,7 +2346,8 @@ export const commands: Command[] = [
       { description: "显示发行版的全部信息", code: "lsb_release -a" },
       { description: "只显示发行版描述信息", code: "lsb_release -d" },
       { description: "只显示版本号", code: "lsb_release -r" },
-      { description: "只显示代号名称", code: "lsb_release -c" }
+      { description: "只显示代号名称", code: "lsb_release -c" },
+      { description: "查看帮助文档", code: "lsb_release --help" }
     ],
     relatedCommands: ["uname", "cat /etc/os-release", "hostnamectl", "rpm -q"]
   },
@@ -2206,7 +2360,8 @@ export const commands: Command[] = [
     examples: [
       { description: "显示 CPU 的完整信息", code: "lscpu" },
       { description: "以可解析格式输出", code: "lscpu -p" },
-      { description: "只显示缓存信息", code: "lscpu -C" }
+      { description: "只显示缓存信息", code: "lscpu -C" },
+      { description: "查看帮助文档", code: "lscpu --help" }
     ],
     relatedCommands: ["uname -m", "nproc", "cat /proc/cpuinfo", "hwinfo"]
   },
@@ -2220,7 +2375,8 @@ export const commands: Command[] = [
       { description: "显示一次系统概要统计", code: "vmstat" },
       { description: "每 2 秒刷新显示一次，共显示 5 次", code: "vmstat 2 5" },
       { description: "显示 slab 内核对象缓存信息", code: "vmstat -m" },
-      { description: "显示磁盘统计信息", code: "vmstat -d" }
+      { description: "显示磁盘统计信息", code: "vmstat -d" },
+      { description: "查看帮助文档", code: "vmstat --help" }
     ],
     relatedCommands: ["top", "iostat", "mpstat", "free"]
   },
@@ -2234,7 +2390,8 @@ export const commands: Command[] = [
       { description: "显示 CPU 和所有设备的 IO 统计", code: "iostat" },
       { description: "每 3 秒刷新显示，共 10 次", code: "iostat 3 10" },
       { description: "以人类易读格式显示", code: "iostat -h" },
-      { description: "只显示指定设备", code: "iostat -p sda" }
+      { description: "只显示指定设备", code: "iostat -p sda" },
+      { description: "查看帮助文档", code: "iostat --help" }
     ],
     relatedCommands: ["vmstat", "mpstat", "iotop", "sar"]
   },
@@ -2247,7 +2404,8 @@ export const commands: Command[] = [
     examples: [
       { description: "显示每个 CPU 核心的使用统计", code: "mpstat -P ALL" },
       { description: "每 5 秒刷新一次", code: "mpstat 5" },
-      { description: "显示 CPU 0 和 CPU 1 的统计", code: "mpstat -P 0,1" }
+      { description: "显示 CPU 0 和 CPU 1 的统计", code: "mpstat -P 0,1" },
+      { description: "查看帮助文档", code: "mpstat --help" }
     ],
     relatedCommands: ["vmstat", "iostat", "top", "sar"]
   },
@@ -2261,7 +2419,8 @@ export const commands: Command[] = [
       { description: "查看所有内核消息", code: "dmesg | head -20" },
       { description: "实时跟踪新的内核消息", code: "dmesg -w" },
       { description: "显示人类可读的时间戳", code: "dmesg -T" },
-      { description: "只显示错误级别的消息", code: "dmesg -l err,crit,alert,emerg" }
+      { description: "只显示错误级别的消息", code: "dmesg -l err,crit,alert,emerg" },
+      { description: "查看帮助文档", code: "dmesg --help" }
     ],
     relatedCommands: ["journalctl", "lspci", "lsusb", "kern.log"]
   },
@@ -2276,7 +2435,8 @@ export const commands: Command[] = [
       { description: "实时跟踪最新日志", code: "journalctl -f" },
       { description: "只查看 nginx 服务的日志", code: "journalctl -u nginx" },
       { description: "查看今天产生的日志", code: "journalctl --since today" },
-      { description: "只显示错误和警告级别的日志", code: "journalctl -p err" }
+      { description: "只显示错误和警告级别的日志", code: "journalctl -p err" },
+      { description: "查看帮助文档", code: "journalctl --help" }
     ],
     relatedCommands: ["dmesg", "systemctl", "logger", "rsyslog"]
   },
@@ -2290,7 +2450,8 @@ export const commands: Command[] = [
       { description: "显示当前日期和时间", code: "date" },
       { description: "以指定格式显示时间", code: "date '+%Y-%m-%d_%H:%M:%S'" },
       { description: "显示 Unix 时间戳", code: "date +%s" },
-      { description: "将时间戳转换为可读日期", code: "date -d @1736919000" }
+      { description: "将时间戳转换为可读日期", code: "date -d @1736919000" },
+      { description: "查看帮助文档", code: "date --help" }
     ],
     relatedCommands: ["cal", "timedatectl", "hwclock", "tzselect"]
   },
@@ -2304,7 +2465,8 @@ export const commands: Command[] = [
       { description: "显示当前月份的日历", code: "cal" },
       { description: "显示 2025 年整年的日历", code: "cal 2025" },
       { description: "显示 2025 年 2 月的日历", code: "cal 2 2025" },
-      { description: "显示本周视图", code: "cal -3" }
+      { description: "显示本周视图", code: "cal -3" },
+      { description: "查看帮助文档", code: "cal --help" }
     ],
     relatedCommands: ["date", "timedatectl", "calendar", "gcal"]
   },
@@ -2318,7 +2480,8 @@ export const commands: Command[] = [
       { description: "显示完整的时间和时区信息", code: "timedatectl status" },
       { description: "列出所有可用的时区", code: "timedatectl list-timezones" },
       { description: "设置时区为上海时间", code: "timedatectl set-timezone Asia/Shanghai" },
-      { description: "开启 NTP 自动同步时间", code: "timedatectl set-ntp true" }
+      { description: "开启 NTP 自动同步时间", code: "timedatectl set-ntp true" },
+      { description: "查看帮助文档", code: "timedatectl --help" }
     ],
     relatedCommands: ["date", "cal", "hwclock", "ntpdate"]
   },
@@ -2332,7 +2495,8 @@ export const commands: Command[] = [
       { description: "显示当前所有 locale 设置", code: "locale" },
       { description: "列出系统所有可用的 locale", code: "locale -a" },
       { description: "显示某个 locale 变量的详细信息", code: "locale -k LC_MONETARY" },
-      { description: "临时修改语言为中文 UTF-8", code: "export LANG=zh_CN.UTF-8" }
+      { description: "临时修改语言为中文 UTF-8", code: "export LANG=zh_CN.UTF-8" },
+      { description: "查看帮助文档", code: "locale --help" }
     ],
     relatedCommands: ["localectl", "charset", "iconv", "env"]
   },
@@ -2346,7 +2510,8 @@ export const commands: Command[] = [
       { description: "列出所有内存信息", code: "lsmem" },
       { description: "以字节为单位显示内存大小", code: "lsmem -b" },
       { description: "以 MB 为单位显示", code: "lsmem --output-size=MB" },
-      { description: "只显示摘要信息", code: "lsmem -s" }
+      { description: "只显示摘要信息", code: "lsmem -s" },
+      { description: "查看帮助文档", code: "lsmem --help" }
     ],
     relatedCommands: ["free", "top", "vmstat", "cat /proc/meminfo"]
   },
@@ -2360,7 +2525,8 @@ export const commands: Command[] = [
       { description: "列出所有 USB 设备", code: "lsusb" },
       { description: "显示设备详细信息", code: "lsusb -v" },
       { description: "只查看指定总线的设备", code: "lsusb -s 001" },
-      { description: "查看指定厂商的设备", code: "lsusb -d 8087:" }
+      { description: "查看指定厂商的设备", code: "lsusb -d 8087:" },
+      { description: "查看帮助文档", code: "lsusb --help" }
     ],
     relatedCommands: ["lspci", "lsblk", "dmesg", "usb-devices"]
   },
@@ -2374,7 +2540,8 @@ export const commands: Command[] = [
       { description: "列出所有 PCI 设备", code: "lspci" },
       { description: "显示设备详细信息", code: "lspci -v" },
       { description: "以树形结构显示设备关系", code: "lspci -t" },
-      { description: "只显示网卡设备", code: "lspci | grep -i network" }
+      { description: "只显示网卡设备", code: "lspci | grep -i network" },
+      { description: "查看帮助文档", code: "lspci --help" }
     ],
     relatedCommands: ["lsusb", "lsblk", "lshw", "dmidecode"]
   },
@@ -2388,7 +2555,8 @@ export const commands: Command[] = [
       { description: "显示所有硬件信息", code: "sudo dmidecode" },
       { description: "只查看 BIOS 信息", code: "sudo dmidecode -t bios" },
       { description: "只查看内存信息", code: "sudo dmidecode -t memory" },
-      { description: "只查看处理器信息", code: "sudo dmidecode -t processor" }
+      { description: "只查看处理器信息", code: "sudo dmidecode -t processor" },
+      { description: "查看帮助文档", code: "dmidecode --help" }
     ],
     relatedCommands: ["lshw", "lspci", "lsusb", "cat /proc/cpuinfo"]
   },
@@ -2402,7 +2570,8 @@ export const commands: Command[] = [
       { description: "显示所有传感器数据", code: "sensors" },
       { description: "以摄氏度显示温度", code: "sensors -C" },
       { description: "只显示核心温度", code: "sensors | grep -i core" },
-      { description: "检测可用传感器芯片", code: "sensors-detect" }
+      { description: "检测可用传感器芯片", code: "sensors-detect" },
+      { description: "查看帮助文档", code: "sensors --help" }
     ],
     relatedCommands: ["top", "htop", "dmidecode", "cat /proc/acpi"]
   },
@@ -2416,7 +2585,8 @@ export const commands: Command[] = [
       { description: "显示可用 CPU 核心数", code: "nproc", output: "8" },
       { description: "显示所有 CPU 核心数（含离线）", code: "nproc --all" },
       { description: "编译时使用所有核心", code: "make -j$(nproc)" },
-      { description: "忽略一个核心留给系统用", code: "make -j$(nproc --ignore=1)" }
+      { description: "忽略一个核心留给系统用", code: "make -j$(nproc --ignore=1)" },
+      { description: "查看帮助文档", code: "nproc --help" }
     ],
     relatedCommands: ["lscpu", "top", "htop", "cat /proc/cpuinfo"]
   },
@@ -2430,7 +2600,8 @@ export const commands: Command[] = [
       { description: "显示系统架构", code: "arch", output: "x86_64" },
       { description: "与 uname -m 等效", code: "uname -m" },
       { description: "判断是否为 64 位系统", code: "[ $(arch) = x86_64 ] && echo '64位'" },
-      { description: "在脚本中根据架构选择软件包", code: "case $(arch) in x86_64) pkg=amd64 ;; aarch64) pkg=arm64 ;; esac" }
+      { description: "在脚本中根据架构选择软件包", code: "case $(arch) in x86_64) pkg=amd64 ;; aarch64) pkg=arm64 ;; esac" },
+      { description: "查看帮助文档", code: "arch --help" }
     ],
     relatedCommands: ["uname", "lscpu", "dpkg", "rpm"]
   },
@@ -2444,7 +2615,8 @@ export const commands: Command[] = [
       { description: "显示所有环境变量", code: "printenv" },
       { description: "查看 PATH 变量", code: "printenv PATH" },
       { description: "查看当前用户", code: "printenv USER", output: "zhangsan" },
-      { description: "查看家目录路径", code: "printenv HOME" }
+      { description: "查看家目录路径", code: "printenv HOME" },
+      { description: "查看帮助文档", code: "printenv --help" }
     ],
     relatedCommands: ["env", "export", "set", "echo"]
   },
@@ -2458,7 +2630,8 @@ export const commands: Command[] = [
       { description: "显示所有环境变量", code: "env" },
       { description: "临时设置变量后运行命令", code: "env LANG=zh_CN.UTF-8 ./myapp" },
       { description: "清空所有环境变量运行命令", code: "env -i /bin/bash" },
-      { description: "取消某个变量后运行命令", code: "env -u LD_LIBRARY_PATH ./program" }
+      { description: "取消某个变量后运行命令", code: "env -u LD_LIBRARY_PATH ./program" },
+      { description: "查看帮助文档", code: "env --help" }
     ],
     relatedCommands: ["printenv", "export", "set", "bash"]
   },
@@ -2472,7 +2645,8 @@ export const commands: Command[] = [
       { description: "设置一个环境变量", code: "export JAVA_HOME=/usr/lib/jvm/java-17" },
       { description: "将目录追加到 PATH", code: "export PATH=$PATH:/opt/bin" },
       { description: "查看所有已导出的变量", code: "export -p" },
-      { description: "设置代理环境变量", code: "export http_proxy=http://proxy.example.com:8080" }
+      { description: "设置代理环境变量", code: "export http_proxy=http://proxy.example.com:8080" },
+      { description: "查看帮助文档", code: "help export" }
     ],
     relatedCommands: ["printenv", "env", "set", "unset"]
   },
@@ -2486,7 +2660,8 @@ export const commands: Command[] = [
       { description: "显示所有 Shell 变量和函数", code: "set" },
       { description: "开启调试模式，显示每条执行的命令", code: "set -x" },
       { description: "脚本中遇到错误立即退出", code: "set -e" },
-      { description: "使用未定义变量时报错", code: "set -u" }
+      { description: "使用未定义变量时报错", code: "set -u" },
+      { description: "查看帮助文档", code: "help set" }
     ],
     relatedCommands: ["export", "unset", "env", "shopt"]
   },
@@ -2500,7 +2675,8 @@ export const commands: Command[] = [
       { description: "删除一个环境变量", code: "unset JAVA_HOME" },
       { description: "删除多个变量", code: "unset http_proxy https_proxy" },
       { description: "删除一个函数", code: "unset -f my_func" },
-      { description: "确认变量已被删除", code: "unset MY_VAR && echo $MY_VAR" }
+      { description: "确认变量已被删除", code: "unset MY_VAR && echo $MY_VAR" },
+      { description: "查看帮助文档", code: "help unset" }
     ],
     relatedCommands: ["export", "set", "env", "printenv"]
   },
@@ -2514,7 +2690,8 @@ export const commands: Command[] = [
       { description: "给 ls -l 起别名 ll", code: "alias ll='ls -l'" },
       { description: "查看所有已设置的别名", code: "alias" },
       { description: "给 rm 加安全确认", code: "alias rm='rm -i'" },
-      { description: "给 grep 加颜色高亮", code: "alias grep='grep --color=auto'" }
+      { description: "给 grep 加颜色高亮", code: "alias grep='grep --color=auto'" },
+      { description: "查看帮助文档", code: "help alias" }
     ],
     relatedCommands: ["unalias", "bash", "source", "type"]
   },
@@ -2528,7 +2705,8 @@ export const commands: Command[] = [
       { description: "取消 ll 别名", code: "unalias ll" },
       { description: "取消所有别名", code: "unalias -a" },
       { description: "取消 rm 的安全别名", code: "unalias rm" },
-      { description: "确认别名已删除", code: "unalias ll && type ll" }
+      { description: "确认别名已删除", code: "unalias ll && type ll" },
+      { description: "查看帮助文档", code: "help unalias" }
     ],
     relatedCommands: ["alias", "bash", "source", "type"]
   },
@@ -2542,7 +2720,8 @@ export const commands: Command[] = [
       { description: "显示所有历史命令", code: "history" },
       { description: "只显示最近 10 条", code: "history 10" },
       { description: "清除所有历史记录", code: "history -c" },
-      { description: "重新执行第 100 条命令", code: "!100" }
+      { description: "重新执行第 100 条命令", code: "!100" },
+      { description: "查看帮助文档", code: "help history" }
     ],
     relatedCommands: ["alias", "bash", "fc", "ctrl+r"]
   },
@@ -2556,7 +2735,8 @@ export const commands: Command[] = [
       { description: "查看所有内核参数", code: "sysctl -a" },
       { description: "查看 IP 转发状态", code: "sysctl net.ipv4.ip_forward" },
       { description: "开启 IP 转发", code: "sudo sysctl -w net.ipv4.ip_forward=1" },
-      { description: "从配置文件加载参数", code: "sudo sysctl -p" }
+      { description: "从配置文件加载参数", code: "sudo sysctl -p" },
+      { description: "查看帮助文档", code: "sysctl --help" }
     ],
     relatedCommands: ["proc", "modprobe", "iptables", "ulimit"],
     dangerLevel: "warning"
@@ -2572,7 +2752,8 @@ export const commands: Command[] = [
     examples: [
       { description: "列出所有分区表", code: "fdisk -l" },
       { description: "进入交互模式对磁盘分区", code: "fdisk /dev/sdb" },
-      { description: "创建一个新的 GPT 分区表", code: "fdisk /dev/sdc" }
+      { description: "创建一个新的 GPT 分区表", code: "fdisk /dev/sdc" },
+      { description: "查看帮助文档", code: "fdisk --help" }
     ],
     relatedCommands: ["parted", "mkfs", "lsblk", "cfdisk"],
     dangerLevel: "danger",
@@ -2587,7 +2768,8 @@ export const commands: Command[] = [
       { description: "将分区格式化为 ext4 文件系统", code: "mkfs.ext4 /dev/sdb1" },
       { description: "格式化为 xfs 文件系统", code: "mkfs.xfs -f /dev/sdc1" },
       { description: "格式化为 FAT32", code: "mkfs.vfat -F 32 /dev/sdd1" },
-      { description: "快速格式化", code: "mkfs.ext4 -T largefile4 /dev/sde1" }
+      { description: "快速格式化", code: "mkfs.ext4 -T largefile4 /dev/sde1" },
+      { description: "查看帮助文档", code: "mkfs --help" }
     ],
     relatedCommands: ["fdisk", "fsck", "mount", "tune2fs"],
     dangerLevel: "danger",
@@ -2602,7 +2784,8 @@ export const commands: Command[] = [
       { description: "将 /dev/sdb1 挂载到 /mnt/data 目录", code: "mount /dev/sdb1 /mnt/data" },
       { description: "挂载 ISO 镜像文件", code: "mount -o loop ubuntu.iso /mnt/cdrom" },
       { description: "以只读方式挂载", code: "mount -o ro /dev/sdc1 /mnt/readonly" },
-      { description: "挂载 NFS 网络共享目录", code: "mount -t nfs 192.168.1.100:/share /mnt/nfs_share" }
+      { description: "挂载 NFS 网络共享目录", code: "mount -t nfs 192.168.1.100:/share /mnt/nfs_share" },
+      { description: "查看帮助文档", code: "mount --help" }
     ],
     relatedCommands: ["umount", "fstab", "automount", "bindfs"]
   },
@@ -2616,7 +2799,8 @@ export const commands: Command[] = [
       { description: "卸载 /mnt/data 目录", code: "umount /mnt/data" },
       { description: "通过设备路径卸载", code: "umount /dev/sdb1" },
       { description: "强制卸载（慎用）", code: "umount -l /mnt/busy" },
-      { description: "卸载所有 NFS 类型的文件系统", code: "umount -a -t nfs" }
+      { description: "卸载所有 NFS 类型的文件系统", code: "umount -a -t nfs" },
+      { description: "查看帮助文档", code: "umount --help" }
     ],
     relatedCommands: ["mount", "fuser", "lsof", "lazy unmount"],
     dangerLevel: "warning",
@@ -2631,7 +2815,8 @@ export const commands: Command[] = [
       { description: "检查分区的文件系统", code: "fsck /dev/sda1" },
       { description: "自动修复发现的问题", code: "fsck -y /dev/sdb1" },
       { description: "强制检查", code: "fsck -f /dev/sdc1" },
-      { description: "指定文件系统类型", code: "fsck -t ext4 /dev/sdd1" }
+      { description: "指定文件系统类型", code: "fsck -t ext4 /dev/sdd1" },
+      { description: "查看帮助文档", code: "fsck --help" }
     ],
     relatedCommands: ["mkfs", "dumpe2fs", "tune2fs", "badblocks"],
     dangerLevel: "warning",
@@ -2646,7 +2831,8 @@ export const commands: Command[] = [
       { description: "显示所有块设备的信息", code: "blkid" },
       { description: "只显示指定设备的信息", code: "blkid /dev/sda2" },
       { description: "只显示 UUID", code: "blkid -s UUID -o value /dev/sda1" },
-      { description: "显示更详细的信息", code: "blkid -p /dev/sdb1" }
+      { description: "显示更详细的信息", code: "blkid -p /dev/sdb1" },
+      { description: "查看帮助文档", code: "blkid --help" }
     ],
     relatedCommands: ["lsblk", "fdisk -l", "fstab", "libuuid"]
   },
@@ -2660,7 +2846,8 @@ export const commands: Command[] = [
       { description: "以树形结构显示所有块设备", code: "lsblk" },
       { description: "显示 UUID 和文件系统类型", code: "lsblk -f" },
       { description: "以 JSON 格式输出", code: "lsblk -J" },
-      { description: "只显示指定设备", code: "lsblk /dev/sda" }
+      { description: "只显示指定设备", code: "lsblk /dev/sda" },
+      { description: "查看帮助文档", code: "lsblk --help" }
     ],
     relatedCommands: ["blkid", "fdisk", "df", "tree"]
   },
@@ -2674,7 +2861,8 @@ export const commands: Command[] = [
       { description: "制作启动 U 盘", code: "dd if=ubuntu.iso of=/dev/sdb bs=4M status=progress" },
       { description: "备份整个磁盘为镜像文件", code: "dd if=/dev/sda of=disk_backup.img bs=64K" },
       { description: "安全擦除硬盘数据", code: "dd if=/dev/urandom of=/dev/sdb bs=1M" },
-      { description: "测试磁盘写入速度", code: "dd if=/dev/zero of=testfile bs=1M count=1024 oflag=dsync" }
+      { description: "测试磁盘写入速度", code: "dd if=/dev/zero of=testfile bs=1M count=1024 oflag=dsync" },
+      { description: "查看帮助文档", code: "dd --help" }
     ],
     relatedCommands: ["cp", "cat", "rsync", "shred"],
     dangerLevel: "danger",
@@ -2689,7 +2877,8 @@ export const commands: Command[] = [
       { description: "进入交互模式对磁盘分区", code: "parted /dev/sdb" },
       { description: "创建 GPT 分区表", code: "parted /dev/sdb mklabel gpt" },
       { description: "创建新分区", code: "parted /dev/sdb mkpart primary ext4 0% 50%" },
-      { description: "打印分区信息", code: "parted /dev/sdb print" }
+      { description: "打印分区信息", code: "parted /dev/sdb print" },
+      { description: "查看帮助文档", code: "parted --help" }
     ],
     relatedCommands: ["fdisk", "cfdisk", "gparted", "mkfs"]
   },
@@ -2702,7 +2891,8 @@ export const commands: Command[] = [
     examples: [
       { description: "将分区格式化为 swap 格式", code: "mkswap /dev/sdb1" },
       { description: "创建 swap 文件", code: "dd if=/dev/zero of=/swapfile bs=1M count=4096 && mkswap /swapfile" },
-      { description: "指定 UUID 创建 swap", code: "mkswap -U custom-uuid /dev/sdc1" }
+      { description: "指定 UUID 创建 swap", code: "mkswap -U custom-uuid /dev/sdc1" },
+      { description: "查看帮助文档", code: "mkswap --help" }
     ],
     relatedCommands: ["swapon", "swapoff", "free", "dd"],
     dangerLevel: "warning",
@@ -2717,7 +2907,8 @@ export const commands: Command[] = [
       { description: "启用 swap 分区", code: "swapon /dev/sdb1" },
       { description: "启用 swap 文件", code: "swapon /swapfile" },
       { description: "查看当前所有 swap 设备", code: "swapon --show" },
-      { description: "启用所有 swap 设备", code: "swapon -a" }
+      { description: "启用所有 swap 设备", code: "swapon -a" },
+      { description: "查看帮助文档", code: "swapon --help" }
     ],
     relatedCommands: ["swapoff", "mkswap", "free", "fstab"]
   },
@@ -2730,7 +2921,8 @@ export const commands: Command[] = [
     examples: [
       { description: "禁用指定的 swap 分区", code: "swapoff /dev/sdb1" },
       { description: "禁用所有 swap 设备", code: "swapoff -a" },
-      { description: "禁用 swap 文件", code: "swapoff /swapfile" }
+      { description: "禁用 swap 文件", code: "swapoff /swapfile" },
+      { description: "查看帮助文档", code: "swapoff --help" }
     ],
     relatedCommands: ["swapon", "mkswap", "free", "fstab"]
   },
@@ -2743,7 +2935,8 @@ export const commands: Command[] = [
     examples: [
       { description: "查看 ext4 文件系统的详细信息", code: "dumpe2fs /dev/sda1" },
       { description: "只显示超级块信息", code: "dumpe2fs -h /dev/sda1" },
-      { description: "显示块组描述信息", code: "dumpe2fs /dev/sda1 | grep -i 'group'" }
+      { description: "显示块组描述信息", code: "dumpe2fs /dev/sda1 | grep -i 'group'" },
+      { description: "查看帮助文档", code: "dumpe2fs --help" }
     ],
     relatedCommands: ["tune2fs", "fsck", "mkfs.ext4", "blkid"]
   },
@@ -2757,7 +2950,8 @@ export const commands: Command[] = [
       { description: "分析当前目录的磁盘使用", code: "ncdu" },
       { description: "分析指定目录", code: "ncdu /home/user" },
       { description: "不扫描隐藏文件", code: "ncdu --exclude-hidden /home" },
-      { description: "导出扫描结果到文件", code: "ncdu -o /tmp/scan_result" }
+      { description: "导出扫描结果到文件", code: "ncdu -o /tmp/scan_result" },
+      { description: "查看帮助文档", code: "ncdu --help" }
     ],
     relatedCommands: ["du", "df", "ls", "find"]
   },
@@ -2771,7 +2965,8 @@ export const commands: Command[] = [
       { description: "查看硬盘基本信息", code: "sudo hdparm -i /dev/sda" },
       { description: "测试硬盘读取速度", code: "sudo hdparm -tT /dev/sda" },
       { description: "查看硬盘电源管理状态", code: "sudo hdparm -C /dev/sda" },
-      { description: "开启 DMA 传输模式", code: "sudo hdparm -d1 /dev/sda" }
+      { description: "开启 DMA 传输模式", code: "sudo hdparm -d1 /dev/sda" },
+      { description: "查看帮助文档", code: "hdparm --help" }
     ],
     relatedCommands: ["smartctl", "fdisk", "lsblk", "badblocks"]
   },
@@ -2785,7 +2980,8 @@ export const commands: Command[] = [
       { description: "查看硬盘整体健康状态", code: "sudo smartctl -H /dev/sda" },
       { description: "显示所有 SMART 信息", code: "sudo smartctl -a /dev/sda" },
       { description: "查看硬盘温度", code: "sudo smartctl -A /dev/sda | grep Temperature" },
-      { description: "运行硬盘自检", code: "sudo smartctl -t long /dev/sda" }
+      { description: "运行硬盘自检", code: "sudo smartctl -t long /dev/sda" },
+      { description: "查看帮助文档", code: "smartctl --help" }
     ],
     relatedCommands: ["hdparm", "lsblk", "fdisk", "badblocks"]
   },
@@ -2799,7 +2995,8 @@ export const commands: Command[] = [
       { description: "查看所有循环设备", code: "losetup -a" },
       { description: "将 ISO 文件关联到循环设备", code: "sudo losetup /dev/loop0 ubuntu.iso" },
       { description: "自动寻找空闲循环设备并关联", code: "sudo losetup -f ubuntu.iso" },
-      { description: "解除循环设备关联", code: "sudo losetup -d /dev/loop0" }
+      { description: "解除循环设备关联", code: "sudo losetup -d /dev/loop0" },
+      { description: "查看帮助文档", code: "losetup --help" }
     ],
     relatedCommands: ["mount", "mkfs", "dd", "fdisk"]
   },
@@ -2813,7 +3010,8 @@ export const commands: Command[] = [
       { description: "查看文件系统参数", code: "sudo tune2fs -l /dev/sda1" },
       { description: "设置文件系统标签", code: "sudo tune2fs -L mydata /dev/sda1" },
       { description: "将 ext2 转换为 ext3", code: "sudo tune2fs -j /dev/sda1" },
-      { description: "设置每 30 天自检一次", code: "sudo tune2fs -i 30d /dev/sda1" }
+      { description: "设置每 30 天自检一次", code: "sudo tune2fs -i 30d /dev/sda1" },
+      { description: "查看帮助文档", code: "tune2fs --help" }
     ],
     relatedCommands: ["dumpe2fs", "fsck", "mkfs.ext4", "resize2fs"],
     dangerLevel: "warning"
@@ -2828,7 +3026,8 @@ export const commands: Command[] = [
       { description: "扩大文件系统到分区最大容量", code: "sudo resize2fs /dev/sda1" },
       { description: "将文件系统缩小到指定大小", code: "sudo resize2fs /dev/sda1 50G" },
       { description: "强制调整前先检查", code: "sudo resize2fs -p /dev/sda1" },
-      { description: "查看最小可缩小到多少", code: "sudo resize2fs -P /dev/sda1" }
+      { description: "查看最小可缩小到多少", code: "sudo resize2fs -P /dev/sda1" },
+      { description: "查看帮助文档", code: "resize2fs --help" }
     ],
     relatedCommands: ["tune2fs", "fdisk", "lvextend", "fsck"]
   },
@@ -2842,7 +3041,8 @@ export const commands: Command[] = [
       { description: "只读模式扫描坏道", code: "sudo badblocks -s /dev/sda" },
       { description: "非破坏性读写测试", code: "sudo badblocks -n /dev/sda" },
       { description: "将坏道列表保存到文件", code: "sudo badblocks -o bad.txt /dev/sda" },
-      { description: "指定扫描的起止块", code: "sudo badblocks -s /dev/sda 1000000 0" }
+      { description: "指定扫描的起止块", code: "sudo badblocks -s /dev/sda 1000000 0" },
+      { description: "查看帮助文档", code: "badblocks --help" }
     ],
     relatedCommands: ["fsck", "smartctl", "hdparm", "e2fsck"]
   },
@@ -2856,7 +3056,8 @@ export const commands: Command[] = [
       { description: "将所有缓存数据写入磁盘", code: "sync" },
       { description: "拔 U 盘前确保数据写入", code: "sync && sudo eject /dev/sdb" },
       { description: "重启前同步数据", code: "sync && sudo reboot" },
-      { description: "显示同步进度信息", code: "sync -v" }
+      { description: "显示同步进度信息", code: "sync -v" },
+      { description: "查看帮助文档", code: "sync --help" }
     ],
     relatedCommands: ["fsck", "mount", "umount", "dd"]
   },
@@ -2872,7 +3073,8 @@ export const commands: Command[] = [
       { description: "打包并压缩为 .tar.gz", code: "tar -czf backup.tar.gz /home/user/project/" },
       { description: "解压 .tar.gz 文件", code: "tar -xzf backup.tar.gz" },
       { description: "打包并压缩为 .tar.bz2", code: "tar -cjf archive.tar.bz2 documents/" },
-      { description: "查看压缩包内容（不解压）", code: "tar -tzf backup.tar.gz" }
+      { description: "查看压缩包内容（不解压）", code: "tar -tzf backup.tar.gz" },
+      { description: "查看帮助文档", code: "tar --help" }
     ],
     relatedCommands: ["gzip", "bzip2", "zip", "7z"]
   },
@@ -2886,7 +3088,8 @@ export const commands: Command[] = [
       { description: "压缩文件", code: "gzip access.log" },
       { description: "保留原文件同时压缩", code: "gzip -k important_data.csv" },
       { description: "指定压缩级别（1 最快，9 最小）", code: "gzip -9 large_file.bin" },
-      { description: "递归压缩目录下所有文件", code: "gzip -r logs/" }
+      { description: "递归压缩目录下所有文件", code: "gzip -r logs/" },
+      { description: "查看帮助文档", code: "gzip --help" }
     ],
     relatedCommands: ["gunzip", "bzip2", "xz", "zcat"]
   },
@@ -2899,7 +3102,8 @@ export const commands: Command[] = [
     examples: [
       { description: "解压 .gz 文件", code: "gunzip access.log.gz" },
       { description: "保留压缩文件同时解压", code: "gunzip -k archive.gz" },
-      { description: "递归解压目录下所有 .gz 文件", code: "gunzip -r logs/" }
+      { description: "递归解压目录下所有 .gz 文件", code: "gunzip -r logs/" },
+      { description: "查看帮助文档", code: "gunzip --help" }
     ],
     relatedCommands: ["gzip", "zcat", "bunzip2", "unxz"]
   },
@@ -2913,7 +3117,8 @@ export const commands: Command[] = [
       { description: "压缩文件为 .bz2 格式", code: "bzip2 big_file.txt" },
       { description: "保留原文件同时压缩", code: "bzip2 -k data.csv" },
       { description: "使用最高压缩级别", code: "bzip2 -9 archive.dat" },
-      { description: "解压 bzip2 文件", code: "bzip2 -d compressed.bz2" }
+      { description: "解压 bzip2 文件", code: "bzip2 -d compressed.bz2" },
+      { description: "查看帮助文档", code: "bzip2 --help" }
     ],
     relatedCommands: ["bunzip2", "gzip", "xz", "bzcat"]
   },
@@ -2925,7 +3130,8 @@ export const commands: Command[] = [
     detailExplain: "就像打开 bzip2 这个高级真空压缩袋——把 .bz2 文件解压还原成原始文件。bunzip2 其实就是 bzip2 -d。",
     examples: [
       { description: "解压 .bz2 文件", code: "bunzip2 archive.bz2" },
-      { description: "保留压缩文件同时解压", code: "bunzip2 -k archive.bz2" }
+      { description: "保留压缩文件同时解压", code: "bunzip2 -k archive.bz2" },
+      { description: "查看帮助文档", code: "bunzip2 --help" }
     ],
     relatedCommands: ["bzip2", "bzcat", "gunzip", "unxz"]
   },
@@ -2939,7 +3145,8 @@ export const commands: Command[] = [
       { description: "将多个文件压缩为 zip 包", code: "zip archive.zip file1.txt file2.txt" },
       { description: "递归压缩整个目录", code: "zip -r project.zip project_folder/" },
       { description: "添加文件到已有的 zip 包", code: "zip -u archive.zip newfile.txt" },
-      { description: "加密压缩", code: "zip -e secret.zip confidential.pdf" }
+      { description: "加密压缩", code: "zip -e secret.zip confidential.pdf" },
+      { description: "查看帮助文档", code: "zip --help" }
     ],
     relatedCommands: ["unzip", "gzip", "tar", "7z"]
   },
@@ -2953,7 +3160,8 @@ export const commands: Command[] = [
       { description: "解压 zip 文件到当前目录", code: "unzip archive.zip" },
       { description: "解压到指定目录", code: "unzip archive.zip -d /target/path/" },
       { description: "查看压缩包内容（不解压）", code: "unzip -l archive.zip" },
-      { description: "只解压特定文件", code: "unzip archive.zip \"*.txt\"" }
+      { description: "只解压特定文件", code: "unzip archive.zip \"*.txt\"" },
+      { description: "查看帮助文档", code: "unzip --help" }
     ],
     relatedCommands: ["zip", "tar", "7z", "jar"]
   },
@@ -2967,7 +3175,8 @@ export const commands: Command[] = [
       { description: "压缩文件为 .xz 格式", code: "xz huge_file.bin" },
       { description: "保留原文件同时压缩", code: "xz -k data.tar" },
       { description: "使用极速压缩", code: "xz -0 quick_compress.dat" },
-      { description: "使用极限压缩", code: "xz -9e massive_database.sql" }
+      { description: "使用极限压缩", code: "xz -9e massive_database.sql" },
+      { description: "查看帮助文档", code: "xz --help" }
     ],
     relatedCommands: ["unxz", "xzcat", "gzip", "bzip2"]
   },
@@ -2979,7 +3188,8 @@ export const commands: Command[] = [
     detailExplain: "就像打开 xz 这个终极真空压缩袋——把 .xz 文件解压还原成原始文件。unxz 其实就是 xz -d。",
     examples: [
       { description: "解压 .xz 文件", code: "unxz archive.xz" },
-      { description: "保留压缩文件同时解压", code: "unxz -k archive.xz" }
+      { description: "保留压缩文件同时解压", code: "unxz -k archive.xz" },
+      { description: "查看帮助文档", code: "unxz --help" }
     ],
     relatedCommands: ["xz", "xzcat", "gunzip", "bunzip2"]
   },
@@ -2993,7 +3203,8 @@ export const commands: Command[] = [
       { description: "压缩为 7z 格式", code: "7z a archive.7z folder/" },
       { description: "解压 7z 文件", code: "7z x archive.7z" },
       { description: "解压 rar 文件", code: "7z x file.rar" },
-      { description: "列出压缩包内容", code: "7z l archive.7z" }
+      { description: "列出压缩包内容", code: "7z l archive.7z" },
+      { description: "查看帮助文档", code: "7z --help" }
     ],
     relatedCommands: ["zip", "unzip", "rar", "tar"]
   },
@@ -3006,7 +3217,8 @@ export const commands: Command[] = [
     examples: [
       { description: "查看 gzip 压缩文件的内容", code: "zcat access.log.gz" },
       { description: "配合 grep 搜索压缩日志", code: "zcat access.log.gz | grep 'error'" },
-      { description: "查看多个压缩文件", code: "zcat file1.gz file2.gz" }
+      { description: "查看多个压缩文件", code: "zcat file1.gz file2.gz" },
+      { description: "查看帮助文档", code: "zcat --help" }
     ],
     relatedCommands: ["gzip", "gunzip", "bzcat", "xzcat"]
   },
@@ -3018,7 +3230,8 @@ export const commands: Command[] = [
     detailExplain: "就像 zcat 的 bzip2 版本——不需要先解压 .bz2 文件，就能直接把压缩文件的内容输出到屏幕上。",
     examples: [
       { description: "查看 bzip2 压缩文件的内容", code: "bzcat archive.bz2" },
-      { description: "配合 grep 搜索", code: "bzcat log.bz2 | grep 'warning'" }
+      { description: "配合 grep 搜索", code: "bzcat log.bz2 | grep 'warning'" },
+      { description: "查看帮助文档", code: "bzcat --help" }
     ],
     relatedCommands: ["bzip2", "bunzip2", "zcat", "xzcat"]
   },
@@ -3030,7 +3243,8 @@ export const commands: Command[] = [
     detailExplain: "就像压缩界的「老爷爷」——是 Unix 系统上最早的压缩工具之一，压缩后文件后缀为 .Z。压缩率不如 gzip，现在基本已经被淘汰了。",
     examples: [
       { description: "压缩文件为 .Z 格式", code: "compress large_file.txt" },
-      { description: "强制压缩", code: "compress -f data.log" }
+      { description: "强制压缩", code: "compress -f data.log" },
+      { description: "查看帮助文档", code: "compress --help" }
     ],
     relatedCommands: ["uncompress", "gzip", "zip", "zcat"]
   },
@@ -3042,7 +3256,8 @@ export const commands: Command[] = [
     detailExplain: "就像帮老爷爷打开他那老式的压缩袋——uncompress 专门用来解压 compress 命令生成的 .Z 格式文件。",
     examples: [
       { description: "解压 .Z 文件", code: "uncompress archive.Z" },
-      { description: "强制解压", code: "uncompress -f data.log.Z" }
+      { description: "强制解压", code: "uncompress -f data.log.Z" },
+      { description: "查看帮助文档", code: "uncompress --help" }
     ],
     relatedCommands: ["compress", "gunzip", "bunzip2", "zcat"]
   },
@@ -3056,7 +3271,8 @@ export const commands: Command[] = [
       { description: "压缩为 rar 格式", code: "rar a archive.rar folder/" },
       { description: "分卷压缩（每卷 100MB）", code: "rar a -v100m archive.rar large_file.iso" },
       { description: "解压 rar 文件", code: "rar x archive.rar" },
-      { description: "测试压缩包完整性", code: "rar t archive.rar" }
+      { description: "测试压缩包完整性", code: "rar t archive.rar" },
+      { description: "查看帮助文档", code: "rar --help" }
     ],
     relatedCommands: ["unrar", "7z", "zip", "tar"]
   },
@@ -3070,7 +3286,8 @@ export const commands: Command[] = [
       { description: "压缩文件", code: "lz4 logfile logfile.lz4" },
       { description: "解压文件", code: "lz4 -d logfile.lz4 logfile" },
       { description: "高压缩比模式（更慢但更小）", code: "lz4 -9 bigfile bigfile.lz4" },
-      { description: "流式压缩（配合管道使用）", code: "tar -cf - mydir/ | lz4 > backup.tar.lz4" }
+      { description: "流式压缩（配合管道使用）", code: "tar -cf - mydir/ | lz4 > backup.tar.lz4" },
+      { description: "查看帮助文档", code: "lz4 --help" }
     ],
     relatedCommands: ["gzip", "zstd", "bzip2", "tar"]
   },
@@ -3084,7 +3301,8 @@ export const commands: Command[] = [
       { description: "压缩文件", code: "zstd data.txt" },
       { description: "解压文件", code: "zstd -d data.txt.zst" },
       { description: "指定压缩级别（1-19）", code: "zstd -15 large_file" },
-      { description: "递归压缩目录", code: "tar --zstd -cf archive.tar.zst mydir/" }
+      { description: "递归压缩目录", code: "tar --zstd -cf archive.tar.zst mydir/" },
+      { description: "查看帮助文档", code: "zstd --help" }
     ],
     relatedCommands: ["gzip", "lz4", "xz", "tar"]
   },
@@ -3098,7 +3316,8 @@ export const commands: Command[] = [
       { description: "压缩文件", code: "lzma bigfile" },
       { description: "解压文件", code: "lzma -d bigfile.lzma" },
       { description: "保留原文件压缩", code: "lzma -k data.tar" },
-      { description: "指定压缩级别", code: "lzma -9 archive.tar" }
+      { description: "指定压缩级别", code: "lzma -9 archive.tar" },
+      { description: "查看帮助文档", code: "lzma --help" }
     ],
     relatedCommands: ["xz", "gzip", "bzip2", "tar"]
   },
@@ -3112,7 +3331,8 @@ export const commands: Command[] = [
       { description: "将当前目录所有文件打包", code: "find . | cpio -o > archive.cpio" },
       { description: "从归档中解包文件", code: "cpio -id < archive.cpio" },
       { description: "查看归档内容列表", code: "cpio -t < archive.cpio" },
-      { description: "打包并用 gzip 压缩", code: "find . | cpio -o | gzip > archive.cpio.gz" }
+      { description: "打包并用 gzip 压缩", code: "find . | cpio -o | gzip > archive.cpio.gz" },
+      { description: "查看帮助文档", code: "cpio --help" }
     ],
     relatedCommands: ["tar", "gzip", "find", "rpm2cpio"]
   },
@@ -3126,7 +3346,8 @@ export const commands: Command[] = [
       { description: "打包多个文件为自解压脚本", code: "shar file1.txt file2.txt > archive.shar" },
       { description: "打包整个目录", code: "shar mydir/ > mydir.shar" },
       { description: "解包自解压脚本", code: "sh archive.shar" },
-      { description: "先查看脚本内容再解包", code: "less archive.shar" }
+      { description: "先查看脚本内容再解包", code: "less archive.shar" },
+      { description: "查看帮助文档", code: "shar --help" }
     ],
     relatedCommands: ["tar", "cpio", "ar", "gzip"]
   },
@@ -3140,7 +3361,8 @@ export const commands: Command[] = [
       { description: "创建静态库", code: "ar rcs libmath.a add.o sub.o mul.o" },
       { description: "列出归档中的文件", code: "ar t libmath.a" },
       { description: "从归档中提取文件", code: "ar x libmath.a add.o" },
-      { description: "查看 .deb 包内容", code: "ar t package.deb" }
+      { description: "查看 .deb 包内容", code: "ar t package.deb" },
+      { description: "查看帮助文档", code: "ar --help" }
     ],
     relatedCommands: ["tar", "cpio", "gcc", "dpkg"]
   },
@@ -3156,7 +3378,8 @@ export const commands: Command[] = [
       { description: "创建新用户", code: "useradd zhangsan" },
       { description: "创建用户并指定家目录和 shell", code: "useradd -m -s /bin/bash lisi" },
       { description: "创建用户并加入附加组", code: "useradd -G docker,sudo wangwu" },
-      { description: "创建系统用户（无登录权限）", code: "useradd -r -s /sbin/nologin nginx" }
+      { description: "创建系统用户（无登录权限）", code: "useradd -r -s /sbin/nologin nginx" },
+      { description: "查看帮助文档", code: "useradd --help" }
     ],
     relatedCommands: ["userdel", "usermod", "adduser", "passwd"]
   },
@@ -3169,7 +3392,8 @@ export const commands: Command[] = [
     examples: [
       { description: "删除用户（保留家目录）", code: "userdel zhangsan" },
       { description: "删除用户并连同家目录一起删除", code: "userdel -r lisi" },
-      { description: "强制删除正在登录的用户", code: "userdel -f wangwu" }
+      { description: "强制删除正在登录的用户", code: "userdel -f wangwu" },
+      { description: "查看帮助文档", code: "userdel --help" }
     ],
     relatedCommands: ["useradd", "usermod", "groupdel", "passwd"],
     dangerLevel: "danger",
@@ -3184,7 +3408,8 @@ export const commands: Command[] = [
       { description: "将用户加入附加组", code: "usermod -aG docker zhangsan" },
       { description: "修改用户的默认 shell", code: "usermod -s /bin/zsh lisi" },
       { description: "修改用户名", code: "usermod -l newname oldname" },
-      { description: "锁定用户账号", code: "usermod -L wangwu" }
+      { description: "锁定用户账号", code: "usermod -L wangwu" },
+      { description: "查看帮助文档", code: "usermod --help" }
     ],
     relatedCommands: ["useradd", "userdel", "groupmod", "chage"]
   },
@@ -3198,7 +3423,8 @@ export const commands: Command[] = [
       { description: "修改当前用户密码", code: "passwd" },
       { description: "root 修改其他用户密码", code: "passwd zhangsan" },
       { description: "锁定用户账号", code: "passwd -l lisi" },
-      { description: "强制用户下次登录时修改密码", code: "passwd -e wangwu" }
+      { description: "强制用户下次登录时修改密码", code: "passwd -e wangwu" },
+      { description: "查看帮助文档", code: "passwd --help" }
     ],
     relatedCommands: ["usermod", "useradd", "chage", "shadow"]
   },
@@ -3211,7 +3437,8 @@ export const commands: Command[] = [
     examples: [
       { description: "创建新用户组", code: "groupadd developers" },
       { description: "创建指定 GID 的用户组", code: "groupadd -g 2000 testers" },
-      { description: "创建系统组", code: "groupadd -r nginx" }
+      { description: "创建系统组", code: "groupadd -r nginx" },
+      { description: "查看帮助文档", code: "groupadd --help" }
     ],
     relatedCommands: ["groupdel", "groupmod", "useradd", "usermod"]
   },
@@ -3223,7 +3450,8 @@ export const commands: Command[] = [
     detailExplain: "就像公司撤销了一个部门——groupdel 删除指定的用户组。注意：不能删除某个用户的主组，就像不能撤销一个还有人上班的部门。",
     examples: [
       { description: "删除用户组", code: "groupdel developers" },
-      { description: "强制删除", code: "groupdel -f testers" }
+      { description: "强制删除", code: "groupdel -f testers" },
+      { description: "查看帮助文档", code: "groupdel --help" }
     ],
     relatedCommands: ["groupadd", "groupmod", "userdel", "usermod"],
     dangerLevel: "danger",
@@ -3238,7 +3466,8 @@ export const commands: Command[] = [
       { description: "查看当前用户的 ID 信息", code: "id", output: "uid=1000(alice) gid=1000(alice) groups=1000(alice),27(sudo),998(docker)" },
       { description: "查看指定用户的 ID 信息", code: "id zhangsan" },
       { description: "只显示 UID", code: "id -u" },
-      { description: "只显示 GID", code: "id -g" }
+      { description: "只显示 GID", code: "id -g" },
+      { description: "查看帮助文档", code: "id --help" }
     ],
     relatedCommands: ["whoami", "groups", "finger", "getent"]
   },
@@ -3250,7 +3479,8 @@ export const commands: Command[] = [
     detailExplain: "就像你突然失忆了，问自己「我是谁？」——whoami 告诉你当前登录的用户名是什么。在用 sudo su 切换了一堆用户后，确认自己当前身份时非常有用。",
     examples: [
       { description: "显示当前用户名", code: "whoami", output: "alice" },
-      { description: "配合其他命令使用", code: "echo \"Current user: $(whoami)\"" }
+      { description: "配合其他命令使用", code: "echo \"Current user: $(whoami)\"" },
+      { description: "查看帮助文档", code: "whoami --help" }
     ],
     relatedCommands: ["id", "who", "logname", "su"]
   },
@@ -3262,7 +3492,8 @@ export const commands: Command[] = [
     detailExplain: "就像查看一个员工同时属于哪些部门——groups 列出指定用户所属的所有用户组。了解用户所属组对于理解权限很重要。",
     examples: [
       { description: "查看当前用户所属的组", code: "groups", output: "alice sudo docker" },
-      { description: "查看指定用户所属的组", code: "groups zhangsan", output: "zhangsan developers testers" }
+      { description: "查看指定用户所属的组", code: "groups zhangsan", output: "zhangsan developers testers" },
+      { description: "查看帮助文档", code: "groups --help" }
     ],
     relatedCommands: ["id", "groupadd", "usermod", "getent"]
   },
@@ -3275,7 +3506,8 @@ export const commands: Command[] = [
     examples: [
       { description: "查看指定用户的详细信息", code: "finger zhangsan" },
       { description: "查看所有登录用户的信息", code: "finger" },
-      { description: "显示长格式信息", code: "finger -l lisi" }
+      { description: "显示长格式信息", code: "finger -l lisi" },
+      { description: "查看帮助文档", code: "finger --help" }
     ],
     relatedCommands: ["id", "who", "w", "pinky"]
   },
@@ -3289,7 +3521,8 @@ export const commands: Command[] = [
       { description: "查看所有用户的登录历史", code: "last" },
       { description: "查看指定用户的登录历史", code: "last zhangsan" },
       { description: "只显示最近 5 条记录", code: "last -n 5" },
-      { description: "显示完整的登录时间和主机名", code: "last -a" }
+      { description: "显示完整的登录时间和主机名", code: "last -a" },
+      { description: "查看帮助文档", code: "last --help" }
     ],
     relatedCommands: ["who", "w", "lastlog", "finger"]
   },
@@ -3301,7 +3534,8 @@ export const commands: Command[] = [
     detailExplain: "就像你临时换了一个部门身份去办事——newgrp 让你切换当前会话的主组（GID），这样你新创建的文件就属于新的组了。注意这会启动一个新的 shell。",
     examples: [
       { description: "切换到 docker 组", code: "newgrp docker" },
-      { description: "切换到 developers 组", code: "newgrp developers" }
+      { description: "切换到 developers 组", code: "newgrp developers" },
+      { description: "查看帮助文档", code: "newgrp --help" }
     ],
     relatedCommands: ["groups", "id", "usermod", "sg"]
   },
@@ -3315,7 +3549,8 @@ export const commands: Command[] = [
       { description: "查看用户的密码过期信息", code: "chage -l zhangsan" },
       { description: "设置密码 90 天后过期", code: "chage -M 90 zhangsan" },
       { description: "设置密码过期前 7 天警告", code: "chage -W 7 zhangsan" },
-      { description: "强制用户下次登录时修改密码", code: "chage -d 0 zhangsan" }
+      { description: "强制用户下次登录时修改密码", code: "chage -d 0 zhangsan" },
+      { description: "查看帮助文档", code: "chage --help" }
     ],
     relatedCommands: ["passwd", "usermod", "shadow", "id"]
   },
@@ -3329,7 +3564,8 @@ export const commands: Command[] = [
       { description: "以指定用户登录", code: "login zhangsan" },
       { description: "登录时显示系统信息", code: "login -p zhangsan" },
       { description: "不执行启动脚本直接登录", code: "login -f zhangsan" },
-      { description: "在远程终端上登录", code: "login -h terminal1 zhangsan" }
+      { description: "在远程终端上登录", code: "login -h terminal1 zhangsan" },
+      { description: "查看帮助文档", code: "login --help" }
     ],
     relatedCommands: ["logout", "su", "ssh", "who"]
   },
@@ -3343,7 +3579,8 @@ export const commands: Command[] = [
       { description: "退出当前登录", code: "logout" },
       { description: "与 exit 等效", code: "exit" },
       { description: "在脚本中检查是否可以退出", code: "shopt -q login_shell && logout || exit" },
-      { description: "快捷键退出", code: "Ctrl+D" }
+      { description: "快捷键退出", code: "Ctrl+D" },
+      { description: "查看帮助文档", code: "help logout" }
     ],
     relatedCommands: ["login", "exit", "su", "who"]
   },
@@ -3357,7 +3594,8 @@ export const commands: Command[] = [
       { description: "将用户 Shell 设为 nologin 禁止登录", code: "sudo usermod -s /sbin/nologin guest" },
       { description: "创建不能登录的系统用户", code: "sudo useradd -s /sbin/nologin mysql" },
       { description: "自定义拒绝登录提示", code: "echo '此账户已禁用' > /etc/nologin.txt" },
-      { description: "临时禁止所有非 root 用户登录", code: "sudo touch /etc/nologin" }
+      { description: "临时禁止所有非 root 用户登录", code: "sudo touch /etc/nologin" },
+      { description: "查看帮助文档", code: "nologin --help" }
     ],
     relatedCommands: ["usermod", "useradd", "passwd", "login"]
   },
@@ -3371,7 +3609,8 @@ export const commands: Command[] = [
       { description: "检查密码文件完整性", code: "sudo pwck" },
       { description: "只读模式检查（不提示修复）", code: "sudo pwck -r" },
       { description: "检查指定文件", code: "sudo pwck /etc/passwd /etc/shadow" },
-      { description: "静默模式，只显示错误", code: "sudo pwck -q" }
+      { description: "静默模式，只显示错误", code: "sudo pwck -q" },
+      { description: "查看帮助文档", code: "pwck --help" }
     ],
     relatedCommands: ["grpck", "passwd", "useradd", "usermod"]
   },
@@ -3385,7 +3624,8 @@ export const commands: Command[] = [
       { description: "检查组文件完整性", code: "sudo grpck" },
       { description: "只读模式检查", code: "sudo grpck -r" },
       { description: "检查指定文件", code: "sudo grpck /etc/group /etc/gshadow" },
-      { description: "静默模式", code: "sudo grpck -q" }
+      { description: "静默模式", code: "sudo grpck -q" },
+      { description: "查看帮助文档", code: "grpck --help" }
     ],
     relatedCommands: ["pwck", "groupadd", "groupmod", "groups"]
   },
@@ -3399,7 +3639,8 @@ export const commands: Command[] = [
       { description: "修改自己的登录 Shell", code: "chsh -s /bin/zsh" },
       { description: "修改其他用户的 Shell", code: "sudo chsh -s /bin/bash zhangsan" },
       { description: "列出系统可用的 Shell", code: "chsh -l" },
-      { description: "查看当前用户的 Shell", code: "echo $SHELL" }
+      { description: "查看当前用户的 Shell", code: "echo $SHELL" },
+      { description: "查看帮助文档", code: "chsh --help" }
     ],
     relatedCommands: ["bash", "zsh", "usermod", "cat /etc/shells"]
   },
@@ -3413,7 +3654,8 @@ export const commands: Command[] = [
       { description: "交互式修改个人信息", code: "chfn" },
       { description: "修改用户全名", code: "sudo chfn -f '张三' zhangsan" },
       { description: "修改办公电话", code: "sudo chfn -w '010-12345678' zhangsan" },
-      { description: "查看用户信息", code: "finger zhangsan" }
+      { description: "查看用户信息", code: "finger zhangsan" },
+      { description: "查看帮助文档", code: "chfn --help" }
     ],
     relatedCommands: ["usermod", "passwd", "chsh", "finger"]
   },
@@ -3430,7 +3672,8 @@ export const commands: Command[] = [
       { description: "升级所有已安装的软件", code: "sudo apt upgrade" },
       { description: "安装软件包", code: "sudo apt install nginx" },
       { description: "卸载软件包", code: "sudo apt remove nginx" },
-      { description: "搜索软件包", code: "apt search text editor" }
+      { description: "搜索软件包", code: "apt search text editor" },
+      { description: "查看帮助文档", code: "apt --help" }
     ],
     relatedCommands: ["apt-get", "dpkg", "snap", "aptitude"]
   },
@@ -3444,7 +3687,8 @@ export const commands: Command[] = [
       { description: "更新软件源", code: "sudo apt-get update" },
       { description: "安装软件包", code: "sudo apt-get install -y build-essential" },
       { description: "彻底卸载软件（含配置文件）", code: "sudo apt-get purge nginx" },
-      { description: "清理不再需要的依赖包", code: "sudo apt-get autoremove" }
+      { description: "清理不再需要的依赖包", code: "sudo apt-get autoremove" },
+      { description: "查看帮助文档", code: "apt-get --help" }
     ],
     relatedCommands: ["apt", "dpkg", "aptitude", "synaptic"]
   },
@@ -3458,7 +3702,8 @@ export const commands: Command[] = [
       { description: "安装软件包", code: "sudo yum install nginx" },
       { description: "更新所有软件", code: "sudo yum update" },
       { description: "搜索软件包", code: "yum search httpd" },
-      { description: "卸载软件包", code: "sudo yum remove nginx" }
+      { description: "卸载软件包", code: "sudo yum remove nginx" },
+      { description: "查看帮助文档", code: "yum --help" }
     ],
     relatedCommands: ["dnf", "rpm", "yum-config-manager", "repoquery"]
   },
@@ -3472,7 +3717,8 @@ export const commands: Command[] = [
       { description: "安装软件包", code: "sudo dnf install nginx" },
       { description: "更新所有软件", code: "sudo dnf upgrade" },
       { description: "搜索软件包", code: "dnf search httpd" },
-      { description: "查看软件包信息", code: "dnf info nginx" }
+      { description: "查看软件包信息", code: "dnf info nginx" },
+      { description: "查看帮助文档", code: "dnf --help" }
     ],
     relatedCommands: ["yum", "rpm", "microdnf", "dnf5"]
   },
@@ -3486,7 +3732,8 @@ export const commands: Command[] = [
       { description: "安装软件包", code: "sudo pacman -S nginx" },
       { description: "更新所有软件", code: "sudo pacman -Syu" },
       { description: "搜索软件包", code: "pacman -Ss text-editor" },
-      { description: "卸载软件包", code: "sudo pacman -R nginx" }
+      { description: "卸载软件包", code: "sudo pacman -R nginx" },
+      { description: "查看帮助文档", code: "pacman --help" }
     ],
     relatedCommands: ["yay", "paru", "makepkg", "pactree"]
   },
@@ -3500,7 +3747,8 @@ export const commands: Command[] = [
       { description: "安装 Python 包", code: "pip install requests" },
       { description: "卸载 Python 包", code: "pip uninstall flask" },
       { description: "查看已安装的包", code: "pip list" },
-      { description: "升级包", code: "pip install --upgrade numpy" }
+      { description: "升级包", code: "pip install --upgrade numpy" },
+      { description: "查看帮助文档", code: "pip --help" }
     ],
     relatedCommands: ["pip3", "conda", "poetry", "pipenv"]
   },
@@ -3514,7 +3762,8 @@ export const commands: Command[] = [
       { description: "初始化一个新项目", code: "npm init -y" },
       { description: "安装依赖包", code: "npm install express" },
       { description: "全局安装工具", code: "npm install -g typescript" },
-      { description: "运行项目脚本", code: "npm run build" }
+      { description: "运行项目脚本", code: "npm run build" },
+      { description: "查看帮助文档", code: "npm --help" }
     ],
     relatedCommands: ["yarn", "pnpm", "npx", "bun"]
   },
@@ -3528,7 +3777,8 @@ export const commands: Command[] = [
       { description: "安装 Snap 包", code: "sudo snap install vlc" },
       { description: "查看已安装的 Snap 包", code: "snap list" },
       { description: "更新 Snap 包", code: "sudo snap refresh vlc" },
-      { description: "卸载 Snap 包", code: "sudo snap remove vlc" }
+      { description: "卸载 Snap 包", code: "sudo snap remove vlc" },
+      { description: "查看帮助文档", code: "snap --help" }
     ],
     relatedCommands: ["flatpak", "apt", "dpkg", "snapcraft"]
   },
@@ -3542,7 +3792,8 @@ export const commands: Command[] = [
       { description: "安装 Flatpak 应用", code: "flatpak install flathub org.gimp.GIMP" },
       { description: "运行 Flatpak 应用", code: "flatpak run org.gimp.GIMP" },
       { description: "更新所有 Flatpak 应用", code: "flatpak update" },
-      { description: "卸载 Flatpak 应用", code: "flatpak uninstall org.gimp.GIMP" }
+      { description: "卸载 Flatpak 应用", code: "flatpak uninstall org.gimp.GIMP" },
+      { description: "查看帮助文档", code: "flatpak --help" }
     ],
     relatedCommands: ["snap", "apt", "dnf", "flathub"]
   },
@@ -3556,7 +3807,8 @@ export const commands: Command[] = [
       { description: "安装 .deb 包文件", code: "sudo dpkg -i package.deb" },
       { description: "查看已安装的包列表", code: "dpkg -l" },
       { description: "查看包安装的文件列表", code: "dpkg -L nginx" },
-      { description: "卸载包", code: "sudo dpkg -r package-name" }
+      { description: "卸载包", code: "sudo dpkg -r package-name" },
+      { description: "查看帮助文档", code: "dpkg --help" }
     ],
     relatedCommands: ["apt", "apt-get", "alien", "debsums"]
   },
@@ -3570,7 +3822,8 @@ export const commands: Command[] = [
       { description: "安装 .rpm 包文件", code: "sudo rpm -ivh package.rpm" },
       { description: "查看已安装的包列表", code: "rpm -qa" },
       { description: "查看包安装的文件列表", code: "rpm -ql nginx" },
-      { description: "卸载包", code: "sudo rpm -e package-name" }
+      { description: "卸载包", code: "sudo rpm -e package-name" },
+      { description: "查看帮助文档", code: "rpm --help" }
     ],
     relatedCommands: ["yum", "dnf", "alien", "rpm2cpio"]
   },
@@ -3584,7 +3837,8 @@ export const commands: Command[] = [
       { description: "安装软件", code: "brew install git" },
       { description: "搜索软件", code: "brew search node" },
       { description: "更新 Homebrew 和所有软件", code: "brew update && brew upgrade" },
-      { description: "卸载软件", code: "brew uninstall git" }
+      { description: "卸载软件", code: "brew uninstall git" },
+      { description: "查看帮助文档", code: "brew --help" }
     ],
     relatedCommands: ["apt", "npm", "pip", "nix"]
   },
@@ -3598,7 +3852,8 @@ export const commands: Command[] = [
       { description: "创建新项目", code: "cargo new my_project" },
       { description: "构建项目", code: "cargo build" },
       { description: "运行项目", code: "cargo run" },
-      { description: "安装二进制工具", code: "cargo install ripgrep" }
+      { description: "安装二进制工具", code: "cargo install ripgrep" },
+      { description: "查看帮助文档", code: "cargo --help" }
     ],
     relatedCommands: ["rustup", "rustc", "npm", "pip"]
   },
@@ -3612,7 +3867,8 @@ export const commands: Command[] = [
       { description: "安装 Ruby gem", code: "gem install rails" },
       { description: "查看已安装的 gem", code: "gem list" },
       { description: "卸载 gem", code: "gem uninstall rails" },
-      { description: "更新所有 gem", code: "gem update" }
+      { description: "更新所有 gem", code: "gem update" },
+      { description: "查看帮助文档", code: "gem --help" }
     ],
     relatedCommands: ["bundler", "ruby", "rvm", "rbenv"]
   },
@@ -3626,7 +3882,8 @@ export const commands: Command[] = [
       { description: "创建新的虚拟环境", code: "conda create -n myenv python=3.11" },
       { description: "激活虚拟环境", code: "conda activate myenv" },
       { description: "安装包", code: "conda install numpy pandas" },
-      { description: "查看所有环境", code: "conda env list" }
+      { description: "查看所有环境", code: "conda env list" },
+      { description: "查看帮助文档", code: "conda --help" }
     ],
     relatedCommands: ["pip", "venv", "virtualenv", "mamba"]
   },
@@ -3640,7 +3897,8 @@ export const commands: Command[] = [
       { description: "编译项目", code: "make" },
       { description: "使用 4 个并行任务编译", code: "make -j4" },
       { description: "安装编译好的程序", code: "sudo make install" },
-      { description: "清理编译产物", code: "make clean" }
+      { description: "清理编译产物", code: "make clean" },
+      { description: "查看帮助文档", code: "make --help" }
     ],
     relatedCommands: ["cmake", "gcc", "nproc", "autoreconf"]
   },
@@ -3654,7 +3912,8 @@ export const commands: Command[] = [
       { description: "在 build 目录中生成 Makefile", code: "cmake -B build" },
       { description: "指定安装路径", code: "cmake -DCMAKE_INSTALL_PREFIX=/usr/local .." },
       { description: "生成后编译", code: "cmake --build build" },
-      { description: "安装编译结果", code: "cmake --install build" }
+      { description: "安装编译结果", code: "cmake --install build" },
+      { description: "查看帮助文档", code: "cmake --help" }
     ],
     relatedCommands: ["make", "gcc", "pkg-config", "ninja"]
   },
@@ -3668,7 +3927,8 @@ export const commands: Command[] = [
       { description: "安装一个包", code: "nix-env -iA nixpkgs.git" },
       { description: "查看已安装的包", code: "nix-env -q" },
       { description: "回滚到上一个系统状态", code: "nix-env --rollback" },
-      { description: "进入临时 Shell 环境", code: "nix-shell -p python3" }
+      { description: "进入临时 Shell 环境", code: "nix-shell -p python3" },
+      { description: "查看帮助文档", code: "nix --help" }
     ],
     relatedCommands: ["apt", "yum", "guix", "docker"]
   },
@@ -3682,7 +3942,8 @@ export const commands: Command[] = [
       { description: "安装一个包", code: "guix install git" },
       { description: "查看可用的包", code: "guix package -A python" },
       { description: "回滚到上一代配置", code: "guix package --roll-back" },
-      { description: "创建一个容器环境", code: "guix shell --container python numpy" }
+      { description: "创建一个容器环境", code: "guix shell --container python numpy" },
+      { description: "查看帮助文档", code: "guix --help" }
     ],
     relatedCommands: ["nix", "apt", "conda", "docker"]
   },
@@ -3696,7 +3957,8 @@ export const commands: Command[] = [
       { description: "安装项目所有依赖", code: "yarn" },
       { description: "添加一个依赖包", code: "yarn add lodash" },
       { description: "添加开发依赖", code: "yarn add -D jest" },
-      { description: "运行脚本命令", code: "yarn run build" }
+      { description: "运行脚本命令", code: "yarn run build" },
+      { description: "查看帮助文档", code: "yarn --help" }
     ],
     relatedCommands: ["npm", "pnpm", "node", "npx"]
   },
@@ -3710,7 +3972,8 @@ export const commands: Command[] = [
       { description: "安装项目依赖", code: "pnpm install" },
       { description: "添加一个依赖包", code: "pnpm add express" },
       { description: "全局安装工具", code: "pnpm add -g typescript" },
-      { description: "运行脚本", code: "pnpm run dev" }
+      { description: "运行脚本", code: "pnpm run dev" },
+      { description: "查看帮助文档", code: "pnpm --help" }
     ],
     relatedCommands: ["npm", "yarn", "node", "npx"]
   },
@@ -3724,7 +3987,8 @@ export const commands: Command[] = [
       { description: "安装项目依赖", code: "composer install" },
       { description: "添加一个依赖包", code: "composer require guzzlehttp/guzzle" },
       { description: "更新所有依赖", code: "composer update" },
-      { description: "创建新项目", code: "composer create-project laravel/laravel myapp" }
+      { description: "创建新项目", code: "composer create-project laravel/laravel myapp" },
+      { description: "查看帮助文档", code: "composer --help" }
     ],
     relatedCommands: ["php", "npm", "pip", "pecl"]
   },
@@ -3738,7 +4002,8 @@ export const commands: Command[] = [
       { description: "编译项目", code: "gradle build" },
       { description: "运行测试", code: "gradle test" },
       { description: "清理构建产物", code: "gradle clean" },
-      { description: "查看所有可用任务", code: "gradle tasks" }
+      { description: "查看所有可用任务", code: "gradle tasks" },
+      { description: "查看帮助文档", code: "gradle --help" }
     ],
     relatedCommands: ["make", "maven", "java", "ant"]
   }
