@@ -1,50 +1,24 @@
-export interface Category {
-  id: string;
-  name: string;
-  icon: string;
-  description: string;
-}
-
-export interface Example {
-  description: string;
-  code: string;
-  output?: string;
-}
-
-export interface Command {
-  name: string;
-  categoryId: string;
-  syntax: string;
-  simpleExplain: string;
-  detailExplain: string;
-  helpOutput?: string;
-  examples: Example[];
-  relatedCommands: string[];
-  dangerLevel?: "warning" | "danger";
-}
-
-export const categories: Category[] = [
-  { id: "file", name: "文件操作", icon: "FolderOpen", description: "文件和目录的创建、查看、复制、移动与删除等基础操作" },
-  { id: "text", name: "文本处理", icon: "FileText", description: "文本内容的查看、搜索、替换、排序与格式化等操作" },
-  { id: "process", name: "进程管理", icon: "Activity", description: "系统进程的查看、控制、调度与管理" },
-  { id: "network", name: "网络工具", icon: "Wifi", description: "网络连接测试、配置、数据传输与诊断工具" },
-  { id: "permission", name: "权限管理", icon: "Shield", description: "文件权限、用户身份切换与访问控制" },
-  { id: "system", name: "系统信息", icon: "Monitor", description: "查看系统硬件、运行状态与环境信息" },
-  { id: "disk", name: "磁盘管理", icon: "HardDrive", description: "磁盘分区、格式化、挂载与存储空间管理" },
-  { id: "compress", name: "压缩解压", icon: "Archive", description: "文件压缩打包与解压还原操作" },
-  { id: "user", name: "用户管理", icon: "Users", description: "用户账号、用户组与登录会话管理" },
-  { id: "package", name: "软件包管理", icon: "Package", description: "软件安装、卸载、更新与依赖管理" }
+export const categories = [
+    { id: "file", name: "文件操作", icon: "FolderOpen", description: "文件和目录的创建、查看、复制、移动与删除等基础操作" },
+    { id: "text", name: "文本处理", icon: "FileText", description: "文本内容的查看、搜索、替换、排序与格式化等操作" },
+    { id: "process", name: "进程管理", icon: "Activity", description: "系统进程的查看、控制、调度与管理" },
+    { id: "network", name: "网络工具", icon: "Wifi", description: "网络连接测试、配置、数据传输与诊断工具" },
+    { id: "permission", name: "权限管理", icon: "Shield", description: "文件权限、用户身份切换与访问控制" },
+    { id: "system", name: "系统信息", icon: "Monitor", description: "查看系统硬件、运行状态与环境信息" },
+    { id: "disk", name: "磁盘管理", icon: "HardDrive", description: "磁盘分区、格式化、挂载与存储空间管理" },
+    { id: "compress", name: "压缩解压", icon: "Archive", description: "文件压缩打包与解压还原操作" },
+    { id: "user", name: "用户管理", icon: "Users", description: "用户账号、用户组与登录会话管理" },
+    { id: "package", name: "软件包管理", icon: "Package", description: "软件安装、卸载、更新与依赖管理" }
 ];
-
-export const commands: Command[] = [
-  // ==================== 文件操作 ====================
-  {
-    name: "ls",
-    categoryId: "file",
-    syntax: "ls [选项] [目录/文件]",
-    simpleExplain: "列出目录下的文件和子目录",
-    detailExplain: "列出指定目录下的文件和子目录。默认只显示文件名，按字母排序。常用参数：-l 显示详细信息（权限、大小、修改时间、属主），-a 显示隐藏文件（以.开头的文件），-h 以人类可读格式显示文件大小，-t 按修改时间排序，-R 递归列出子目录内容。",
-    helpOutput: `Usage: ls [OPTION]... [FILE]...
+export const commands = [
+    // ==================== 文件操作 ====================
+    {
+        name: "ls",
+        categoryId: "file",
+        syntax: "ls [选项] [目录/文件]",
+        simpleExplain: "列出文件夹里的东西，就像打开抽屉看看里面有什么",
+        detailExplain: "就像你打开一个抽屉或书架，把里面的所有物品名称列出来让你看清楚。默认只显示文件名，加上参数后还能看到文件大小、修改时间、权限等详细信息，就像给每件物品贴上标签。",
+        helpOutput: `Usage: ls [OPTION]... [FILE]...
 List information about the FILEs (the current directory by default).
 Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
 
@@ -98,22 +72,22 @@ Mandatory arguments to long options are mandatory for short options too.
                              file-type (--file-type), classify (-F)
 
   -i, --inode                print the index number of each f`,
-    examples: [
-      { description: "列出当前目录下的所有文件和文件夹", code: "ls", output: "Documents  Downloads  Pictures  README.md" },
-      { description: "以详细列表形式显示（含权限、大小、时间）", code: "ls -l", output: "drwxr-xr-x 2 user user 4096 Jan 15 10:30 Documents\n-rw-r--r-- 1 user user 1234 Jan 14 09:00 README.md" },
-      { description: "显示隐藏文件（以点开头的文件）", code: "ls -la" },
-      { description: "按文件大小从大到小排序显示", code: "ls -lhS" },
-      { description: "查看帮助文档", code: "ls --help" }
-    ],
-    relatedCommands: ["cd", "pwd", "tree", "find"]
-  },
-  {
-    name: "cd",
-    categoryId: "file",
-    syntax: "cd [目录路径]",
-    simpleExplain: "切换当前工作目录",
-    detailExplain: "切换当前工作目录到指定路径。不带参数时回到用户家目录，cd - 返回上一次所在目录，cd .. 进入上一级目录。参数支持绝对路径和相对路径。是 shell 内建命令，不产生新进程。",
-    helpOutput: `cd: cd [-L|[-P [-e]] [-@]] [dir]
+        examples: [
+            { description: "列出当前目录下的所有文件和文件夹", code: "ls", output: "Documents  Downloads  Pictures  README.md" },
+            { description: "以详细列表形式显示（含权限、大小、时间）", code: "ls -l", output: "drwxr-xr-x 2 user user 4096 Jan 15 10:30 Documents\n-rw-r--r-- 1 user user 1234 Jan 14 09:00 README.md" },
+            { description: "显示隐藏文件（以点开头的文件）", code: "ls -la" },
+            { description: "按文件大小从大到小排序显示", code: "ls -lhS" },
+            { description: "查看帮助文档", code: "ls --help" }
+        ],
+        relatedCommands: ["cd", "pwd", "tree", "find"]
+    },
+    {
+        name: "cd",
+        categoryId: "file",
+        syntax: "cd [目录路径]",
+        simpleExplain: "换一个目录去工作，就像走进不同的房间",
+        detailExplain: "就像你在家里从一个房间走到另一个房间——你在卧室时只能看到卧室的东西，走到书房就只能看到书房的东西。cd 就是让你在电脑的「目录房间」之间来回走动。",
+        helpOutput: `cd: cd [-L|[-P [-e]] [-@]] [dir]
     Change the shell working directory.
     
     Change the current directory to DIR.  The default DIR is the value of the
@@ -148,22 +122,22 @@ Mandatory arguments to long options are mandatory for short options too.
     Returns 0 if the directory is changed, and if $PWD is set successfully when
     -P is used; non-zero otherwise.
 `,
-    examples: [
-      { description: "进入 Documents 目录", code: "cd ~/Documents" },
-      { description: "回到上一级目录", code: "cd .." },
-      { description: "直接回到家目录", code: "cd ~" },
-      { description: "回到上次所在的目录", code: "cd -" },
-      { description: "查看帮助文档", code: "help cd" }
-    ],
-    relatedCommands: ["ls", "pwd", "mkdir", "pushd"]
-  },
-  {
-    name: "cp",
-    categoryId: "file",
-    syntax: "cp [选项] 源文件 目标位置",
-    simpleExplain: "复制文件或目录",
-    detailExplain: "复制文件或目录到目标位置，源文件保持不变。常用参数：-r 递归复制目录及其内容，-i 覆盖前提示确认，-p 保留权限、属主和时间戳，-v 显示复制过程，-u 仅在源较新时复制。常用于备份和分发文件。",
-    helpOutput: `Usage: cp [OPTION]... [-T] SOURCE DEST
+        examples: [
+            { description: "进入 Documents 目录", code: "cd ~/Documents" },
+            { description: "回到上一级目录", code: "cd .." },
+            { description: "直接回到家目录", code: "cd ~" },
+            { description: "回到上次所在的目录", code: "cd -" },
+            { description: "查看帮助文档", code: "help cd" }
+        ],
+        relatedCommands: ["ls", "pwd", "mkdir", "pushd"]
+    },
+    {
+        name: "cp",
+        categoryId: "file",
+        syntax: "cp [选项] 源文件 目标位置",
+        simpleExplain: "复制文件，就像用复印机复印一份文档",
+        detailExplain: "就像你拿一份重要文件去复印店复印一份副本——原件还在原处不动，多了一份一模一样的复印件放在你指定的地方。可以复制单个文件，也可以整个文件夹一起复制。",
+        helpOutput: `Usage: cp [OPTION]... [-T] SOURCE DEST
   or:  cp [OPTION]... SOURCE... DIRECTORY
   or:  cp [OPTION]... -t DIRECTORY SOURCE...
 Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.
@@ -209,22 +183,22 @@ Mandatory arguments to long options are mandatory for short options too.
   -v, --verbose                explain what is being done
   -x, --one-file-system        stay on this file system
   -Z `,
-    examples: [
-      { description: "复制一个文件到指定目录", code: "cp report.txt /home/user/backup/" },
-      { description: "复制并重命名新文件", code: "cp old_config.txt new_config.txt" },
-      { description: "递归复制整个文件夹", code: "cp -r project_folder/ /home/user/backup/" },
-      { description: "复制时保留文件属性", code: "cp -a important_data /backup/" },
-      { description: "查看帮助文档", code: "cp --help" }
-    ],
-    relatedCommands: ["mv", "rsync", "scp", "ln"]
-  },
-  {
-    name: "mv",
-    categoryId: "file",
-    syntax: "mv [选项] 源文件 目标位置",
-    simpleExplain: "移动或重命名文件",
-    detailExplain: "移动文件或目录到新位置，也可用于重命名。源位置文件会被删除，目标位置生成同名文件。常用参数：-i 覆盖前提示，-f 强制覆盖不提示，-n 不覆盖已存在文件，-v 显示操作过程。跨文件系统移动时实际执行复制后删除。",
-    helpOutput: `Usage: mv [OPTION]... [-T] SOURCE DEST
+        examples: [
+            { description: "复制一个文件到指定目录", code: "cp report.txt /home/user/backup/" },
+            { description: "复制并重命名新文件", code: "cp old_config.txt new_config.txt" },
+            { description: "递归复制整个文件夹", code: "cp -r project_folder/ /home/user/backup/" },
+            { description: "复制时保留文件属性", code: "cp -a important_data /backup/" },
+            { description: "查看帮助文档", code: "cp --help" }
+        ],
+        relatedCommands: ["mv", "rsync", "scp", "ln"]
+    },
+    {
+        name: "mv",
+        categoryId: "file",
+        syntax: "mv [选项] 源文件 目标位置",
+        simpleExplain: "移动或重命名文件，就像把文件搬到另一个抽屉或换个名字",
+        detailExplain: "就像你把一本书从书架的左边移到右边，或者给它重新贴个书名标签。注意：mv 不是复印，是真正的「搬家」，原来的地方就没有了。所以它既可以用来移动文件，也可以用来改名。",
+        helpOutput: `Usage: mv [OPTION]... [-T] SOURCE DEST
   or:  mv [OPTION]... SOURCE... DIRECTORY
   or:  mv [OPTION]... -t DIRECTORY SOURCE...
 Rename SOURCE to DEST, or move SOURCE(s) to DIRECTORY.
@@ -274,22 +248,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/mv>
 or available locally via: info '(coreutils) mv invocation'
 `,
-    examples: [
-      { description: "将文件移动到另一个目录", code: "mv download.pdf ~/Documents/" },
-      { description: "给文件改个名字", code: "mv old_name.txt new_name.txt" },
-      { description: "移动前先询问确认", code: "mv -i important_file /tmp/" },
-      { description: "批量移动所有 txt 文件", code: "mv *.txt ~/text_files/" },
-      { description: "查看帮助文档", code: "mv --help" }
-    ],
-    relatedCommands: ["cp", "rm", "rename", "ln"]
-  },
-  {
-    name: "rm",
-    categoryId: "file",
-    syntax: "rm [选项] 文件/目录",
-    simpleExplain: "删除文件或目录（不可恢复）",
-    detailExplain: "删除文件或目录，删除后不可恢复，无回收站机制。常用参数：-r 递归删除目录及其内容，-f 强制删除不提示，-i 删除前逐个确认，-v 显示删除过程。使用 -rf 时需格外谨慎，避免误删重要数据。常用于清理临时文件和卸载软件。",
-    helpOutput: `Usage: rm [OPTION]... [FILE]...
+        examples: [
+            { description: "将文件移动到另一个目录", code: "mv download.pdf ~/Documents/" },
+            { description: "给文件改个名字", code: "mv old_name.txt new_name.txt" },
+            { description: "移动前先询问确认", code: "mv -i important_file /tmp/" },
+            { description: "批量移动所有 txt 文件", code: "mv *.txt ~/text_files/" },
+            { description: "查看帮助文档", code: "mv --help" }
+        ],
+        relatedCommands: ["cp", "rm", "rename", "ln"]
+    },
+    {
+        name: "rm",
+        categoryId: "file",
+        syntax: "rm [选项] 文件/目录",
+        simpleExplain: "删除文件，就像把废纸扔进碎纸机",
+        detailExplain: "就像你把不要的文件扔进碎纸机——文件会被彻底销毁，而且通常无法恢复！所以用 rm 要特别小心，尤其是加 -rf 参数时，就像拿到了一把大铁锤，敲什么碎什么，没有回收站可以捡回来。",
+        helpOutput: `Usage: rm [OPTION]... [FILE]...
 Remove (unlink) the FILE(s).
 
   -f, --force           ignore nonexistent files and arguments, never prompt
@@ -330,23 +304,23 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/rm>
 or available locally via: info '(coreutils) rm invocation'
 `,
-    examples: [
-      { description: "删除一个普通文件", code: "rm temp_file.txt" },
-      { description: "删除前逐一询问确认", code: "rm -i *.log" },
-      { description: "强制删除且递归删除整个目录（慎用！）", code: "rm -rf old_project/" },
-      { description: "删除空目录", code: "rmdir empty_folder/" },
-      { description: "查看帮助文档", code: "rm --help" }
-    ],
-    relatedCommands: ["cp", "mv", "trash", "shred"],
-    dangerLevel: "danger",
-  },
-  {
-    name: "mkdir",
-    categoryId: "file",
-    syntax: "mkdir [选项] 目录名",
-    simpleExplain: "创建新目录",
-    detailExplain: "创建新目录。常用参数：-p 递归创建多级目录且目录已存在时不报错，-m 设置目录权限（如 -m 755），-v 显示创建过程。常用于初始化项目结构、创建工作目录。一次可创建多个目录。",
-    helpOutput: `Usage: mkdir [OPTION]... DIRECTORY...
+        examples: [
+            { description: "删除一个普通文件", code: "rm temp_file.txt" },
+            { description: "删除前逐一询问确认", code: "rm -i *.log" },
+            { description: "强制删除且递归删除整个目录（慎用！）", code: "rm -rf old_project/" },
+            { description: "删除空目录", code: "rmdir empty_folder/" },
+            { description: "查看帮助文档", code: "rm --help" }
+        ],
+        relatedCommands: ["cp", "mv", "trash", "shred"],
+        dangerLevel: "danger",
+    },
+    {
+        name: "mkdir",
+        categoryId: "file",
+        syntax: "mkdir [选项] 目录名",
+        simpleExplain: "创建新文件夹，就像买个新收纳盒来装东西",
+        detailExplain: "就像你想整理桌面，买了一个新的收纳盒（文件夹），用来分类存放各种文件。可以一次建一个，也可以一次性建好多层嵌套的文件夹，就像买了一套俄罗斯套娃。",
+        helpOutput: `Usage: mkdir [OPTION]... DIRECTORY...
 Create the DIRECTORY(ies), if they do not already exist.
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -366,22 +340,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/mkdir>
 or available locally via: info '(coreutils) mkdir invocation'
 `,
-    examples: [
-      { description: "创建一个名为 photos 的目录", code: "mkdir photos" },
-      { description: "同时创建多层嵌套目录", code: "mkdir -p project/src/components/utils" },
-      { description: "创建目录并设置权限", code: "mkdir -m 755 public_html" },
-      { description: "一次创建多个目录", code: "mkdir dir1 dir2 dir3" },
-      { description: "查看帮助文档", code: "mkdir --help" }
-    ],
-    relatedCommands: ["ls", "cd", "rmdir", "tree"]
-  },
-  {
-    name: "touch",
-    categoryId: "file",
-    syntax: "touch [选项] 文件名",
-    simpleExplain: "创建空文件或更新时间戳",
-    detailExplain: "更新文件的时间戳（访问时间和修改时间）为当前时间，若文件不存在则创建空文件。常用参数：-a 仅更新访问时间，-m 仅更新修改时间，-d 或 -t 指定具体时间，-c 文件不存在时不创建。常用于快速创建空文件或触发构建工具重新编译。",
-    helpOutput: `Usage: touch [OPTION]... FILE...
+        examples: [
+            { description: "创建一个名为 photos 的目录", code: "mkdir photos" },
+            { description: "同时创建多层嵌套目录", code: "mkdir -p project/src/components/utils" },
+            { description: "创建目录并设置权限", code: "mkdir -m 755 public_html" },
+            { description: "一次创建多个目录", code: "mkdir dir1 dir2 dir3" },
+            { description: "查看帮助文档", code: "mkdir --help" }
+        ],
+        relatedCommands: ["ls", "cd", "rmdir", "tree"]
+    },
+    {
+        name: "touch",
+        categoryId: "file",
+        syntax: "touch [选项] 文件名",
+        simpleExplain: "创建空文件或更新文件时间戳，就像新建一张白纸或盖个时间章",
+        detailExplain: "就像你拿出一张全新的空白纸准备写字（创建空文件）；如果文件已经存在，touch 就像在上面盖一个新的时间印章——内容不变，但「最后修改时间」变成现在这个时刻。",
+        helpOutput: `Usage: touch [OPTION]... FILE...
 Update the access and modification times of each FILE to the current time.
 
 A FILE argument that does not exist is created empty, unless -c or -h
@@ -414,22 +388,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/touch>
 or available locally via: info '(coreutils) touch invocation'
 `,
-    examples: [
-      { description: "创建一个空的 notes.txt 文件", code: "touch notes.txt" },
-      { description: "同时创建多个空文件", code: "touch file1.log file2.log file3.log" },
-      { description: "更新已有文件的时间戳", code: "touch existing_file.md" },
-      { description: "将文件时间戳设为指定时间", code: "touch -t 202501011200.00 archive.txt" },
-      { description: "查看帮助文档", code: "touch --help" }
-    ],
-    relatedCommands: ["ls", "stat", "mkdir", "cat"]
-  },
-  {
-    name: "find",
-    categoryId: "file",
-    syntax: "find [路径] [表达式]",
-    simpleExplain: "按条件搜索文件",
-    detailExplain: "在指定目录下按多种条件搜索文件并执行操作。支持按名称（-name）、类型（-type）、大小（-size）、修改时间（-mtime）、属主（-user）、权限（-perm）等条件过滤，可用 -exec 对结果执行命令，-delete 删除匹配文件。常用于批量查找、清理和文件管理。",
-    helpOutput: `Usage: find [-H] [-L] [-P] [-Olevel] [-D debugopts] [path...] [expression]
+        examples: [
+            { description: "创建一个空的 notes.txt 文件", code: "touch notes.txt" },
+            { description: "同时创建多个空文件", code: "touch file1.log file2.log file3.log" },
+            { description: "更新已有文件的时间戳", code: "touch existing_file.md" },
+            { description: "将文件时间戳设为指定时间", code: "touch -t 202501011200.00 archive.txt" },
+            { description: "查看帮助文档", code: "touch --help" }
+        ],
+        relatedCommands: ["ls", "stat", "mkdir", "cat"]
+    },
+    {
+        name: "find",
+        categoryId: "file",
+        syntax: "find [路径] [表达式]",
+        simpleExplain: "全盘搜索文件，就像请侦探在整个房子里找某样东西",
+        detailExplain: "就像你丢了钥匙，请一位超级侦探帮你把整个屋子翻个底朝天找出来。你可以告诉他：「我要找名字带 log 的」「我要找超过 100MB 的文件」「我要找昨天修改过的文件」。find 就是这样一位全能搜索侦探。",
+        helpOutput: `Usage: find [-H] [-L] [-P] [-Olevel] [-D debugopts] [path...] [expression]
 
 Default path is the current directory; default expression is -print.
 Expression may consist of: operators, options, tests, and actions.
@@ -475,22 +449,22 @@ program via the GNU findutils bug-reporting page at
 https://savannah.gnu.org/bugs/?group=findutils or, if
 you have no web access, by sending email to <bug-findutils@gnu.org>.
 `,
-    examples: [
-      { description: "在当前目录下查找所有 txt 文件", code: "find . -name \"*.txt\"", output: "./notes.txt\n./report.txt\n./data/summary.txt" },
-      { description: "查找大于 100MB 的文件", code: "find /home -size +100M" },
-      { description: "查找 7 天内被修改过的文件", code: "find ./project -mtime -7" },
-      { description: "找到后执行删除操作（慎用）", code: "find /tmp -name \"*.tmp\" -delete" },
-      { description: "查看帮助文档", code: "find --help" }
-    ],
-    relatedCommands: ["locate", "grep", "which", "whereis"]
-  },
-  {
-    name: "ln",
-    categoryId: "file",
-    syntax: "ln [选项] 目标 链接名",
-    simpleExplain: "创建文件链接（硬链接或符号链接）",
-    detailExplain: "为文件或目录创建链接。默认创建硬链接，-s 创建符号链接（软链接）。硬链接与源文件共享同一 inode，删除源文件后仍可访问；符号链接是指向目标路径的独立文件，源文件删除后失效。常用参数：-f 强制覆盖已有链接，-v 显示创建过程。常用于为路径较深的文件创建快捷访问入口。",
-    helpOutput: `Usage: ln [OPTION]... [-T] TARGET LINK_NAME
+        examples: [
+            { description: "在当前目录下查找所有 txt 文件", code: "find . -name \"*.txt\"", output: "./notes.txt\n./report.txt\n./data/summary.txt" },
+            { description: "查找大于 100MB 的文件", code: "find /home -size +100M" },
+            { description: "查找 7 天内被修改过的文件", code: "find ./project -mtime -7" },
+            { description: "找到后执行删除操作（慎用）", code: "find /tmp -name \"*.tmp\" -delete" },
+            { description: "查看帮助文档", code: "find --help" }
+        ],
+        relatedCommands: ["locate", "grep", "which", "whereis"]
+    },
+    {
+        name: "ln",
+        categoryId: "file",
+        syntax: "ln [选项] 目标 链接名",
+        simpleExplain: "创建快捷方式，就像在桌面上放一个指向文件的快捷图标",
+        detailExplain: "就像你在电脑桌面上创建一个快捷方式图标——点击它就能打开真实存在的程序。软链接就像 Windows 的快捷方式，是一个「指路牌」；硬链接则更像给同一个人取了两个名字，删掉任何一个另一个还在。",
+        helpOutput: `Usage: ln [OPTION]... [-T] TARGET LINK_NAME
   or:  ln [OPTION]... TARGET
   or:  ln [OPTION]... TARGET... DIRECTORY
   or:  ln [OPTION]... -t DIRECTORY TARGET...
@@ -542,22 +516,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/ln>
 or available locally via: info '(coreutils) ln invocation'
 `,
-    examples: [
-      { description: "创建软链接（类似快捷方式）", code: "ln -s /opt/app/config.yml ~/config_link" },
-      { description: "创建硬链接", code: "ln original.txt hardlink.txt" },
-      { description: "覆盖已存在的链接", code: "ln -sf /new/path target_link" },
-      { description: "在当前目录为远程文件创建链接", code: "ln -s /var/log/syslog ./syslog_link" },
-      { description: "查看帮助文档", code: "ln --help" }
-    ],
-    relatedCommands: ["cp", "mv", "readlink", "stat"]
-  },
-  {
-    name: "pwd",
-    categoryId: "file",
-    syntax: "pwd",
-    simpleExplain: "显示当前工作目录的路径",
-    detailExplain: "打印当前工作目录的绝对路径。默认输出逻辑路径（受 shell 环境影响），-P 参数显示物理路径（解析符号链接后的真实路径）。常用于脚本中获取当前目录、确认所处位置。是 shell 内建命令。",
-    helpOutput: `pwd: pwd [-LP]
+        examples: [
+            { description: "创建软链接（类似快捷方式）", code: "ln -s /opt/app/config.yml ~/config_link" },
+            { description: "创建硬链接", code: "ln original.txt hardlink.txt" },
+            { description: "覆盖已存在的链接", code: "ln -sf /new/path target_link" },
+            { description: "在当前目录为远程文件创建链接", code: "ln -s /var/log/syslog ./syslog_link" },
+            { description: "查看帮助文档", code: "ln --help" }
+        ],
+        relatedCommands: ["cp", "mv", "readlink", "stat"]
+    },
+    {
+        name: "pwd",
+        categoryId: "file",
+        syntax: "pwd",
+        simpleExplain: "告诉你现在站在哪个目录里，就像抬头看门牌号",
+        detailExplain: "就像你走进一栋大楼迷路了，看看墙上的门牌号就知道自己目前在几楼几号房间。pwd 会打印出你当前所在目录的完整路径，让你不会在层层嵌套的文件夹中迷失方向。",
+        helpOutput: `pwd: pwd [-LP]
     Print the name of the current working directory.
     
     Options:
@@ -571,20 +545,20 @@ or available locally via: info '(coreutils) ln invocation'
     Returns 0 unless an invalid option is given or the current directory
     cannot be read.
 `,
-    examples: [
-      { description: "显示当前工作目录的完整路径", code: "pwd", output: "/home/user/Documents/project" },
-      { description: "显示物理路径（解析掉符号链接）", code: "pwd -P" },
-      { description: "查看帮助文档", code: "help pwd" }
-    ],
-    relatedCommands: ["cd", "ls", "dirname", "basename"]
-  },
-  {
-    name: "tree",
-    categoryId: "file",
-    syntax: "tree [选项] [目录]",
-    simpleExplain: "以树形结构显示目录内容",
-    detailExplain: "以树状结构递归显示目录及其子目录内容，直观展示层级关系。常用参数：-d 只显示目录，-L 限制显示深度，-a 显示隐藏文件，-f 显示完整路径，-h 显示文件大小，-C 彩色输出。常用于查看项目结构、文档化目录布局。",
-    helpOutput: `usage: tree [-acdfghilnpqrstuvxACDFJQNSUX] [-L level [-R]] [-H  baseHREF]
+        examples: [
+            { description: "显示当前工作目录的完整路径", code: "pwd", output: "/home/user/Documents/project" },
+            { description: "显示物理路径（解析掉符号链接）", code: "pwd -P" },
+            { description: "查看帮助文档", code: "help pwd" }
+        ],
+        relatedCommands: ["cd", "ls", "dirname", "basename"]
+    },
+    {
+        name: "tree",
+        categoryId: "file",
+        syntax: "tree [选项] [目录]",
+        simpleExplain: "以树形图展示目录结构，就像画一张家族族谱图",
+        detailExplain: "就像给你画一张家族族谱图，一目了然地展示哪个文件夹下面有哪些子文件夹和文件，层级关系清清楚楚。比单纯的 ls 更直观，一眼就能看懂项目的整体结构。",
+        helpOutput: `usage: tree [-acdfghilnpqrstuvxACDFJQNSUX] [-L level [-R]] [-H  baseHREF]
 	[-T title] [-o filename] [-P pattern] [-I pattern] [--gitignore]
 	[--gitfile[=]file] [--matchdirs] [--metafirst] [--ignore-case]
 	[--nolinks] [--hintro[=]file] [--houtro[=]file] [--inodes] [--device]
@@ -637,22 +611,22 @@ or available locally via: info '(coreutils) ln invocation'
   -U            Leave files unsorted.
   -r            Reverse the order of the sort.
   --dirsfirst   List directories before file`,
-    examples: [
-      { description: "以树形结构展示当前目录", code: "tree", output: ".\n├── src/\n│   ├── main.ts\n│   └── utils.ts\n├── package.json\n└── README.md" },
-      { description: "只显示目录，不显示文件", code: "tree -d" },
-      { description: "限制显示深度为 2 层", code: "tree -L 2" },
-      { description: "显示每个文件的大小", code: "tree -h" },
-      { description: "查看帮助文档", code: "tree --help" }
-    ],
-    relatedCommands: ["ls", "find", "pwd", "du"]
-  },
-  {
-    name: "rmdir",
-    categoryId: "file",
-    syntax: "rmdir [选项] 目录名",
-    simpleExplain: "删除空目录",
-    detailExplain: "删除空目录，目录非空时报错，是一种防止误删的安全机制。常用参数：-p 递归删除空的父目录，-v 显示删除过程。如需删除非空目录应使用 rm -r。常用于清理临时目录结构。",
-    helpOutput: `Usage: rmdir [OPTION]... DIRECTORY...
+        examples: [
+            { description: "以树形结构展示当前目录", code: "tree", output: ".\n├── src/\n│   ├── main.ts\n│   └── utils.ts\n├── package.json\n└── README.md" },
+            { description: "只显示目录，不显示文件", code: "tree -d" },
+            { description: "限制显示深度为 2 层", code: "tree -L 2" },
+            { description: "显示每个文件的大小", code: "tree -h" },
+            { description: "查看帮助文档", code: "tree --help" }
+        ],
+        relatedCommands: ["ls", "find", "pwd", "du"]
+    },
+    {
+        name: "rmdir",
+        categoryId: "file",
+        syntax: "rmdir [选项] 目录名",
+        simpleExplain: "删除空文件夹，就像扔掉一个空的收纳盒",
+        detailExplain: "就像你要扔掉一个空的收纳盒子——但如果盒子里还有东西就扔不掉，必须先把东西拿出来。rmdir 只能删除空目录，这其实是一种安全机制，防止你误删还有文件的文件夹。",
+        helpOutput: `Usage: rmdir [OPTION]... DIRECTORY...
 Remove the DIRECTORY(ies), if they are empty.
 
       --ignore-fail-on-non-empty
@@ -669,21 +643,21 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/rmdir>
 or available locally via: info '(coreutils) rmdir invocation'
 `,
-    examples: [
-      { description: "删除空目录", code: "rmdir empty_folder" },
-      { description: "连同空的父目录一起删除", code: "rmdir -p a/b/c/empty_dir" },
-      { description: "忽略非空目录的错误提示", code: "rmdir --ignore-fail-on-non-empty folder*" },
-      { description: "查看帮助文档", code: "rmdir --help" }
-    ],
-    relatedCommands: ["rm", "mkdir", "ls", "tree"]
-  },
-  {
-    name: "stat",
-    categoryId: "file",
-    syntax: "stat [选项] 文件/目录",
-    simpleExplain: "显示文件或文件系统的详细信息",
-    detailExplain: "显示文件或文件系统的详细状态信息，包括大小、块数、inode、权限、属主、访问时间、修改时间、状态改变时间等。常用参数：-f 显示文件系统而非文件信息，-c 按指定格式输出，-t 以简洁格式显示。比 ls -l 提供更完整的时间戳和元数据。常用于排查文件权限和检查时间信息。",
-    helpOutput: `Usage: stat [OPTION]... FILE...
+        examples: [
+            { description: "删除空目录", code: "rmdir empty_folder" },
+            { description: "连同空的父目录一起删除", code: "rmdir -p a/b/c/empty_dir" },
+            { description: "忽略非空目录的错误提示", code: "rmdir --ignore-fail-on-non-empty folder*" },
+            { description: "查看帮助文档", code: "rmdir --help" }
+        ],
+        relatedCommands: ["rm", "mkdir", "ls", "tree"]
+    },
+    {
+        name: "stat",
+        categoryId: "file",
+        syntax: "stat [选项] 文件/目录",
+        simpleExplain: "查看文件的详细身份证信息",
+        detailExplain: "就像你去派出所查一个人的详细户籍信息——不只是名字，还包括出生日期（创建时间）、最近什么时候来过（访问时间）、最后一次修改是什么时候、文件有多大、占用了多少磁盘块等等。比 ls -l 给的信息更全面。",
+        helpOutput: `Usage: stat [OPTION]... FILE...
 Display file or file system status.
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -751,21 +725,21 @@ Valid format sequences for file systems:
   %c   total file nodes in file system
   %d   free file nodes in file system
   %f   fr`,
-    examples: [
-      { description: "查看文件的完整元信息", code: "stat report.pdf", output: "  File: report.pdf\n  Size: 1048576\tBlocks: 2048\nModify: 2025-01-15 10:30:00" },
-      { description: "只显示文件系统信息", code: "stat -f /dev/sda1" },
-      { description: "以简洁格式显示", code: "stat -c '%n %s %y' *.txt" },
-      { description: "查看帮助文档", code: "stat --help" }
-    ],
-    relatedCommands: ["ls", "file", "touch", "wc"]
-  },
-  {
-    name: "file",
-    categoryId: "file",
-    syntax: "file [选项] 文件名",
-    simpleExplain: "识别文件类型",
-    detailExplain: "通过读取文件头部魔术数字（magic number）判断文件真实类型，不依赖扩展名。常用参数：-b 不显示文件名，-i 输出 MIME 类型，-z 查看压缩文件内部，-L 跟随符号链接。常用于识别无扩展名或扩展名错误的文件、验证文件格式。",
-    helpOutput: `Usage: file [OPTION...] [FILE...]
+        examples: [
+            { description: "查看文件的完整元信息", code: "stat report.pdf", output: "  File: report.pdf\n  Size: 1048576\tBlocks: 2048\nModify: 2025-01-15 10:30:00" },
+            { description: "只显示文件系统信息", code: "stat -f /dev/sda1" },
+            { description: "以简洁格式显示", code: "stat -c '%n %s %y' *.txt" },
+            { description: "查看帮助文档", code: "stat --help" }
+        ],
+        relatedCommands: ["ls", "file", "touch", "wc"]
+    },
+    {
+        name: "file",
+        categoryId: "file",
+        syntax: "file [选项] 文件名",
+        simpleExplain: "识别文件的真实类型，就像验钞机识别钞票真伪",
+        detailExplain: "就像一个经验丰富的鉴定专家，不用看文件扩展名，而是通过分析文件内部的「指纹」（魔术数字/头部字节）来判断它到底是什么类型的文件。有时候文件名叫 photo.jpg 但其实是可执行程序，file 一眼就能识破。",
+        helpOutput: `Usage: file [OPTION...] [FILE...]
 Determine type of FILEs.
 
       --help                 display this help and exit
@@ -812,22 +786,22 @@ Determine type of FILEs.
                                    regex    8192 length limit for REGEX searches
   -r, --raw                  don't translate unprintable chars to \\ooo
   -s, --special-files        treat special (block/char devic`,
-    examples: [
-      { description: "识别文件的类型", code: "file mystery_file", output: "mystery_file: PNG image data, 1920 x 1080" },
-      { description: "批量识别多个文件类型", code: "file *" },
-      { description: "显示 MIME 类型", code: "file --mime document.pdf", output: "document.pdf: application/pdf; charset=binary" },
-      { description: "不解压直接识别压缩包内文件类型", code: "file -z backup.tar.gz" },
-      { description: "查看帮助文档", code: "file --help" }
-    ],
-    relatedCommands: ["stat", "ls", "xdg-mime", "mimetype"]
-  },
-  {
-    name: "rename",
-    categoryId: "file",
-    syntax: "rename [选项] 表达式 文件名...",
-    simpleExplain: "批量重命名文件",
-    detailExplain: "按 Perl 正则表达式批量重命名文件。第一个参数为替换规则，后续为待处理文件列表。例如 's/\\.htm/\\.html/' 将 .htm 改为 .html，'s/^/prefix_/' 添加前缀。支持 -n 预览不实际执行，-f 强制覆盖，-v 显示过程。常用于批量修改扩展名、规范化命名。",
-    helpOutput: `Usage: rename [ -h|-m|-V ] [ -v|-n ] [ -f ] [ -e|-E perlexpr]*|perlexpr  [ files ]
+        examples: [
+            { description: "识别文件的类型", code: "file mystery_file", output: "mystery_file: PNG image data, 1920 x 1080" },
+            { description: "批量识别多个文件类型", code: "file *" },
+            { description: "显示 MIME 类型", code: "file --mime document.pdf", output: "document.pdf: application/pdf; charset=binary" },
+            { description: "不解压直接识别压缩包内文件类型", code: "file -z backup.tar.gz" },
+            { description: "查看帮助文档", code: "file --help" }
+        ],
+        relatedCommands: ["stat", "ls", "xdg-mime", "mimetype"]
+    },
+    {
+        name: "rename",
+        categoryId: "file",
+        syntax: "rename [选项] 表达式 文件名...",
+        simpleExplain: "批量给文件改名，就像流水线上统一更换产品标签",
+        detailExplain: "就像工厂流水线上的工人，按照统一的规则给一批产品换标签——比如把所有的 .htm 后缀改成 .html，或者在所有文件名前面加上日期前缀。一条命令搞定几十个文件的改名，效率极高。",
+        helpOutput: `Usage: rename [ -h|-m|-V ] [ -v|-n ] [ -f ] [ -e|-E perlexpr]*|perlexpr  [ files ]
 
 Options:
   -v, --verbose    打印所有被重命名的文件名
@@ -836,22 +810,22 @@ Options:
   -e, --expression  指定 Perl 正则表达式进行替换
   -m, --man        显示完整手册
   -V, --version    显示版本信息`,
-    examples: [
-      { description: "把所有 .htm 文件后缀改为 .html", code: "rename 's/.htm$/.html/' *.htm" },
-      { description: "在所有文件名前加上日期前缀", code: "rename 's/^/2025-01-15-/' *.jpg" },
-      { description: "把文件名中的空格替换为下划线", code: "rename 's/ /_/g' *\\ *" },
-      { description: "预览改名效果（不实际执行）", code: "rename -n 's/.JPG$/.jpg/' *" },
-      { description: "查看帮助文档", code: "rename --help" }
-    ],
-    relatedCommands: ["mv", "mmv", "ln", "basename"]
-  },
-  {
-    name: "locate",
-    categoryId: "file",
-    syntax: "locate [选项] 关键词",
-    simpleExplain: "通过索引数据库快速查找文件",
-    detailExplain: "通过预建的文件名数据库快速查找文件路径，速度远快于 find。数据库由 updatedb 定期更新，可能不含最新文件。常用参数：-i 忽略大小写，-r 使用正则表达式，-c 只输出匹配数量，-d 指定数据库。常用于快速定位已知文件名的路径。",
-    helpOutput: `Usage: locate [OPTION]... [PATTERN]...
+        examples: [
+            { description: "把所有 .htm 文件后缀改为 .html", code: "rename 's/.htm$/.html/' *.htm" },
+            { description: "在所有文件名前加上日期前缀", code: "rename 's/^/2025-01-15-/' *.jpg" },
+            { description: "把文件名中的空格替换为下划线", code: "rename 's/ /_/g' *\\ *" },
+            { description: "预览改名效果（不实际执行）", code: "rename -n 's/.JPG$/.jpg/' *" },
+            { description: "查看帮助文档", code: "rename --help" }
+        ],
+        relatedCommands: ["mv", "mmv", "ln", "basename"]
+    },
+    {
+        name: "locate",
+        categoryId: "file",
+        syntax: "locate [选项] 关键词",
+        simpleExplain: "快速查找文件位置，就像查字典索引而不是逐页翻",
+        detailExplain: "就像你查字典时先看索引页而不是从头翻到尾。locate 维护了一份所有文件的索引数据库，搜起来飞快，秒出结果。缺点是数据库不是实时的，刚创建的文件可能搜不到，需要先 updatedb 更新一下索引。",
+        helpOutput: `Usage: locate [OPTION]... [PATTERN]...
 Search for entries in a mlocate database.
 
   -A, --all            仅显示匹配所有模式的条目
@@ -865,38 +839,38 @@ Search for entries in a mlocate database.
   -w, --wholename      匹配完整路径（默认）
       --help           显示帮助
       --version        显示版本`,
-    examples: [
-      { description: "快速查找所有包含 config 的文件", code: "locate config", output: "/etc/config.conf\n/home/user/.config\n/usr/local/etc/nginx/config" },
-      { description: "统计匹配到的文件数量", code: "locate -c nginx" },
-      { description: "使用正则表达式搜索", code: "locate -r '\\.log$'" },
-      { description: "忽略大小写搜索", code: "locate -i README" },
-      { description: "查看帮助文档", code: "locate --help" }
-    ],
-    relatedCommands: ["find", "updatedb", "which", "whereis"]
-  },
-  {
-    name: "which",
-    categoryId: "file",
-    syntax: "which 命令名",
-    simpleExplain: "查找可执行命令的路径",
-    detailExplain: "在 PATH 环境变量指定的目录中查找可执行文件的位置，返回第一个匹配的完整路径。常用参数：-a 列出所有匹配路径而非仅第一个。常用于排查命令找不到、确认使用的是哪个版本的程序、区分内建命令与外部命令。",
-    helpOutput: `Usage: /usr/bin/which [-as] args
+        examples: [
+            { description: "快速查找所有包含 config 的文件", code: "locate config", output: "/etc/config.conf\n/home/user/.config\n/usr/local/etc/nginx/config" },
+            { description: "统计匹配到的文件数量", code: "locate -c nginx" },
+            { description: "使用正则表达式搜索", code: "locate -r '\\.log$'" },
+            { description: "忽略大小写搜索", code: "locate -i README" },
+            { description: "查看帮助文档", code: "locate --help" }
+        ],
+        relatedCommands: ["find", "updatedb", "which", "whereis"]
+    },
+    {
+        name: "which",
+        categoryId: "file",
+        syntax: "which 命令名",
+        simpleExplain: "找出命令程序的安装位置，就像查某个工具放在哪个工具箱里",
+        detailExplain: "就像你问同事「那个锤子放在哪？」，他告诉你「在三号工具箱」。which 告诉你当你输入一个命令时，系统到底是从哪个路径找到这个可执行程序的。这对排查「为什么我的命令找不到」这类问题特别有用。",
+        helpOutput: `Usage: /usr/bin/which [-as] args
 `,
-    examples: [
-      { description: "查找 python3 的安装路径", code: "which python3", output: "/usr/bin/python3" },
-      { description: "查找所有匹配的位置", code: "which -a node", output: "/usr/local/bin/node\n/home/user/.nvm/versions/node/bin/node" },
-      { description: "查找 git 的位置", code: "which git", output: "/usr/bin/git" },
-      { description: "查看帮助文档", code: "which --help" }
-    ],
-    relatedCommands: ["whereis", "type", "locate", "find"]
-  },
-  {
-    name: "whereis",
-    categoryId: "file",
-    syntax: "whereis [选项] 命令名",
-    simpleExplain: "查找命令相关的程序、手册和源码",
-    detailExplain: "同时查找命令的二进制文件、源代码和 man 手册页路径。比 which 覆盖范围更广，搜索路径包括 /usr、/bin、/etc 等标准目录。常用参数：-b 仅查二进制，-m 仅查手册，-s 仅查源码，-B/-M/-S 指定搜索路径。常用于全面了解命令的安装位置和相关文档。",
-    helpOutput: `
+        examples: [
+            { description: "查找 python3 的安装路径", code: "which python3", output: "/usr/bin/python3" },
+            { description: "查找所有匹配的位置", code: "which -a node", output: "/usr/local/bin/node\n/home/user/.nvm/versions/node/bin/node" },
+            { description: "查找 git 的位置", code: "which git", output: "/usr/bin/git" },
+            { description: "查看帮助文档", code: "which --help" }
+        ],
+        relatedCommands: ["whereis", "type", "locate", "find"]
+    },
+    {
+        name: "whereis",
+        categoryId: "file",
+        syntax: "whereis [选项] 命令名",
+        simpleExplain: "查找命令相关的所有文件（程序、手册、源码）",
+        detailExplain: "就像 which 的升级版——不但告诉你程序本体在哪，还顺便告诉你它的使用说明书（man 手册页）在哪、源代码在哪。相当于一次查询就把跟这个命令有关的所有线索都找到了。",
+        helpOutput: `
 Usage:
  whereis [options] [-BMS <dir>... -f] <name>
 
@@ -919,22 +893,22 @@ Options:
 
 For more details see whereis(1).
 `,
-    examples: [
-      { description: "查找 gcc 相关的所有文件", code: "whereis gcc", output: "gcc: /usr/bin/gcc /usr/lib/gcc /usr/share/man/man1/gcc.1.gz" },
-      { description: "只查找二进制程序", code: "whereis -b python" },
-      { description: "只查找帮助手册", code: "whereis -m curl" },
-      { description: "只查找源代码文件", code: "whereis -s apache2" },
-      { description: "查看帮助文档", code: "whereis --help" }
-    ],
-    relatedCommands: ["which", "type", "find", "locate"]
-  },
-  {
-    name: "basename",
-    categoryId: "file",
-    syntax: "basename 路径 [后缀]",
-    simpleExplain: "提取文件路径中的文件名部分",
-    detailExplain: "从完整路径中提取文件名部分，去除目录前缀，可选去除指定后缀。例如 basename /var/log/syslog 输出 syslog，basename file.txt .txt 输出 file。常用于脚本中处理文件路径、提取纯文件名。",
-    helpOutput: `Usage: basename NAME [SUFFIX]
+        examples: [
+            { description: "查找 gcc 相关的所有文件", code: "whereis gcc", output: "gcc: /usr/bin/gcc /usr/lib/gcc /usr/share/man/man1/gcc.1.gz" },
+            { description: "只查找二进制程序", code: "whereis -b python" },
+            { description: "只查找帮助手册", code: "whereis -m curl" },
+            { description: "只查找源代码文件", code: "whereis -s apache2" },
+            { description: "查看帮助文档", code: "whereis --help" }
+        ],
+        relatedCommands: ["which", "type", "find", "locate"]
+    },
+    {
+        name: "basename",
+        categoryId: "file",
+        syntax: "basename 路径 [后缀]",
+        simpleExplain: "提取文件路径中的文件名部分",
+        detailExplain: "就像从完整地址中只取出门牌号一样——给你一个长长的路径，basename 只把最后那个文件名挑出来给你，还能顺便去掉后缀。",
+        helpOutput: `Usage: basename NAME [SUFFIX]
   or:  basename OPTION... NAME...
 Print NAME with any leading directory components removed.
 If specified, also remove a trailing SUFFIX.
@@ -957,22 +931,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/basename>
 or available locally via: info '(coreutils) basename invocation'
 `,
-    examples: [
-      { description: "提取路径中的文件名", code: "basename /home/user/docs/report.txt", output: "report.txt" },
-      { description: "提取文件名并去掉后缀", code: "basename /home/user/docs/report.txt .txt", output: "report" },
-      { description: "提取目录路径的最后一级", code: "basename /var/log/nginx/", output: "nginx" },
-      { description: "处理多个路径", code: "basename -a /usr/bin/python3 /usr/bin/git", output: "python3\ngit" },
-      { description: "查看帮助文档", code: "basename --help" }
-    ],
-    relatedCommands: ["dirname", "realpath", "readlink", "pwd"]
-  },
-  {
-    name: "dirname",
-    categoryId: "file",
-    syntax: "dirname 路径",
-    simpleExplain: "提取文件路径中的目录部分",
-    detailExplain: "从完整路径中提取目录部分，去除末尾的文件名。例如 dirname /var/log/syslog 输出 /var/log。支持处理相对路径和绝对路径，多个斜杠会被规范化。常用于脚本中获取文件所在目录、构造相关路径。",
-    helpOutput: `Usage: dirname [OPTION] NAME...
+        examples: [
+            { description: "提取路径中的文件名", code: "basename /home/user/docs/report.txt", output: "report.txt" },
+            { description: "提取文件名并去掉后缀", code: "basename /home/user/docs/report.txt .txt", output: "report" },
+            { description: "提取目录路径的最后一级", code: "basename /var/log/nginx/", output: "nginx" },
+            { description: "处理多个路径", code: "basename -a /usr/bin/python3 /usr/bin/git", output: "python3\ngit" },
+            { description: "查看帮助文档", code: "basename --help" }
+        ],
+        relatedCommands: ["dirname", "realpath", "readlink", "pwd"]
+    },
+    {
+        name: "dirname",
+        categoryId: "file",
+        syntax: "dirname 路径",
+        simpleExplain: "提取文件路径中的目录部分",
+        detailExplain: "就像从完整地址中只取出街道名——给你一个完整的文件路径，dirname 把文件名去掉，只留下它所在的目录路径。",
+        helpOutput: `Usage: dirname [OPTION] NAME...
 Output each NAME with its last non-slash component and trailing slashes
 removed; if NAME contains no /'s, output '.' (meaning the current directory).
 
@@ -990,22 +964,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/dirname>
 or available locally via: info '(coreutils) dirname invocation'
 `,
-    examples: [
-      { description: "提取路径中的目录部分", code: "dirname /home/user/docs/report.txt", output: "/home/user/docs" },
-      { description: "处理当前目录下的文件", code: "dirname config.yaml", output: "." },
-      { description: "处理多级路径", code: "dirname /var/log/nginx/access.log", output: "/var/log/nginx" },
-      { description: "处理末尾有斜杠的路径", code: "dirname /home/user/", output: "/home" },
-      { description: "查看帮助文档", code: "dirname --help" }
-    ],
-    relatedCommands: ["basename", "realpath", "pwd", "cd"]
-  },
-  {
-    name: "realpath",
-    categoryId: "file",
-    syntax: "realpath 文件路径",
-    simpleExplain: "显示文件的真实绝对路径",
-    detailExplain: "将给定路径解析为规范的绝对路径，展开符号链接、处理 . 和 .. 引用。常用参数：-s 不展开符号链接，-m 允许路径不存在，-e 要求路径必须存在，--relative-to 输出相对路径。常用于脚本中规范化路径、获取文件真实位置。",
-    helpOutput: `Usage: realpath [OPTION]... FILE...
+        examples: [
+            { description: "提取路径中的目录部分", code: "dirname /home/user/docs/report.txt", output: "/home/user/docs" },
+            { description: "处理当前目录下的文件", code: "dirname config.yaml", output: "." },
+            { description: "处理多级路径", code: "dirname /var/log/nginx/access.log", output: "/var/log/nginx" },
+            { description: "处理末尾有斜杠的路径", code: "dirname /home/user/", output: "/home" },
+            { description: "查看帮助文档", code: "dirname --help" }
+        ],
+        relatedCommands: ["basename", "realpath", "pwd", "cd"]
+    },
+    {
+        name: "realpath",
+        categoryId: "file",
+        syntax: "realpath 文件路径",
+        simpleExplain: "显示文件的真实绝对路径",
+        detailExplain: "就像GPS定位到你的真实位置，不管你怎么绕路——即使路径中包含符号链接或 .. 这样的相对引用，realpath 也会帮你解析出最终的绝对路径。",
+        helpOutput: `Usage: realpath [OPTION]... FILE...
 Print the resolved absolute file name;
 all but the last component must exist
 
@@ -1026,22 +1000,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/realpath>
 or available locally via: info '(coreutils) realpath invocation'
 `,
-    examples: [
-      { description: "显示文件的真实绝对路径", code: "realpath ../neighbor/config.ini", output: "/home/user/project/config.ini" },
-      { description: "解析符号链接的真实路径", code: "realpath /usr/bin/python3", output: "/usr/bin/python3.10" },
-      { description: "去除路径中的 . 和 ..", code: "realpath ./src/../lib/./utils.js", output: "/home/user/project/lib/utils.js" },
-      { description: "检查多个文件的真实路径", code: "realpath file1.txt file2.txt" },
-      { description: "查看帮助文档", code: "realpath --help" }
-    ],
-    relatedCommands: ["readlink", "basename", "dirname", "pwd"]
-  },
-  {
-    name: "readlink",
-    categoryId: "file",
-    syntax: "readlink 链接文件",
-    simpleExplain: "查看符号链接指向的真实目标",
-    detailExplain: "输出符号链接指向的目标路径。默认只处理一层链接，-f 参数递归解析所有符号链接并输出规范化的绝对路径，-e 要求目标必须存在，-n 不输出换行。常用于脚本中获取符号链接的真实目标、验证链接有效性。",
-    helpOutput: `Usage: readlink [OPTION]... FILE...
+        examples: [
+            { description: "显示文件的真实绝对路径", code: "realpath ../neighbor/config.ini", output: "/home/user/project/config.ini" },
+            { description: "解析符号链接的真实路径", code: "realpath /usr/bin/python3", output: "/usr/bin/python3.10" },
+            { description: "去除路径中的 . 和 ..", code: "realpath ./src/../lib/./utils.js", output: "/home/user/project/lib/utils.js" },
+            { description: "检查多个文件的真实路径", code: "realpath file1.txt file2.txt" },
+            { description: "查看帮助文档", code: "realpath --help" }
+        ],
+        relatedCommands: ["readlink", "basename", "dirname", "pwd"]
+    },
+    {
+        name: "readlink",
+        categoryId: "file",
+        syntax: "readlink 链接文件",
+        simpleExplain: "查看符号链接指向的真实目标",
+        detailExplain: "就像追踪快递的最终目的地——符号链接就像一个转发地址，readlink 帮你看到它到底指向哪里，而不是停留在转发点。",
+        helpOutput: `Usage: readlink [OPTION]... FILE...
 Print value of a symbolic link or canonical file name
 
   -f, --canonicalize            canonicalize by following every symlink in
@@ -1066,22 +1040,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/readlink>
 or available locally via: info '(coreutils) readlink invocation'
 `,
-    examples: [
-      { description: "查看符号链接指向的目标", code: "readlink /usr/bin/python", output: "/usr/bin/python3" },
-      { description: "递归解析多层符号链接", code: "readlink -f /usr/bin/python", output: "/usr/bin/python3.10" },
-      { description: "查看多个链接的目标", code: "readlink link1 link2 link3" },
-      { description: "显示链接的详细信息", code: "readlink -e /usr/bin/python3" },
-      { description: "查看帮助文档", code: "readlink --help" }
-    ],
-    relatedCommands: ["ln", "realpath", "ls", "stat"]
-  },
-  {
-    name: "install",
-    categoryId: "file",
-    syntax: "install [选项] 源文件 目标",
-    simpleExplain: "复制文件并设置权限",
-    detailExplain: "复制文件到目标位置并同时设置权限、属主等属性，常用于 Makefile 中的安装步骤。常用参数：-m 设置权限（如 -m 755），-o 设置属主，-g 设置属组，-d 创建目录，-p 保留时间戳。结合了 cp、chmod、chown 的功能，常用于软件安装和部署。",
-    helpOutput: `Usage: install [OPTION]... [-T] SOURCE DEST
+        examples: [
+            { description: "查看符号链接指向的目标", code: "readlink /usr/bin/python", output: "/usr/bin/python3" },
+            { description: "递归解析多层符号链接", code: "readlink -f /usr/bin/python", output: "/usr/bin/python3.10" },
+            { description: "查看多个链接的目标", code: "readlink link1 link2 link3" },
+            { description: "显示链接的详细信息", code: "readlink -e /usr/bin/python3" },
+            { description: "查看帮助文档", code: "readlink --help" }
+        ],
+        relatedCommands: ["ln", "realpath", "ls", "stat"]
+    },
+    {
+        name: "install",
+        categoryId: "file",
+        syntax: "install [选项] 源文件 目标",
+        simpleExplain: "复制文件并设置权限",
+        detailExplain: "就像搬家时不仅搬东西还顺便换了门锁——install 不仅能复制文件，还能同时设置文件权限、所有者等属性，一步到位。",
+        helpOutput: `Usage: install [OPTION]... [-T] SOURCE DEST
   or:  install [OPTION]... SOURCE... DIRECTORY
   or:  install [OPTION]... -t DIRECTORY SOURCE...
   or:  install [OPTION]... -d DIRECTORY...
@@ -1134,22 +1108,22 @@ the VERSION_CONTROL environment variable.  Here are the values:
   none, off       never make backups (even if --backup is given)
   numbered, t     make numbered backups
   existing, ni`,
-    examples: [
-      { description: "复制文件并设置权限为755", code: "install -m 755 myapp /usr/local/bin/" },
-      { description: "复制文件并设置所有者", code: "install -o root -g root script.sh /usr/local/bin/" },
-      { description: "创建目录并设置权限", code: "install -d -m 750 /etc/myapp/config" },
-      { description: "备份目标文件后再复制", code: "install -b -m 644 config.ini /etc/myapp/" },
-      { description: "查看帮助文档", code: "install --help" }
-    ],
-    relatedCommands: ["cp", "chmod", "chown", "mkdir"]
-  },
-  {
-    name: "shred",
-    categoryId: "file",
-    syntax: "shred [选项] 文件",
-    simpleExplain: "安全删除文件使其无法恢复",
-    detailExplain: "通过多次覆写文件内容使数据难以恢复，比 rm 更安全地删除敏感数据。常用参数：-n 指定覆写次数，-z 最后用零覆写以隐藏 shred 操作，-u 覆写后删除文件，-v 显示过程。对日志结构文件系统、SSD 和带快照的文件系统效果有限。常用于销毁机密文件。",
-    helpOutput: `Usage: shred [OPTION]... FILE...
+        examples: [
+            { description: "复制文件并设置权限为755", code: "install -m 755 myapp /usr/local/bin/" },
+            { description: "复制文件并设置所有者", code: "install -o root -g root script.sh /usr/local/bin/" },
+            { description: "创建目录并设置权限", code: "install -d -m 750 /etc/myapp/config" },
+            { description: "备份目标文件后再复制", code: "install -b -m 644 config.ini /etc/myapp/" },
+            { description: "查看帮助文档", code: "install --help" }
+        ],
+        relatedCommands: ["cp", "chmod", "chown", "mkdir"]
+    },
+    {
+        name: "shred",
+        categoryId: "file",
+        syntax: "shred [选项] 文件",
+        simpleExplain: "安全删除文件使其无法恢复",
+        detailExplain: "就像用碎纸机把文件碎成粉末——普通的 rm 删除只是把目录标记删了，数据还在磁盘上；shred 会反复覆写文件内容，让数据恢复工具也无力回天。",
+        helpOutput: `Usage: shred [OPTION]... FILE...
 Overwrite the specified FILE(s) repeatedly, in order to make it harder
 for even very expensive hardware probing to recover the data.
 
@@ -1188,23 +1162,23 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/shred>
 or available locally via: info '(coreutils) shred invocation'
 `,
-    examples: [
-      { description: "安全删除文件（覆写3次后删除）", code: "shred -u secret.txt" },
-      { description: "覆写25次后删除", code: "shred -v -n 25 -u secret.txt" },
-      { description: "只覆写不删除文件", code: "shred -n 5 important.dat" },
-      { description: "安全删除整个分区数据", code: "shred -vfz /dev/sdb1" },
-      { description: "查看帮助文档", code: "shred --help" }
-    ],
-    relatedCommands: ["rm", "dd", "wipe", "cp"],
-    dangerLevel: "danger"
-  },
-  {
-    name: "chroot",
-    categoryId: "file",
-    syntax: "chroot 新根目录 [命令]",
-    simpleExplain: "切换根目录运行程序",
-    detailExplain: "将指定目录作为根目录运行程序，程序在该目录内运行，无法访问外部真实文件系统。需要 root 权限，目标目录需包含必要的运行库和设备文件。常用参数：--userspec 指定用户和组。常用于系统修复、构建沙箱环境、测试和交叉编译。",
-    helpOutput: `Usage: chroot [OPTION] NEWROOT [COMMAND [ARG]...]
+        examples: [
+            { description: "安全删除文件（覆写3次后删除）", code: "shred -u secret.txt" },
+            { description: "覆写25次后删除", code: "shred -v -n 25 -u secret.txt" },
+            { description: "只覆写不删除文件", code: "shred -n 5 important.dat" },
+            { description: "安全删除整个分区数据", code: "shred -vfz /dev/sdb1" },
+            { description: "查看帮助文档", code: "shred --help" }
+        ],
+        relatedCommands: ["rm", "dd", "wipe", "cp"],
+        dangerLevel: "danger"
+    },
+    {
+        name: "chroot",
+        categoryId: "file",
+        syntax: "chroot 新根目录 [命令]",
+        simpleExplain: "切换根目录运行程序",
+        detailExplain: "就像在一个平行世界里工作——chroot 把指定的目录当作根目录 /，程序在这个新世界里运行，看不到外面的真实文件系统。常用于系统修复、测试环境搭建等场景。",
+        helpOutput: `Usage: chroot [OPTION] NEWROOT [COMMAND [ARG]...]
   or:  chroot OPTION
 Run COMMAND with root directory set to NEWROOT.
 
@@ -1227,23 +1201,23 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/chroot>
 or available locally via: info '(coreutils) chroot invocation'
 `,
-    examples: [
-      { description: "切换到新根目录并运行shell", code: "chroot /mnt/sysroot /bin/bash" },
-      { description: "在新根目录中执行指定命令", code: "chroot /mnt/sysroot apt update" },
-      { description: "指定用户和组运行", code: "chroot --userspec=user:group /mnt/newroot /bin/sh" },
-      { description: "切换根目录进行系统修复", code: "chroot /mnt/recovery /bin/bash" },
-      { description: "查看帮助文档", code: "chroot --help" }
-    ],
-    relatedCommands: ["mount", "su", "docker", "ssh"],
-    dangerLevel: "warning"
-  },
-  {
-    name: "pushd",
-    categoryId: "file",
-    syntax: "pushd 目录",
-    simpleExplain: "切换目录并保存当前目录到栈中",
-    detailExplain: "将当前目录压入目录栈并切换到指定目录，结合 popd 可在多个目录间快速切换。不带参数时交换栈顶两个目录。常用参数：-n 仅压栈不切换目录，+N/-N 指定栈中位置。常用于在多个工作目录间频繁切换、脚本中保存和恢复目录状态。",
-    helpOutput: `pushd: pushd [-n] [+N | -N | dir]
+        examples: [
+            { description: "切换到新根目录并运行shell", code: "chroot /mnt/sysroot /bin/bash" },
+            { description: "在新根目录中执行指定命令", code: "chroot /mnt/sysroot apt update" },
+            { description: "指定用户和组运行", code: "chroot --userspec=user:group /mnt/newroot /bin/sh" },
+            { description: "切换根目录进行系统修复", code: "chroot /mnt/recovery /bin/bash" },
+            { description: "查看帮助文档", code: "chroot --help" }
+        ],
+        relatedCommands: ["mount", "su", "docker", "ssh"],
+        dangerLevel: "warning"
+    },
+    {
+        name: "pushd",
+        categoryId: "file",
+        syntax: "pushd 目录",
+        simpleExplain: "切换目录并保存当前目录到栈中",
+        detailExplain: "就像在迷宫里留下面包屑标记来时的路——pushd 不仅切换到新目录，还会把当前目录记住，方便你之后用 popd 原路返回。",
+        helpOutput: `pushd: pushd [-n] [+N | -N | dir]
     Add directories to stack.
     
     Adds a directory to the top of the directory stack, or rotates
@@ -1272,22 +1246,22 @@ or available locally via: info '(coreutils) chroot invocation'
     Returns success unless an invalid argument is supplied or the directory
     change fails.
 `,
-    examples: [
-      { description: "切换到新目录并保存当前目录", code: "pushd /var/log", output: "/var/log ~" },
-      { description: "与当前目录交换", code: "pushd +1" },
-      { description: "切换到项目目录", code: "pushd ~/projects/myapp" },
-      { description: "在多个目录间快速切换", code: "pushd /etc/nginx" },
-      { description: "查看帮助文档", code: "help pushd" }
-    ],
-    relatedCommands: ["popd", "dirs", "cd", "pwd"]
-  },
-  {
-    name: "popd",
-    categoryId: "file",
-    syntax: "popd",
-    simpleExplain: "返回到之前pushd保存的目录",
-    detailExplain: "从目录栈中弹出栈顶目录并切换到新的栈顶目录，与 pushd 配合使用。不带参数时弹出当前目录并回到上一个目录。常用参数：-n 仅弹出栈顶不切换目录，+N/-N 删除栈中指定位置的目录。常用于脚本中恢复之前的工作目录。",
-    helpOutput: `popd: popd [-n] [+N | -N]
+        examples: [
+            { description: "切换到新目录并保存当前目录", code: "pushd /var/log", output: "/var/log ~" },
+            { description: "与当前目录交换", code: "pushd +1" },
+            { description: "切换到项目目录", code: "pushd ~/projects/myapp" },
+            { description: "在多个目录间快速切换", code: "pushd /etc/nginx" },
+            { description: "查看帮助文档", code: "help pushd" }
+        ],
+        relatedCommands: ["popd", "dirs", "cd", "pwd"]
+    },
+    {
+        name: "popd",
+        categoryId: "file",
+        syntax: "popd",
+        simpleExplain: "返回到之前pushd保存的目录",
+        detailExplain: "就像沿着面包屑回到迷宫的起点——popd 会从目录栈中取出上次 pushd 保存的目录，让你轻松回到之前的工作位置。",
+        helpOutput: `popd: popd [-n] [+N | -N]
     Remove directories from stack.
     
     Removes entries from the directory stack.  With no arguments, removes
@@ -1312,22 +1286,22 @@ or available locally via: info '(coreutils) chroot invocation'
     Returns success unless an invalid argument is supplied or the directory
     change fails.
 `,
-    examples: [
-      { description: "返回上一个pushd保存的目录", code: "popd", output: "~" },
-      { description: "跳转到栈中第2个目录", code: "popd +1" },
-      { description: "删除栈顶目录但不切换", code: "popd -n" },
-      { description: "与pushd配合在多个目录间跳转", code: "popd" },
-      { description: "查看帮助文档", code: "help popd" }
-    ],
-    relatedCommands: ["pushd", "dirs", "cd", "pwd"]
-  },
-  {
-    name: "dirs",
-    categoryId: "file",
-    syntax: "dirs",
-    simpleExplain: "显示目录栈的内容",
-    detailExplain: "显示目录栈的内容。目录栈由 pushd 命令压入、popd 命令弹出，dirs 列出当前栈中保存的所有目录路径。常用参数：-c 清空目录栈，-v 显示带行号的列表，-l 显示完整路径。常用于在多个工作目录间快速切换时查看可跳转的目录列表。",
-    helpOutput: `dirs: dirs [-clpv] [+N] [-N]
+        examples: [
+            { description: "返回上一个pushd保存的目录", code: "popd", output: "~" },
+            { description: "跳转到栈中第2个目录", code: "popd +1" },
+            { description: "删除栈顶目录但不切换", code: "popd -n" },
+            { description: "与pushd配合在多个目录间跳转", code: "popd" },
+            { description: "查看帮助文档", code: "help popd" }
+        ],
+        relatedCommands: ["pushd", "dirs", "cd", "pwd"]
+    },
+    {
+        name: "dirs",
+        categoryId: "file",
+        syntax: "dirs",
+        simpleExplain: "显示目录栈的内容",
+        detailExplain: "就像查看你在迷宫里留下的所有面包屑标记——dirs 会列出所有用 pushd 保存过的目录，让你清楚自己可以在哪些目录之间快速跳转。",
+        helpOutput: `dirs: dirs [-clpv] [+N] [-N]
     Display directory stack.
     
     Display the list of currently remembered directories.  Directories
@@ -1354,22 +1328,22 @@ or available locally via: info '(coreutils) chroot invocation'
     Exit Status:
     Returns success unless an invalid option is supplied or an error occurs.
 `,
-    examples: [
-      { description: "显示目录栈", code: "dirs", output: "~ /var/log /etc/nginx" },
-      { description: "每行显示一个目录", code: "dirs -p", output: "~\n/var/log\n/etc/nginx" },
-      { description: "显示目录栈中的索引号", code: "dirs -v", output: "0  ~\n1  /var/log\n2  /etc/nginx" },
-      { description: "只显示第N个目录", code: "dirs +1" },
-      { description: "查看帮助文档", code: "help dirs" }
-    ],
-    relatedCommands: ["pushd", "popd", "cd", "pwd"]
-  },
-  {
-    name: "md5sum",
-    categoryId: "file",
-    syntax: "md5sum 文件",
-    simpleExplain: "计算文件的MD5校验和",
-    detailExplain: "计算并校验文件的 MD5 散列值。MD5 根据文件内容生成 128 位（32 位十六进制字符）的固定长度摘要，文件内容任何改动都会导致散列值完全变化。常用方式：md5sum file 生成校验和，md5sum -c checksum.md5 校验文件完整性。常用于验证文件下载是否完整或检测文件是否被篡改。",
-    helpOutput: `Usage: md5sum [OPTION]... [FILE]...
+        examples: [
+            { description: "显示目录栈", code: "dirs", output: "~ /var/log /etc/nginx" },
+            { description: "每行显示一个目录", code: "dirs -p", output: "~\n/var/log\n/etc/nginx" },
+            { description: "显示目录栈中的索引号", code: "dirs -v", output: "0  ~\n1  /var/log\n2  /etc/nginx" },
+            { description: "只显示第N个目录", code: "dirs +1" },
+            { description: "查看帮助文档", code: "help dirs" }
+        ],
+        relatedCommands: ["pushd", "popd", "cd", "pwd"]
+    },
+    {
+        name: "md5sum",
+        categoryId: "file",
+        syntax: "md5sum 文件",
+        simpleExplain: "计算文件的MD5校验和",
+        detailExplain: "就像给文件拍一个指纹来验证身份——md5sum 会根据文件内容生成一串唯一的字符，只要文件内容有一丁点变化，这串字符就会完全不同。常用来验证文件下载是否完整。",
+        helpOutput: `Usage: md5sum [OPTION]... [FILE]...
 Print or check MD5 (128-bit) checksums.
 
 With no FILE, or when FILE is -, read standard input.
@@ -1403,22 +1377,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/md5sum>
 or available locally via: info '(coreutils) md5sum invocation'
 `,
-    examples: [
-      { description: "计算文件的MD5值", code: "md5sum ubuntu-22.04.iso", output: "a4acf81002b7c7ce2e2e5f1b2c5c5c5c  ubuntu-22.04.iso" },
-      { description: "校验文件与MD5值是否匹配", code: "md5sum -c checksum.md5", output: "ubuntu-22.04.iso: OK" },
-      { description: "计算多个文件的MD5", code: "md5sum file1.txt file2.txt > checksums.md5" },
-      { description: "从标准输入计算MD5", code: "echo \"hello\" | md5sum", output: "b1946ac92492d2347c6235b4d2611184  -" },
-      { description: "查看帮助文档", code: "md5sum --help" }
-    ],
-    relatedCommands: ["sha256sum", "cksum", "sha1sum", "file"]
-  },
-  {
-    name: "sha256sum",
-    categoryId: "file",
-    syntax: "sha256sum 文件",
-    simpleExplain: "计算文件的SHA256校验和",
-    detailExplain: "计算并校验文件的 SHA256 散列值。SHA256 生成 256 位（64 位十六进制字符）摘要，安全性高于 MD5，碰撞概率极低。常用方式：sha256sum file 生成校验和，sha256sum -c checksum.sha256 校验文件完整性。是当前推荐的文件校验方式，常用于验证系统镜像、密钥文件等关键数据。",
-    helpOutput: `Usage: sha256sum [OPTION]... [FILE]...
+        examples: [
+            { description: "计算文件的MD5值", code: "md5sum ubuntu-22.04.iso", output: "a4acf81002b7c7ce2e2e5f1b2c5c5c5c  ubuntu-22.04.iso" },
+            { description: "校验文件与MD5值是否匹配", code: "md5sum -c checksum.md5", output: "ubuntu-22.04.iso: OK" },
+            { description: "计算多个文件的MD5", code: "md5sum file1.txt file2.txt > checksums.md5" },
+            { description: "从标准输入计算MD5", code: "echo \"hello\" | md5sum", output: "b1946ac92492d2347c6235b4d2611184  -" },
+            { description: "查看帮助文档", code: "md5sum --help" }
+        ],
+        relatedCommands: ["sha256sum", "cksum", "sha1sum", "file"]
+    },
+    {
+        name: "sha256sum",
+        categoryId: "file",
+        syntax: "sha256sum 文件",
+        simpleExplain: "计算文件的SHA256校验和",
+        detailExplain: "就像给文件做DNA鉴定，比MD5更精确——SHA256 生成的校验和更长更安全，几乎不可能出现两个不同文件产生相同校验和的情况，是当前最推荐的文件校验方式。",
+        helpOutput: `Usage: sha256sum [OPTION]... [FILE]...
 Print or check SHA256 (256-bit) checksums.
 
 With no FILE, or when FILE is -, read standard input.
@@ -1452,22 +1426,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/sha256sum>
 or available locally via: info '(coreutils) sha2 utilities'
 `,
-    examples: [
-      { description: "计算文件的SHA256值", code: "sha256sum ubuntu-22.04.iso", output: "ab4acf81002b7c7ce2e2e5f1b2c5c5c5c...  ubuntu-22.04.iso" },
-      { description: "校验文件完整性", code: "sha256sum -c SHA256SUMS", output: "ubuntu-22.04.iso: OK" },
-      { description: "计算多个文件的SHA256", code: "sha256sum *.tar.gz > checksums.sha256" },
-      { description: "从标准输入计算SHA256", code: "echo \"hello\" | sha256sum" },
-      { description: "查看帮助文档", code: "sha256sum --help" }
-    ],
-    relatedCommands: ["md5sum", "cksum", "sha1sum", "gpg"]
-  },
-  {
-    name: "xargs",
-    categoryId: "file",
-    syntax: "xargs [选项] [命令]",
-    simpleExplain: "将标准输入转换为命令参数",
-    detailExplain: "从标准输入读取数据并作为参数传递给后续命令。解决管道只能传递 stdin 而不能传递命令行参数的问题。常用参数：-n 指定每次传递的参数个数，-I 指定替换字符串，-d 指定分隔符，-P 并行执行。典型用法：find . -name \"*.log\" | xargs rm 批量删除查找到的文件。",
-    helpOutput: `Usage: xargs [OPTION]... COMMAND [INITIAL-ARGS]...
+        examples: [
+            { description: "计算文件的SHA256值", code: "sha256sum ubuntu-22.04.iso", output: "ab4acf81002b7c7ce2e2e5f1b2c5c5c5c...  ubuntu-22.04.iso" },
+            { description: "校验文件完整性", code: "sha256sum -c SHA256SUMS", output: "ubuntu-22.04.iso: OK" },
+            { description: "计算多个文件的SHA256", code: "sha256sum *.tar.gz > checksums.sha256" },
+            { description: "从标准输入计算SHA256", code: "echo \"hello\" | sha256sum" },
+            { description: "查看帮助文档", code: "sha256sum --help" }
+        ],
+        relatedCommands: ["md5sum", "cksum", "sha1sum", "gpg"]
+    },
+    {
+        name: "xargs",
+        categoryId: "file",
+        syntax: "xargs [选项] [命令]",
+        simpleExplain: "将标准输入转换为命令参数",
+        detailExplain: "就像流水线工人把传送带上的零件一个个递给下一道工序——xargs 把前一个命令的输出变成后一个命令的参数，让两个命令能够无缝协作。",
+        helpOutput: `Usage: xargs [OPTION]... COMMAND [INITIAL-ARGS]...
 Run COMMAND with arguments INITIAL-ARGS and more arguments read from input.
 
 Mandatory and optional arguments to long options are also
@@ -1513,24 +1487,23 @@ Please see also the documentation at https://www.gnu.org/software/findutils/.
 You can report (and track progress on fixing) bugs in the "xargs"
 program via the GNU findutils bug-reporting page at
 ht`,
-    examples: [
-      { description: "查找并删除所有.log文件", code: "find . -name \"*.log\" | xargs rm" },
-      { description: "每行一个参数执行命令", code: "find . -name \"*.txt\" | xargs -I {} cp {} /backup/" },
-      { description: "限制每次传递的参数数量", code: "echo \"a b c d e\" | xargs -n 2 echo", output: "a b\nc d\ne" },
-      { description: "并行执行任务", code: "find . -name \"*.jpg\" | xargs -P 4 -I {} convert {} {}.png" },
-      { description: "查看帮助文档", code: "xargs --help" }
-    ],
-    relatedCommands: ["find", "grep", "exec", "parallel"]
-  },
-
-  // ==================== 文本处理 ====================
-  {
-    name: "cat",
-    categoryId: "text",
-    syntax: "cat [选项] 文件名...",
-    simpleExplain: "查看文件全部内容",
-    detailExplain: "顺序读取文件内容并输出到标准输出。可同时显示多个文件，按顺序拼接输出。常用参数：-n 显示行号，-b 仅对非空行编号，-s 压缩连续空行，-A 显示不可见字符。适合查看小型文件；大文件应使用 less 或 more 分页查看。",
-    helpOutput: `Usage: cat [OPTION]... [FILE]...
+        examples: [
+            { description: "查找并删除所有.log文件", code: "find . -name \"*.log\" | xargs rm" },
+            { description: "每行一个参数执行命令", code: "find . -name \"*.txt\" | xargs -I {} cp {} /backup/" },
+            { description: "限制每次传递的参数数量", code: "echo \"a b c d e\" | xargs -n 2 echo", output: "a b\nc d\ne" },
+            { description: "并行执行任务", code: "find . -name \"*.jpg\" | xargs -P 4 -I {} convert {} {}.png" },
+            { description: "查看帮助文档", code: "xargs --help" }
+        ],
+        relatedCommands: ["find", "grep", "exec", "parallel"]
+    },
+    // ==================== 文本处理 ====================
+    {
+        name: "cat",
+        categoryId: "text",
+        syntax: "cat [选项] 文件名...",
+        simpleExplain: "查看文件全部内容，就像一口气读完一本小册子",
+        detailExplain: "就像你拿起一本薄薄的笔记本，一页一页从头看到尾，把所有内容都显示在屏幕上。适合查看小型文件的内容，如果文件很大，屏幕上内容会飞速滚动根本看不清——这时候就该用 less 或 more 了。",
+        helpOutput: `Usage: cat [OPTION]... [FILE]...
 Concatenate FILE(s) to standard output.
 
 With no FILE, or when FILE is -, read standard input.
@@ -1557,22 +1530,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/cat>
 or available locally via: info '(coreutils) cat invocation'
 `,
-    examples: [
-      { description: "显示文件的全部内容", code: "cat config.json" },
-      { description: "显示多个文件并合并输出", code: "cat header.txt body.txt footer.txt > full_doc.txt" },
-      { description: "带行号显示文件内容", code: "cat -n main.py" },
-      { description: "压缩连续空行为一行", code: "cat -s messy_text.txt" },
-      { description: "查看帮助文档", code: "cat --help" }
-    ],
-    relatedCommands: ["less", "more", "head", "tail"]
-  },
-  {
-    name: "grep",
-    categoryId: "text",
-    syntax: "grep [选项] 模式 文件...",
-    simpleExplain: "在文本中搜索匹配的行",
-    detailExplain: "在文本中搜索匹配指定模式的行并输出。支持基本正则、扩展正则（-E）和固定字符串（-F）。常用参数：-i 忽略大小写，-v 反向匹配（输出不包含模式的行），-r 递归搜索目录，-n 显示行号，-c 统计匹配行数，-o 仅输出匹配部分。是日志分析和文本检索的核心工具。",
-    helpOutput: `Usage: grep [OPTION]... PATTERNS [FILE]...
+        examples: [
+            { description: "显示文件的全部内容", code: "cat config.json" },
+            { description: "显示多个文件并合并输出", code: "cat header.txt body.txt footer.txt > full_doc.txt" },
+            { description: "带行号显示文件内容", code: "cat -n main.py" },
+            { description: "压缩连续空行为一行", code: "cat -s messy_text.txt" },
+            { description: "查看帮助文档", code: "cat --help" }
+        ],
+        relatedCommands: ["less", "more", "head", "tail"]
+    },
+    {
+        name: "grep",
+        categoryId: "text",
+        syntax: "grep [选项] 模式 文件...",
+        simpleExplain: "在文本中搜索关键词，就像用荧光笔在书中标记所有关键词出现的地方",
+        detailExplain: "就像你拿着一本书和一个荧光笔，把书中所有包含「错误」这个词的行都标记高亮出来。grep 是 Linux 中最常用的文本搜索工具，支持正则表达式，能在海量日志中瞬间定位到你想要的那一行。",
+        helpOutput: `Usage: grep [OPTION]... PATTERNS [FILE]...
 Search for PATTERNS in each FILE.
 Example: grep -i 'hello world' menu.h main.c
 PATTERNS can contain multiple patterns separated by newlines.
@@ -1627,23 +1600,23 @@ Output control:
   -Z, --null                print 0 byte after FILE name
 
 Context con`,
-    examples: [
-      { description: "在文件中搜索 error 关键词", code: "grep \"error\" app.log" },
-      { description: "忽略大小写搜索", code: "grep -i \"warning\" system.log" },
-      { description: "显示匹配行的行号", code: "grep -n \"TODO\" src/*.ts" },
-      { description: "递归搜索目录下所有文件", code: "grep -r \"function\" ./src/" },
-      { description: "反向匹配：显示不包含该词的行", code: "grep -v \"^#\" config.ini" },
-      { description: "查看帮助文档", code: "grep --help" }
-    ],
-    relatedCommands: ["egrep", "fgrep", "sed", "awk"]
-  },
-  {
-    name: "sed",
-    categoryId: "text",
-    syntax: "sed [选项] '脚本' 文件...",
-    simpleExplain: "流编辑器，对文本进行替换和编辑",
-    detailExplain: "流编辑器，按行对文本执行编辑操作。最常用于文本替换，也支持删除、插入、追加等操作。常用参数：s/old/new/g 全局替换，-i 直接修改原文件，-n 配合 p 仅输出匹配行，-e 执行多个编辑命令，-r 使用扩展正则。常用于批量修改配置文件或脚本中的文本。",
-    helpOutput: `Usage: sed [OPTION]... {script-only-if-no-other-script} [input-file]...
+        examples: [
+            { description: "在文件中搜索 error 关键词", code: "grep \"error\" app.log" },
+            { description: "忽略大小写搜索", code: "grep -i \"warning\" system.log" },
+            { description: "显示匹配行的行号", code: "grep -n \"TODO\" src/*.ts" },
+            { description: "递归搜索目录下所有文件", code: "grep -r \"function\" ./src/" },
+            { description: "反向匹配：显示不包含该词的行", code: "grep -v \"^#\" config.ini" },
+            { description: "查看帮助文档", code: "grep --help" }
+        ],
+        relatedCommands: ["egrep", "fgrep", "sed", "awk"]
+    },
+    {
+        name: "sed",
+        categoryId: "text",
+        syntax: "sed [选项] '脚本' 文件...",
+        simpleExplain: "流编辑器，就像文字处理的流水线自动替换机器",
+        detailExplain: "就像一台自动化文字处理流水线——文件内容像水流一样经过 sed 这台机器，机器按你的指令对每一行进行替换、删除、插入等操作，然后输出处理后的结果。最常用的功能就是批量替换文本中的字符串。",
+        helpOutput: `Usage: sed [OPTION]... {script-only-if-no-other-script} [input-file]...
 
   -n, --quiet, --silent
                  suppress automatic printing of pattern space
@@ -1686,22 +1659,22 @@ GNU sed home page: <https://www.gnu.org/software/sed/>.
 General help using GNU software: <https://www.gnu.org/gethelp/>.
 E-mail bug reports to: <bug-sed@gnu.org>.
 `,
-    examples: [
-      { description: "将文件中的 foo 替换为 bar 并输出", code: "sed 's/foo/bar/g' input.txt" },
-      { description: "直接修改文件内容（原地替换）", code: "sed -i 's/old_domain.com/new_domain.com/g' *.html" },
-      { description: "删除第 2 到第 5 行", code: "sed '2,5d' data.csv" },
-      { description: "只显示匹配的行", code: "sed -n '/error/p' logfile" },
-      { description: "查看帮助文档", code: "sed --help" }
-    ],
-    relatedCommands: ["grep", "awk", "tr", "perl"]
-  },
-  {
-    name: "awk",
-    categoryId: "text",
-    syntax: "awk [选项] '模式{动作}' 文件...",
-    simpleExplain: "强大的文本数据处理工具",
-    detailExplain: "文本处理语言，按行和列处理结构化文本。默认以空格/制表符分列，通过 $1、$2 等访问字段，支持条件判断、循环和算术运算。常用方式：awk '{print $1}' 输出第一列，awk -F',' '{print $2}' 指定分隔符，awk '$3>100' 按条件过滤。适合处理 CSV、日志等列式数据。",
-    helpOutput: `Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
+        examples: [
+            { description: "将文件中的 foo 替换为 bar 并输出", code: "sed 's/foo/bar/g' input.txt" },
+            { description: "直接修改文件内容（原地替换）", code: "sed -i 's/old_domain.com/new_domain.com/g' *.html" },
+            { description: "删除第 2 到第 5 行", code: "sed '2,5d' data.csv" },
+            { description: "只显示匹配的行", code: "sed -n '/error/p' logfile" },
+            { description: "查看帮助文档", code: "sed --help" }
+        ],
+        relatedCommands: ["grep", "awk", "tr", "perl"]
+    },
+    {
+        name: "awk",
+        categoryId: "text",
+        syntax: "awk [选项] '模式{动作}' 文件...",
+        simpleExplain: "强大的文本数据处理工具，就像 Excel 的命令行版本",
+        detailExplain: "就像 Excel 的命令行版——可以把文本按列拆分、筛选、计算、格式化输出。比如有一张逗号分隔的成绩表，awk 可以轻松算出平均分、过滤不及格的学生、按成绩排序输出。它是文本处理的瑞士军刀。",
+        helpOutput: `Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
 Usage: awk [POSIX or GNU style options] [--] 'program' file ...
 POSIX options:		GNU long options: (standard)
 	-f progfile		--file=progfile
@@ -1749,22 +1722,22 @@ Examples:
 	awk '{ sum += $1 }; END { print sum }' file
 	awk -F: '{ print $1 }' /etc/passwd
 `,
-    examples: [
-      { description: "打印文件的第 1 列和第 3 列", code: "awk '{print $1, $3}' data.txt" },
-      { description: "以冒号为分隔符，打印用户名", code: "awk -F: '{print $1}' /etc/passwd", output: "root\ndaemon\nbin\nsys\nuser" },
-      { description: "计算第二列数值的总和", code: "awk '{sum+=$2} END {print sum}' numbers.txt" },
-      { description: "过滤第三列大于 50 的行", code: "awk '$3 > 50' scores.csv" },
-      { description: "查看帮助文档", code: "awk --help" }
-    ],
-    relatedCommands: ["sed", "grep", "cut", "sort"]
-  },
-  {
-    name: "head",
-    categoryId: "text",
-    syntax: "head [选项] 文件...",
-    simpleExplain: "查看文件开头若干行",
-    detailExplain: "输出文件开头部分内容。默认显示前 10 行。常用参数：-n N 指定显示前 N 行，-n -N 显示除最后 N 行外的所有内容，-c N 显示前 N 字节。常用于快速查看文件格式、检查日志文件头部信息或预览大文件内容。",
-    helpOutput: `Usage: head [OPTION]... [FILE]...
+        examples: [
+            { description: "打印文件的第 1 列和第 3 列", code: "awk '{print $1, $3}' data.txt" },
+            { description: "以冒号为分隔符，打印用户名", code: "awk -F: '{print $1}' /etc/passwd", output: "root\ndaemon\nbin\nsys\nuser" },
+            { description: "计算第二列数值的总和", code: "awk '{sum+=$2} END {print sum}' numbers.txt" },
+            { description: "过滤第三列大于 50 的行", code: "awk '$3 > 50' scores.csv" },
+            { description: "查看帮助文档", code: "awk --help" }
+        ],
+        relatedCommands: ["sed", "grep", "cut", "sort"]
+    },
+    {
+        name: "head",
+        categoryId: "text",
+        syntax: "head [选项] 文件...",
+        simpleExplain: "查看文件开头几行，就像看书先看前言部分",
+        detailExplain: "就像你拿到一本新书，先翻开前几页看看大概讲什么内容。head 默认显示文件的前 10 行，也可以指定显示多少行。当你面对一个巨大的日志文件时，head 可以让你快速了解文件的格式和开头内容。",
+        helpOutput: `Usage: head [OPTION]... [FILE]...
 Print the first 10 lines of each FILE to standard output.
 With more than one FILE, precede each with a header giving the file name.
 
@@ -1793,22 +1766,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/head>
 or available locally via: info '(coreutils) head invocation'
 `,
-    examples: [
-      { description: "显示文件前 10 行（默认）", code: "head server.log" },
-      { description: "只显示前 5 行", code: "head -n 5 config.yaml" },
-      { description: "显示前 20 个字节", code: "head -c 20 binary.dat" },
-      { description: "同时显示多个文件的开头", code: "head -n 3 *.txt" },
-      { description: "查看帮助文档", code: "head --help" }
-    ],
-    relatedCommands: ["tail", "cat", "less", "tac"]
-  },
-  {
-    name: "tail",
-    categoryId: "text",
-    syntax: "tail [选项] 文件...",
-    simpleExplain: "查看文件末尾若干行",
-    detailExplain: "输出文件末尾部分内容。默认显示最后 10 行。常用参数：-n N 指定显示最后 N 行，-f 实时追踪文件新增内容（常用于监控日志），-F 同 -f 但文件被轮转时仍可追踪，-c N 显示最后 N 字节。是日志监控和排查问题的常用工具。",
-    helpOutput: `Usage: tail [OPTION]... [FILE]...
+        examples: [
+            { description: "显示文件前 10 行（默认）", code: "head server.log" },
+            { description: "只显示前 5 行", code: "head -n 5 config.yaml" },
+            { description: "显示前 20 个字节", code: "head -c 20 binary.dat" },
+            { description: "同时显示多个文件的开头", code: "head -n 3 *.txt" },
+            { description: "查看帮助文档", code: "head --help" }
+        ],
+        relatedCommands: ["tail", "cat", "less", "tac"]
+    },
+    {
+        name: "tail",
+        categoryId: "text",
+        syntax: "tail [选项] 文件...",
+        simpleExplain: "查看文件末尾几行，就像看书先看结局",
+        detailExplain: "就像你追剧忍不住先看最后一集的大结局，tail 让你直接跳到文件的末尾看最后几行。最实用的场景是用 tail -f 实时跟踪日志文件——就像坐在监控室看着屏幕上不断滚动的最新消息。",
+        helpOutput: `Usage: tail [OPTION]... [FILE]...
 Print the last 10 lines of each FILE to standard output.
 With more than one FILE, precede each with a header giving the file name.
 
@@ -1858,22 +1831,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/tail>
 or available locally via: info '(coreutils) tail invocation'
 `,
-    examples: [
-      { description: "显示文件末尾 10 行（默认）", code: "tail access.log" },
-      { description: "实时跟踪日志文件的新增内容", code: "tail -f /var/log/syslog" },
-      { description: "显示最后 20 行", code: "tail -n 20 debug.log" },
-      { description: "从第 100 行开始显示到末尾", code: "tail -n +100 bigfile.txt" },
-      { description: "查看帮助文档", code: "tail --help" }
-    ],
-    relatedCommands: ["head", "less", "tailf", "multitail"]
-  },
-  {
-    name: "sort",
-    categoryId: "text",
-    syntax: "sort [选项] 文件...",
-    simpleExplain: "对文本行进行排序",
-    detailExplain: "对文本行进行排序。默认按字典序排序。常用参数：-n 按数值排序，-r 逆序排序，-k N 按第 N 列排序，-t 指定字段分隔符，-u 排序并去重，-f 忽略大小写。常配合 uniq 使用，先排序再去重以删除所有重复行。",
-    helpOutput: `Usage: sort [OPTION]... [FILE]...
+        examples: [
+            { description: "显示文件末尾 10 行（默认）", code: "tail access.log" },
+            { description: "实时跟踪日志文件的新增内容", code: "tail -f /var/log/syslog" },
+            { description: "显示最后 20 行", code: "tail -n 20 debug.log" },
+            { description: "从第 100 行开始显示到末尾", code: "tail -n +100 bigfile.txt" },
+            { description: "查看帮助文档", code: "tail --help" }
+        ],
+        relatedCommands: ["head", "less", "tailf", "multitail"]
+    },
+    {
+        name: "sort",
+        categoryId: "text",
+        syntax: "sort [选项] 文件...",
+        simpleExplain: "对文本行进行排序，就像把一副扑克牌按顺序理好",
+        detailExplain: "就像你手里有一堆乱序的扑克牌，sort 帮你把它们按从小到大（或 A 到 Z）的顺序排得整整齐齐。可以按数字大小排序、按字母顺序排序、倒序排列，甚至按某一列来排序——就像图书管理员整理乱糟糟的书架。",
+        helpOutput: `Usage: sort [OPTION]... [FILE]...
   or:  sort [OPTION]... --files0-from=F
 Write sorted concatenation of all FILE(s) to standard output.
 
@@ -1925,23 +1898,23 @@ Other options:
   -z, --zero-terminated     line delimiter is NUL, not newline
       --help        display this help and exit
 `,
-    examples: [
-      { description: "按字母顺序对文件内容排序", code: "sort names.txt", output: "Alice\nBob\nCharlie\nDavid" },
-      { description: "按数字大小排序", code: "sort -n scores.txt" },
-      { description: "倒序排列（从大到小）", code: "sort -r dates.txt" },
-      { description: "按第 2 列排序", code: "sort -k2 -n data.csv" },
-      { description: "去除重复行后排序", code: "sort -u list.txt" },
-      { description: "查看帮助文档", code: "sort --help" }
-    ],
-    relatedCommands: ["uniq", "awk", "cut", "wc"]
-  },
-  {
-    name: "uniq",
-    categoryId: "text",
-    syntax: "uniq [选项] 文件...",
-    simpleExplain: "去除相邻的重复行",
-    detailExplain: "去除相邻的重复行，仅保留一行。注意只处理相邻重复，因此通常先用 sort 排序再用 uniq 去重。常用参数：-c 显示每行重复次数，-d 仅显示重复行，-u 仅显示唯一行，-i 忽略大小写。常用于统计日志中重复记录或合并相同条目。",
-    helpOutput: `Usage: uniq [OPTION]... [INPUT [OUTPUT]]
+        examples: [
+            { description: "按字母顺序对文件内容排序", code: "sort names.txt", output: "Alice\nBob\nCharlie\nDavid" },
+            { description: "按数字大小排序", code: "sort -n scores.txt" },
+            { description: "倒序排列（从大到小）", code: "sort -r dates.txt" },
+            { description: "按第 2 列排序", code: "sort -k2 -n data.csv" },
+            { description: "去除重复行后排序", code: "sort -u list.txt" },
+            { description: "查看帮助文档", code: "sort --help" }
+        ],
+        relatedCommands: ["uniq", "awk", "cut", "wc"]
+    },
+    {
+        name: "uniq",
+        categoryId: "text",
+        syntax: "uniq [选项] 文件...",
+        simpleExplain: "去除重复的相邻行，就像把连在一起的相同答案合并成一条",
+        detailExplain: "就像你在批改试卷时发现好几个同学连续写了完全相同的答案，uniq 把这些重复的答案合并成一条只保留一个。注意：它只会去掉相邻的重复行，所以通常配合 sort 先排序再去重才能去掉所有重复。",
+        helpOutput: `Usage: uniq [OPTION]... [INPUT [OUTPUT]]
 Filter adjacent matching lines from INPUT (or standard input),
 writing to OUTPUT (or standard output).
 
@@ -1976,22 +1949,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/uniq>
 or available locally via: info '(coreutils) uniq invocation'
 `,
-    examples: [
-      { description: "去除相邻重复行", code: "uniq raw_log.txt" },
-      { description: "显示重复出现的行及出现次数", code: "uniq -c access.log", output: "   3  192.168.1.1\n   7  10.0.0.5\n   1  172.16.0.1" },
-      { description: "只显示重复的行", code: "uniq -d users.txt" },
-      { description: "只显示不重复的唯一行", code: "uniq -u items.txt" },
-      { description: "查看帮助文档", code: "uniq --help" }
-    ],
-    relatedCommands: ["sort", "awk", "tr", "wc"]
-  },
-  {
-    name: "wc",
-    categoryId: "text",
-    syntax: "wc [选项] 文件...",
-    simpleExplain: "统计文件的行数、单词数和字节数",
-    detailExplain: "统计文件的行数、单词数和字节数。默认依次输出三个数值。常用参数：-l 仅统计行数，-w 仅统计单词数，-c 仅统计字节数，-m 统计字符数。常用于快速了解文件规模，如统计日志行数、代码行数等。",
-    helpOutput: `Usage: wc [OPTION]... [FILE]...
+        examples: [
+            { description: "去除相邻重复行", code: "uniq raw_log.txt" },
+            { description: "显示重复出现的行及出现次数", code: "uniq -c access.log", output: "   3  192.168.1.1\n   7  10.0.0.5\n   1  172.16.0.1" },
+            { description: "只显示重复的行", code: "uniq -d users.txt" },
+            { description: "只显示不重复的唯一行", code: "uniq -u items.txt" },
+            { description: "查看帮助文档", code: "uniq --help" }
+        ],
+        relatedCommands: ["sort", "awk", "tr", "wc"]
+    },
+    {
+        name: "wc",
+        categoryId: "text",
+        syntax: "wc [选项] 文件...",
+        simpleExplain: "统计文件的字数、行数、字符数，就像作文老师统计作文字数",
+        detailExplain: "就像语文老师批改作文时要数一数这篇文章有多少行、多少个字、多少个字符。wc 能同时告诉你这三个统计数据，对于快速了解一个大文件的基本情况非常有用——比如「这个日志文件居然有 10 万行！」",
+        helpOutput: `Usage: wc [OPTION]... [FILE]...
   or:  wc [OPTION]... --files0-from=F
 Print newline, word, and byte counts for each FILE, and a total line if
 more than one FILE is specified.  A word is a non-zero-length sequence of
@@ -2019,22 +1992,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/wc>
 or available locally via: info '(coreutils) wc invocation'
 `,
-    examples: [
-      { description: "统计文件的行数、单词数和字符数", code: "wc essay.txt", output: "  25  180  1056 essay.txt" },
-      { description: "只统计行数", code: "wc -l large_file.csv", output: "10000 large_file.csv" },
-      { description: "只统计字符数", code: "wc -m message.txt" },
-      { description: "统计多个文件并显示总计", code: "wc *.py" },
-      { description: "查看帮助文档", code: "wc --help" }
-    ],
-    relatedCommands: ["cat", "nl", "sort", "uniq"]
-  },
-  {
-    name: "cut",
-    categoryId: "text",
-    syntax: "cut [选项] 文件...",
-    simpleExplain: "按列或字段提取文本",
-    detailExplain: "按列或字段提取文本内容。常用参数：-f N 提取第 N 个字段（需配合 -d 指定分隔符），-d 指定字段分隔符（默认为制表符），-c N-M 提取字符范围，-b N-M 提取字节范围。常用于从 CSV、/etc/passwd 等结构化文件中提取特定列。",
-    helpOutput: `Usage: cut OPTION... [FILE]...
+        examples: [
+            { description: "统计文件的行数、单词数和字符数", code: "wc essay.txt", output: "  25  180  1056 essay.txt" },
+            { description: "只统计行数", code: "wc -l large_file.csv", output: "10000 large_file.csv" },
+            { description: "只统计字符数", code: "wc -m message.txt" },
+            { description: "统计多个文件并显示总计", code: "wc *.py" },
+            { description: "查看帮助文档", code: "wc --help" }
+        ],
+        relatedCommands: ["cat", "nl", "sort", "uniq"]
+    },
+    {
+        name: "cut",
+        categoryId: "text",
+        syntax: "cut [选项] 文件...",
+        simpleExplain: "按列切割文本，就像切蛋糕一样只取想要的切片",
+        detailExplain: "就像一块长条蛋糕，上面有不同的配料，你只想吃其中几种——cut 帮你精确地「切开」你想要的那些列。比如 CSV 文件中每行有很多字段，但你只需要第 1 列和第 3 列，cut 一刀下去就给你提取出来了。",
+        helpOutput: `Usage: cut OPTION... [FILE]...
 Print selected parts of lines from each FILE to standard output.
 
 With no FILE, or when FILE is -, read standard input.
@@ -2071,22 +2044,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/cut>
 or available locally via: info '(coreutils) cut invocation'
 `,
-    examples: [
-      { description: "提取每行的第 1-3 个字符", code: "cut -c1-3 codes.txt" },
-      { description: "以冒号为分隔符，提取第 1 和第 6 列", code: "cut -d: -f1,6 /etc/passwd", output: "root:/root\nbin:/bin\ndaemon:/sbin" },
-      { description: "以逗号分隔，提取第 2 列", code: "cut -d',' -f2 data.csv" },
-      { description: "提取除第 1 列外的所有列", code: "cut -d'\t' -f2- tabbed.tsv" },
-      { description: "查看帮助文档", code: "cut --help" }
-    ],
-    relatedCommands: ["awk", "paste", "sort", "join"]
-  },
-  {
-    name: "tr",
-    categoryId: "text",
-    syntax: "tr [选项] 字符集1 字符集2",
-    simpleExplain: "替换或删除字符",
-    detailExplain: "转换或删除标准输入中的字符。从 stdin 读取、写到 stdout，不能直接读取文件。常用方式：tr 'a-z' 'A-Z' 小写转大写，tr -d ' ' 删除空格，tr -s ' ' 压缩连续空格为一个，tr 可将换行符替换为空格实现行合并。常用于字符大小写转换、空白符处理等。",
-    helpOutput: `Usage: tr [OPTION]... STRING1 [STRING2]
+        examples: [
+            { description: "提取每行的第 1-3 个字符", code: "cut -c1-3 codes.txt" },
+            { description: "以冒号为分隔符，提取第 1 和第 6 列", code: "cut -d: -f1,6 /etc/passwd", output: "root:/root\nbin:/bin\ndaemon:/sbin" },
+            { description: "以逗号分隔，提取第 2 列", code: "cut -d',' -f2 data.csv" },
+            { description: "提取除第 1 列外的所有列", code: "cut -d'\t' -f2- tabbed.tsv" },
+            { description: "查看帮助文档", code: "cut --help" }
+        ],
+        relatedCommands: ["awk", "paste", "sort", "join"]
+    },
+    {
+        name: "tr",
+        categoryId: "text",
+        syntax: "tr [选项] 字符集1 字符集2",
+        simpleExplain: "字符替换和删除工具，就像打字员把文中的某些字母统一换成别的",
+        detailExplain: "就像一个专职的文字校对员，按照你的要求把文章中的某些字符批量替换成别的字符——比如把所有小写字母变大写、把空格换成制表符、或者干脆把某些字符全部删掉。它是一个纯粹的字符转换器。",
+        helpOutput: `Usage: tr [OPTION]... STRING1 [STRING2]
 Translate, squeeze, and/or delete characters from standard input,
 writing to standard output.  STRING1 and STRING2 specify arrays of
 characters ARRAY1 and ARRAY2 that control the action.
@@ -2141,22 +2114,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/tr>
 or available locally via: info '(coreutils) tr invocation'
 `,
-    examples: [
-      { description: "把小写字母转换为大写", code: "echo \"hello world\" | tr 'a-z' 'A-Z'", output: "HELLO WORLD" },
-      { description: "删除所有数字字符", code: "echo \"abc123def456\" | tr -d '0-9'", output: "abcdef" },
-      { description: "把连续的空格压缩为一个", code: "echo \"hello    world\" | tr -s ' '", output: "hello world" },
-      { description: "把换行符替换为空格", code: "tr '\\n' ' ' < multiline.txt" },
-      { description: "查看帮助文档", code: "tr --help" }
-    ],
-    relatedCommands: ["sed", "awk", "fold", "expand"]
-  },
-  {
-    name: "diff",
-    categoryId: "text",
-    syntax: "diff [选项] 文件1 文件2",
-    simpleExplain: "比较两个文件的差异",
-    detailExplain: "逐行比较两个文件或目录的差异并输出。输出格式标记：< 表示第一个文件独有，> 表示第二个文件独有，--- 分隔两个文件。常用参数：-u 显示统一格式（unified，patch 默认格式），-c 上下文格式，-r 递归比较目录，-q 仅报告是否不同。常用于代码变更对比和生成补丁。",
-    helpOutput: `Usage: diff [OPTION]... FILES
+        examples: [
+            { description: "把小写字母转换为大写", code: "echo \"hello world\" | tr 'a-z' 'A-Z'", output: "HELLO WORLD" },
+            { description: "删除所有数字字符", code: "echo \"abc123def456\" | tr -d '0-9'", output: "abcdef" },
+            { description: "把连续的空格压缩为一个", code: "echo \"hello    world\" | tr -s ' '", output: "hello world" },
+            { description: "把换行符替换为空格", code: "tr '\\n' ' ' < multiline.txt" },
+            { description: "查看帮助文档", code: "tr --help" }
+        ],
+        relatedCommands: ["sed", "awk", "fold", "expand"]
+    },
+    {
+        name: "diff",
+        categoryId: "text",
+        syntax: "diff [选项] 文件1 文件2",
+        simpleExplain: "比较两个文件的差异，就像老师对比两份作业找出不同之处",
+        detailExplain: "就像老师拿来两份作业放在一起逐行对比，用红笔圈出哪些地方不一样。diff 会精确地告诉你：哪一行被删除了、哪一行新增了、哪一行被修改了。这是程序员日常必备工具——用来查看代码改了什么地方。",
+        helpOutput: `Usage: diff [OPTION]... FILES
 Compare FILES line by line.
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -2207,22 +2180,22 @@ Mandatory arguments to long options are mandatory for short options too.
 
   -a, --text                      treat all files as text
       --strip-trailing-cr         strip trailing carria`,
-    examples: [
-      { description: "比较两个文件的差异", code: "diff file_v1.txt file_v2.txt" },
-      { description: "以统一的 diff 格式显示差异", code: "diff -u original.py modified.py" },
-      { description: "递归比较两个目录的差异", code: "diff -r dir_a/ dir_b/" },
-      { description: "忽略空格差异进行比较", code: "diff -w config_old.ini config_new.ini" },
-      { description: "查看帮助文档", code: "diff --help" }
-    ],
-    relatedCommands: ["cmp", "vimdiff", "patch", "sdiff"]
-  },
-  {
-    name: "tee",
-    categoryId: "text",
-    syntax: "tee [选项] 文件...",
-    simpleExplain: "将输出同时写入文件和标准输出",
-    detailExplain: "从标准输入读取数据，同时写入文件和标准输出。相当于管道中的分流节点。常用参数：-a 追加而非覆盖文件，-i 忽略中断信号。典型用法：command | tee output.log 既在屏幕显示又保存到文件，常用于记录命令输出同时观察执行过程。",
-    helpOutput: `Usage: tee [OPTION]... [FILE]...
+        examples: [
+            { description: "比较两个文件的差异", code: "diff file_v1.txt file_v2.txt" },
+            { description: "以统一的 diff 格式显示差异", code: "diff -u original.py modified.py" },
+            { description: "递归比较两个目录的差异", code: "diff -r dir_a/ dir_b/" },
+            { description: "忽略空格差异进行比较", code: "diff -w config_old.ini config_new.ini" },
+            { description: "查看帮助文档", code: "diff --help" }
+        ],
+        relatedCommands: ["cmp", "vimdiff", "patch", "sdiff"]
+    },
+    {
+        name: "tee",
+        categoryId: "text",
+        syntax: "tee [选项] 文件...",
+        simpleExplain: "分流输出，就像水管的三通接头同时向两个方向供水",
+        detailExplain: "就像水管的 T 型三通接头——水流进来后，一边继续往下流（显示在屏幕上），另一边分出去存到一个文件里。tee 最经典的用法是在管道中间「偷」一份输出存档，同时不影响后续处理流程。",
+        helpOutput: `Usage: tee [OPTION]... [FILE]...
 Copy standard input to each FILE, and also to standard output.
 
   -a, --append              append to the given FILEs, do not overwrite
@@ -2248,22 +2221,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/tee>
 or available locally via: info '(coreutils) tee invocation'
 `,
-    examples: [
-      { description: "保存输出到文件的同时显示在屏幕", code: "echo \"important log\" | tee logfile.txt", output: "important log" },
-      { description: "追加写入而非覆盖", code: "ping google.com | tee -a ping_result.txt" },
-      { description: "同时写入多个文件", code: "cat data.csv | tee backup1.csv backup2.csv | sort" },
-      { description: "配合 sudo 写入需要权限的文件", code: "echo \"setting\" | sudo tee /etc/config.d/new.conf" },
-      { description: "查看帮助文档", code: "tee --help" }
-    ],
-    relatedCommands: ["cat", "redirect", "pipe", "script"]
-  },
-  {
-    name: "less",
-    categoryId: "text",
-    syntax: "less [选项] 文件...",
-    simpleExplain: "分页查看文件内容",
-    detailExplain: "分页查看文件内容，支持前后翻页和搜索。相比 more 功能更强，查看时不会一次性加载整个文件，适合大文件。常用快捷键：空格/PageDown 向下翻页，b/PageUp 向上翻页，/ 向下搜索，? 向上搜索，q 退出。常用于查看日志、配置文件等长文本。",
-    helpOutput: `
+        examples: [
+            { description: "保存输出到文件的同时显示在屏幕", code: "echo \"important log\" | tee logfile.txt", output: "important log" },
+            { description: "追加写入而非覆盖", code: "ping google.com | tee -a ping_result.txt" },
+            { description: "同时写入多个文件", code: "cat data.csv | tee backup1.csv backup2.csv | sort" },
+            { description: "配合 sudo 写入需要权限的文件", code: "echo \"setting\" | sudo tee /etc/config.d/new.conf" },
+            { description: "查看帮助文档", code: "tee --help" }
+        ],
+        relatedCommands: ["cat", "redirect", "pipe", "script"]
+    },
+    {
+        name: "less",
+        categoryId: "text",
+        syntax: "less [选项] 文件...",
+        simpleExplain: "分页阅读大文件，就像用电子书阅读器看书可以上下翻页",
+        detailExplain: "就像用电子书阅读器看一本厚厚的小说——你可以一页一页往前翻、往后翻、跳到任意页、搜索关键词。比 cat 好用太多了，因为 cat 会把整本书一下子全倒出来，而 less 让你从容地阅读。",
+        helpOutput: `
                    SSUUMMMMAARRYY OOFF LLEESSSS CCOOMMMMAANNDDSS
 
       Commands marked with * may be preceded by a number, _N.
@@ -2318,22 +2291,22 @@ or available locally via: info '(coreutils) tee invocation'
         ^R       Don't use REGULAR EXPRESSIONS.
         ^W       WRAP search if no match found.
  -----------------------------------------------------`,
-    examples: [
-      { description: "分页浏览大日志文件", code: "less /var/log/syslog" },
-      { description: "打开时直接跳到文件末尾", code: "less +G huge_log.txt" },
-      { description: "显示行号", code: "less -N source_code.c" },
-      { description: "打开后直接搜索关键词", code: "less +/error app.log" },
-      { description: "查看帮助文档", code: "less --help" }
-    ],
-    relatedCommands: ["more", "cat", "head", "tail"]
-  },
-  {
-    name: "more",
-    categoryId: "text",
-    syntax: "more [选项] 文件...",
-    simpleExplain: "简单的分页查看器",
-    detailExplain: "分页查看文件内容，按空格向下翻页。功能较简单，只能向下翻页，不能向上翻页或搜索。已被功能更强大的 less 基本取代。常用快捷键：空格向下翻页，Enter 向下滚动一行，q 退出。适用于简单分页查看场景。",
-    helpOutput: `
+        examples: [
+            { description: "分页浏览大日志文件", code: "less /var/log/syslog" },
+            { description: "打开时直接跳到文件末尾", code: "less +G huge_log.txt" },
+            { description: "显示行号", code: "less -N source_code.c" },
+            { description: "打开后直接搜索关键词", code: "less +/error app.log" },
+            { description: "查看帮助文档", code: "less --help" }
+        ],
+        relatedCommands: ["more", "cat", "head", "tail"]
+    },
+    {
+        name: "more",
+        categoryId: "text",
+        syntax: "more [选项] 文件...",
+        simpleExplain: "简单的分页查看器，就像 less 的简化版翻书工具",
+        detailExplain: "就像 less 的老前辈——也能分页显示文件内容，按空格翻下一页。但功能比较简单，不能往回翻页，也不能搜索。现在大家一般都用 less 替代它（因为 less is more，少即是多嘛，这是个程序员笑话）。",
+        helpOutput: `
 Usage:
  more [options] <file>...
 
@@ -2358,22 +2331,22 @@ Options:
 
 For more details see more(1).
 `,
-    examples: [
-      { description: "分页显示文件内容", code: "more readme.txt" },
-      { description: "每屏显示 15 行", code: "more -15 long_text.txt" },
-      { description: "从第 20 行开始显示", code: "more +20 document.txt" },
-      { description: "清除屏幕后显示", code: "more -c file.txt" },
-      { description: "查看帮助文档", code: "more --help" }
-    ],
-    relatedCommands: ["less", "cat", "pg", "most"]
-  },
-  {
-    name: "paste",
-    categoryId: "text",
-    syntax: "paste [选项] 文件...",
-    simpleExplain: "按行合并多个文件",
-    detailExplain: "将多个文件的对应行横向合并，默认以制表符分隔。常用参数：-d 指定分隔符，-s 将每个文件的内容合并为一行（横向变纵向）。典型用法：paste file1 file2 将两个文件按行并排显示，常用于合并多列数据生成表格。",
-    helpOutput: `Usage: paste [OPTION]... [FILE]...
+        examples: [
+            { description: "分页显示文件内容", code: "more readme.txt" },
+            { description: "每屏显示 15 行", code: "more -15 long_text.txt" },
+            { description: "从第 20 行开始显示", code: "more +20 document.txt" },
+            { description: "清除屏幕后显示", code: "more -c file.txt" },
+            { description: "查看帮助文档", code: "more --help" }
+        ],
+        relatedCommands: ["less", "cat", "pg", "most"]
+    },
+    {
+        name: "paste",
+        categoryId: "text",
+        syntax: "paste [选项] 文件...",
+        simpleExplain: "把多个文件按行合并，就像把两张纸左右拼接在一起",
+        detailExplain: "就像你有两张名单纸，想把它们左右拼成一张——第一个人的左边是名单A的名字，右边是名单B的名字。paste 把多个文件的对应行横向拼接在一起，默认用制表符分隔。",
+        helpOutput: `Usage: paste [OPTION]... [FILE]...
 Write lines consisting of the sequentially corresponding lines from
 each FILE, separated by TABs, to standard output.
 
@@ -2391,22 +2364,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/paste>
 or available locally via: info '(coreutils) paste invocation'
 `,
-    examples: [
-      { description: "将两个文件按行合并", code: "paste names.txt ages.txt", output: "Alice\t25\nBob\t30\nCharlie\t28" },
-      { description: "用逗号作为分隔符合并", code: "paste -d',' ids.txt cities.txt" },
-      { description: "合并多个文件", code: "paste -d'|' col1.txt col2.txt col3.txt" },
-      { description: "将标准输入的行转为单行", code: "ls | paste -d' ' -s" },
-      { description: "查看帮助文档", code: "paste --help" }
-    ],
-    relatedCommands: ["cut", "join", "pr", "awk"]
-  },
-  {
-    name: "fmt",
-    categoryId: "text",
-    syntax: "fmt [选项] 文件...",
-    simpleExplain: "格式化文本段落",
-    detailExplain: "重新格式化文本段落，使每行宽度大致一致。默认目标宽度为 75 个字符。常用参数：-w N 设置行宽为 N，-s 仅拆分长行不合并短行，-u 统一空格（单词间一个空格、句间两个空格）。常用于整理格式混乱的纯文本文件，如 README、邮件正文。",
-    helpOutput: `Usage: fmt [-WIDTH] [OPTION]... [FILE]...
+        examples: [
+            { description: "将两个文件按行合并", code: "paste names.txt ages.txt", output: "Alice\t25\nBob\t30\nCharlie\t28" },
+            { description: "用逗号作为分隔符合并", code: "paste -d',' ids.txt cities.txt" },
+            { description: "合并多个文件", code: "paste -d'|' col1.txt col2.txt col3.txt" },
+            { description: "将标准输入的行转为单行", code: "ls | paste -d' ' -s" },
+            { description: "查看帮助文档", code: "paste --help" }
+        ],
+        relatedCommands: ["cut", "join", "pr", "awk"]
+    },
+    {
+        name: "fmt",
+        categoryId: "text",
+        syntax: "fmt [选项] 文件...",
+        simpleExplain: "格式化文本段落，就像排版工人调整文字让它整齐美观",
+        detailExplain: "就像专业的文字排版工人——把一段参差不齐的文字重新排版，让每行的宽度基本一致（默认 75 个字符），看起来整齐舒服。特别适合处理那些行长度乱七八糟的文本文件。",
+        helpOutput: `Usage: fmt [-WIDTH] [OPTION]... [FILE]...
 Reformat each paragraph in the FILE(s), writing to standard output.
 The option -WIDTH is an abbreviated form of --width=DIGITS.
 
@@ -2429,22 +2402,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/fmt>
 or available locally via: info '(coreutils) fmt invocation'
 `,
-    examples: [
-      { description: "格式化段落（默认宽度 75 字符）", code: "fmt paragraph.txt" },
-      { description: "设置每行宽度为 50 字符", code: "fmt -w 50 long_line.txt" },
-      { description: "缩进每行 4 个空格", code: "fmt -p '    ' indented.txt" },
-      { description: "合并短行并均匀分割", code: "fmt -s short_lines.txt" },
-      { description: "查看帮助文档", code: "fmt --help" }
-    ],
-    relatedCommands: ["fold", "par", "pr", "nl"]
-  },
-  {
-    name: "nl",
-    categoryId: "text",
-    syntax: "nl [选项] 文件...",
-    simpleExplain: "为文本行添加行号",
-    detailExplain: "为文件每行添加行号并输出。比 cat -n 提供更多控制选项。常用参数：-b 指定编号方式（a 全部编号、t 非空行编号、n 不编号），-n 设置编号格式（ln 左对齐、rn 右对齐、rz 右对齐补零），-w 设置编号字段宽度，-s 设置编号与内容分隔符。常用于生成带行号的代码或文档。",
-    helpOutput: `Usage: nl [OPTION]... [FILE]...
+        examples: [
+            { description: "格式化段落（默认宽度 75 字符）", code: "fmt paragraph.txt" },
+            { description: "设置每行宽度为 50 字符", code: "fmt -w 50 long_line.txt" },
+            { description: "缩进每行 4 个空格", code: "fmt -p '    ' indented.txt" },
+            { description: "合并短行并均匀分割", code: "fmt -s short_lines.txt" },
+            { description: "查看帮助文档", code: "fmt --help" }
+        ],
+        relatedCommands: ["fold", "par", "pr", "nl"]
+    },
+    {
+        name: "nl",
+        categoryId: "text",
+        syntax: "nl [选项] 文件...",
+        simpleExplain: "给文本添加行号，就像给书的每一页印上页码",
+        detailExplain: "就像出版社给书籍的每一页印上页码——nl 给文件的每一行前面加上行号。比 cat -n 更灵活，可以自定义行号的格式、起始值、步进值等，还可以选择性地给空行或不空行编号。",
+        helpOutput: `Usage: nl [OPTION]... [FILE]...
 Write each FILE to standard output, with line numbers added.
 
 With no FILE, or when FILE is -, read standard input.
@@ -2491,22 +2464,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/nl>
 or available locally via: info '(coreutils) nl invocation'
 `,
-    examples: [
-      { description: "给文件添加行号", code: "nl source.py" },
-      { description: "自定义行号格式", code: "nl -nrz -w3 data.txt" },
-      { description: "行号从 10 开始，每次加 5", code: "nl -v10 -i5 list.txt" },
-      { description: "不给空行编号", code: "nl -bt mixed.txt" },
-      { description: "查看帮助文档", code: "nl --help" }
-    ],
-    relatedCommands: ["cat", "wc", "pr", "fmt"]
-  },
-  {
-    name: "tac",
-    categoryId: "text",
-    syntax: "tac [选项] 文件...",
-    simpleExplain: "倒序显示文件内容",
-    detailExplain: "反向输出文件内容，从最后一行到第一行（cat 反拼）。常用于查看日志时将最新内容显示在最上方。常用参数：-s 指定分隔符（默认为换行符），-r 将分隔符作为正则表达式处理。适合需要逆序查看文件内容的场景。",
-    helpOutput: `Usage: tac [OPTION]... [FILE]...
+        examples: [
+            { description: "给文件添加行号", code: "nl source.py" },
+            { description: "自定义行号格式", code: "nl -nrz -w3 data.txt" },
+            { description: "行号从 10 开始，每次加 5", code: "nl -v10 -i5 list.txt" },
+            { description: "不给空行编号", code: "nl -bt mixed.txt" },
+            { description: "查看帮助文档", code: "nl --help" }
+        ],
+        relatedCommands: ["cat", "wc", "pr", "fmt"]
+    },
+    {
+        name: "tac",
+        categoryId: "text",
+        syntax: "tac [选项] 文件...",
+        simpleExplain: "倒序显示文件内容，就像从最后一页往前看书",
+        detailExplain: "cat 是从头读到尾，tac 恰恰反过来——从最后一行读到第一行。名字就是把 cat 倒过来拼写，很好记。当你想看日志文件的最新内容在最上面时，tac 特别好用。",
+        helpOutput: `Usage: tac [OPTION]... [FILE]...
 Write each FILE to standard output, last line first.
 
 With no FILE, or when FILE is -, read standard input.
@@ -2523,20 +2496,20 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/tac>
 or available locally via: info '(coreutils) tac invocation'
 `,
-    examples: [
-      { description: "倒序显示文件内容", code: "tac access.log" },
-      { description: "倒序显示并用分隔符连接", code: "tac -s ',' csv_data.txt" },
-      { description: "查看帮助文档", code: "tac --help" }
-    ],
-    relatedCommands: ["cat", "tail", "rev", "sort -r"]
-  },
-  {
-    name: "rev",
-    categoryId: "text",
-    syntax: "rev [选项] 文件...",
-    simpleExplain: "反转每行中的字符顺序",
-    detailExplain: "反转每行中字符的顺序，逐行处理。例如 hello 变为 olleh，但行序不变。从 stdin 读取、输出到 stdout。常用于简单的字符反转需求，如密码学练习、文本处理中的字符串变换等场景。",
-    helpOutput: `Usage: rev [options] [file ...]
+        examples: [
+            { description: "倒序显示文件内容", code: "tac access.log" },
+            { description: "倒序显示并用分隔符连接", code: "tac -s ',' csv_data.txt" },
+            { description: "查看帮助文档", code: "tac --help" }
+        ],
+        relatedCommands: ["cat", "tail", "rev", "sort -r"]
+    },
+    {
+        name: "rev",
+        categoryId: "text",
+        syntax: "rev [选项] 文件...",
+        simpleExplain: "反转每行中的字符顺序，就像镜面反射每个字",
+        detailExplain: "就像照镜子——每个字符的顺序都被反转了。「hello」变成「olleh」，每一行都独立地进行字符级反转。这个命令在日常工作中用得不太多，但在做某些文字游戏或密码学相关的事情时会派上用场。",
+        helpOutput: `Usage: rev [options] [file ...]
 
 Reverse lines characterwise.
 
@@ -2546,21 +2519,21 @@ Options:
 
 For more details see rev(1).
 `,
-    examples: [
-      { description: "反转每行中的字符顺序", code: "echo \"hello world\" | rev", output: "dlrow olleh" },
-      { description: "反转文件中每一行", code: "rev palindrome_test.txt" },
-      { description: "检查是否为回文字符串", code: "echo \"level\" | rev", output: "level" },
-      { description: "查看帮助文档", code: "rev --help" }
-    ],
-    relatedCommands: ["tac", "tr", "sed", "perl"]
-  },
-  {
-    name: "rg",
-    categoryId: "text",
-    syntax: "rg [选项] 模式 [文件]",
-    simpleExplain: "高速递归搜索工具（ripgrep）",
-    detailExplain: "ripgrep，用 Rust 编写的高速文本搜索工具。默认递归搜索当前目录，自动遵循 .gitignore 规则忽略文件，速度优于 grep。常用参数：-i 忽略大小写，-n 显示行号，-l 仅显示文件名，-t 按文件类型过滤，-e 使用正则，-F 固定字符串。是现代代码库检索的首选工具。",
-    helpOutput: `ripgrep 14.1.0
+        examples: [
+            { description: "反转每行中的字符顺序", code: "echo \"hello world\" | rev", output: "dlrow olleh" },
+            { description: "反转文件中每一行", code: "rev palindrome_test.txt" },
+            { description: "检查是否为回文字符串", code: "echo \"level\" | rev", output: "level" },
+            { description: "查看帮助文档", code: "rev --help" }
+        ],
+        relatedCommands: ["tac", "tr", "sed", "perl"]
+    },
+    {
+        name: "rg",
+        categoryId: "text",
+        syntax: "rg [选项] 模式 [文件]",
+        simpleExplain: "更快更强的搜索工具，就像给grep装上了涡轮增压引擎",
+        detailExplain: "就像给grep装上了涡轮增压引擎——ripgrep (rg) 用Rust编写，搜索速度极快，自动忽略 .gitignore 中的文件，默认递归搜索，是现代开发者替代 grep 的首选工具。",
+        helpOutput: `ripgrep 14.1.0
 Andrew Gallant <jamslam@gmail.com>
 
 ripgrep (rg) recursively searches the current directory for lines matching
@@ -2641,22 +2614,22 @@ INPUT OPTIONS:
         For each input PATH, this flag causes ripgrep to search the standard
         output of COMMAND PATH instead of the contents of PATH. This option
         expects the COMMAND program to either be a path `,
-    examples: [
-      { description: "在当前目录递归搜索关键词", code: "rg \"TODO\" .", output: "src/main.rs:10:// TODO: refactor this" },
-      { description: "只搜索特定类型的文件", code: "rg -t py \"import os\" ." },
-      { description: "显示匹配行的上下文", code: "rg -C 3 \"error\" app.log" },
-      { description: "只显示匹配的文件名", code: "rg -l \"function\" src/" },
-      { description: "查看帮助文档", code: "rg --help" }
-    ],
-    relatedCommands: ["grep", "ag", "find", "sed"]
-  },
-  {
-    name: "ag",
-    categoryId: "text",
-    syntax: "ag [选项] 模式 [路径]",
-    simpleExplain: "快速的代码搜索工具",
-    detailExplain: "The Silver Searcher，专为代码库搜索优化的高速搜索工具。自动忽略 .gitignore 中的文件和版本控制目录，速度比 grep 快。常用参数：-i 忽略大小写，-l 仅显示文件名，-G 按文件名过滤，--ignore 添加忽略规则。适合在大型代码库中快速定位代码。",
-    helpOutput: `Usage: ag [FILE-TYPE] [OPTIONS] PATTERN [PATH]
+        examples: [
+            { description: "在当前目录递归搜索关键词", code: "rg \"TODO\" .", output: "src/main.rs:10:// TODO: refactor this" },
+            { description: "只搜索特定类型的文件", code: "rg -t py \"import os\" ." },
+            { description: "显示匹配行的上下文", code: "rg -C 3 \"error\" app.log" },
+            { description: "只显示匹配的文件名", code: "rg -l \"function\" src/" },
+            { description: "查看帮助文档", code: "rg --help" }
+        ],
+        relatedCommands: ["grep", "ag", "find", "sed"]
+    },
+    {
+        name: "ag",
+        categoryId: "text",
+        syntax: "ag [选项] 模式 [路径]",
+        simpleExplain: "超快的代码搜索工具，就像一个训练有素的搜救犬",
+        detailExplain: "就像一个训练有素的搜救犬——The Silver Searcher (ag) 比 grep 快很多，自动忽略版本控制目录和二进制文件，专为在代码库中搜索而设计。",
+        helpOutput: `Usage: ag [FILE-TYPE] [OPTIONS] PATTERN [PATH]
 
 The Silver Searcher. A code-searching tool similar to ack, but faster.
 
@@ -2677,22 +2650,22 @@ Options:
   -A NUM, --after NUM         显示匹配行后 NUM 行
   -B NUM, --before NUM        显示匹配行前 NUM 行
   -C NUM, --context NUM       显示匹配行前后各 NUM 行`,
-    examples: [
-      { description: "在代码中搜索函数定义", code: "ag \"def handle_request\" ." },
-      { description: "忽略大小写搜索", code: "ag -i \"error\" /var/log/" },
-      { description: "只搜索Python文件", code: "ag -G \"\\.py$\" \"import\" ." },
-      { description: "显示匹配行号和上下文", code: "ag -C 2 \"class User\" src/" },
-      { description: "查看帮助文档", code: "ag --help" }
-    ],
-    relatedCommands: ["rg", "grep", "find", "ack"]
-  },
-  {
-    name: "jq",
-    categoryId: "text",
-    syntax: "jq [过滤器] [文件]",
-    simpleExplain: "命令行JSON数据处理工具",
-    detailExplain: "命令行 JSON 处理工具，支持查询、过滤、转换和格式化 JSON 数据。使用类 jq 语法访问字段和数组。常用方式：jq '.' 格式化输出，jq '.key' 提取字段，jq '.[]' 遍历数组，jq -r 输出原始字符串，jq -c 紧凑输出。常用于处理 API 响应、配置文件等 JSON 数据。",
-    helpOutput: `jq - commandline JSON processor [version 1.7]
+        examples: [
+            { description: "在代码中搜索函数定义", code: "ag \"def handle_request\" ." },
+            { description: "忽略大小写搜索", code: "ag -i \"error\" /var/log/" },
+            { description: "只搜索Python文件", code: "ag -G \"\\.py$\" \"import\" ." },
+            { description: "显示匹配行号和上下文", code: "ag -C 2 \"class User\" src/" },
+            { description: "查看帮助文档", code: "ag --help" }
+        ],
+        relatedCommands: ["rg", "grep", "find", "ack"]
+    },
+    {
+        name: "jq",
+        categoryId: "text",
+        syntax: "jq [过滤器] [文件]",
+        simpleExplain: "JSON数据处理工具，就像一个精通翻译的JSON语言专家",
+        detailExplain: "就像一个精通翻译的JSON语言专家——jq 能读取、过滤、转换JSON数据，把复杂的JSON结构提取成你想要的格式，是处理API返回数据的必备利器。",
+        helpOutput: `jq - commandline JSON processor [version 1.7]
 
 Usage:	jq [options] <jq filter> [file...]
 	jq [options] --args <jq filter> [strings...]
@@ -2755,22 +2728,22 @@ Command options:
 Named arguments are also available as $ARGS.named[], while
 positional arguments are available as $ARGS.positional[].
 `,
-    examples: [
-      { description: "提取JSON中的某个字段", code: "echo '{\"name\":\"Tom\",\"age\":25}' | jq '.name'", output: "\"Tom\"" },
-      { description: "格式化压缩的JSON", code: "curl -s api.example.com/data | jq ." },
-      { description: "提取数组中的所有元素", code: "jq '.users[].name' users.json" },
-      { description: "筛选满足条件的对象", code: "jq '.[] | select(.age > 18)' people.json" },
-      { description: "查看帮助文档", code: "jq --help" }
-    ],
-    relatedCommands: ["grep", "sed", "awk", "python"]
-  },
-  {
-    name: "column",
-    categoryId: "text",
-    syntax: "column [选项] [文件]",
-    simpleExplain: "将文本按列对齐显示",
-    detailExplain: "将输入文本按列对齐排列成表格形式。常用参数：-t 根据分隔符自动判断列数并创建表格，-s 指定列分隔符（默认为空格），-c 设置输出最大宽度，-n 禁用将相邻分隔符合并。适合将杂乱数据整理成易读的表格输出。",
-    helpOutput: `
+        examples: [
+            { description: "提取JSON中的某个字段", code: "echo '{\"name\":\"Tom\",\"age\":25}' | jq '.name'", output: "\"Tom\"" },
+            { description: "格式化压缩的JSON", code: "curl -s api.example.com/data | jq ." },
+            { description: "提取数组中的所有元素", code: "jq '.users[].name' users.json" },
+            { description: "筛选满足条件的对象", code: "jq '.[] | select(.age > 18)' people.json" },
+            { description: "查看帮助文档", code: "jq --help" }
+        ],
+        relatedCommands: ["grep", "sed", "awk", "python"]
+    },
+    {
+        name: "column",
+        categoryId: "text",
+        syntax: "column [选项] [文件]",
+        simpleExplain: "将文本按列对齐显示，就像把散乱的队伍整理成整齐的方阵",
+        detailExplain: "就像把散乱的队伍整理成整齐的方阵——column 把杂乱无章的文本按列排列整齐，让输出看起来像一张规整的表格，特别适合展示数据。",
+        helpOutput: `
 Usage:
  column [options] [<file>...]
 
@@ -2808,22 +2781,22 @@ Options:
 
 For more details see column(1).
 `,
-    examples: [
-      { description: "按冒号分隔并整齐显示", code: "column -t -s ':' /etc/passwd" },
-      { description: "将文本排成多列显示", code: "seq 1 10 | column" },
-      { description: "指定输出宽度为80字符", code: "column -c 80 filelist.txt" },
-      { description: "按制表符分隔对齐", code: "column -t -s $'\\t' data.tsv" },
-      { description: "查看帮助文档", code: "column --help" }
-    ],
-    relatedCommands: ["sort", "paste", "awk", "pr"]
-  },
-  {
-    name: "expand",
-    categoryId: "text",
-    syntax: "expand [文件]",
-    simpleExplain: "将Tab字符转换为空格",
-    detailExplain: "将文件中的 Tab 字符转换为空格，保证在不同环境下显示一致。默认每个 Tab 转换为 8 个空格，可用 -t 参数指定空格数或自定义制表位位置。常用于代码格式化或避免 Tab 宽度差异导致的对齐问题。",
-    helpOutput: `Usage: expand [OPTION]... [FILE]...
+        examples: [
+            { description: "按冒号分隔并整齐显示", code: "column -t -s ':' /etc/passwd" },
+            { description: "将文本排成多列显示", code: "seq 1 10 | column" },
+            { description: "指定输出宽度为80字符", code: "column -c 80 filelist.txt" },
+            { description: "按制表符分隔对齐", code: "column -t -s $'\\t' data.tsv" },
+            { description: "查看帮助文档", code: "column --help" }
+        ],
+        relatedCommands: ["sort", "paste", "awk", "pr"]
+    },
+    {
+        name: "expand",
+        categoryId: "text",
+        syntax: "expand [文件]",
+        simpleExplain: "将Tab转换为空格，就像把折叠的椅子全部展开",
+        detailExplain: "就像把折叠的椅子全部展开——expand 把文件中的 Tab 字符替换成空格，确保在不同编辑器中显示效果一致，不会因为Tab宽度设置不同而错位。",
+        helpOutput: `Usage: expand [OPTION]... [FILE]...
 Convert tabs in each FILE to spaces, writing to standard output.
 
 With no FILE, or when FILE is -, read standard input.
@@ -2845,22 +2818,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/expand>
 or available locally via: info '(coreutils) expand invocation'
 `,
-    examples: [
-      { description: "将Tab转换为空格", code: "expand code.py" },
-      { description: "指定Tab宽度为4个空格", code: "expand -t 4 code.py" },
-      { description: "转换后保存到新文件", code: "expand -t 2 indent.ts > indent_spaces.ts" },
-      { description: "只转换行首的Tab", code: "expand -i Makefile" },
-      { description: "查看帮助文档", code: "expand --help" }
-    ],
-    relatedCommands: ["unexpand", "tr", "sed", "cut"]
-  },
-  {
-    name: "unexpand",
-    categoryId: "text",
-    syntax: "unexpand [文件]",
-    simpleExplain: "将空格转换为Tab字符",
-    detailExplain: "将连续的空格转换回 Tab 字符，是 expand 的反向操作。默认只转换行首的空格，-a 参数表示转换所有位置的空格。常用于压缩文件体积或恢复使用 Tab 缩进的格式。",
-    helpOutput: `Usage: unexpand [OPTION]... [FILE]...
+        examples: [
+            { description: "将Tab转换为空格", code: "expand code.py" },
+            { description: "指定Tab宽度为4个空格", code: "expand -t 4 code.py" },
+            { description: "转换后保存到新文件", code: "expand -t 2 indent.ts > indent_spaces.ts" },
+            { description: "只转换行首的Tab", code: "expand -i Makefile" },
+            { description: "查看帮助文档", code: "expand --help" }
+        ],
+        relatedCommands: ["unexpand", "tr", "sed", "cut"]
+    },
+    {
+        name: "unexpand",
+        categoryId: "text",
+        syntax: "unexpand [文件]",
+        simpleExplain: "将空格转换为Tab，就像把展开的椅子重新折叠起来",
+        detailExplain: "就像把展开的椅子重新折叠起来——unexpand 把连续的空格转换回 Tab 字符，可以减小文件体积，也是 expand 的反向操作。",
+        helpOutput: `Usage: unexpand [OPTION]... [FILE]...
 Convert blanks in each FILE to tabs, writing to standard output.
 
 With no FILE, or when FILE is -, read standard input.
@@ -2883,22 +2856,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/unexpand>
 or available locally via: info '(coreutils) unexpand invocation'
 `,
-    examples: [
-      { description: "将空格转换为Tab", code: "unexpand code.py" },
-      { description: "指定Tab宽度为4", code: "unexpand -t 4 code.py" },
-      { description: "只转换行首的空格", code: "unexpand --first-only code.py" },
-      { description: "转换后保存到新文件", code: "unexpand -t 2 spaces.txt > tabs.txt" },
-      { description: "查看帮助文档", code: "unexpand --help" }
-    ],
-    relatedCommands: ["expand", "tr", "sed", "cut"]
-  },
-  {
-    name: "shuf",
-    categoryId: "text",
-    syntax: "shuf [选项] [文件]",
-    simpleExplain: "随机打乱输入行的顺序",
-    detailExplain: "将输入的每一行随机打乱顺序后输出。支持从文件或标准输入读取，常用参数：-n 只输出指定数量的随机行，-r 允许重复抽样，-i 从指定数字范围生成随机数，-e 直接处理命令行参数。常用于随机抽样、抽奖或生成随机序列。",
-    helpOutput: `Usage: shuf [OPTION]... [FILE]
+        examples: [
+            { description: "将空格转换为Tab", code: "unexpand code.py" },
+            { description: "指定Tab宽度为4", code: "unexpand -t 4 code.py" },
+            { description: "只转换行首的空格", code: "unexpand --first-only code.py" },
+            { description: "转换后保存到新文件", code: "unexpand -t 2 spaces.txt > tabs.txt" },
+            { description: "查看帮助文档", code: "unexpand --help" }
+        ],
+        relatedCommands: ["expand", "tr", "sed", "cut"]
+    },
+    {
+        name: "shuf",
+        categoryId: "text",
+        syntax: "shuf [选项] [文件]",
+        simpleExplain: "随机打乱行顺序，就像洗牌一样把顺序打乱",
+        detailExplain: "就像洗牌一样把顺序打乱——shuf 会把输入的每一行随机重新排列，常用于随机抽取、抽奖、生成随机序列等场景。",
+        helpOutput: `Usage: shuf [OPTION]... [FILE]
   or:  shuf -e [OPTION]... [ARG]...
   or:  shuf -i LO-HI [OPTION]...
 Write a random permutation of the input lines to standard output.
@@ -2921,22 +2894,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/shuf>
 or available locally via: info '(coreutils) shuf invocation'
 `,
-    examples: [
-      { description: "随机打乱文件中的行", code: "shuf names.txt" },
-      { description: "随机抽取3行", code: "shuf -n 3 names.txt" },
-      { description: "生成1到10的随机数", code: "shuf -i 1-10 -n 1", output: "7" },
-      { description: "从命令行参数中随机选一个", code: "shuf -e apple banana cherry -n 1", output: "banana" },
-      { description: "查看帮助文档", code: "shuf --help" }
-    ],
-    relatedCommands: ["sort", "head", "tail", "seq"]
-  },
-  {
-    name: "comm",
-    categoryId: "text",
-    syntax: "comm [选项] 文件1 文件2",
-    simpleExplain: "比较两个已排序文件的异同",
-    detailExplain: "逐行比较两个已排序的文件，输出三列：仅文件1有的行、仅文件2有的行、两文件共有的行。参数 -1、-2、-3 分别抑制对应列的输出，可用于求交集或差集。前提是两个输入文件必须先排序。",
-    helpOutput: `Usage: comm [OPTION]... FILE1 FILE2
+        examples: [
+            { description: "随机打乱文件中的行", code: "shuf names.txt" },
+            { description: "随机抽取3行", code: "shuf -n 3 names.txt" },
+            { description: "生成1到10的随机数", code: "shuf -i 1-10 -n 1", output: "7" },
+            { description: "从命令行参数中随机选一个", code: "shuf -e apple banana cherry -n 1", output: "banana" },
+            { description: "查看帮助文档", code: "shuf --help" }
+        ],
+        relatedCommands: ["sort", "head", "tail", "seq"]
+    },
+    {
+        name: "comm",
+        categoryId: "text",
+        syntax: "comm [选项] 文件1 文件2",
+        simpleExplain: "比较两个已排序文件的异同，就像找两份名单的相同和不同之处",
+        detailExplain: "就像找两份名单的相同和不同之处——comm 会分三列显示：只在文件1中有的、只在文件2中有的、两个文件都有的。前提是两个文件必须先排好序。",
+        helpOutput: `Usage: comm [OPTION]... FILE1 FILE2
 Compare sorted files FILE1 and FILE2 line by line.
 
 When FILE1 or FILE2 (not both) is -, read standard input.
@@ -2969,22 +2942,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/comm>
 or available locally via: info '(coreutils) comm invocation'
 `,
-    examples: [
-      { description: "比较两个文件的异同", code: "comm file1.txt file2.txt" },
-      { description: "只显示两个文件共有的行", code: "comm -12 file1.txt file2.txt" },
-      { description: "只显示文件1独有的行", code: "comm -23 file1.txt file2.txt" },
-      { description: "只显示文件2独有的行", code: "comm -13 file1.txt file2.txt" },
-      { description: "查看帮助文档", code: "comm --help" }
-    ],
-    relatedCommands: ["diff", "sort", "join", "uniq"]
-  },
-  {
-    name: "join",
-    categoryId: "text",
-    syntax: "join [选项] 文件1 文件2",
-    simpleExplain: "按共同字段合并两个文件",
-    detailExplain: "根据两个文件中相同的字段（默认第一列）将行合并，类似数据库的 JOIN 操作。要求两个文件已按该字段排序。常用参数：-1 和 -2 指定各文件的连接字段，-t 设置字段分隔符，-a 显示未匹配的行，-o 自定义输出字段。",
-    helpOutput: `Usage: join [OPTION]... FILE1 FILE2
+        examples: [
+            { description: "比较两个文件的异同", code: "comm file1.txt file2.txt" },
+            { description: "只显示两个文件共有的行", code: "comm -12 file1.txt file2.txt" },
+            { description: "只显示文件1独有的行", code: "comm -23 file1.txt file2.txt" },
+            { description: "只显示文件2独有的行", code: "comm -13 file1.txt file2.txt" },
+            { description: "查看帮助文档", code: "comm --help" }
+        ],
+        relatedCommands: ["diff", "sort", "join", "uniq"]
+    },
+    {
+        name: "join",
+        categoryId: "text",
+        syntax: "join [选项] 文件1 文件2",
+        simpleExplain: "按共同字段合并两文件，就像根据学号把两张表合并成一张",
+        detailExplain: "就像根据学号把两张表合并成一张——join 根据两个文件中相同的字段（默认是第一列）把行合并在一起，类似于数据库的 JOIN 操作。",
+        helpOutput: `Usage: join [OPTION]... FILE1 FILE2
 For each pair of input lines with identical join fields, write a line to
 standard output.  The default join field is the first, delimited by blanks.
 
@@ -3030,22 +3003,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/join>
 or available locally via: info '(coreutils) join invocation'
 `,
-    examples: [
-      { description: "按第一列合并两个文件", code: "join names.txt scores.txt" },
-      { description: "指定合并的字段列", code: "join -1 2 -2 1 file1.txt file2.txt" },
-      { description: "显示未匹配的行", code: "join -a 1 names.txt scores.txt" },
-      { description: "指定字段分隔符", code: "join -t ',' data1.csv data2.csv" },
-      { description: "查看帮助文档", code: "join --help" }
-    ],
-    relatedCommands: ["comm", "sort", "paste", "awk"]
-  },
-  {
-    name: "split",
-    categoryId: "text",
-    syntax: "split [选项] 文件 [前缀]",
-    simpleExplain: "将大文件分割成多个小文件",
-    detailExplain: "将大文件按大小或行数拆分成多个小文件。默认每 1000 行拆分一次，输出文件以 xaa、xab... 命名。常用参数：-l 按行数拆分，-b 按字节数拆分，-d 使用数字后缀，-a 指定后缀长度。常用于分割日志或大文件便于传输。",
-    helpOutput: `Usage: split [OPTION]... [FILE [PREFIX]]
+        examples: [
+            { description: "按第一列合并两个文件", code: "join names.txt scores.txt" },
+            { description: "指定合并的字段列", code: "join -1 2 -2 1 file1.txt file2.txt" },
+            { description: "显示未匹配的行", code: "join -a 1 names.txt scores.txt" },
+            { description: "指定字段分隔符", code: "join -t ',' data1.csv data2.csv" },
+            { description: "查看帮助文档", code: "join --help" }
+        ],
+        relatedCommands: ["comm", "sort", "paste", "awk"]
+    },
+    {
+        name: "split",
+        categoryId: "text",
+        syntax: "split [选项] 文件 [前缀]",
+        simpleExplain: "将大文件分割成小文件，就像把一个大蛋糕切成小块",
+        detailExplain: "就像把一个大蛋糕切成小块——split 把一个大文件按大小或行数拆分成多个小文件，方便传输或处理。每个小文件会自动命名。",
+        helpOutput: `Usage: split [OPTION]... [FILE [PREFIX]]
 Output pieces of FILE to PREFIXaa, PREFIXab, ...;
 default size is 1000 lines, and default PREFIX is 'x'.
 
@@ -3089,22 +3062,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/split>
 or available locally via: info '(coreutils) split invocation'
 `,
-    examples: [
-      { description: "按默认1000行分割文件", code: "split large_log.txt" },
-      { description: "每100行分割一次", code: "split -l 100 data.txt chunk_" },
-      { description: "按大小分割（每个50MB）", code: "split -b 50M bigfile.zip part_" },
-      { description: "分割时使用数字后缀", code: "split -d -l 500 data.txt part_" },
-      { description: "查看帮助文档", code: "split --help" }
-    ],
-    relatedCommands: ["csplit", "cat", "wc", "head"]
-  },
-  {
-    name: "csplit",
-    categoryId: "text",
-    syntax: "csplit [选项] 文件 模式",
-    simpleExplain: "按内容模式分割文件",
-    detailExplain: "根据文件内容的模式（行号或正则匹配）分割文件，比 split 更灵活。可按章节、空行或特定标记拆分。常用参数：-f 指定输出文件前缀，-b 指定后缀格式，-k 保留出错时已生成的文件，/模式/ 按正则分割，{n} 重复分割 n 次。",
-    helpOutput: `Usage: csplit [OPTION]... FILE PATTERN...
+        examples: [
+            { description: "按默认1000行分割文件", code: "split large_log.txt" },
+            { description: "每100行分割一次", code: "split -l 100 data.txt chunk_" },
+            { description: "按大小分割（每个50MB）", code: "split -b 50M bigfile.zip part_" },
+            { description: "分割时使用数字后缀", code: "split -d -l 500 data.txt part_" },
+            { description: "查看帮助文档", code: "split --help" }
+        ],
+        relatedCommands: ["csplit", "cat", "wc", "head"]
+    },
+    {
+        name: "csplit",
+        categoryId: "text",
+        syntax: "csplit [选项] 文件 模式",
+        simpleExplain: "按内容模式分割文件，就像按章节把一本书拆分成多个小册子",
+        detailExplain: "就像按章节把一本书拆分成多个小册子——csplit 根据文件内容的模式（如特定行或正则匹配）来分割文件，比 split 更灵活，可以按内容逻辑拆分。",
+        helpOutput: `Usage: csplit [OPTION]... FILE PATTERN...
 Output pieces of FILE separated by PATTERN(s) to files 'xx00', 'xx01', ...,
 and output byte counts of each piece to standard output.
 
@@ -3135,22 +3108,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/csplit>
 or available locally via: info '(coreutils) csplit invocation'
 `,
-    examples: [
-      { description: "按空行分割文件", code: "csplit file.txt /^$/" },
-      { description: "按指定行号分割", code: "csplit data.txt 100 200 300" },
-      { description: "按章节标题分割", code: "csplit book.txt '/^Chapter/' '{*}'" },
-      { description: "保留分割后的文件（不自动删除）", code: "csplit -k log.txt '/^--/' '{*}'" },
-      { description: "查看帮助文档", code: "csplit --help" }
-    ],
-    relatedCommands: ["split", "cat", "head", "tail"]
-  },
-  {
-    name: "iconv",
-    categoryId: "text",
-    syntax: "iconv -f 编码 -t 编码 文件",
-    simpleExplain: "转换文件的字符编码",
-    detailExplain: "将文件从一种字符编码转换为另一种编码。常用参数：-f 指定源编码，-t 指定目标编码，-o 输出到文件，-c 忽略无法转换的字符，-l 列出所有支持的编码。常用于解决不同系统间编码不兼容导致的乱码问题，如 GBK 与 UTF-8 互转。",
-    helpOutput: `Usage: iconv [OPTION...] [FILE...]
+        examples: [
+            { description: "按空行分割文件", code: "csplit file.txt /^$/" },
+            { description: "按指定行号分割", code: "csplit data.txt 100 200 300" },
+            { description: "按章节标题分割", code: "csplit book.txt '/^Chapter/' '{*}'" },
+            { description: "保留分割后的文件（不自动删除）", code: "csplit -k log.txt '/^--/' '{*}'" },
+            { description: "查看帮助文档", code: "csplit --help" }
+        ],
+        relatedCommands: ["split", "cat", "head", "tail"]
+    },
+    {
+        name: "iconv",
+        categoryId: "text",
+        syntax: "iconv -f 编码 -t 编码 文件",
+        simpleExplain: "转换文件编码，就像把中文翻译成英文一样转换字符编码",
+        detailExplain: "就像把中文翻译成英文一样转换字符编码——iconv 把文件从一种字符编码转换为另一种，解决不同系统之间编码不兼容导致的乱码问题。",
+        helpOutput: `Usage: iconv [OPTION...] [FILE...]
 Convert encoding of given files from one encoding to another.
 
  Input/Output format specification:
@@ -3176,22 +3149,22 @@ for any corresponding short options.
 For bug reporting instructions, please see:
 <https://bugs.launchpad.net/ubuntu/+source/glibc/+bugs>.
 `,
-    examples: [
-      { description: "将GBK编码转换为UTF-8", code: "iconv -f GBK -t UTF-8 readme.txt" },
-      { description: "转换后保存到新文件", code: "iconv -f GB18030 -t UTF-8 input.txt -o output.txt" },
-      { description: "列出所有支持的编码", code: "iconv -l" },
-      { description: "转换时忽略无法识别的字符", code: "iconv -f GBK -t UTF-8//IGNORE messy.txt" },
-      { description: "查看帮助文档", code: "iconv --help" }
-    ],
-    relatedCommands: ["dos2unix", "unix2dos", "file", "sed"]
-  },
-  {
-    name: "dos2unix",
-    categoryId: "text",
-    syntax: "dos2unix [文件]",
-    simpleExplain: "将Windows换行符转为Unix格式",
-    detailExplain: "将 Windows 格式的换行符 \\r\\n 转换为 Unix 格式的 \\n。常用参数：-k 保留原文件时间戳，-n 输出到新文件而不修改原文件，-q 静默模式。常用于解决在 Linux 上运行 Windows 编辑的脚本时报语法错误的问题。",
-    helpOutput: `Usage: dos2unix [options] [file ...]
+        examples: [
+            { description: "将GBK编码转换为UTF-8", code: "iconv -f GBK -t UTF-8 readme.txt" },
+            { description: "转换后保存到新文件", code: "iconv -f GB18030 -t UTF-8 input.txt -o output.txt" },
+            { description: "列出所有支持的编码", code: "iconv -l" },
+            { description: "转换时忽略无法识别的字符", code: "iconv -f GBK -t UTF-8//IGNORE messy.txt" },
+            { description: "查看帮助文档", code: "iconv --help" }
+        ],
+        relatedCommands: ["dos2unix", "unix2dos", "file", "sed"]
+    },
+    {
+        name: "dos2unix",
+        categoryId: "text",
+        syntax: "dos2unix [文件]",
+        simpleExplain: "将Windows换行符转换为Unix格式，就像把右舵车改成左舵车",
+        detailExplain: "就像把右舵车改成左舵车——Windows 用 \\r\\n 换行，Unix/Linux 用 \\n 换行，dos2unix 把 Windows 格式的换行符转换为 Unix 格式，解决脚本在Linux上运行报错的问题。",
+        helpOutput: `Usage: dos2unix [options] [file ...]
 Convert DOS/MAC text files to Unix format.
 
 Options:
@@ -3205,22 +3178,22 @@ Options:
   -R, --replace-charset 替换字符集
   -l, --list           列出可用编码
       --version        显示版本`,
-    examples: [
-      { description: "转换Windows文件为Unix格式", code: "dos2unix script.sh" },
-      { description: "批量转换所有sh文件", code: "dos2unix *.sh" },
-      { description: "只显示哪些文件需要转换", code: "dos2unix -i *.txt" },
-      { description: "保留原文件并转换到新文件", code: "dos2unix -n input.txt output.txt" },
-      { description: "查看帮助文档", code: "dos2unix --help" }
-    ],
-    relatedCommands: ["unix2dos", "iconv", "sed", "tr"]
-  },
-  {
-    name: "unix2dos",
-    categoryId: "text",
-    syntax: "unix2dos [文件]",
-    simpleExplain: "将Unix换行符转为Windows格式",
-    detailExplain: "将 Unix 格式的换行符 \\n 转换为 Windows 格式的 \\r\\n，是 dos2unix 的反向操作。常用参数：-k 保留文件时间戳，-n 输出到新文件，-q 静默模式。常用于将 Linux 上的文本文件传到 Windows 环境中避免显示异常。",
-    helpOutput: `Usage: unix2dos [options] [file ...]
+        examples: [
+            { description: "转换Windows文件为Unix格式", code: "dos2unix script.sh" },
+            { description: "批量转换所有sh文件", code: "dos2unix *.sh" },
+            { description: "只显示哪些文件需要转换", code: "dos2unix -i *.txt" },
+            { description: "保留原文件并转换到新文件", code: "dos2unix -n input.txt output.txt" },
+            { description: "查看帮助文档", code: "dos2unix --help" }
+        ],
+        relatedCommands: ["unix2dos", "iconv", "sed", "tr"]
+    },
+    {
+        name: "unix2dos",
+        categoryId: "text",
+        syntax: "unix2dos [文件]",
+        simpleExplain: "将Unix换行符转换为Windows格式，就像把左舵车改成右舵车",
+        detailExplain: "就像把左舵车改成右舵车——unix2dos 是 dos2unix 的反向操作，把 Unix 的 \\n 换行符转换为 Windows 的 \\r\\n 格式，方便在Windows环境中使用。",
+        helpOutput: `Usage: unix2dos [options] [file ...]
 Convert Unix text files to DOS format.
 
 Options:
@@ -3233,22 +3206,22 @@ Options:
   -F, --follow-symlink 跟随符号链接
   -l, --list           列出可用编码
       --version        显示版本`,
-    examples: [
-      { description: "转换Unix文件为Windows格式", code: "unix2dos readme.txt" },
-      { description: "批量转换", code: "unix2dos *.txt" },
-      { description: "保留原文件并转换到新文件", code: "unix2dos -n input.txt output.txt" },
-      { description: "只显示文件信息不转换", code: "unix2dos -i *.txt" },
-      { description: "查看帮助文档", code: "unix2dos --help" }
-    ],
-    relatedCommands: ["dos2unix", "iconv", "sed", "tr"]
-  },
-  {
-    name: "base64",
-    categoryId: "text",
-    syntax: "base64 [选项] [文件]",
-    simpleExplain: "Base64编码或解码数据",
-    detailExplain: "将二进制数据编码为纯文本格式（仅含 A-Z、a-z、0-9、+/= 字符）。常用参数：-d 解码数据，-i 忽略非字母字符，-w 指定换行宽度（0 表示不换行）。常用于在只支持文本的环境中传输二进制数据，如邮件附件、JSON 中嵌入图片、HTTP Basic 认证。",
-    helpOutput: `Usage: base64 [OPTION]... [FILE]
+        examples: [
+            { description: "转换Unix文件为Windows格式", code: "unix2dos readme.txt" },
+            { description: "批量转换", code: "unix2dos *.txt" },
+            { description: "保留原文件并转换到新文件", code: "unix2dos -n input.txt output.txt" },
+            { description: "只显示文件信息不转换", code: "unix2dos -i *.txt" },
+            { description: "查看帮助文档", code: "unix2dos --help" }
+        ],
+        relatedCommands: ["dos2unix", "iconv", "sed", "tr"]
+    },
+    {
+        name: "base64",
+        categoryId: "text",
+        syntax: "base64 [选项] [文件]",
+        simpleExplain: "Base64编码/解码工具，就像把信件用特殊密码重新编码",
+        detailExplain: "就像把信件用特殊密码重新编码——base64 把二进制数据转换成纯文本格式（只含字母、数字和 +/），方便在只支持文本的环境中传输，比如邮件附件和JSON中嵌入图片。",
+        helpOutput: `Usage: base64 [OPTION]... [FILE]
 Base64 encode or decode FILE, or standard input, to standard output.
 
 With no FILE, or when FILE is -, read standard input.
@@ -3271,22 +3244,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/base64>
 or available locally via: info '(coreutils) base64 invocation'
 `,
-    examples: [
-      { description: "编码字符串", code: "echo -n \"hello\" | base64", output: "aGVsbG8=" },
-      { description: "解码Base64字符串", code: "echo \"aGVsbG8=\" | base64 -d", output: "hello" },
-      { description: "编码文件内容", code: "base64 image.png > image_b64.txt" },
-      { description: "解码Base64文件", code: "base64 -d image_b64.txt > image.png" },
-      { description: "查看帮助文档", code: "base64 --help" }
-    ],
-    relatedCommands: ["xxd", "od", "hexdump", "openssl"]
-  },
-  {
-    name: "strings",
-    categoryId: "text",
-    syntax: "strings [选项] 文件",
-    simpleExplain: "从二进制文件中提取可读字符串",
-    detailExplain: "从二进制文件中提取可打印的字符串序列（默认长度至少 4 个字符）。常用参数：-n 指定最小字符串长度，-a 扫描整个文件，-t 显示字符串偏移量，-e 设置字符编码。常用于逆向工程、调试或查看编译后程序中的文本信息。",
-    helpOutput: `Usage: strings [option(s)] [file(s)]
+        examples: [
+            { description: "编码字符串", code: "echo -n \"hello\" | base64", output: "aGVsbG8=" },
+            { description: "解码Base64字符串", code: "echo \"aGVsbG8=\" | base64 -d", output: "hello" },
+            { description: "编码文件内容", code: "base64 image.png > image_b64.txt" },
+            { description: "解码Base64文件", code: "base64 -d image_b64.txt > image.png" },
+            { description: "查看帮助文档", code: "base64 --help" }
+        ],
+        relatedCommands: ["xxd", "od", "hexdump", "openssl"]
+    },
+    {
+        name: "strings",
+        categoryId: "text",
+        syntax: "strings [选项] 文件",
+        simpleExplain: "从二进制文件中提取可读文本，就像从矿石中提炼黄金",
+        detailExplain: "就像从矿石中提炼黄金——strings 从二进制文件（如可执行程序、图片等）中提取出人类可读的字符串，常用于逆向工程、调试或查看编译后程序中的文本信息。",
+        helpOutput: `Usage: strings [option(s)] [file(s)]
  Display printable strings in [file(s)] (stdin by default)
  The options are:
   -a - --all                Scan the entire file, not just the data section [default]
@@ -3309,22 +3282,22 @@ or available locally via: info '(coreutils) base64 invocation'
 strings: supported targets: elf64-x86-64 elf32-i386 elf32-iamcu elf32-x86-64 pei-i386 pe-x86-64 pei-x86-64 elf64-little elf64-big elf32-little elf32-big pe-bigobj-x86-64 pe-i386 pdb srec symbolsrec verilog tekhex binary ihex plugin
 Report bugs to <https://sourceware.org/bugzilla/>
 `,
-    examples: [
-      { description: "从二进制文件中提取可读文本", code: "strings /usr/bin/ls" },
-      { description: "只提取至少10个字符的文本", code: "strings -n 10 program.bin" },
-      { description: "在二进制文件中搜索特定字符串", code: "strings app.bin | grep \"password\"" },
-      { description: "提取并显示偏移地址", code: "strings -t x library.so" },
-      { description: "查看帮助文档", code: "strings --help" }
-    ],
-    relatedCommands: ["grep", "xxd", "od", "hexdump"]
-  },
-  {
-    name: "fold",
-    categoryId: "text",
-    syntax: "fold [选项] [文件]",
-    simpleExplain: "将长行按指定宽度折行显示",
-    detailExplain: "将超过指定宽度的行自动换行，默认每行 80 个字符。常用参数：-w 指定行宽，-b 按字节而非字符计数，-s 尽量在空格处换行避免单词被截断。常用于防止长行超出终端显示范围或适配固定宽度输出。",
-    helpOutput: `Usage: fold [OPTION]... [FILE]...
+        examples: [
+            { description: "从二进制文件中提取可读文本", code: "strings /usr/bin/ls" },
+            { description: "只提取至少10个字符的文本", code: "strings -n 10 program.bin" },
+            { description: "在二进制文件中搜索特定字符串", code: "strings app.bin | grep \"password\"" },
+            { description: "提取并显示偏移地址", code: "strings -t x library.so" },
+            { description: "查看帮助文档", code: "strings --help" }
+        ],
+        relatedCommands: ["grep", "xxd", "od", "hexdump"]
+    },
+    {
+        name: "fold",
+        categoryId: "text",
+        syntax: "fold [选项] [文件]",
+        simpleExplain: "将长行折叠为指定宽度，就像把超长的纸条按固定宽度折起来",
+        detailExplain: "就像把超长的纸条按固定宽度折起来——fold 把超过指定宽度的行自动换行，防止内容超出终端显示范围，默认每行80个字符。",
+        helpOutput: `Usage: fold [OPTION]... [FILE]...
 Wrap input lines in each FILE, writing to standard output.
 
 With no FILE, or when FILE is -, read standard input.
@@ -3341,24 +3314,23 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/fold>
 or available locally via: info '(coreutils) fold invocation'
 `,
-    examples: [
-      { description: "按默认80列折叠长行", code: "fold long_text.txt" },
-      { description: "指定每行40个字符", code: "fold -w 40 readme.txt" },
-      { description: "按字节宽度折叠（不截断多字节字符）", code: "fold -s -w 60 article.txt" },
-      { description: "在空格处折行", code: "fold -s -w 50 paragraph.txt" },
-      { description: "查看帮助文档", code: "fold --help" }
-    ],
-    relatedCommands: ["fmt", "pr", "column", "cut"]
-  },
-
-  // ==================== 进程管理 ====================
-  {
-    name: "ps",
-    categoryId: "process",
-    syntax: "ps [选项]",
-    simpleExplain: "查看当前运行的进程列表",
-    detailExplain: "显示当前系统进程的快照信息。常用参数：-e 或 -A 显示所有进程，-f 显示完整格式，-u 按用户过滤，-aux 显示所有进程的详细信息（BSD 风格），--forest 以树形显示进程关系。是排查进程状态、CPU/内存占用最基础的工具。",
-    helpOutput: `
+        examples: [
+            { description: "按默认80列折叠长行", code: "fold long_text.txt" },
+            { description: "指定每行40个字符", code: "fold -w 40 readme.txt" },
+            { description: "按字节宽度折叠（不截断多字节字符）", code: "fold -s -w 60 article.txt" },
+            { description: "在空格处折行", code: "fold -s -w 50 paragraph.txt" },
+            { description: "查看帮助文档", code: "fold --help" }
+        ],
+        relatedCommands: ["fmt", "pr", "column", "cut"]
+    },
+    // ==================== 进程管理 ====================
+    {
+        name: "ps",
+        categoryId: "process",
+        syntax: "ps [选项]",
+        simpleExplain: "查看当前运行的进程列表，就像看公司的员工考勤表",
+        detailExplain: "就像公司的人事经理拿出一份员工在岗名单——谁在工作（运行中）、谁的工号是多少（PID）、占了多少工位资源（CPU/内存）、谁来启动的这个任务。ps 是了解系统正在做什么的最基本工具。",
+        helpOutput: `
 Usage:
  ps [options]
 
@@ -3368,22 +3340,22 @@ Usage:
 
 For more details see ps(1).
 `,
-    examples: [
-      { description: "显示当前用户的进程", code: "ps" },
-      { description: "显示所有进程的详细信息", code: "ps aux" },
-      { description: "以树形结构显示进程关系", code: "ps auxf" },
-      { description: "显示指定 PID 的进程信息", code: "ps -p 1234 -o pid,user,cmd" },
-      { description: "查看帮助文档", code: "ps --help" }
-    ],
-    relatedCommands: ["top", "pstree", "pgrep", "kill"]
-  },
-  {
-    name: "top",
-    categoryId: "process",
-    syntax: "top [选项]",
-    simpleExplain: "实时监控系统的进程和资源",
-    detailExplain: "实时动态显示系统进程状态和资源占用情况，默认每 3 秒刷新一次。顶部显示系统负载、CPU、内存等汇总信息，下方列出各进程的 PID、用户、CPU、内存、运行时间等。按 q 退出，M 按内存排序，P 按 CPU 排序，k 可终止进程。",
-    helpOutput: `
+        examples: [
+            { description: "显示当前用户的进程", code: "ps" },
+            { description: "显示所有进程的详细信息", code: "ps aux" },
+            { description: "以树形结构显示进程关系", code: "ps auxf" },
+            { description: "显示指定 PID 的进程信息", code: "ps -p 1234 -o pid,user,cmd" },
+            { description: "查看帮助文档", code: "ps --help" }
+        ],
+        relatedCommands: ["top", "pstree", "pgrep", "kill"]
+    },
+    {
+        name: "top",
+        categoryId: "process",
+        syntax: "top [选项]",
+        simpleExplain: "实时监控系统进程，就像机场大屏幕实时显示航班动态",
+        detailExplain: "就像机场的实时航班信息大屏幕——不断刷新显示哪些进程正在运行、占用多少 CPU 和内存、已经运行了多久。屏幕每隔几秒自动刷新一次，让你能实时掌握系统的健康状态。按 q 键退出。",
+        helpOutput: `
 Usage:
  top [options]
 
@@ -3411,22 +3383,22 @@ Options:
 
 For more details see top(1).
 `,
-    examples: [
-      { description: "启动 top 实时监控界面", code: "top" },
-      { description: "只显示特定用户的进程", code: "top -u www-data" },
-      { description: "每 5 秒刷新一次", code: "top -d 5" },
-      { description: "只显示 3 次刷新后退出", code: "top -n 3 -b" },
-      { description: "查看帮助文档", code: "top --help" }
-    ],
-    relatedCommands: ["htop", "ps", "vmstat", "mpstat"]
-  },
-  {
-    name: "htop",
-    categoryId: "process",
-    syntax: "htop [选项]",
-    simpleExplain: "增强版交互式进程监控器",
-    detailExplain: "增强版的 top，提供彩色界面和交互式操作。支持鼠标点击、方向键选中进程、树形视图、横向滚动查看完整信息。常用快捷键：F5 树形视图，F6 排序，F9 发送信号，F7/F8 调整优先级。多数系统需额外安装。",
-    helpOutput: `htop 3.3.0
+        examples: [
+            { description: "启动 top 实时监控界面", code: "top" },
+            { description: "只显示特定用户的进程", code: "top -u www-data" },
+            { description: "每 5 秒刷新一次", code: "top -d 5" },
+            { description: "只显示 3 次刷新后退出", code: "top -n 3 -b" },
+            { description: "查看帮助文档", code: "top --help" }
+        ],
+        relatedCommands: ["htop", "ps", "vmstat", "mpstat"]
+    },
+    {
+        name: "htop",
+        categoryId: "process",
+        syntax: "htop [选项]",
+        simpleExplain: "增强版进程监控器，就像 top 的升级版彩色触摸屏",
+        detailExplain: "就像 top 的豪华升级版——有彩色的界面、可以用鼠标点击操作、可以用方向键选中进程、支持树形视图显示。如果你觉得 top 太简陋难用，htop 绝对会让你眼前一亮。不过很多系统需要额外安装。",
+        helpOutput: `htop 3.3.0
 (C) 2004-2019 Hisham Muhammad. (C) 2020-2024 htop dev team.
 Released under the GNU GPLv2+.
 
@@ -3448,22 +3420,22 @@ Released under the GNU GPLv2+.
 Press F1 inside htop for online help.
 See 'man htop' for more information.
 `,
-    examples: [
-      { description: "启动 htop 交互式界面", code: "htop" },
-      { description: "按 CPU 使用率排序", code: "htop --sort-key PERCENT_CPU" },
-      { description: "只显示指定 PID 的进程树", code: "htop -p 1234,5678" },
-      { description: "启动时延迟 2 秒再显示", code: "htop -d 2" },
-      { description: "查看帮助文档", code: "htop --help" }
-    ],
-    relatedCommands: ["top", "ps", "glances", "atop"]
-  },
-  {
-    name: "kill",
-    categoryId: "process",
-    syntax: "kill [选项] <PID>",
-    simpleExplain: "向进程发送信号（常用于终止）",
-    detailExplain: "向指定进程发送信号，默认发送 SIGTERM（15）请求进程正常退出。常用参数：-9 发送 SIGKILL 强制终止进程（不可被捕获或忽略），-15 发送 SIGTERM，-l 列出所有信号，-HUP 重启进程。需提供进程 PID。",
-    helpOutput: `
+        examples: [
+            { description: "启动 htop 交互式界面", code: "htop" },
+            { description: "按 CPU 使用率排序", code: "htop --sort-key PERCENT_CPU" },
+            { description: "只显示指定 PID 的进程树", code: "htop -p 1234,5678" },
+            { description: "启动时延迟 2 秒再显示", code: "htop -d 2" },
+            { description: "查看帮助文档", code: "htop --help" }
+        ],
+        relatedCommands: ["top", "ps", "glances", "atop"]
+    },
+    {
+        name: "kill",
+        categoryId: "process",
+        syntax: "kill [选项] <PID>",
+        simpleExplain: "终止进程，就像给正在运行的程序发一张停工通知单",
+        detailExplain: "就像你对着一个正在干活的工人喊「停下！」——kill 向指定的进程发送信号，最常用的是终止信号（SIGTERM 或 SIGKILL）。SIGTERM 像是礼貌地说「请你停下来收拾下班」，而 SIGKILL 则像是直接拔电源——强制立即停止，不给任何反应机会。",
+        helpOutput: `
 Usage:
  kill [options] <pid> [...]
 
@@ -3480,23 +3452,23 @@ Options:
 
 For more details see kill(1).
 `,
-    examples: [
-      { description: "礼貌地请求进程终止", code: "kill 1234" },
-      { description: "强制杀死进程", code: "kill -9 5678" },
-      { description: "发送挂起信号（暂停但不结束）", code: "kill -STOP 9012" },
-      { description: "发送继续信号（恢复被暂停的进程）", code: "kill -CONT 9012" },
-      { description: "查看帮助文档", code: "kill --help" }
-    ],
-    relatedCommands: ["killall", "pkill", "pgrep", "jobs"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "bg",
-    categoryId: "process",
-    syntax: "bg [作业号]",
-    simpleExplain: "将暂停的任务放到后台继续运行",
-    detailExplain: "将暂停（挂起）的作业放到后台继续运行。通常先用 Ctrl+Z 暂停前台任务，再用 bg 将其转入后台。可指定作业号（如 bg %1）选择特定任务。后台任务继续执行但不再占用终端，可配合 jobs 查看状态。",
-    helpOutput: `bg: bg [job_spec ...]
+        examples: [
+            { description: "礼貌地请求进程终止", code: "kill 1234" },
+            { description: "强制杀死进程", code: "kill -9 5678" },
+            { description: "发送挂起信号（暂停但不结束）", code: "kill -STOP 9012" },
+            { description: "发送继续信号（恢复被暂停的进程）", code: "kill -CONT 9012" },
+            { description: "查看帮助文档", code: "kill --help" }
+        ],
+        relatedCommands: ["killall", "pkill", "pgrep", "jobs"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "bg",
+        categoryId: "process",
+        syntax: "bg [作业号]",
+        simpleExplain: "把暂停的任务放到后台运行，就像把活儿交给后台部门慢慢做",
+        detailExplain: "就像你在前台接待客人时，把一些不需要立刻完成的工作交代给后台部门去慢慢处理——前台终端解放出来可以继续接受其他命令，后台的工作在默默进行。通常配合 Ctrl+Z 先暂停任务再用 bg 放到后台。",
+        helpOutput: `bg: bg [job_spec ...]
     Move jobs to the background.
     
     Place the jobs identified by each JOB_SPEC in the background, as if they
@@ -3506,20 +3478,20 @@ For more details see kill(1).
     Exit Status:
     Returns success unless job control is not enabled or an error occurs.
 `,
-    examples: [
-      { description: "把最近一个暂停的作业放到后台运行", code: "bg" },
-      { description: "把指定作业号的进程放到后台", code: "bg %2" },
-      { description: "查看帮助文档", code: "help bg" }
-    ],
-    relatedCommands: ["fg", "jobs", "nohup", "Ctrl+Z"]
-  },
-  {
-    name: "fg",
-    categoryId: "process",
-    syntax: "fg [作业号]",
-    simpleExplain: "将后台任务调回前台运行",
-    detailExplain: "将后台作业调回前台继续运行。可指定作业号（如 fg %1）选择特定任务。任务回到前台后终端被其占用，直到任务完成或再次被 Ctrl+Z 暂停。常用于查看后台任务的实时输出或重新交互操作。",
-    helpOutput: `fg: fg [job_spec]
+        examples: [
+            { description: "把最近一个暂停的作业放到后台运行", code: "bg" },
+            { description: "把指定作业号的进程放到后台", code: "bg %2" },
+            { description: "查看帮助文档", code: "help bg" }
+        ],
+        relatedCommands: ["fg", "jobs", "nohup", "Ctrl+Z"]
+    },
+    {
+        name: "fg",
+        categoryId: "process",
+        syntax: "fg [作业号]",
+        simpleExplain: "把后台任务拉回前台，就像把后台部门的活儿拿回自己手上做",
+        detailExplain: "就像你之前把一项工作交给了后台部门（bg），现在想亲自过问一下，就用 fg 把它重新调回前台终端。此时终端就被这个任务占据，直到它完成或再次被你放到后台。",
+        helpOutput: `fg: fg [job_spec]
     Move job to the foreground.
     
     Place the job identified by JOB_SPEC in the foreground, making it the
@@ -3529,20 +3501,20 @@ For more details see kill(1).
     Exit Status:
     Status of command placed in foreground, or failure if an error occurs.
 `,
-    examples: [
-      { description: "把最近的后台作业拉回前台", code: "fg" },
-      { description: "把 2 号作业拉回前台", code: "fg %2" },
-      { description: "查看帮助文档", code: "help fg" }
-    ],
-    relatedCommands: ["bg", "jobs", "Ctrl+Z", "nohup"]
-  },
-  {
-    name: "jobs",
-    categoryId: "process",
-    syntax: "jobs [选项]",
-    simpleExplain: "查看当前shell的后台任务列表",
-    detailExplain: "列出当前 shell 会话中的后台作业及其状态。显示作业号、状态（Running/Stopped）和命令。常用参数：-l 同时显示 PID，-p 仅显示 PID，-r 只显示运行中的，-s 只显示已停止的。是管理前后台任务的参考工具。",
-    helpOutput: `jobs: jobs [-lnprs] [jobspec ...] or jobs -x command [args]
+        examples: [
+            { description: "把最近的后台作业拉回前台", code: "fg" },
+            { description: "把 2 号作业拉回前台", code: "fg %2" },
+            { description: "查看帮助文档", code: "help fg" }
+        ],
+        relatedCommands: ["bg", "jobs", "Ctrl+Z", "nohup"]
+    },
+    {
+        name: "jobs",
+        categoryId: "process",
+        syntax: "jobs [选项]",
+        simpleExplain: "查看当前 shell 的后台任务列表，就像查看自己的待办事项清单",
+        detailExplain: "就像你口袋里的待办事项清单——记录着你在这个终端里启动了哪些后台任务、它们的编号是多少、状态是正在运行还是暂停了。这是管理前后台任务的必备参考表。",
+        helpOutput: `jobs: jobs [-lnprs] [jobspec ...] or jobs -x command [args]
     Display status of jobs.
     
     Lists the active jobs.  JOBSPEC restricts output to that job.
@@ -3564,22 +3536,22 @@ For more details see kill(1).
     Returns success unless an invalid option is given or an error occurs.
     If -x is used, returns the exit status of COMMAND.
 `,
-    examples: [
-      { description: "列出当前 shell 的所有后台作业", code: "jobs", output: "[1]   Running    python train.py &\n[2]-  Stopped    vim notes.txt\n[3]+  Running    npm start &" },
-      { description: "列出作业的同时显示 PID", code: "jobs -l" },
-      { description: "只列出正在运行的作业", code: "jobs -r" },
-      { description: "只列出已暂停的作业", code: "jobs -s" },
-      { description: "查看帮助文档", code: "help jobs" }
-    ],
-    relatedCommands: ["fg", "bg", "Ctrl+Z", "nohup"]
-  },
-  {
-    name: "nohup",
-    categoryId: "process",
-    syntax: "nohup 命令 [参数...]",
-    simpleExplain: "让命令断开终端后继续运行",
-    detailExplain: "忽略挂断信号（SIGHUP）运行命令，使进程在终端关闭后继续运行。输出默认重定向到 nohup.out 文件。常用于运行长时间任务，配合 & 放到后台执行，如 nohup ./script.sh &。注意 nohup 不自动将任务转入后台，需手动加 &。",
-    helpOutput: `Usage: nohup COMMAND [ARG]...
+        examples: [
+            { description: "列出当前 shell 的所有后台作业", code: "jobs", output: "[1]   Running    python train.py &\n[2]-  Stopped    vim notes.txt\n[3]+  Running    npm start &" },
+            { description: "列出作业的同时显示 PID", code: "jobs -l" },
+            { description: "只列出正在运行的作业", code: "jobs -r" },
+            { description: "只列出已暂停的作业", code: "jobs -s" },
+            { description: "查看帮助文档", code: "help jobs" }
+        ],
+        relatedCommands: ["fg", "bg", "Ctrl+Z", "nohup"]
+    },
+    {
+        name: "nohup",
+        categoryId: "process",
+        syntax: "nohup 命令 [参数...]",
+        simpleExplain: "让命令断开终端后仍继续运行，就像设定了自动运行的机器人不怕主人离开",
+        detailExplain: "就像你安排了一个机器人干活，然后关上门回家——普通的命令在你关闭终端时就会被终止，但 nohup 启动的命令就像一个独立的机器人，不管你是否在线，它都会坚持把活干完。非常适合跑长时间任务。",
+        helpOutput: `Usage: nohup COMMAND [ARG]...
   or:  nohup OPTION
 Run COMMAND, ignoring hangup signals.
 
@@ -3607,21 +3579,21 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/nohup>
 or available locally via: info '(coreutils) nohup invocation'
 `,
-    examples: [
-      { description: "让脚本在后台持续运行", code: "nohup ./backup.sh &" },
-      { description: "自定义输出日志文件", code: "nohup python model_train.py > training.log 2>&1 &" },
-      { description: "配合 nice 降低优先级运行", code: "nohup nice -n 19 ./heavy_computation.sh &" },
-      { description: "查看帮助文档", code: "nohup --help" }
-    ],
-    relatedCommands: ["bg", "screen", "tmux", "disown"]
-  },
-  {
-    name: "nice",
-    categoryId: "process",
-    syntax: "nice [选项] 命令 [参数...]",
-    simpleExplain: "以指定优先级启动进程",
-    detailExplain: "以指定优先级启动进程。nice 值范围 -20（最高优先级）到 19（最低优先级），默认 0，普通用户只能调高 nice 值（降低优先级），root 可调低。语法：nice -n 10 command。值越大表示越谦让，占用 CPU 越少。",
-    helpOutput: `Usage: nice [OPTION] [COMMAND [ARG]...]
+        examples: [
+            { description: "让脚本在后台持续运行", code: "nohup ./backup.sh &" },
+            { description: "自定义输出日志文件", code: "nohup python model_train.py > training.log 2>&1 &" },
+            { description: "配合 nice 降低优先级运行", code: "nohup nice -n 19 ./heavy_computation.sh &" },
+            { description: "查看帮助文档", code: "nohup --help" }
+        ],
+        relatedCommands: ["bg", "screen", "tmux", "disown"]
+    },
+    {
+        name: "nice",
+        categoryId: "process",
+        syntax: "nice [选项] 命令 [参数...]",
+        simpleExplain: "以指定优先级启动进程，就像告诉系统这个任务急不急",
+        detailExplain: "就像你去办事大厅排队，有的人拿的是 VIP 号（优先级高，先办理），有的人拿的是普通号（优先级低，慢慢排）。nice 值范围是 -20（最高优先级）到 19（最低优先级），默认是 0。nice 值越大表示越「谦让」，越愿意让别人先执行。",
+        helpOutput: `Usage: nice [OPTION] [COMMAND [ARG]...]
 Run COMMAND with an adjusted niceness, which affects process scheduling.
 With no COMMAND, print the current niceness.  Niceness values range from
 -20 (most favorable to the process) to 19 (least favorable to the process).
@@ -3646,21 +3618,21 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/nice>
 or available locally via: info '(coreutils) nice invocation'
 `,
-    examples: [
-      { description: "以低优先级运行耗时任务", code: "nice -n 10 ./compile_project.sh" },
-      { description: "以较高优先级运行关键任务", code: "nice -n -5 ./critical_service" },
-      { description: "查看当前 nice 默认值", code: "nice", output: "0" },
-      { description: "查看帮助文档", code: "nice --help" }
-    ],
-    relatedCommands: ["renice", "ionice", "nohup", "chrt"]
-  },
-  {
-    name: "renice",
-    categoryId: "process",
-    syntax: "renice [选项] 优先级 <PID>",
-    simpleExplain: "调整运行中进程的优先级",
-    detailExplain: "调整正在运行的进程的优先级。与 nice（启动时设定）不同，renice 用于运行中修改。语法：renice -n 5 -p PID。常用参数：-p 指定 PID，-u 按用户调整其所有进程，-g 按进程组调整。普通用户只能调高 nice 值。",
-    helpOutput: `
+        examples: [
+            { description: "以低优先级运行耗时任务", code: "nice -n 10 ./compile_project.sh" },
+            { description: "以较高优先级运行关键任务", code: "nice -n -5 ./critical_service" },
+            { description: "查看当前 nice 默认值", code: "nice", output: "0" },
+            { description: "查看帮助文档", code: "nice --help" }
+        ],
+        relatedCommands: ["renice", "ionice", "nohup", "chrt"]
+    },
+    {
+        name: "renice",
+        categoryId: "process",
+        syntax: "renice [选项] 优先级 <PID>",
+        simpleExplain: "调整正在运行进程的优先级，就像中途改变办事的紧急程度",
+        detailExplain: "就像一个任务已经开始执行了，但你突然发现它太占资源或者太紧急了——renice 可以中途调整它的优先级。nice 是启动时设定的，renice 是运行中修改的，两者互补。",
+        helpOutput: `
 Usage:
  renice [-n|--priority|--relative] <priority> [-p|--pid] <pid>...
  renice [-n|--priority|--relative] <priority>  -g|--pgrp <pgid>...
@@ -3684,22 +3656,22 @@ Options:
 
 For more details see renice(1).
 `,
-    examples: [
-      { description: "降低 PID 为 1234 的进程优先级", code: "renice +10 1234" },
-      { description: "提高某个进程的优先级", code: "renice -5 5678" },
-      { description: "修改用户所有进程的优先级", code: "renice +5 -u www-data" },
-      { description: "修改进程组所有进程的优先级", code: "renice +10 -g 1001" },
-      { description: "查看帮助文档", code: "renice --help" }
-    ],
-    relatedCommands: ["nice", "top", "ps", "ionice"]
-  },
-  {
-    name: "pgrep",
-    categoryId: "process",
-    syntax: "pgrep [选项] 模式",
-    simpleExplain: "按名称查找进程ID",
-    detailExplain: "根据进程名或其他属性查找进程并输出其 PID。比 ps | grep 更简洁高效。常用参数：-l 同时显示进程名，-u 按用户过滤，-f 匹配完整命令行，-x 精确匹配进程名，-n 只返回最新启动的进程。常用于脚本中获取 PID。",
-    helpOutput: `
+        examples: [
+            { description: "降低 PID 为 1234 的进程优先级", code: "renice +10 1234" },
+            { description: "提高某个进程的优先级", code: "renice -5 5678" },
+            { description: "修改用户所有进程的优先级", code: "renice +5 -u www-data" },
+            { description: "修改进程组所有进程的优先级", code: "renice +10 -g 1001" },
+            { description: "查看帮助文档", code: "renice --help" }
+        ],
+        relatedCommands: ["nice", "top", "ps", "ionice"]
+    },
+    {
+        name: "pgrep",
+        categoryId: "process",
+        syntax: "pgrep [选项] 模式",
+        simpleExplain: "按名称查找进程 ID，就像通过姓名查工号",
+        detailExplain: "就像人事系统中根据员工姓名查找他的工号——你知道程序叫什么名字（比如 chrome），但不知道它的 PID，pgrep 帮你快速找到。比 ps | grep 更简洁高效，直接返回匹配的 PID 号码。",
+        helpOutput: `
 Usage:
  pgrep [options] <pattern>
 
@@ -3740,22 +3712,22 @@ Options:
 
 For more details see pgrep(1).
 `,
-    examples: [
-      { description: "查找 nginx 进程的 PID", code: "pgrep nginx", output: "1234\n1235" },
-      { description: "查找并显示进程名", code: "pgrep -a python", output: "5678 python train.py\n5690 python serve.py" },
-      { description: "查找属于指定用户的进程", code: "pgrep -u root sshd" },
-      { description: "查找最老的匹配进程", code: "pgrep -o firefox" },
-      { description: "查看帮助文档", code: "pgrep --help" }
-    ],
-    relatedCommands: ["pkill", "ps", "pidof", "kill"]
-  },
-  {
-    name: "pkill",
-    categoryId: "process",
-    syntax: "pkill [选项] 模式",
-    simpleExplain: "按名称向进程发送信号",
-    detailExplain: "根据进程名或其他属性直接向匹配的进程发送信号（默认 SIGTERM），是 pgrep 与 kill 的组合。常用参数：-9 强制终止，-u 按用户过滤，-f 匹配完整命令行，-x 精确匹配进程名。无需先查 PID，一步完成，如 pkill firefox。",
-    helpOutput: `
+        examples: [
+            { description: "查找 nginx 进程的 PID", code: "pgrep nginx", output: "1234\n1235" },
+            { description: "查找并显示进程名", code: "pgrep -a python", output: "5678 python train.py\n5690 python serve.py" },
+            { description: "查找属于指定用户的进程", code: "pgrep -u root sshd" },
+            { description: "查找最老的匹配进程", code: "pgrep -o firefox" },
+            { description: "查看帮助文档", code: "pgrep --help" }
+        ],
+        relatedCommands: ["pkill", "ps", "pidof", "kill"]
+    },
+    {
+        name: "pkill",
+        categoryId: "process",
+        syntax: "pkill [选项] 模式",
+        simpleExplain: "按名称杀死进程，就像点名让人下班",
+        detailExplain: "就像 pgrep + kill 的组合拳——先根据进程名找到对应的进程，然后直接发送终止信号把它杀掉。不用先查 PID 再 kill，一步到位。比如 pkill firefox 就能把所有 Firefox 进程都关掉。",
+        helpOutput: `
 Usage:
  pkill [options] <pattern>
 
@@ -3795,23 +3767,23 @@ Options:
 
 For more details see pgrep(1).
 `,
-    examples: [
-      { description: "杀死所有名为 chrome 的进程", code: "pkill chrome" },
-      { description: "向指定用户的进程发送终止信号", code: "pkill -u bob sleep" },
-      { description: "强制杀死匹配的进程", code: "pkill -9 hung_process" },
-      { description: "先模拟执行", code: "pkill -l python" },
-      { description: "查看帮助文档", code: "pkill --help" }
-    ],
-    relatedCommands: ["pgrep", "kill", "killall", "ps"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "killall",
-    categoryId: "process",
-    syntax: "killall [选项] 进程名",
-    simpleExplain: "按进程名杀死所有同名进程",
-    detailExplain: "按进程名向所有匹配的进程发送信号（默认 SIGTERM）。与 pkill 类似，但 killall 要求进程名完全匹配，更严格。常用参数：-9 强制终止，-u 按用户过滤，-i 交互式确认，-e 显示详细信息，-w 等待进程终止。如 killall nginx。",
-    helpOutput: `Usage: killall [OPTION]... [--] NAME...
+        examples: [
+            { description: "杀死所有名为 chrome 的进程", code: "pkill chrome" },
+            { description: "向指定用户的进程发送终止信号", code: "pkill -u bob sleep" },
+            { description: "强制杀死匹配的进程", code: "pkill -9 hung_process" },
+            { description: "先模拟执行", code: "pkill -l python" },
+            { description: "查看帮助文档", code: "pkill --help" }
+        ],
+        relatedCommands: ["pgrep", "kill", "killall", "ps"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "killall",
+        categoryId: "process",
+        syntax: "killall [选项] 进程名",
+        simpleExplain: "按进程名杀死所有同名进程，就像通知所有叫这个名字的人都下班",
+        detailExplain: "就像广播通知：「所有叫 Tom 的人请下班！」——不管有几个 Tom，全部一起叫停。killall 和 pkill 类似，但 killall 要求进程名必须完全匹配，更严格一些。",
+        helpOutput: `Usage: killall [OPTION]... [--] NAME...
 Send a signal to processes by name.
 
 Options:
@@ -3828,23 +3800,23 @@ Options:
   -w, --wait           等待所有被杀进程退出
   -I, --ignore-case    进程名匹配忽略大小写
   -Z, --context REGEXP 匹配 SELinux 安全上下文`,
-    examples: [
-      { description: "杀死所有 Firefox 进程", code: "killall firefox" },
-      { description: "优雅地等待进程自行关闭", code: "killall -w nginx" },
-      { description: "按信号名发送信号", code: "killall -HUP apache2" },
-      { description: "交互式确认后才杀死进程", code: "killall -i chrome" },
-      { description: "查看帮助文档", code: "killall --help" }
-    ],
-    relatedCommands: ["kill", "pkill", "pgrep", "xkill"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "watch",
-    categoryId: "process",
-    syntax: "watch [选项] 命令",
-    simpleExplain: "周期性重复执行命令并显示输出",
-    detailExplain: "周期性执行指定命令并将输出全屏刷新显示，用于实时监控命令输出变化。常用参数：-n 指定刷新间隔（秒，默认 2 秒），-d 高亮显示两次刷新间变化的文本，-t 不显示标题栏。典型用法如 watch -n 1 df -h 实时监控磁盘使用情况。",
-    helpOutput: `
+        examples: [
+            { description: "杀死所有 Firefox 进程", code: "killall firefox" },
+            { description: "优雅地等待进程自行关闭", code: "killall -w nginx" },
+            { description: "按信号名发送信号", code: "killall -HUP apache2" },
+            { description: "交互式确认后才杀死进程", code: "killall -i chrome" },
+            { description: "查看帮助文档", code: "killall --help" }
+        ],
+        relatedCommands: ["kill", "pkill", "pgrep", "xkill"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "watch",
+        categoryId: "process",
+        syntax: "watch [选项] 命令",
+        simpleExplain: "周期性重复执行命令，就像每隔几分钟看一次手表确认时间",
+        detailExplain: "就像你设置了一个闹钟每隔几秒钟提醒你看一次某个指标——watch 会反复执行同一个命令并把结果刷新显示在屏幕上。比如 watch -n 2 df -h 每 2 秒刷新一次磁盘用量，非常直观地观察变化趋势。",
+        helpOutput: `
 Usage:
  watch [options] command
 
@@ -3870,22 +3842,22 @@ Options:
 
 For more details see watch(1).
 `,
-    examples: [
-      { description: "每 2 秒刷新显示内存使用情况", code: "watch -n 2 free -h" },
-      { description: "高亮显示变化的区域", code: "watch -d 'ls -l /tmp'" },
-      { description: "遇到错误时不中断继续执行", code: "watch -e ping google.com" },
-      { description: "执行前先清除屏幕", code: "watch -t date" },
-      { description: "查看帮助文档", code: "watch --help" }
-    ],
-    relatedCommands: ["top", "cron", "sleep", "loop"]
-  },
-  {
-    name: "screen",
-    categoryId: "process",
-    syntax: "screen [选项] [命令]",
-    simpleExplain: "虚拟终端多路复用管理器",
-    detailExplain: "创建可在其中运行多个独立终端窗口的全屏会话，会话在 SSH 断开后继续运行，重连后可恢复。常用快捷键：Ctrl+A C 创建新窗口，Ctrl+A N/P 切换窗口，Ctrl+A D 分离会话；用 screen -r 恢复会话。适合长时间运行任务和远程会话管理。",
-    helpOutput: `Usage: screen [options] [cmd [args]]
+        examples: [
+            { description: "每 2 秒刷新显示内存使用情况", code: "watch -n 2 free -h" },
+            { description: "高亮显示变化的区域", code: "watch -d 'ls -l /tmp'" },
+            { description: "遇到错误时不中断继续执行", code: "watch -e ping google.com" },
+            { description: "执行前先清除屏幕", code: "watch -t date" },
+            { description: "查看帮助文档", code: "watch --help" }
+        ],
+        relatedCommands: ["top", "cron", "sleep", "loop"]
+    },
+    {
+        name: "screen",
+        categoryId: "process",
+        syntax: "screen [选项] [命令]",
+        simpleExplain: "虚拟终端管理器，就像随身携带一个可以随时打开的便携工作站",
+        detailExplain: "就像一个可以随时打开、关闭、带走的便携式虚拟终端——你在 screen 里启动的任务不会因为 SSH 断开而被杀死。可以创建多个「窗口」，每个窗口运行不同的任务。即使你关掉电脑回家，screen 里的任务仍在服务器上默默运行着。",
+        helpOutput: `Usage: screen [options] [cmd [args]]
 
 Screen is a full-screen window manager that multiplexes a physical terminal.
 
@@ -3904,22 +3876,22 @@ Options:
   -x             连接到非分离的会话（多窗口共享）
   -X command     在会话中执行命令
   -v             显示版本`,
-    examples: [
-      { description: "创建一个新的 screen 会话", code: "screen -S mysession" },
-      { description: "脱离会话（任务继续在后台运行）", code: "Ctrl+A, D" },
-      { description: "重新连接到已有的会话", code: "screen -r mysession" },
-      { description: "列出所有 screen 会话", code: "screen -ls" },
-      { description: "查看帮助文档", code: "screen --help" }
-    ],
-    relatedCommands: ["tmux", "nohup", "bg", "byobu"]
-  },
-  {
-    name: "tmux",
-    categoryId: "process",
-    syntax: "tmux [选项] [命令]",
-    simpleExplain: "终端复用器，支持多窗口会话",
-    detailExplain: "终端复用器，支持在一个终端中创建多个窗口和窗格，会话独立于 SSH 连接持续运行。常用操作：水平/垂直分割窗格、创建/切换窗口、tmux attach 恢复会话、tmux detach 分离会话。相比 screen 功能更强大，配置更灵活。",
-    helpOutput: `usage: tmux [-2CDluvV] [-c shell-command] [-f file] [-L socket-name]
+        examples: [
+            { description: "创建一个新的 screen 会话", code: "screen -S mysession" },
+            { description: "脱离会话（任务继续在后台运行）", code: "Ctrl+A, D" },
+            { description: "重新连接到已有的会话", code: "screen -r mysession" },
+            { description: "列出所有 screen 会话", code: "screen -ls" },
+            { description: "查看帮助文档", code: "screen --help" }
+        ],
+        relatedCommands: ["tmux", "nohup", "bg", "byobu"]
+    },
+    {
+        name: "tmux",
+        categoryId: "process",
+        syntax: "tmux [选项] [命令]",
+        simpleExplain: "终端复用器，就像在一个屏幕上同时开多个窗口办公",
+        detailExplain: "就像一个超级工作站——你可以把一个终端屏幕分割成多个窗格（pane），每个窗格运行不同的命令；也可以创建多个标签页（window），每个标签页是一组窗格布局。最重要的是，tmux 里的任务不受 SSH 断开的影响，下次重新连接一切都在。",
+        helpOutput: `usage: tmux [-2CDluvV] [-c shell-command] [-f file] [-L socket-name]
             [-S socket-path] [-T terminal-title] [command [flags]]
 
 Commands:
@@ -3939,23 +3911,23 @@ Commands:
   set-option       设置选项
   bind-key         绑定快捷键
   send-keys        向窗口发送按键`,
-    examples: [
-      { description: "创建新的 tmux 会话", code: "tmux new -s work" },
-      { description: "水平分割当前窗格", code: "Ctrl+B, %" },
-      { description: "垂直分割当前窗格", code: "Ctrl+B, \"" },
-      { description: "列出所有会话", code: "tmux list-sessions" },
-      { description: "重新连接会话", code: "tmux attach -t work" },
-      { description: "查看帮助文档", code: "tmux --help" }
-    ],
-    relatedCommands: ["screen", "nohup", "byobu", "zellij"]
-  },
-  {
-    name: "crontab",
-    categoryId: "process",
-    syntax: "crontab [选项]",
-    simpleExplain: "管理定时循环任务",
-    detailExplain: "管理用户的定时任务表，按 cron 表达式周期性执行指定命令，格式为「分 时 日 月 周 命令」。常用参数：-e 编辑当前用户任务表，-l 列出任务，-r 删除所有任务，-u 指定用户。适合周期性备份、清理、监控等任务。",
-    helpOutput: `Usage: crontab [options] file
+        examples: [
+            { description: "创建新的 tmux 会话", code: "tmux new -s work" },
+            { description: "水平分割当前窗格", code: "Ctrl+B, %" },
+            { description: "垂直分割当前窗格", code: "Ctrl+B, \"" },
+            { description: "列出所有会话", code: "tmux list-sessions" },
+            { description: "重新连接会话", code: "tmux attach -t work" },
+            { description: "查看帮助文档", code: "tmux --help" }
+        ],
+        relatedCommands: ["screen", "nohup", "byobu", "zellij"]
+    },
+    {
+        name: "crontab",
+        categoryId: "process",
+        syntax: "crontab [选项]",
+        simpleExplain: "定时任务管理器，就像每天定时响铃的智能闹钟",
+        detailExplain: "就像你设定了一个超级智能闹钟——不仅每天早上叫你起床，还能在每个周一上午 9 点自动备份文件、每月 1 号凌晨清理临时文件、每隔 5 分钟检查一次服务状态。crontab 就是 Linux 的「定时任务管家」。",
+        helpOutput: `Usage: crontab [options] file
        crontab [options]
 
 Options:
@@ -3971,22 +3943,22 @@ Cron 时间格式: 分 时 日 月 周 命令
   */N 表示每 N 个单位
   a,b,c 表示列表
   a-b 表示范围`,
-    examples: [
-      { description: "编辑当前用户的定时任务", code: "crontab -e" },
-      { description: "列出当前的定时任务", code: "crontab -l", output: "0 2 * * * /home/user/backup.sh\n*/5 * * * * /usr/bin/check_health.sh" },
-      { description: "删除所有定时任务", code: "crontab -r" },
-      { description: "为其他用户编辑 crontab", code: "crontab -u www-data -e" },
-      { description: "查看帮助文档", code: "crontab --help" }
-    ],
-    relatedCommands: ["at", "systemctl timer", "anacron", "fcron"]
-  },
-  {
-    name: "systemctl",
-    categoryId: "process",
-    syntax: "systemctl [选项] 命令 [服务名]",
-    simpleExplain: "控制systemd系统服务",
-    detailExplain: "systemd 的主控制工具，用于管理系统服务（单元）。常用参数：start/stop/restart/reload 控制服务，status 查看状态，enable/disable 设置开机自启，list-units 列出所有单元，list-unit-files 查看单元文件。是现代 Linux 发行版的标准服务管理方式。",
-    helpOutput: `systemctl [OPTIONS...] COMMAND ...
+        examples: [
+            { description: "编辑当前用户的定时任务", code: "crontab -e" },
+            { description: "列出当前的定时任务", code: "crontab -l", output: "0 2 * * * /home/user/backup.sh\n*/5 * * * * /usr/bin/check_health.sh" },
+            { description: "删除所有定时任务", code: "crontab -r" },
+            { description: "为其他用户编辑 crontab", code: "crontab -u www-data -e" },
+            { description: "查看帮助文档", code: "crontab --help" }
+        ],
+        relatedCommands: ["at", "systemctl timer", "anacron", "fcron"]
+    },
+    {
+        name: "systemctl",
+        categoryId: "process",
+        syntax: "systemctl [选项] 命令 [服务名]",
+        simpleExplain: "系统服务控制器，就像管理公司各部门的总指挥中心",
+        detailExplain: "就像一家大公司的总控制中心——可以启动/停止各个部门（服务）、查看各部门运行状态、设置开机自启、查看服务日志。现代 Linux 系统都用 systemd 管理服务，systemctl 就是最核心的控制面板。",
+        helpOutput: `systemctl [OPTIONS...] COMMAND ...
 
 Query or send control commands to the system manager.
 
@@ -4033,41 +4005,41 @@ Query or send control commands to the system manager.
                                       unit's namespace
   service-log-level SERVICE [LEVEL]   Get/set logging threshold for service
   servi`,
-    examples: [
-      { description: "启动 nginx 服务", code: "systemctl start nginx" },
-      { description: "停止 nginx 服务", code: "systemctl stop nginx" },
-      { description: "重启 nginx 服务", code: "systemctl restart nginx" },
-      { description: "查看服务状态", code: "systemctl status nginx" },
-      { description: "设置开机自启", code: "systemctl enable nginx" },
-      { description: "查看所有正在运行的服务", code: "systemctl list-units --type=service --state=running" },
-      { description: "查看帮助文档", code: "systemctl --help" }
-    ],
-    relatedCommands: ["service", "journalctl", "initctl", "chkconfig"]
-  },
-  {
-    name: "service",
-    categoryId: "process",
-    syntax: "service <服务名> <命令>",
-    simpleExplain: "传统系统服务管理工具",
-    detailExplain: "传统 SysVinit 风格的服务管理命令，对指定服务执行 start、stop、restart、status 等操作。语法简单（如 service nginx restart），在新系统上通常作为 systemctl 的兼容包装。适合旧版系统或简单脚本场景。",
-    helpOutput: `Usage: service < option > | --status-all | [ service_name [ command | --full-restart ] ]
+        examples: [
+            { description: "启动 nginx 服务", code: "systemctl start nginx" },
+            { description: "停止 nginx 服务", code: "systemctl stop nginx" },
+            { description: "重启 nginx 服务", code: "systemctl restart nginx" },
+            { description: "查看服务状态", code: "systemctl status nginx" },
+            { description: "设置开机自启", code: "systemctl enable nginx" },
+            { description: "查看所有正在运行的服务", code: "systemctl list-units --type=service --state=running" },
+            { description: "查看帮助文档", code: "systemctl --help" }
+        ],
+        relatedCommands: ["service", "journalctl", "initctl", "chkconfig"]
+    },
+    {
+        name: "service",
+        categoryId: "process",
+        syntax: "service <服务名> <命令>",
+        simpleExplain: "传统服务管理命令，就像老式的手动控制面板",
+        detailExplain: "就像 systemctl 的老前辈——在较旧的 Linux 系统上用来管理服务的启停。虽然新系统推荐用 systemctl，但 service 命令在很多场合仍然可用，而且语法更简单直观。",
+        helpOutput: `Usage: service < option > | --status-all | [ service_name [ command | --full-restart ] ]
 `,
-    examples: [
-      { description: "启动 Apache 服务", code: "service apache2 start" },
-      { description: "查看 MySQL 服务状态", code: "service mysql status" },
-      { description: "重启防火墙服务", code: "service iptables restart" },
-      { description: "列出所有服务及其状态", code: "service --status-all" },
-      { description: "查看帮助文档", code: "service --help" }
-    ],
-    relatedCommands: ["systemctl", "chkconfig", "update-rc.d", "initctl"]
-  },
-  {
-    name: "at",
-    categoryId: "process",
-    syntax: "at [选项] 时间",
-    simpleExplain: "执行一次性定时任务",
-    detailExplain: "在指定时间点执行一次性任务，与 crontab 的周期性任务互补。常用参数：-f 从文件读取命令，-l 列出待执行任务，-d 删除任务，-m 任务完成后发邮件。时间格式支持 now + 5 minutes、3pm 等，需 atd 服务运行。",
-    helpOutput: `Usage: at [-V] [-q queue] [-f file] [-mMlv] timespec ...
+        examples: [
+            { description: "启动 Apache 服务", code: "service apache2 start" },
+            { description: "查看 MySQL 服务状态", code: "service mysql status" },
+            { description: "重启防火墙服务", code: "service iptables restart" },
+            { description: "列出所有服务及其状态", code: "service --status-all" },
+            { description: "查看帮助文档", code: "service --help" }
+        ],
+        relatedCommands: ["systemctl", "chkconfig", "update-rc.d", "initctl"]
+    },
+    {
+        name: "at",
+        categoryId: "process",
+        syntax: "at [选项] 时间",
+        simpleExplain: "一次性定时任务，就像定好今晚 8 点提醒自己做一件事",
+        detailExplain: "就像手机上的「提醒」功能——设定一个未来的时间点，到时候系统自动帮你执行一次指定命令。和 crontab 不同，at 只执行一次就结束了，适合「今天下午 3 点发一封邮件」这种一次性需求。",
+        helpOutput: `Usage: at [-V] [-q queue] [-f file] [-mMlv] timespec ...
        at [-V] [-q queue] [-f file] [-mMkv] [-t time]
        at -c job [job...]
        atq [-V] [-q queue]
@@ -4085,22 +4057,22 @@ Options:
   -d job      删除任务（等同 atrm）
   -c job      显示指定任务的命令内容
   -V          显示版本`,
-    examples: [
-      { description: "在今天下午 3 点执行备份脚本", code: "echo '/home/user/backup.sh' | at 15:00" },
-      { description: "在 10 分钟后执行命令", code: "echo 'echo Time is up!' | at now + 10 minutes" },
-      { description: "查看待执行的 at 任务队列", code: "atq" },
-      { description: "删除指定编号的 at 任务", code: "atrm 1" },
-      { description: "查看帮助文档", code: "at --help" }
-    ],
-    relatedCommands: ["crontab", "batch", "timeout", "sleep"]
-  },
-  {
-    name: "pidof",
-    categoryId: "process",
-    syntax: "pidof 程序名",
-    simpleExplain: "查找运行中程序的进程ID",
-    detailExplain: "查找指定名称进程的 PID。常用参数：-s 只返回一个 PID，-c 只返回当前终端下的进程，-x 同时匹配脚本名，-o 省略指定 PID。常用于脚本中获取进程号以便后续 kill 或监控。",
-    helpOutput: `Usage: pidof [options] program1 [program2 ..]
+        examples: [
+            { description: "在今天下午 3 点执行备份脚本", code: "echo '/home/user/backup.sh' | at 15:00" },
+            { description: "在 10 分钟后执行命令", code: "echo 'echo Time is up!' | at now + 10 minutes" },
+            { description: "查看待执行的 at 任务队列", code: "atq" },
+            { description: "删除指定编号的 at 任务", code: "atrm 1" },
+            { description: "查看帮助文档", code: "at --help" }
+        ],
+        relatedCommands: ["crontab", "batch", "timeout", "sleep"]
+    },
+    {
+        name: "pidof",
+        categoryId: "process",
+        syntax: "pidof 程序名",
+        simpleExplain: "查找正在运行程序的进程ID，就像在人群中找到某人的身份证号",
+        detailExplain: "就像在一个人山人海的广场上，你想找到某个叫「张三」的人——pidof 能直接告诉你他的身份证号（PID），方便你后续对他进行操作，比如发送信号或查看详情。",
+        helpOutput: `Usage: pidof [options] program1 [program2 ..]
 
 Options:
   -s          只返回一个 PID
@@ -4112,22 +4084,22 @@ Options:
   -q          安静模式，不输出 PID
   -h          显示帮助
   -V          显示版本`,
-    examples: [
-      { description: "查找 nginx 进程的 PID", code: "pidof nginx", output: "1234 1233" },
-      { description: "查找 sshd 进程的 PID", code: "pidof sshd" },
-      { description: "只显示一个 PID（最新的）", code: "pidof -s nginx" },
-      { description: "查找指定脚本进程的 PID", code: "pidof -x myscript.sh" },
-      { description: "查看帮助文档", code: "pidof --help" }
-    ],
-    relatedCommands: ["pgrep", "ps", "pkill", "kill"]
-  },
-  {
-    name: "lsof",
-    categoryId: "process",
-    syntax: "lsof [选项]",
-    simpleExplain: "列出进程打开的文件",
-    detailExplain: "列出当前系统打开的文件及占用它们的进程，文件涵盖普通文件、目录、网络套接字、设备等。常用参数：-i 查看网络连接，-p 指定进程，-u 指定用户，+D 递归查看目录。常用于排查端口占用、文件被锁、删除未释放等问题。",
-    helpOutput: `lsof: illegal option character: -
+        examples: [
+            { description: "查找 nginx 进程的 PID", code: "pidof nginx", output: "1234 1233" },
+            { description: "查找 sshd 进程的 PID", code: "pidof sshd" },
+            { description: "只显示一个 PID（最新的）", code: "pidof -s nginx" },
+            { description: "查找指定脚本进程的 PID", code: "pidof -x myscript.sh" },
+            { description: "查看帮助文档", code: "pidof --help" }
+        ],
+        relatedCommands: ["pgrep", "ps", "pkill", "kill"]
+    },
+    {
+        name: "lsof",
+        categoryId: "process",
+        syntax: "lsof [选项]",
+        simpleExplain: "列出被进程打开的文件，就像查看谁正在使用哪些房间",
+        detailExplain: "就像酒店前台查看每个房间住了谁——lsof 能告诉你哪个进程打开了哪些文件、端口或目录。在排查「文件被谁占用无法删除」或「端口被谁占用」时特别有用，就像查房记录一样一目了然。",
+        helpOutput: `lsof: illegal option character: -
 lsof: -e not followed by a file system path: "lp"
 lsof 4.95.0
  latest revision: https://github.com/lsof-org/lsof
@@ -4166,22 +4138,22 @@ Defaults in parentheses; comma-separated set (s) items; dash-separated ranges.
   names  select named files or files on named file systems
 Anyone can list all files; /dev warnings disabled; kernel ID check disabled.
 `,
-    examples: [
-      { description: "查看 80 端口被哪个进程占用", code: "lsof -i :80", output: "nginx  1234  root  6u  IPv4  12345  0t0  TCP *:http (LISTEN)" },
-      { description: "查看某个用户打开的所有文件", code: "lsof -u www-data" },
-      { description: "查看某个进程打开的文件", code: "lsof -p 1234" },
-      { description: "查看被删除但仍被进程占用的文件", code: "lsof | grep deleted" },
-      { description: "查看帮助文档", code: "lsof --help" }
-    ],
-    relatedCommands: ["fuser", "ss", "netstat", "ps"]
-  },
-  {
-    name: "strace",
-    categoryId: "process",
-    syntax: "strace [选项] 命令",
-    simpleExplain: "跟踪程序的系统调用",
-    detailExplain: "跟踪进程的系统调用和接收到的信号。常用参数：-p 附加到运行中进程，-f 跟踪子进程，-e 过滤特定调用，-c 统计调用次数与耗时，-o 输出到文件。常用于排查程序崩溃、卡死、性能瓶颈及文件/网络访问问题。",
-    helpOutput: `Usage: strace [-ACdffhikqqrtttTvVwxxyyzZ] [-I N] [-b execve] [-e EXPR]...
+        examples: [
+            { description: "查看 80 端口被哪个进程占用", code: "lsof -i :80", output: "nginx  1234  root  6u  IPv4  12345  0t0  TCP *:http (LISTEN)" },
+            { description: "查看某个用户打开的所有文件", code: "lsof -u www-data" },
+            { description: "查看某个进程打开的文件", code: "lsof -p 1234" },
+            { description: "查看被删除但仍被进程占用的文件", code: "lsof | grep deleted" },
+            { description: "查看帮助文档", code: "lsof --help" }
+        ],
+        relatedCommands: ["fuser", "ss", "netstat", "ps"]
+    },
+    {
+        name: "strace",
+        categoryId: "process",
+        syntax: "strace [选项] 命令",
+        simpleExplain: "跟踪程序的系统调用，就像给程序装上监控摄像头看它的一举一动",
+        detailExplain: "就像给程序装了一套全方位监控摄像头——程序每次跟操作系统「对话」（系统调用），strace 都会记录下来。程序打开文件、读写数据、网络通信，全都被拍得一清二楚，是排查程序故障的利器。",
+        helpOutput: `Usage: strace [-ACdffhikqqrtttTvVwxxyyzZ] [-I N] [-b execve] [-e EXPR]...
               [-a COLUMN] [-o FILE] [-s STRSIZE] [-X FORMAT] [-O OVERHEAD]
               [-S SORTBY] [-P PATH]... [-p PID]... [-U COLUMNS] [--seccomp-bpf]
               { -p PID | [-DDD] [-E VAR=VAL]... [-u USERNAME] PROG [ARGS] }
@@ -4244,22 +4216,22 @@ Filtering:
   -P PATH, --trace-path=PATH
                  trace accesses to PATH
   -z, --su`,
-    examples: [
-      { description: "跟踪 ls 命令的所有系统调用", code: "strace ls" },
-      { description: "只跟踪文件相关的系统调用", code: "strace -e trace=file cat test.txt" },
-      { description: "跟踪正在运行的进程（按PID）", code: "strace -p 1234" },
-      { description: "统计各系统调用的次数和时间", code: "strace -c ls" },
-      { description: "查看帮助文档", code: "strace --help" }
-    ],
-    relatedCommands: ["ltrace", "lsof", "gdb", "perf"]
-  },
-  {
-    name: "ltrace",
-    categoryId: "process",
-    syntax: "ltrace [选项] 命令",
-    simpleExplain: "跟踪程序的库函数调用",
-    detailExplain: "跟踪进程对动态库函数的调用，与 strace 跟踪系统调用形成互补。常用参数：-p 附加进程，-f 跟踪子进程，-e 过滤特定库函数，-c 统计调用次数，-l 按库过滤。常用于分析程序对 libc 等库函数的使用情况。",
-    helpOutput: `Usage: ltrace [option ...] command [arg ...]
+        examples: [
+            { description: "跟踪 ls 命令的所有系统调用", code: "strace ls" },
+            { description: "只跟踪文件相关的系统调用", code: "strace -e trace=file cat test.txt" },
+            { description: "跟踪正在运行的进程（按PID）", code: "strace -p 1234" },
+            { description: "统计各系统调用的次数和时间", code: "strace -c ls" },
+            { description: "查看帮助文档", code: "strace --help" }
+        ],
+        relatedCommands: ["ltrace", "lsof", "gdb", "perf"]
+    },
+    {
+        name: "ltrace",
+        categoryId: "process",
+        syntax: "ltrace [选项] 命令",
+        simpleExplain: "跟踪程序的库函数调用，就像监听程序和外部服务的电话记录",
+        detailExplain: "就像监听程序打电话给各种外部服务（库函数）的通话记录——程序调用了 printf、malloc、fopen 这些库函数时，ltrace 都会记录下来。和 strace 不同，ltrace 关注的是程序和库的交互，而不是和操作系统的交互。",
+        helpOutput: `Usage: ltrace [option ...] command [arg ...]
 
 Options:
   -a, --align COLUMN  对齐返回值到指定列
@@ -4282,22 +4254,22 @@ Options:
   -t, -tt, -ttt        打印时间戳
   -T                   显示调用耗时
   -u USERNAME          以指定用户运行`,
-    examples: [
-      { description: "跟踪 ls 命令的库函数调用", code: "ltrace ls" },
-      { description: "只跟踪 malloc 和 free 调用", code: "ltrace -e malloc,free ./myapp" },
-      { description: "跟踪正在运行的进程", code: "ltrace -p 1234" },
-      { description: "统计各库函数调用次数", code: "ltrace -c ./myapp" },
-      { description: "查看帮助文档", code: "ltrace --help" }
-    ],
-    relatedCommands: ["strace", "lsof", "gdb", "nm"]
-  },
-  {
-    name: "ionice",
-    categoryId: "process",
-    syntax: "ionice [选项] 命令",
-    simpleExplain: "设置进程的IO调度优先级",
-    detailExplain: "设置或查看进程的 I/O 调度优先级。调度类别：-c 0 无优先级，-c 1 实时（最高），-c 2 尽力（默认），-c 3 空闲（仅当磁盘空闲时）；-n 0-7 指定优先级，-p 指定进程。适合降低后台备份任务的磁盘争用。",
-    helpOutput: `
+        examples: [
+            { description: "跟踪 ls 命令的库函数调用", code: "ltrace ls" },
+            { description: "只跟踪 malloc 和 free 调用", code: "ltrace -e malloc,free ./myapp" },
+            { description: "跟踪正在运行的进程", code: "ltrace -p 1234" },
+            { description: "统计各库函数调用次数", code: "ltrace -c ./myapp" },
+            { description: "查看帮助文档", code: "ltrace --help" }
+        ],
+        relatedCommands: ["strace", "lsof", "gdb", "nm"]
+    },
+    {
+        name: "ionice",
+        categoryId: "process",
+        syntax: "ionice [选项] 命令",
+        simpleExplain: "设置进程的IO调度优先级，就像给快递分配不同的配送等级",
+        detailExplain: "就像快递公司给包裹分了「加急」「普通」「不着急」三个等级——ionice 让你决定某个程序读写磁盘时的优先级。重要的程序可以插队优先读写，不急的后台备份任务可以等别人用完磁盘再说，避免磁盘忙得团团转。",
+        helpOutput: `
 Usage:
  ionice [options] -p <pid>...
  ionice [options] -P <pgid>...
@@ -4321,22 +4293,22 @@ Options:
 
 For more details see ionice(1).
 `,
-    examples: [
-      { description: "以最低优先级运行备份任务", code: "ionice -c 3 tar czf backup.tar.gz /data" },
-      { description: "以最高优先级运行数据库", code: "ionice -c 1 -n 0 mysqld" },
-      { description: "查看进程的 IO 调度类别", code: "ionice -p 1234" },
-      { description: "以尽力而为模式运行编译任务", code: "ionice -c 2 -n 7 make" },
-      { description: "查看帮助文档", code: "ionice --help" }
-    ],
-    relatedCommands: ["nice", "renice", "taskset", "chrt"]
-  },
-  {
-    name: "taskset",
-    categoryId: "process",
-    syntax: "taskset [选项] 掩码 命令",
-    simpleExplain: "将进程绑定到指定CPU核心",
-    detailExplain: "设置或查看进程的 CPU 亲和性，将进程绑定到指定 CPU 核心。常用参数：-p 操作已运行进程，-c 指定 CPU 列表。例如 taskset -c 0,1 command 限定在 0、1 号核心运行。可减少核心切换开销，提升缓存命中率，常用于性能优化和隔离。",
-    helpOutput: `Usage: taskset [options] [mask | cpu-list] [pid|cmd [args...]]
+        examples: [
+            { description: "以最低优先级运行备份任务", code: "ionice -c 3 tar czf backup.tar.gz /data" },
+            { description: "以最高优先级运行数据库", code: "ionice -c 1 -n 0 mysqld" },
+            { description: "查看进程的 IO 调度类别", code: "ionice -p 1234" },
+            { description: "以尽力而为模式运行编译任务", code: "ionice -c 2 -n 7 make" },
+            { description: "查看帮助文档", code: "ionice --help" }
+        ],
+        relatedCommands: ["nice", "renice", "taskset", "chrt"]
+    },
+    {
+        name: "taskset",
+        categoryId: "process",
+        syntax: "taskset [选项] 掩码 命令",
+        simpleExplain: "将进程绑定到指定CPU核心，就像指定某个员工只在特定工位工作",
+        detailExplain: "就像公司规定某个员工只能在 3 号工位办公——taskset 把进程「绑」到特定的 CPU 核心上运行。这样可以避免进程在不同核心之间跳来跳去，提高缓存命中率，适合对性能要求极高的场景。",
+        helpOutput: `Usage: taskset [options] [mask | cpu-list] [pid|cmd [args...]]
 
 
 Show or change the CPU affinity of a process.
@@ -4361,22 +4333,22 @@ Ranges in list format can take a stride argument:
 
 For more details see taskset(1).
 `,
-    examples: [
-      { description: "将命令绑定到 CPU 0 上运行", code: "taskset 0x1 ./myapp" },
-      { description: "将命令绑定到 CPU 0 和 CPU 1 上运行", code: "taskset 0x3 ./myapp" },
-      { description: "查看进程的 CPU 亲和性", code: "taskset -p 1234" },
-      { description: "修改已运行进程的 CPU 绑定", code: "taskset -p 0x2 1234" },
-      { description: "查看帮助文档", code: "taskset --help" }
-    ],
-    relatedCommands: ["nice", "ionice", "chrt", "ps"]
-  },
-  {
-    name: "prlimit",
-    categoryId: "process",
-    syntax: "prlimit [选项] -p PID",
-    simpleExplain: "查看或修改进程资源限制",
-    detailExplain: "查看或修改进程的资源限制（rlimit），涵盖 CPU 时间、文件数、内存、进程数、文件大小等。常用参数：-p 指定 PID，--nofile 设置最大打开文件数，--rss 设置内存上限，--nproc 设置进程数上限。常用于排查 too many open files 等资源耗尽问题。",
-    helpOutput: `
+        examples: [
+            { description: "将命令绑定到 CPU 0 上运行", code: "taskset 0x1 ./myapp" },
+            { description: "将命令绑定到 CPU 0 和 CPU 1 上运行", code: "taskset 0x3 ./myapp" },
+            { description: "查看进程的 CPU 亲和性", code: "taskset -p 1234" },
+            { description: "修改已运行进程的 CPU 绑定", code: "taskset -p 0x2 1234" },
+            { description: "查看帮助文档", code: "taskset --help" }
+        ],
+        relatedCommands: ["nice", "ionice", "chrt", "ps"]
+    },
+    {
+        name: "prlimit",
+        categoryId: "process",
+        syntax: "prlimit [选项] -p PID",
+        simpleExplain: "查看或修改进程资源限制，就像给员工设置工作额度上限",
+        detailExplain: "就像给员工规定每天最多能处理多少单、用多少材料——prlimit 可以查看或修改进程能使用的系统资源上限，比如最多打开多少文件、最多使用多少内存、最多能创建多少进程等，防止单个进程把系统资源吃光。",
+        helpOutput: `
 Usage:
  prlimit [options] [--<resource>=<limit>] [-p PID]
  prlimit [options] [--<resource>=<limit>] COMMAND
@@ -4424,22 +4396,22 @@ Available output columns:
 
 For more details see prlimit(1).
 `,
-    examples: [
-      { description: "查看进程的所有资源限制", code: "prlimit -p 1234" },
-      { description: "将最大打开文件数设为 65535", code: "prlimit --nofile=65535 -p 1234" },
-      { description: "限制进程最大内存为 2GB", code: "prlimit --as=2147483648 -p 1234" },
-      { description: "设置进程最大 CPU 时间为 60 秒", code: "prlimit --cpu=60 -p 1234" },
-      { description: "查看帮助文档", code: "prlimit --help" }
-    ],
-    relatedCommands: ["ulimit", "nice", "ionice", "ps"]
-  },
-  {
-    name: "chrt",
-    categoryId: "process",
-    syntax: "chrt [选项] 优先级 命令",
-    simpleExplain: "修改进程的实时调度策略",
-    detailExplain: "设置或查看进程的实时调度策略与优先级。调度策略：-f FIFO，-r Round Robin，-o Other（普通）；-p 优先级 PID 修改运行中进程。例如 chrt -f -p 99 1234 设置最高实时优先级。适用于音视频处理、工业控制等对响应时间敏感的场景。",
-    helpOutput: `Show or change the real-time scheduling attributes of a process.
+        examples: [
+            { description: "查看进程的所有资源限制", code: "prlimit -p 1234" },
+            { description: "将最大打开文件数设为 65535", code: "prlimit --nofile=65535 -p 1234" },
+            { description: "限制进程最大内存为 2GB", code: "prlimit --as=2147483648 -p 1234" },
+            { description: "设置进程最大 CPU 时间为 60 秒", code: "prlimit --cpu=60 -p 1234" },
+            { description: "查看帮助文档", code: "prlimit --help" }
+        ],
+        relatedCommands: ["ulimit", "nice", "ionice", "ps"]
+    },
+    {
+        name: "chrt",
+        categoryId: "process",
+        syntax: "chrt [选项] 优先级 命令",
+        simpleExplain: "修改进程的实时调度策略，就像给紧急任务开辟绿色通道",
+        detailExplain: "就像医院给危重病人开辟绿色通道——chrt 可以让某些进程获得「实时调度」的特权，确保它们在任何情况下都能第一时间获得 CPU 时间。适合对响应时间要求极高的任务，比如音视频处理、工业控制等。",
+        helpOutput: `Show or change the real-time scheduling attributes of a process.
 
 Set policy:
  chrt [options] <priority> <command> [<arg>...]
@@ -4473,22 +4445,22 @@ Other options:
 
 For more details see chrt(1).
 `,
-    examples: [
-      { description: "以实时调度策略运行程序（优先级99）", code: "chrt -f 99 ./realtime_app" },
-      { description: "以公平调度策略运行程序", code: "chrt -b 0 ./background_task" },
-      { description: "查看进程的调度策略", code: "chrt -p 1234" },
-      { description: "修改已运行进程的调度策略为实时", code: "chrt -f -p 50 1234" },
-      { description: "查看帮助文档", code: "chrt --help" }
-    ],
-    relatedCommands: ["nice", "ionice", "taskset", "renice"]
-  },
-  {
-    name: "pwdx",
-    categoryId: "process",
-    syntax: "pwdx PID",
-    simpleExplain: "查看进程的当前工作目录",
-    detailExplain: "显示指定进程的当前工作目录。用法为 pwdx PID，直接输出该进程启动时的目录路径。常用于排查程序相对路径异常、定位进程运行位置、确认服务实际工作目录等问题。",
-    helpOutput: `
+        examples: [
+            { description: "以实时调度策略运行程序（优先级99）", code: "chrt -f 99 ./realtime_app" },
+            { description: "以公平调度策略运行程序", code: "chrt -b 0 ./background_task" },
+            { description: "查看进程的调度策略", code: "chrt -p 1234" },
+            { description: "修改已运行进程的调度策略为实时", code: "chrt -f -p 50 1234" },
+            { description: "查看帮助文档", code: "chrt --help" }
+        ],
+        relatedCommands: ["nice", "ionice", "taskset", "renice"]
+    },
+    {
+        name: "pwdx",
+        categoryId: "process",
+        syntax: "pwdx PID",
+        simpleExplain: "查看进程的工作目录，就像查看某人当前在哪里办公",
+        detailExplain: "就像想知道同事现在在哪个办公室——pwdx 能告诉你某个进程当前的工作目录是什么。这在排查「程序从哪里运行」或「相对路径为什么不对」时非常有用，直接定位进程的「办公地点」。",
+        helpOutput: `
 Usage:
  pwdx [options] pid...
 
@@ -4498,21 +4470,21 @@ Options:
 
 For more details see pwdx(1).
 `,
-    examples: [
-      { description: "查看 PID 为 1234 的进程工作目录", code: "pwdx 1234", output: "1234: /home/user/project" },
-      { description: "查看 nginx 主进程的工作目录", code: "pwdx $(pidof nginx | awk '{print $1}')" },
-      { description: "查看所有 bash 进程的工作目录", code: "pgrep bash | xargs pwdx" },
-      { description: "查看帮助文档", code: "pwdx --help" }
-    ],
-    relatedCommands: ["pwd", "ps", "lsof", "pgrep"]
-  },
-  {
-    name: "pstree",
-    categoryId: "process",
-    syntax: "pstree [选项]",
-    simpleExplain: "以树形结构显示进程关系",
-    detailExplain: "以树状结构显示进程及其父子关系。常用参数：-p 显示 PID，-u 显示用户，-a 显示命令行参数，-n 按 PID 排序，-h 高亮当前进程及祖先。比 ps 列表更直观地展示进程层级，便于理解服务派生关系。",
-    helpOutput: `Usage: pstree [ -a ] [ -c ] [ -h | -H PID ] [ -g ] [ -G | -U ] [ -l ]
+        examples: [
+            { description: "查看 PID 为 1234 的进程工作目录", code: "pwdx 1234", output: "1234: /home/user/project" },
+            { description: "查看 nginx 主进程的工作目录", code: "pwdx $(pidof nginx | awk '{print $1}')" },
+            { description: "查看所有 bash 进程的工作目录", code: "pgrep bash | xargs pwdx" },
+            { description: "查看帮助文档", code: "pwdx --help" }
+        ],
+        relatedCommands: ["pwd", "ps", "lsof", "pgrep"]
+    },
+    {
+        name: "pstree",
+        categoryId: "process",
+        syntax: "pstree [选项]",
+        simpleExplain: "以树形结构显示进程关系，就像画一张家族族谱来看谁是谁的上级",
+        detailExplain: "就像画一张家族族谱——pstree 把进程之间的父子关系用树状图展示出来，让你一眼看出哪个进程是「家长」，哪些是「孩子」。比 ps 的列表更直观，特别适合理解进程的层级关系。",
+        helpOutput: `Usage: pstree [ -a ] [ -c ] [ -h | -H PID ] [ -g ] [ -G | -U ] [ -l ]
             [ -n ] [ -p ] [ -s ] [ -Z ] [ PID | USER ]
 
 Options:
@@ -4533,22 +4505,22 @@ Options:
   -U          使用 UTF-8 线条字符
   -V          显示版本
   -Z          显示 SELinux 上下文`,
-    examples: [
-      { description: "显示所有进程的树形结构", code: "pstree" },
-      { description: "显示进程的 PID", code: "pstree -p" },
-      { description: "以某进程为根显示子进程树", code: "pstree 1234" },
-      { description: "高亮当前进程", code: "pstree -h" },
-      { description: "查看帮助文档", code: "pstree --help" }
-    ],
-    relatedCommands: ["ps", "pgrep", "top", "htop"]
-  },
-  {
-    name: "trap",
-    categoryId: "process",
-    syntax: "trap '命令' 信号",
-    simpleExplain: "捕获并处理Shell信号",
-    detailExplain: "在 Shell 脚本中捕获指定信号并执行预设命令，避免脚本被信号异常中断。语法为 trap '命令' 信号，常用信号：EXIT（脚本退出）、INT（Ctrl+C）、TERM（终止）、HUP（挂起）。常用于脚本退出时清理临时文件、释放锁、回滚状态。",
-    helpOutput: `trap: trap [-lp] [[arg] signal_spec ...]
+        examples: [
+            { description: "显示所有进程的树形结构", code: "pstree" },
+            { description: "显示进程的 PID", code: "pstree -p" },
+            { description: "以某进程为根显示子进程树", code: "pstree 1234" },
+            { description: "高亮当前进程", code: "pstree -h" },
+            { description: "查看帮助文档", code: "pstree --help" }
+        ],
+        relatedCommands: ["ps", "pgrep", "top", "htop"]
+    },
+    {
+        name: "trap",
+        categoryId: "process",
+        syntax: "trap '命令' 信号",
+        simpleExplain: "捕获并处理Shell信号，就像设置一个陷阱来捕获特定事件",
+        detailExplain: "就像在家里安装了烟雾报警器——当特定信号（比如 Ctrl+C 的中断信号）到来时，trap 会「捕获」它并执行你预设的命令，而不是让程序直接崩溃退出。常用于脚本退出时做清理工作，比如删除临时文件、释放资源。",
+        helpOutput: `trap: trap [-lp] [[arg] signal_spec ...]
     Trap signals and other events.
     
     Defines and activates handlers to be run when the shell receives signals
@@ -4581,24 +4553,23 @@ Options:
     Exit Status:
     Returns success unless a SIGSPEC is invalid or an invalid option is given.
 `,
-    examples: [
-      { description: "脚本退出时执行清理命令", code: "trap 'rm -f /tmp/mylock' EXIT" },
-      { description: "忽略 Ctrl+C 中断信号", code: "trap '' INT" },
-      { description: "捕获多个信号并执行不同操作", code: "trap 'echo 挂起了' SIGHUP" },
-      { description: "查看当前设置的所有 trap", code: "trap -p" },
-      { description: "查看帮助文档", code: "help trap" }
-    ],
-    relatedCommands: ["kill", "nohup", "signal", "ps"]
-  },
-
-  // ==================== 网络工具 ====================
-  {
-    name: "ping",
-    categoryId: "network",
-    syntax: "ping [选项] 目标主机",
-    simpleExplain: "测试网络连通性",
-    detailExplain: "向目标主机发送 ICMP Echo 请求包，根据是否收到回应判断网络连通性和延迟。常用参数：-c 指定发送次数，-i 指定间隔，-s 指定包大小，-W 指定超时，-f 洪泛模式。常用于网络故障排查、连通性测试和延迟测量。",
-    helpOutput: `ping: invalid option -- '-'
+        examples: [
+            { description: "脚本退出时执行清理命令", code: "trap 'rm -f /tmp/mylock' EXIT" },
+            { description: "忽略 Ctrl+C 中断信号", code: "trap '' INT" },
+            { description: "捕获多个信号并执行不同操作", code: "trap 'echo 挂起了' SIGHUP" },
+            { description: "查看当前设置的所有 trap", code: "trap -p" },
+            { description: "查看帮助文档", code: "help trap" }
+        ],
+        relatedCommands: ["kill", "nohup", "signal", "ps"]
+    },
+    // ==================== 网络工具 ====================
+    {
+        name: "ping",
+        categoryId: "network",
+        syntax: "ping [选项] 目标主机",
+        simpleExplain: "测试网络连通性，就像对着远处的人喊一声看他有没有回应",
+        detailExplain: "就像你在山谷里大喊一声「喂——！」然后听有没有回声——如果有回声说明路是通的，没回声可能是对方不在或者路断了。ping 向目标主机发送 ICMP 数据包，通过一来一回的过程判断网络是否通畅以及延迟有多高。",
+        helpOutput: `ping: invalid option -- '-'
 
 Usage
   ping [options] <destination>
@@ -4652,22 +4623,22 @@ IPv6 options:
 
 For more details see ping(8).
 `,
-    examples: [
-      { description: "测试与 Google 的网络连通性", code: "ping google.com" },
-      { description: "只发送 4 个数据包后停止", code: "ping -c 4 baidu.com" },
-      { description: "每秒发送一个包", code: "ping -i 1 192.168.1.1" },
-      { description: "指定数据包大小", code: "ping -s 1024 server.local" },
-      { description: "查看帮助文档", code: "ping --help" }
-    ],
-    relatedCommands: ["traceroute", "mtr", "arping", "fping"]
-  },
-  {
-    name: "ifconfig",
-    categoryId: "network",
-    syntax: "ifconfig [接口] [选项]",
-    simpleExplain: "配置和查看网络接口",
-    detailExplain: "配置和查看网络接口信息，包括 IP 地址、MAC 地址、MTU、收发包统计、接口状态等。常用操作：ifconfig eth0 up/down 启停接口，ifconfig eth0 192.168.1.10 设置 IP。新系统推荐使用 ip 命令，但 ifconfig 仍被广泛使用。",
-    helpOutput: `Usage:
+        examples: [
+            { description: "测试与 Google 的网络连通性", code: "ping google.com" },
+            { description: "只发送 4 个数据包后停止", code: "ping -c 4 baidu.com" },
+            { description: "每秒发送一个包", code: "ping -i 1 192.168.1.1" },
+            { description: "指定数据包大小", code: "ping -s 1024 server.local" },
+            { description: "查看帮助文档", code: "ping --help" }
+        ],
+        relatedCommands: ["traceroute", "mtr", "arping", "fping"]
+    },
+    {
+        name: "ifconfig",
+        categoryId: "network",
+        syntax: "ifconfig [接口] [选项]",
+        simpleExplain: "配置和查看网络接口，就像查看和设置网卡的「身份证」信息",
+        detailExplain: "就像查看电脑网卡的名片——IP 地址是多少、MAC 地址是什么、收发了多少数据包、网络是开启还是关闭状态。虽然新系统推荐用 ip 命令替代，但 ifconfig 依然被广泛使用。",
+        helpOutput: `Usage:
   ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]
   [add <address>[/<prefixlen>]]
   [del <address>[/<prefixlen>]]
@@ -4688,22 +4659,22 @@ For more details see ping(8).
   <AF>=Address family. Default: inet
   List of possible address families:
 `,
-    examples: [
-      { description: "显示所有网络接口的信息", code: "ifconfig -a" },
-      { description: "启用网络接口", code: "ifconfig eth0 up" },
-      { description: "禁用网络接口", code: "ifconfig eth0 down" },
-      { description: "为接口分配 IP 地址", code: "ifconfig eth0 192.168.1.50 netmask 255.255.255.0" },
-      { description: "查看帮助文档", code: "ifconfig --help" }
-    ],
-    relatedCommands: ["ip", "ip addr", "netstat", "iwconfig"]
-  },
-  {
-    name: "curl",
-    categoryId: "network",
-    syntax: "curl [选项] URL",
-    simpleExplain: "命令行网络数据传输工具",
-    detailExplain: "命令行数据传输工具，支持 HTTP、HTTPS、FTP、SCP 等多种协议。常用参数：-X 指定请求方法，-d 发送数据，-H 添加请求头，-o 输出到文件，-L 跟随重定向，-I 仅取响应头，-s 静默模式。广泛用于 API 调试、文件下载、接口测试。",
-    helpOutput: `Usage: curl [options...] <url>
+        examples: [
+            { description: "显示所有网络接口的信息", code: "ifconfig -a" },
+            { description: "启用网络接口", code: "ifconfig eth0 up" },
+            { description: "禁用网络接口", code: "ifconfig eth0 down" },
+            { description: "为接口分配 IP 地址", code: "ifconfig eth0 192.168.1.50 netmask 255.255.255.0" },
+            { description: "查看帮助文档", code: "ifconfig --help" }
+        ],
+        relatedCommands: ["ip", "ip addr", "netstat", "iwconfig"]
+    },
+    {
+        name: "curl",
+        categoryId: "network",
+        syntax: "curl [选项] URL",
+        simpleExplain: "强大的网络数据传输工具，就像万能的网络浏览器命令行版",
+        detailExplain: "就像一个全能的网络浏览器——但没有图形界面。它可以下载文件、上传数据、访问 API 接口、测试网站响应、发送各种 HTTP 请求。curl 是开发者和运维人员最常用的网络工具之一。",
+        helpOutput: `Usage: curl [options...] <url>
  -d, --data <data>          HTTP POST data
  -f, --fail                 Fail fast with no output on HTTP errors
  -h, --help <category>      Get help for commands
@@ -4721,22 +4692,22 @@ This is not the full help, this menu is stripped into categories.
 Use "--help category" to get an overview of all categories.
 For all options use the manual or "--help all".
 `,
-    examples: [
-      { description: "获取网页内容", code: "curl https://example.com" },
-      { description: "发送 POST 请求（JSON 数据）", code: "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"test\"}' https://api.example.com/users" },
-      { description: "下载文件并保存", code: "curl -O https://example.com/file.zip" },
-      { description: "只显示响应头信息", code: "curl -I https://google.com" },
-      { description: "查看帮助文档", code: "curl --help" }
-    ],
-    relatedCommands: ["wget", "httpie", "axios", "httpie"]
-  },
-  {
-    name: "wget",
-    categoryId: "network",
-    syntax: "wget [选项] URL",
-    simpleExplain: "从网络下载文件",
-    detailExplain: "非交互式网络文件下载工具，支持 HTTP、HTTPS、FTP 协议。常用参数：-c 断点续传，-r 递归下载，-P 指定保存目录，-b 后台下载，--limit-rate 限速，-m 镜像网站。适合大文件下载、批量抓取和自动化脚本。",
-    helpOutput: `GNU Wget 1.21.4, a non-interactive network retriever.
+        examples: [
+            { description: "获取网页内容", code: "curl https://example.com" },
+            { description: "发送 POST 请求（JSON 数据）", code: "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"test\"}' https://api.example.com/users" },
+            { description: "下载文件并保存", code: "curl -O https://example.com/file.zip" },
+            { description: "只显示响应头信息", code: "curl -I https://google.com" },
+            { description: "查看帮助文档", code: "curl --help" }
+        ],
+        relatedCommands: ["wget", "httpie", "axios", "httpie"]
+    },
+    {
+        name: "wget",
+        categoryId: "network",
+        syntax: "wget [选项] URL",
+        simpleExplain: "网络文件下载工具，就像一个不知疲倦的下载机器人",
+        detailExplain: "就像一个专门负责下载文件的机器人——你给它一个网址，它就会把文件下载到本地。wget 比 curl 更专注于「下载」这件事，支持断点续传、递归下载整个网站、限速等功能。",
+        helpOutput: `GNU Wget 1.21.4, a non-interactive network retriever.
 Usage: wget [OPTION]... [URL]...
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -4787,22 +4758,22 @@ Download:
   -T,  --timeout=SECONDS           set all timeout values to SECONDS
        --dns-timeout=SECS          set the DNS lookup timeout to SECS
        --connect-timeout=SECS      set t`,
-    examples: [
-      { description: "下载单个文件", code: "wget https://example.com/large_file.iso" },
-      { description: "断点续传", code: "wget -c https://example.com/big_file.zip" },
-      { description: "递归下载整个网站", code: "wget -r -np https://docs.example.com/" },
-      { description: "限制下载速度", code: "wget --limit-rate=200k http://example.com/file.tar.gz" },
-      { description: "查看帮助文档", code: "wget --help" }
-    ],
-    relatedCommands: ["curl", "axel", "aria2c", "lftp"]
-  },
-  {
-    name: "ssh",
-    categoryId: "network",
-    syntax: "ssh [选项] 用户@主机",
-    simpleExplain: "安全远程登录主机",
-    detailExplain: "通过加密通道远程登录到目标主机执行命令或建立隧道。常用参数：-p 指定端口，-i 指定私钥，-L/-R/-D 本地/远程/动态端口转发，-N 不执行远程命令，-C 启用压缩。所有传输均加密，是远程管理 Linux 服务器的标准方式。",
-    helpOutput: `unknown option -- -
+        examples: [
+            { description: "下载单个文件", code: "wget https://example.com/large_file.iso" },
+            { description: "断点续传", code: "wget -c https://example.com/big_file.zip" },
+            { description: "递归下载整个网站", code: "wget -r -np https://docs.example.com/" },
+            { description: "限制下载速度", code: "wget --limit-rate=200k http://example.com/file.tar.gz" },
+            { description: "查看帮助文档", code: "wget --help" }
+        ],
+        relatedCommands: ["curl", "axel", "aria2c", "lftp"]
+    },
+    {
+        name: "ssh",
+        categoryId: "network",
+        syntax: "ssh [选项] 用户@主机",
+        simpleExplain: "安全远程登录，就像通过网络远程操控另一台电脑",
+        detailExplain: "就像你坐在家里的电脑前，却能像坐在办公室一样操控公司的服务器——键盘敲什么，远端的电脑就执行什么，屏幕上显示的结果实时传回来。SSH 的所有传输都是加密安全的。",
+        helpOutput: `unknown option -- -
 usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface] [-b bind_address]
            [-c cipher_spec] [-D [bind_address:]port] [-E log_file]
            [-e escape_char] [-F configfile] [-I pkcs11] [-i identity_file]
@@ -4812,42 +4783,42 @@ usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface] [-b bind_address]
            destination [command [argument ...]]
        ssh [-Q query_option]
 `,
-    examples: [
-      { description: "远程登录到服务器", code: "ssh user@192.168.1.100" },
-      { description: "指定端口登录", code: "ssh -p 2222 user@example.com" },
-      { description: "使用密钥文件登录", code: "ssh -i ~/.ssh/id_rsa admin@server.com" },
-      { description: "在远程服务器上执行一条命令", code: "ssh user@host 'df -h && free -m'" },
-      { description: "查看帮助文档", code: "ssh --help" }
-    ],
-    relatedCommands: ["scp", "sftp", "telnet", "mosh"]
-  },
-  {
-    name: "scp",
-    categoryId: "network",
-    syntax: "scp [选项] 源 目标",
-    simpleExplain: "安全远程拷贝文件",
-    detailExplain: "基于 SSH 协议在本地与远程主机之间加密复制文件，支持本地到远程、远程到本地、远程到远程三种方向。常用参数：-P 指定端口，-r 递归复制目录，-p 保留权限和时间戳，-i 指定私钥。适合单次加密文件传输。",
-    helpOutput: `scp: unknown option -- -
+        examples: [
+            { description: "远程登录到服务器", code: "ssh user@192.168.1.100" },
+            { description: "指定端口登录", code: "ssh -p 2222 user@example.com" },
+            { description: "使用密钥文件登录", code: "ssh -i ~/.ssh/id_rsa admin@server.com" },
+            { description: "在远程服务器上执行一条命令", code: "ssh user@host 'df -h && free -m'" },
+            { description: "查看帮助文档", code: "ssh --help" }
+        ],
+        relatedCommands: ["scp", "sftp", "telnet", "mosh"]
+    },
+    {
+        name: "scp",
+        categoryId: "network",
+        syntax: "scp [选项] 源 目标",
+        simpleExplain: "安全远程文件拷贝，就像通过加密快递通道寄送文件",
+        detailExplain: "就像通过一条加密的安全快递通道在两台电脑之间传送文件——基于 SSH 协议，传输过程全程加密。可以从本地传到远程、从远程传到本地。",
+        helpOutput: `scp: unknown option -- -
 usage: scp [-346ABCOpqRrsTv] [-c cipher] [-D sftp_server_path] [-F ssh_config]
            [-i identity_file] [-J destination] [-l limit] [-o ssh_option]
            [-P port] [-S program] [-X sftp_option] source ... target
 `,
-    examples: [
-      { description: "上传本地文件到远程服务器", code: "scp localfile.txt user@remote:/home/user/" },
-      { description: "从远程服务器下载文件到本地", code: "scp user@remote:/path/file.txt ./local_dir/" },
-      { description: "递归复制整个目录", code: "scp -r ./project/ user@server:/opt/apps/" },
-      { description: "指定端口传输", code: "scp -P 2222 config.yml deploy@host:/etc/app/" },
-      { description: "查看帮助文档", code: "scp --help" }
-    ],
-    relatedCommands: ["ssh", "rsync", "sftp", "ftp"]
-  },
-  {
-    name: "netstat",
-    categoryId: "network",
-    syntax: "netstat [选项]",
-    simpleExplain: "查看网络连接状态",
-    detailExplain: "显示网络连接、路由表、接口统计等信息。常用参数：-t TCP 连接，-u UDP 连接，-l 监听端口，-n 显示数字地址，-p 显示进程，-r 路由表。在新系统上逐渐被更快的 ss 命令取代，但仍是经典排查工具。",
-    helpOutput: `usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}
+        examples: [
+            { description: "上传本地文件到远程服务器", code: "scp localfile.txt user@remote:/home/user/" },
+            { description: "从远程服务器下载文件到本地", code: "scp user@remote:/path/file.txt ./local_dir/" },
+            { description: "递归复制整个目录", code: "scp -r ./project/ user@server:/opt/apps/" },
+            { description: "指定端口传输", code: "scp -P 2222 config.yml deploy@host:/etc/app/" },
+            { description: "查看帮助文档", code: "scp --help" }
+        ],
+        relatedCommands: ["ssh", "rsync", "sftp", "ftp"]
+    },
+    {
+        name: "netstat",
+        categoryId: "network",
+        syntax: "netstat [选项]",
+        simpleExplain: "查看网络连接状态，就像查看电话交换机的通话记录",
+        detailExplain: "就像电信局的通话记录显示器——谁在和谁通话、用的是哪个端口、处于什么状态。虽然逐渐被 ss 取代，但 netstat 依然是经典工具。",
+        helpOutput: `usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}
        netstat [-vWnNcaeol] [<Socket> ...]
        netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }
 
@@ -4880,22 +4851,22 @@ usage: scp [-346ABCOpqRrsTv] [-c cipher] [-D sftp_server_path] [-F ssh_config]
   <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: inet
   List of possible address families (which support routing):
 `,
-    examples: [
-      { description: "显示所有 TCP 连接", code: "netstat -tn" },
-      { description: "显示所有监听的端口", code: "netstat -tlnp" },
-      { description: "显示路由表", code: "netstat -rn" },
-      { description: "持续显示网络接口统计信息", code: "netstat -c" },
-      { description: "查看帮助文档", code: "netstat --help" }
-    ],
-    relatedCommands: ["ss", "lsof", "ip", "nmap"]
-  },
-  {
-    name: "ss",
-    categoryId: "network",
-    syntax: "ss [选项]",
-    simpleExplain: "查看网络连接状态（netstat替代）",
-    detailExplain: "显示套接字统计信息，直接从内核读取数据，性能优于 netstat。常用参数：-t TCP，-u UDP，-l 监听套接字，-n 不解析名称，-p 显示进程，-m 内存使用，-s 汇总统计。适合高并发服务器快速排查连接状态。",
-    helpOutput: `Usage: ss [ OPTIONS ]
+        examples: [
+            { description: "显示所有 TCP 连接", code: "netstat -tn" },
+            { description: "显示所有监听的端口", code: "netstat -tlnp" },
+            { description: "显示路由表", code: "netstat -rn" },
+            { description: "持续显示网络接口统计信息", code: "netstat -c" },
+            { description: "查看帮助文档", code: "netstat --help" }
+        ],
+        relatedCommands: ["ss", "lsof", "ip", "nmap"]
+    },
+    {
+        name: "ss",
+        categoryId: "network",
+        syntax: "ss [选项]",
+        simpleExplain: "新一代网络连接查看工具，就像 netstat 的升级高速版",
+        detailExplain: "就像 netstat 的现代化升级版——更快、更强大、信息更丰富。ss 直接从内核获取网络连接信息，在连接数量很大的服务器上比 netstat 快得多。",
+        helpOutput: `Usage: ss [ OPTIONS ]
        ss [ OPTIONS ] [ FILTER ]
    -h, --help          this message
    -V, --version       output version information
@@ -4951,62 +4922,62 @@ usage: scp [-346ABCOpqRrsTv] [-c cipher] [-D sftp_server_path] [-F ssh_config]
           connected := {established|syn-sent|syn-recv|fin-wait-{1,2}|time-wait|close-wait|last-ack|closing}
        synchronized := {established|syn-recv|fin-wait-{1,2}|time-wait|close-wait|last-ack|closing}
       `,
-    examples: [
-      { description: "显示所有 TCP 连接", code: "ss -tn" },
-      { description: "显示所有监听端口及对应进程", code: "ss -tlnp" },
-      { description: "显示 UDP 连接", code: "ss -uln" },
-      { description: "统计各状态下的连接数量", code: "ss -s" },
-      { description: "查看帮助文档", code: "ss --help" }
-    ],
-    relatedCommands: ["netstat", "lsof", "ip", "nmap"]
-  },
-  {
-    name: "nslookup",
-    categoryId: "network",
-    syntax: "nslookup [选项] 域名",
-    simpleExplain: "DNS域名查询工具",
-    detailExplain: "向 DNS 服务器查询域名与 IP 地址的映射关系，支持交互式和非交互式两种模式。常用：nslookup domain 查询 A 记录，nslookup domain 8.8.8.8 指定 DNS 服务器，set type=MX 查询邮件记录。常用于 DNS 故障排查和记录验证。",
-    helpOutput: `*** Invalid option: -help
+        examples: [
+            { description: "显示所有 TCP 连接", code: "ss -tn" },
+            { description: "显示所有监听端口及对应进程", code: "ss -tlnp" },
+            { description: "显示 UDP 连接", code: "ss -uln" },
+            { description: "统计各状态下的连接数量", code: "ss -s" },
+            { description: "查看帮助文档", code: "ss --help" }
+        ],
+        relatedCommands: ["netstat", "lsof", "ip", "nmap"]
+    },
+    {
+        name: "nslookup",
+        categoryId: "network",
+        syntax: "nslookup [选项] 域名",
+        simpleExplain: "DNS 查询工具，就像查通讯录把人名翻译成电话号码",
+        detailExplain: "就像你只知道朋友的名字（域名），想知道他的电话号码（IP 地址）——nslookup 帮你去 DNS 服务器上查这个映射关系。",
+        helpOutput: `*** Invalid option: -help
 
 `,
-    examples: [
-      { description: "查询域名的 IP 地址", code: "nslookup google.com" },
-      { description: "指定 DNS 服务器查询", code: "nslookup example.com 114.114.114.114" },
-      { description: "查询 MX 记录", code: "nslookup -type=MX gmail.com" },
-      { description: "交互模式查询", code: "nslookup" },
-      { description: "查看帮助文档", code: "nslookup --help" }
-    ],
-    relatedCommands: ["dig", "host", "whois", "route"]
-  },
-  {
-    name: "dig",
-    categoryId: "network",
-    syntax: "dig [选项] 域名 [查询类型]",
-    simpleExplain: "DNS 查询工具，支持详细解析记录",
-    detailExplain: "DNS 查询工具，输出完整的 DNS 查询过程和响应详情。常用参数：@server 指定 DNS 服务器，-x 反向查询（IP 到域名），+short 只输出简短结果，+trace 显示完整解析链路，-t 指定查询记录类型（A、MX、NS 等）。适合网络管理员排查 DNS 故障和分析解析过程。",
-    helpOutput: `Invalid option: --help
+        examples: [
+            { description: "查询域名的 IP 地址", code: "nslookup google.com" },
+            { description: "指定 DNS 服务器查询", code: "nslookup example.com 114.114.114.114" },
+            { description: "查询 MX 记录", code: "nslookup -type=MX gmail.com" },
+            { description: "交互模式查询", code: "nslookup" },
+            { description: "查看帮助文档", code: "nslookup --help" }
+        ],
+        relatedCommands: ["dig", "host", "whois", "route"]
+    },
+    {
+        name: "dig",
+        categoryId: "network",
+        syntax: "dig [选项] 域名 [查询类型]",
+        simpleExplain: "高级 DNS 查询工具，就像 nslookup 的专业增强版",
+        detailExplain: "就像 nslookup 的专业版——输出的信息更加详细和专业，可以看到完整的 DNS 查询过程、响应时间等。深受网络管理员喜爱。",
+        helpOutput: `Invalid option: --help
 Usage:  dig [@global-server] [domain] [q-type] [q-class] {q-opt}
             {global-d-opt} host [@local-server] {local-d-opt}
             [ host [@local-server] {local-d-opt} [...]]
 
 Use "dig -h" (or "dig -h | more") for complete list of options
 `,
-    examples: [
-      { description: "查询域名的 A 记录", code: "dig example.com" },
-      { description: "简洁输出", code: "dig +short google.com", output: "142.250.80.46" },
-      { description: "追踪完整的 DNS 解析链路", code: "dig +trace example.com" },
-      { description: "查询指定类型的 DNS 记录", code: "dig TXT _dmarc.google.com" },
-      { description: "查看帮助文档", code: "dig --help" }
-    ],
-    relatedCommands: ["nslookup", "host", "whois", "dnstracer"]
-  },
-  {
-    name: "traceroute",
-    categoryId: "network",
-    syntax: "traceroute [选项] 目标主机",
-    simpleExplain: "追踪数据包到目标主机的路由路径",
-    detailExplain: "追踪数据包从本机到目标主机所经过的所有路由节点。利用递增的 TTL 值触发中间路由器返回 ICMP 超时消息，逐跳显示路径上每个路由器的 IP 和往返延迟。常用参数：-n 不解析主机名以加快显示，-w 设置等待超时，-q 设置每跳探测次数，-I 使用 ICMP 替代 UDP。用于排查网络延迟和路由故障。",
-    helpOutput: `Usage: traceroute [ -46dFITnreAVV ] [ -f first_ttl ] [ -g gate,... ]
+        examples: [
+            { description: "查询域名的 A 记录", code: "dig example.com" },
+            { description: "简洁输出", code: "dig +short google.com", output: "142.250.80.46" },
+            { description: "追踪完整的 DNS 解析链路", code: "dig +trace example.com" },
+            { description: "查询指定类型的 DNS 记录", code: "dig TXT _dmarc.google.com" },
+            { description: "查看帮助文档", code: "dig --help" }
+        ],
+        relatedCommands: ["nslookup", "host", "whois", "dnstracer"]
+    },
+    {
+        name: "traceroute",
+        categoryId: "network",
+        syntax: "traceroute [选项] 目标主机",
+        simpleExplain: "追踪网络路径，就像查看快递包裹经过了哪些中转站",
+        detailExplain: "就像你寄出一个快递包裹，traceroute 帮你追踪这个包裹从你家出发，经过了哪些中转站（路由器），最终到达目的地。每一跳都会显示经过的路由器 IP 和耗时。",
+        helpOutput: `Usage: traceroute [ -46dFITnreAVV ] [ -f first_ttl ] [ -g gate,... ]
        [ -i iface ] [ -m max_ttl ] [ -N squeries ] [ -p port ]
        [ -t tos ] [ -l flow_label ] [ -w waittime ] [ -q nqueries ]
        [ -s src_addr ] [ -z sendwait ] [ --fwmark=num ] host [ packetlen ]
@@ -5028,22 +4999,22 @@ Options:
   -s SRC_ADDR  指定源地址
   -w WAITTIME  等待响应时间（秒，默认 5）
   -z SENDWAIT  探测间延迟（毫秒）`,
-    examples: [
-      { description: "追踪到目标主机的完整路径", code: "traceroute google.com" },
-      { description: "使用 ICMP 进行追踪", code: "traceroute -I baidu.com" },
-      { description: "指定最大跳数", code: "traceroute -m 15 example.com" },
-      { description: "不进行 DNS 反解", code: "traceroute -n target.host" },
-      { description: "查看帮助文档", code: "traceroute --help" }
-    ],
-    relatedCommands: ["ping", "mtr", "tracepath", "pathping"]
-  },
-  {
-    name: "route",
-    categoryId: "network",
-    syntax: "route [选项] [命令]",
-    simpleExplain: "查看和修改系统路由表",
-    detailExplain: "查看和操作内核 IP 路由表。route 或 route -n 显示当前路由规则，add/del 子命令添加或删除静态路由条目。常用参数：-n 以数字形式显示地址，net 指定目标网络，gw 指定网关，dev 指定出口接口。在新系统中已被 ip route 替代，但仍广泛用于老旧环境。",
-    helpOutput: `Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables
+        examples: [
+            { description: "追踪到目标主机的完整路径", code: "traceroute google.com" },
+            { description: "使用 ICMP 进行追踪", code: "traceroute -I baidu.com" },
+            { description: "指定最大跳数", code: "traceroute -m 15 example.com" },
+            { description: "不进行 DNS 反解", code: "traceroute -n target.host" },
+            { description: "查看帮助文档", code: "traceroute --help" }
+        ],
+        relatedCommands: ["ping", "mtr", "tracepath", "pathping"]
+    },
+    {
+        name: "route",
+        categoryId: "network",
+        syntax: "route [选项] [命令]",
+        simpleExplain: "查看和修改路由表，就像查看和设置导航地图的路线规则",
+        detailExplain: "就像 GPS 导航中的路由规划表——告诉数据包要去某个目的地应该走哪条路。route 可以查看当前的路由规则，也可以手动添加或删除路由条目。",
+        helpOutput: `Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables
        route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.
 
        route {-h|--help} [<AF>]              Detailed usage syntax for specified AF.
@@ -5058,22 +5029,22 @@ Options:
   <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: inet
   List of possible address families (which support routing):
 `,
-    examples: [
-      { description: "显示内核路由表", code: "route -n" },
-      { description: "添加默认网关", code: "route add default gw 192.168.1.1" },
-      { description: "添加到指定网段的路由", code: "route add -net 10.0.0.0 netmask 255.255.0.0 gw 192.168.1.254" },
-      { description: "删除路由条目", code: "route del -net 192.168.2.0 netmask 255.255.255.0" },
-      { description: "查看帮助文档", code: "route --help" }
-    ],
-    relatedCommands: ["ip route", "ifconfig", "netstat", "arp"]
-  },
-  {
-    name: "ip",
-    categoryId: "network",
-    syntax: "ip [选项] 对象 {命令}",
-    simpleExplain: "网络配置工具，管理地址、路由和网卡",
-    detailExplain: "现代 Linux 网络配置的核心命令，整合了 ifconfig、route、arp 等工具的功能。常用子命令：ip addr 管理地址，ip route 管理路由表，ip link 管理网络接口，ip neigh 管理 ARP 表，ip -s link 查看接口流量统计。支持 IPv4/IPv6 双栈，是 systemd 时代网络管理的首选工具。",
-    helpOutput: `Usage: ip [ OPTIONS ] OBJECT { COMMAND | help }
+        examples: [
+            { description: "显示内核路由表", code: "route -n" },
+            { description: "添加默认网关", code: "route add default gw 192.168.1.1" },
+            { description: "添加到指定网段的路由", code: "route add -net 10.0.0.0 netmask 255.255.0.0 gw 192.168.1.254" },
+            { description: "删除路由条目", code: "route del -net 192.168.2.0 netmask 255.255.255.0" },
+            { description: "查看帮助文档", code: "route --help" }
+        ],
+        relatedCommands: ["ip route", "ifconfig", "netstat", "arp"]
+    },
+    {
+        name: "ip",
+        categoryId: "network",
+        syntax: "ip [选项] 对象 {命令}",
+        simpleExplain: "多功能网络配置工具，就像瑞士军刀般的网络管理神器",
+        detailExplain: "就像一套瑞士军刀——以前需要 ifconfig、route、arp、netstat 等多个命令做的事，ip 一个命令全部搞定。ip addr 管地址、ip route 管路由、ip link 管接口……是现代 Linux 网络管理的核心工具。",
+        helpOutput: `Usage: ip [ OPTIONS ] OBJECT { COMMAND | help }
        ip [ -force ] -batch filename
 where  OBJECT := { address | addrlabel | amt | fou | help | ila | ioam | l2tp |
                    link | macsec | maddress | monitor | mptcp | mroute | mrule |
@@ -5089,44 +5060,44 @@ where  OBJECT := { address | addrlabel | amt | fou | help | ila | ioam | l2tp |
                     -rc[vbuf] [size] | -n[etns] name | -N[umeric] | -a[ll] |
                     -c[olor]}
 `,
-    examples: [
-      { description: "显示所有网络接口的 IP 地址", code: "ip addr show" },
-      { description: "显示路由表", code: "ip route show" },
-      { description: "启用/禁用网络接口", code: "ip link set eth0 up" },
-      { description: "添加 IP 地址到接口", code: "ip addr add 192.168.1.50/24 dev eth0" },
-      { description: "查看帮助文档", code: "ip --help" }
-    ],
-    relatedCommands: ["ifconfig", "route", "netstat", "ss"]
-  },
-  {
-    name: "nc",
-    categoryId: "network",
-    syntax: "nc [选项] 主机 端口",
-    simpleExplain: "网络连接和数据传输的命令行工具",
-    detailExplain: "多功能网络工具 netcat，可作为客户端连接服务器、监听端口提供服务、传输文件或扫描端口。常用参数：-l 监听模式，-p 指定本地端口，-z 端口扫描模式，-v 显示详细信息，-u 使用 UDP，-e 将输入输出绑定到程序。常用于网络调试、临时服务搭建和端口连通性测试。",
-    helpOutput: `nc: invalid option -- '-'
+        examples: [
+            { description: "显示所有网络接口的 IP 地址", code: "ip addr show" },
+            { description: "显示路由表", code: "ip route show" },
+            { description: "启用/禁用网络接口", code: "ip link set eth0 up" },
+            { description: "添加 IP 地址到接口", code: "ip addr add 192.168.1.50/24 dev eth0" },
+            { description: "查看帮助文档", code: "ip --help" }
+        ],
+        relatedCommands: ["ifconfig", "route", "netstat", "ss"]
+    },
+    {
+        name: "nc",
+        categoryId: "network",
+        syntax: "nc [选项] 主机 端口",
+        simpleExplain: "网络瑞士军刀，就像一把万能的网络工具刀",
+        detailExplain: "就像一把真正的瑞士军刀——可以当客户端连接服务器、可以当服务器监听端口、可以在两台机器间传文件、可以扫描端口。nc（netcat）简单却极其强大。",
+        helpOutput: `nc: invalid option -- '-'
 usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
 	  [-m minttl] [-O length] [-P proxy_username] [-p source_port]
 	  [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
 	  [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
 	  [destination] [port]
 `,
-    examples: [
-      { description: "扫描端口是否开放", code: "nc -zv google.com 80" },
-      { description: "在本机 8888 端口启动简易聊天服务器", code: "nc -l -p 8888" },
-      { description: "连接到聊天服务器", code: "nc localhost 8888" },
-      { description: "在两台机器间传输文件（接收端）", code: "nc -l -p 9999 > received_file.zip" },
-      { description: "查看帮助文档", code: "nc --help" }
-    ],
-    relatedCommands: ["socat", "nmap", "telnet", "curl"]
-  },
-  {
-    name: "ftp",
-    categoryId: "network",
-    syntax: "ftp [选项] 主机",
-    simpleExplain: "FTP 文件传输客户端",
-    detailExplain: "传统 FTP 文件传输协议客户端，用于在本地与远程主机之间上传下载文件。常用命令：open 连接服务器，get/put 下载上传单个文件，mget/mput 批量传输，binary 切换二进制模式，prompt 关闭交互确认。由于明文传输不安全，生产环境建议改用 sftp/scp，仅适用于受信任的内部网络或老旧系统。",
-    helpOutput: `Usage: ftp [options] [host[:port]]
+        examples: [
+            { description: "扫描端口是否开放", code: "nc -zv google.com 80" },
+            { description: "在本机 8888 端口启动简易聊天服务器", code: "nc -l -p 8888" },
+            { description: "连接到聊天服务器", code: "nc localhost 8888" },
+            { description: "在两台机器间传输文件（接收端）", code: "nc -l -p 9999 > received_file.zip" },
+            { description: "查看帮助文档", code: "nc --help" }
+        ],
+        relatedCommands: ["socat", "nmap", "telnet", "curl"]
+    },
+    {
+        name: "ftp",
+        categoryId: "network",
+        syntax: "ftp [选项] 主机",
+        simpleExplain: "FTP 文件传输客户端，就像专用的文件快递服务",
+        detailExplain: "就像一种专门在网络上传送文件的老牌快递服务——FTP 是最早的文件传输协议之一。虽然安全性不如 SFTP/SCP，但在一些老旧系统和内部网络中仍然在使用。",
+        helpOutput: `Usage: ftp [options] [host[:port]]
 
 Options:
   -4             只使用 IPv4
@@ -5145,22 +5116,22 @@ Options:
   -V             禁用进度条
 
 交互命令: ls, cd, get, put, mget, mput, mkdir, rmdir, delete, rename, bye`,
-    examples: [
-      { description: "连接到 FTP 服务器", code: "ftp ftp.example.com" },
-      { description: "下载文件", code: "get remote_file.txt" },
-      { description: "上传文件", code: "put local_file.txt" },
-      { description: "匿名登录 FTP 服务器", code: "ftp anonymous@ftp.gnu.org" },
-      { description: "查看帮助文档", code: "ftp --help" }
-    ],
-    relatedCommands: ["sftp", "lftp", "curl", "wget"]
-  },
-  {
-    name: "arp",
-    categoryId: "network",
-    syntax: "arp [选项]",
-    simpleExplain: "查看和管理 ARP 缓存表",
-    detailExplain: "查看和管理内核 ARP 缓存表，记录 IP 地址与 MAC 地址的对应关系。arp 或 arp -n 显示当前缓存，-d 删除指定条目，-s 添加静态映射。用于排查局域网内 IP 冲突、MAC 地址欺骗和二层通信故障。在新系统中可由 ip neigh 替代。",
-    helpOutput: `Usage:
+        examples: [
+            { description: "连接到 FTP 服务器", code: "ftp ftp.example.com" },
+            { description: "下载文件", code: "get remote_file.txt" },
+            { description: "上传文件", code: "put local_file.txt" },
+            { description: "匿名登录 FTP 服务器", code: "ftp anonymous@ftp.gnu.org" },
+            { description: "查看帮助文档", code: "ftp --help" }
+        ],
+        relatedCommands: ["sftp", "lftp", "curl", "wget"]
+    },
+    {
+        name: "arp",
+        categoryId: "network",
+        syntax: "arp [选项]",
+        simpleExplain: "查看和管理 ARP 缓存表，就像查看局域网的「名片夹」",
+        detailExplain: "就像你有一个名片夹，记录了身边同事的名字（IP 地址）和长相（MAC 地址）之间的对应关系。ARP 就是建立这种映射的工具。",
+        helpOutput: `Usage:
   arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP cache
   arp [-v]          [-i <if>] -d  <host> [pub]               <-Delete ARP entry
   arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from file
@@ -5181,22 +5152,22 @@ Options:
   <HW>=Use '-H <hw>' to specify hardware address type. Default: ether
   List of possible hardware types (which support ARP):
 `,
-    examples: [
-      { description: "显示 ARP 缓存表", code: "arp -a" },
-      { description: "删除指定的 ARP 条目", code: "arp -d 192.168.1.5" },
-      { description: "手动添加 ARP 条目", code: "arp -s 192.168.1.100 00:aa:bb:cc:dd:ee" },
-      { description: "显示 ARP 表的数值格式", code: "arp -vn" },
-      { description: "查看帮助文档", code: "arp --help" }
-    ],
-    relatedCommands: ["ip neigh", "arping", "ifconfig", "netstat"]
-  },
-  {
-    name: "host",
-    categoryId: "network",
-    syntax: "host [选项] 名称",
-    simpleExplain: "DNS 查询工具，查询域名解析",
-    detailExplain: "轻量级 DNS 查询工具，输入域名返回 IP，输入 IP 反查域名。常用参数：-t 指定记录类型（A、MX、NS、TXT 等），-a 显示全部记录，-l 列出域内所有主机（AXFR）。输出比 dig 简洁，适合脚本调用和快速查询。",
-    helpOutput: `host: illegal option -- -
+        examples: [
+            { description: "显示 ARP 缓存表", code: "arp -a" },
+            { description: "删除指定的 ARP 条目", code: "arp -d 192.168.1.5" },
+            { description: "手动添加 ARP 条目", code: "arp -s 192.168.1.100 00:aa:bb:cc:dd:ee" },
+            { description: "显示 ARP 表的数值格式", code: "arp -vn" },
+            { description: "查看帮助文档", code: "arp --help" }
+        ],
+        relatedCommands: ["ip neigh", "arping", "ifconfig", "netstat"]
+    },
+    {
+        name: "host",
+        categoryId: "network",
+        syntax: "host [选项] 名称",
+        simpleExplain: "简单的 DNS 查询工具，就像快速的电话号码查询器",
+        detailExplain: "就像一个轻量级的 DNS 查询工具——比 dig 简单，比 nslookup 输出更干净。输入域名返回 IP 地址，输入 IP 返回域名。",
+        helpOutput: `host: illegal option -- -
 Usage: host [-aCdilrTvVw] [-c class] [-N ndots] [-t type] [-W time]
             [-R number] [-m flag] [-p port] hostname [server]
        -a is equivalent to -v -t ANY
@@ -5221,22 +5192,22 @@ Usage: host [-aCdilrTvVw] [-c class] [-N ndots] [-t type] [-W time]
        -4 use IPv4 query transport only
        -6 use IPv6 query transport only
 `,
-    examples: [
-      { description: "查询域名的 IP 地址", code: "host google.com" },
-      { description: "反向查询（IP 查域名）", code: "host 8.8.8.8" },
-      { description: "查询 MX 记录", code: "host -t MX gmail.com" },
-      { description: "查询 SOA 记录", code: "host -t SOA example.com" },
-      { description: "查看帮助文档", code: "host --help" }
-    ],
-    relatedCommands: ["dig", "nslookup", "whois", "dnsmasq"]
-  },
-  {
-    name: "whois",
-    categoryId: "network",
-    syntax: "whois [选项] 域名/IP",
-    simpleExplain: "查询域名注册和归属信息",
-    detailExplain: "查询域名的注册信息，包括注册人、注册商、注册时间、过期时间和域名服务器等。直接执行 whois domain.com 即可，常用参数：-h 指定查询服务器，-p 指定端口。常用于域名抢注监控、归属权调查和取证分析。",
-    helpOutput: `Usage: whois [OPTION]... OBJECT...
+        examples: [
+            { description: "查询域名的 IP 地址", code: "host google.com" },
+            { description: "反向查询（IP 查域名）", code: "host 8.8.8.8" },
+            { description: "查询 MX 记录", code: "host -t MX gmail.com" },
+            { description: "查询 SOA 记录", code: "host -t SOA example.com" },
+            { description: "查看帮助文档", code: "host --help" }
+        ],
+        relatedCommands: ["dig", "nslookup", "whois", "dnsmasq"]
+    },
+    {
+        name: "whois",
+        categoryId: "network",
+        syntax: "whois [选项] 域名/IP",
+        simpleExplain: "查询域名注册信息，就像查房产证知道房主是谁",
+        detailExplain: "就像去房地产登记中心查一套房子的产权信息——whois 可以查到域名是谁注册的、什么时候注册的、什么时候过期等信息。",
+        helpOutput: `Usage: whois [OPTION]... OBJECT...
 
 Options:
   -h HOST       查询指定 whois 服务器
@@ -5260,22 +5231,22 @@ Options:
   -q            返回服务器信息
   -t TYPE       返回指定类型的模板
   -v TYPE       返回指定类型的详细模板`,
-    examples: [
-      { description: "查询域名的注册信息", code: "whois example.com" },
-      { description: "查询 IP 地址的归属信息", code: "whois 8.8.8.8" },
-      { description: "查询结果只显示简要信息", code: "whois -H github.com" },
-      { description: "使用指定的 whois 服务器查询", code: "whois -h whois.apnic.net 202.100.1.1" },
-      { description: "查看帮助文档", code: "whois --help" }
-    ],
-    relatedCommands: ["dig", "nslookup", "host", "nicinfo"]
-  },
-  {
-    name: "nmap",
-    categoryId: "network",
-    syntax: "nmap [选项] 目标",
-    simpleExplain: "网络探测和安全端口扫描工具",
-    detailExplain: "网络扫描与安全审计工具，可探测目标主机的开放端口、运行服务和操作系统类型。常用参数：-sS TCP SYN 扫描（半开扫描），-sU UDP 扫描，-O 操作系统识别，-sV 服务版本探测，-A 综合扫描，-p 指定端口范围。是渗透测试和资产管理的基础工具。",
-    helpOutput: `Usage: nmap [Scan Type(s)] [Options] {target specification}
+        examples: [
+            { description: "查询域名的注册信息", code: "whois example.com" },
+            { description: "查询 IP 地址的归属信息", code: "whois 8.8.8.8" },
+            { description: "查询结果只显示简要信息", code: "whois -H github.com" },
+            { description: "使用指定的 whois 服务器查询", code: "whois -h whois.apnic.net 202.100.1.1" },
+            { description: "查看帮助文档", code: "whois --help" }
+        ],
+        relatedCommands: ["dig", "nslookup", "host", "nicinfo"]
+    },
+    {
+        name: "nmap",
+        categoryId: "network",
+        syntax: "nmap [选项] 目标",
+        simpleExplain: "网络探测和安全扫描器，就像给网络做一次全面的体检",
+        detailExplain: "就像请了一位专业的网络安全体检医生——他会系统地检查目标主机开放了哪些端口、运行了什么服务、操作系统是什么类型。",
+        helpOutput: `Usage: nmap [Scan Type(s)] [Options] {target specification}
 
 Scan Types:
   -sL           列表扫描（仅列出目标）
@@ -5299,22 +5270,22 @@ Options:
   -oG FILE      输出为 grep 友好格式
   --script S    使用 NSE 脚本
   -Pn           跳过主机发现（直接扫描端口）`,
-    examples: [
-      { description: "扫描常见端口", code: "nmap -F 192.168.1.1" },
-      { description: "全面扫描所有端口并检测操作系统", code: "nmap -O -sS -p- target.com" },
-      { description: "扫描整个子网的主机存活情况", code: "nmap -sn 192.168.1.0/24" },
-      { description: "扫描并尝试检测服务版本", code: "nmap -sV 127.0.0.1" },
-      { description: "查看帮助文档", code: "nmap --help" }
-    ],
-    relatedCommands: ["nc", "masscan", "zenmap", "arp-scan"]
-  },
-  {
-    name: "iptables",
-    categoryId: "network",
-    syntax: "iptables [选项] 命令 [规则]",
-    simpleExplain: "配置 Linux 防火墙规则",
-    detailExplain: "Linux 内核 netfilter 防火墙的规则管理工具，按表（filter、nat、mangle、raw）和链（INPUT、OUTPUT、FORWARD 等）组织规则。常用动作：ACCEPT 放行、DROP 丢弃、REJECT 拒绝并回应。参数 -A 追加规则，-D 删除规则，-L 列出规则，-F 清空链，-t 指定表。是服务器安全防护的核心组件。",
-    helpOutput: `Usage: iptables [-t table] {-A|-C|-D} chain rule-specification
+        examples: [
+            { description: "扫描常见端口", code: "nmap -F 192.168.1.1" },
+            { description: "全面扫描所有端口并检测操作系统", code: "nmap -O -sS -p- target.com" },
+            { description: "扫描整个子网的主机存活情况", code: "nmap -sn 192.168.1.0/24" },
+            { description: "扫描并尝试检测服务版本", code: "nmap -sV 127.0.0.1" },
+            { description: "查看帮助文档", code: "nmap --help" }
+        ],
+        relatedCommands: ["nc", "masscan", "zenmap", "arp-scan"]
+    },
+    {
+        name: "iptables",
+        categoryId: "network",
+        syntax: "iptables [选项] 命令 [规则]",
+        simpleExplain: "Linux 防火墙配置工具，就像给网络大门配保安和安检规则",
+        detailExplain: "就像给你的网络大门配备了一套完整的安保系统——可以制定规则允许谁进（ACCEPT）、拒绝谁入（REJECT）、丢弃谁的请求（DROP）。iptables 是保护服务器安全的第一道防线。",
+        helpOutput: `Usage: iptables [-t table] {-A|-C|-D} chain rule-specification
        iptables [-t table] -I chain [rulenum] rule-specification
        iptables [-t table] -R chain rulenum rule-specification
        iptables [-t table] -D chain rulenum
@@ -5345,23 +5316,23 @@ Options:
   -o IFACE      匹配出接口
   -v            详细输出
   -n            数字格式（不解析名称）`,
-    examples: [
-      { description: "查看当前防火墙规则", code: "iptables -L -n -v" },
-      { description: "允许 SSH 入站连接", code: "iptables -A INPUT -p tcp --dport 22 -j ACCEPT" },
-      { description: "禁止来自某 IP 的所有访问", code: "iptables -A INPUT -s 1.2.3.4 -j DROP" },
-      { description: "设置默认策略为拒绝所有入站流量", code: "iptables -P INPUT DROP" },
-      { description: "查看帮助文档", code: "iptables --help" }
-    ],
-    relatedCommands: ["ufw", "firewalld", "nftables", "shorewall"],
-    dangerLevel: "danger",
-  },
-  {
-    name: "rsync",
-    categoryId: "network",
-    syntax: "rsync [选项] 源 目标",
-    simpleExplain: "高效远程文件同步和备份工具",
-    detailExplain: "高效的文件同步与备份工具，通过比较源和目标的差异只传输变化部分，支持本地和远程（基于 SSH 或 rsync 协议）传输。常用参数：-a 归档模式（保留权限、属主、时间等），-v 显示详细过程，-z 传输时压缩，-P 显示进度并支持断点续传，--delete 删除目标中多余的文件，-e 指定远程 shell。是远程备份和镜像的首选工具。",
-    helpOutput: `rsync  version 3.2.7  protocol version 31
+        examples: [
+            { description: "查看当前防火墙规则", code: "iptables -L -n -v" },
+            { description: "允许 SSH 入站连接", code: "iptables -A INPUT -p tcp --dport 22 -j ACCEPT" },
+            { description: "禁止来自某 IP 的所有访问", code: "iptables -A INPUT -s 1.2.3.4 -j DROP" },
+            { description: "设置默认策略为拒绝所有入站流量", code: "iptables -P INPUT DROP" },
+            { description: "查看帮助文档", code: "iptables --help" }
+        ],
+        relatedCommands: ["ufw", "firewalld", "nftables", "shorewall"],
+        dangerLevel: "danger",
+    },
+    {
+        name: "rsync",
+        categoryId: "network",
+        syntax: "rsync [选项] 源 目标",
+        simpleExplain: "高效远程同步文件，就像一个聪明的搬运工只搬变化过的东西",
+        detailExplain: "就像一个特别聪明的搬运工——他不会把所有东西都重新搬一遍，而是只搬上次之后有变化的部分。rsync 通过比较源和目标的差异，只传输变化的内容，大大节省了时间和带宽，是远程备份和同步的首选工具。",
+        helpOutput: `rsync  version 3.2.7  protocol version 31
 Copyright (C) 1996-2022 by Andrew Tridgell, Wayne Davison, and others.
 Web site: https://rsync.samba.org/
 Capabilities:
@@ -5421,22 +5392,22 @@ Options
 --links, -l              copy symlinks as symlinks
 --copy-links, -L         transform symlink into referent file/dir
 --copy-unsafe-links      only "`,
-    examples: [
-      { description: "将本地目录同步到远程服务器", code: "rsync -avz ./project/ user@server:/backup/project/" },
-      { description: "从远程服务器拉取文件到本地", code: "rsync -avz user@server:/var/log/ ./logs/" },
-      { description: "本地目录间同步（删除目标多余文件）", code: "rsync -avz --delete ./src/ ./dst/" },
-      { description: "显示传输进度和速度", code: "rsync -avz --progress ./data/ user@server:/data/" },
-      { description: "查看帮助文档", code: "rsync --help" }
-    ],
-    relatedCommands: ["scp", "ssh", "wget", "cp"]
-  },
-  {
-    name: "mosh",
-    categoryId: "network",
-    syntax: "mosh 用户@主机",
-    simpleExplain: "支持断线重连的远程终端连接工具",
-    detailExplain: "移动 shell 客户端，基于 UDP 协议，在 IP 地址变化、网络抖动或短暂断网时仍能保持会话不中断。本地回显机制使输入响应更快，适合在移动网络或不稳定环境下远程登录。要求服务端安装 mosh-server，且双方通过 SSH 完成初始认证后切换到 UDP 通道。",
-    helpOutput: `Usage: mosh [options] [--] [user@]host [command...]
+        examples: [
+            { description: "将本地目录同步到远程服务器", code: "rsync -avz ./project/ user@server:/backup/project/" },
+            { description: "从远程服务器拉取文件到本地", code: "rsync -avz user@server:/var/log/ ./logs/" },
+            { description: "本地目录间同步（删除目标多余文件）", code: "rsync -avz --delete ./src/ ./dst/" },
+            { description: "显示传输进度和速度", code: "rsync -avz --progress ./data/ user@server:/data/" },
+            { description: "查看帮助文档", code: "rsync --help" }
+        ],
+        relatedCommands: ["scp", "ssh", "wget", "cp"]
+    },
+    {
+        name: "mosh",
+        categoryId: "network",
+        syntax: "mosh 用户@主机",
+        simpleExplain: "支持断线重连的远程连接，就像手机信号不好也能继续通话",
+        detailExplain: "就像手机信号不好时通话不会直接挂断——mosh 在网络不稳定、IP 地址变化、甚至短暂断网的情况下都能保持连接不断。比 SSH 更适合在移动网络或不稳定网络环境下使用，是远程办公的利器。",
+        helpOutput: `Usage: mosh [options] [--] [user@]host [command...]
        mosh-server [options]
 
 Options:
@@ -5454,43 +5425,43 @@ Options:
   --local               不使用 ssh 连接（本地）
   -v                    详细输出
   -V                    显示版本`,
-    examples: [
-      { description: "连接到远程服务器", code: "mosh user@server.com" },
-      { description: "指定 SSH 端口连接", code: "mosh --ssh='ssh -p 2222' user@server.com" },
-      { description: "指定 mosh 的 UDP 端口范围", code: "mosh --port=60001 user@server.com" },
-      { description: "查看帮助文档", code: "mosh --help" }
-    ],
-    relatedCommands: ["ssh", "screen", "tmux", "scp"]
-  },
-  {
-    name: "sftp",
-    categoryId: "network",
-    syntax: "sftp 用户@主机",
-    simpleExplain: "基于 SSH 的安全文件传输客户端",
-    detailExplain: "基于 SSH 加密通道的交互式文件传输客户端，提供与 FTP 类似的命令（ls、cd、get、put 等）。常用参数：-P 指定端口，-b 批处理模式从文件读取命令，-r 递归传输目录。传输过程全程加密，支持公钥认证，是替代传统 FTP 传输敏感数据的标准方案。",
-    helpOutput: `unknown option -- -
+        examples: [
+            { description: "连接到远程服务器", code: "mosh user@server.com" },
+            { description: "指定 SSH 端口连接", code: "mosh --ssh='ssh -p 2222' user@server.com" },
+            { description: "指定 mosh 的 UDP 端口范围", code: "mosh --port=60001 user@server.com" },
+            { description: "查看帮助文档", code: "mosh --help" }
+        ],
+        relatedCommands: ["ssh", "screen", "tmux", "scp"]
+    },
+    {
+        name: "sftp",
+        categoryId: "network",
+        syntax: "sftp 用户@主机",
+        simpleExplain: "安全的FTP文件传输，就像用装甲车运输贵重物品",
+        detailExplain: "就像用装甲车运输贵重物品——sftp 基于 SSH 加密通道传输文件，比传统 FTP 安全得多。它既支持上传下载，也支持浏览远程目录，就像一个加密版的文件管理器，在传输敏感数据时是首选。",
+        helpOutput: `unknown option -- -
 usage: sftp [-46AaCfNpqrv] [-B buffer_size] [-b batchfile] [-c cipher]
           [-D sftp_server_command] [-F ssh_config] [-i identity_file]
           [-J destination] [-l limit] [-o ssh_option] [-P port]
           [-R num_requests] [-S program] [-s subsystem | sftp_server]
           [-X sftp_option] destination
 `,
-    examples: [
-      { description: "连接到远程 SFTP 服务器", code: "sftp user@server.com" },
-      { description: "上传本地文件到远程", code: "sftp> put local.txt /remote/path/" },
-      { description: "从远程下载文件到本地", code: "sftp> get /remote/file.txt ./local/" },
-      { description: "查看远程目录内容", code: "sftp> ls /var/log/" },
-      { description: "查看帮助文档", code: "sftp --help" }
-    ],
-    relatedCommands: ["scp", "ssh", "ftp", "rsync"]
-  },
-  {
-    name: "ncat",
-    categoryId: "network",
-    syntax: "ncat [选项] [主机] [端口]",
-    simpleExplain: "netcat 增强版网络工具",
-    detailExplain: "netcat 的增强版（Nmap 项目），支持 SSL/TLS 加密、代理、代理链、访问控制等高级特性。常用参数：-l 监听模式，--ssl 启用加密，--proxy 指定代理，-e 绑定程序到连接，--allow 限制访问来源。常用于加密隧道、临时服务搭建和复杂网络调试场景。",
-    helpOutput: `Usage: ncat [OPTIONS...] [hostname] [port]
+        examples: [
+            { description: "连接到远程 SFTP 服务器", code: "sftp user@server.com" },
+            { description: "上传本地文件到远程", code: "sftp> put local.txt /remote/path/" },
+            { description: "从远程下载文件到本地", code: "sftp> get /remote/file.txt ./local/" },
+            { description: "查看远程目录内容", code: "sftp> ls /var/log/" },
+            { description: "查看帮助文档", code: "sftp --help" }
+        ],
+        relatedCommands: ["scp", "ssh", "ftp", "rsync"]
+    },
+    {
+        name: "ncat",
+        categoryId: "network",
+        syntax: "ncat [选项] [主机] [端口]",
+        simpleExplain: "增强版的netcat网络工具，就像瑞士军刀升级版",
+        detailExplain: "就像把瑞士军刀升级成了多功能工具箱——ncat 是 netcat 的增强版，支持 SSL 加密、代理、代理链等高级功能。可以用来端口扫描、数据传输、搭建临时服务器，几乎能完成任何网络调试任务。",
+        helpOutput: `Usage: ncat [OPTIONS...] [hostname] [port]
 
 Options:
   -4, -6            强制 IPv4/IPv6
@@ -5516,38 +5487,38 @@ Options:
   --send-only       仅发送数据
   -c CMD            同 --sh-exec
   -e CMD            同 --exec`,
-    examples: [
-      { description: "监听 8080 端口", code: "ncat -l 8080" },
-      { description: "连接到远程主机的 80 端口", code: "ncat example.com 80" },
-      { description: "使用 SSL 加密连接", code: "ncat --ssl server.com 443" },
-      { description: "在两台机器间传输文件", code: "ncat -l 1234 > file.txt  # 接收方\nncat sender-ip 1234 < file.txt  # 发送方" },
-      { description: "查看帮助文档", code: "ncat --help" }
-    ],
-    relatedCommands: ["nc", "socat", "telnet", "curl"]
-  },
-  {
-    name: "socat",
-    categoryId: "network",
-    syntax: "socat [选项] 地址1 地址2",
-    simpleExplain: "双向数据流转发工具",
-    detailExplain: "双向数据流中继工具，可在任意两类数据通道之间建立连接（如 TCP 到串口、UNIX 套接字到网络端口、文件到管道）。命令格式为 socat ADDR1 ADDR2，常用选项：-d 调试输出，fork 多连接处理，openssl: 启用 SSL。功能比 ncat 更强大也更复杂，适合网络工程师处理协议转换和端口转发。",
-    helpOutput: `2026/06/17 05:12:31 socat[3300] E unknown option "--help"; use option "-h" for help
+        examples: [
+            { description: "监听 8080 端口", code: "ncat -l 8080" },
+            { description: "连接到远程主机的 80 端口", code: "ncat example.com 80" },
+            { description: "使用 SSL 加密连接", code: "ncat --ssl server.com 443" },
+            { description: "在两台机器间传输文件", code: "ncat -l 1234 > file.txt  # 接收方\nncat sender-ip 1234 < file.txt  # 发送方" },
+            { description: "查看帮助文档", code: "ncat --help" }
+        ],
+        relatedCommands: ["nc", "socat", "telnet", "curl"]
+    },
+    {
+        name: "socat",
+        categoryId: "network",
+        syntax: "socat [选项] 地址1 地址2",
+        simpleExplain: "高级网络数据转发工具，就像一个万能的数据中转站",
+        detailExplain: "就像一个万能的数据中转站——socat 可以在任意两个数据通道之间建立桥梁，比如把 TCP 端口转发到串口、把 UNIX 套接字转发到网络端口等。比 ncat 更强大也更复杂，是网络工程师的终极工具。",
+        helpOutput: `2026/06/17 05:12:31 socat[3300] E unknown option "--help"; use option "-h" for help
 `,
-    examples: [
-      { description: "将本地 8080 端口转发到远程 80 端口", code: "socat TCP-LISTEN:8080,fork TCP:remote-server:80" },
-      { description: "通过 SOCKS5 代理连接", code: "socat TCP:target:80 SOCKS5:proxy:target:80" },
-      { description: "将 UNIX 套接字暴露为 TCP 端口", code: "socat TCP-LISTEN:9000,fork UNIX-CONNECT:/var/run/docker.sock" },
-      { description: "查看帮助文档", code: "socat --help" }
-    ],
-    relatedCommands: ["ncat", "nc", "ssh", "iptables"]
-  },
-  {
-    name: "tcpdump",
-    categoryId: "network",
-    syntax: "tcpdump [选项]",
-    simpleExplain: "抓取和分析网络数据包",
-    detailExplain: "抓取和分析流经网卡的数据包，基于 BPF 过滤表达式精确匹配流量。常用参数：-i 指定接口，-n 不解析主机名，-nn 不解析端口名，-c 抓取指定数量后退出，-w 写入 pcap 文件，-r 读取 pcap 文件，host/port/net 过滤条件。是网络排障、协议分析和安全审计的基础工具。",
-    helpOutput: `Usage: tcpdump [-aAdDefhIJKlLnNOpqStuUvxX#] [ -B size ] [ -c count ]
+        examples: [
+            { description: "将本地 8080 端口转发到远程 80 端口", code: "socat TCP-LISTEN:8080,fork TCP:remote-server:80" },
+            { description: "通过 SOCKS5 代理连接", code: "socat TCP:target:80 SOCKS5:proxy:target:80" },
+            { description: "将 UNIX 套接字暴露为 TCP 端口", code: "socat TCP-LISTEN:9000,fork UNIX-CONNECT:/var/run/docker.sock" },
+            { description: "查看帮助文档", code: "socat --help" }
+        ],
+        relatedCommands: ["ncat", "nc", "ssh", "iptables"]
+    },
+    {
+        name: "tcpdump",
+        categoryId: "network",
+        syntax: "tcpdump [选项]",
+        simpleExplain: "抓取网络数据包，就像在网络高速公路上设置监控摄像头",
+        detailExplain: "就像在网络高速公路上安装了高清监控摄像头——tcpdump 能捕获流经网卡的所有数据包，让你看到网络里到底在传输什么。排查网络故障、分析协议、安全审计时都离不开它，是网络排障的「照妖镜」。",
+        helpOutput: `Usage: tcpdump [-aAdDefhIJKlLnNOpqStuUvxX#] [ -B size ] [ -c count ]
        [ -C file_size ] [ -E algo:secret ] [ -F file ] [ -G seconds ]
        [ -i interface ] [ -j tstamptype ] [ -M secret ] [ --number ]
        [ -Q in|out|inout ] [ -r file ] [ -s snaplen ] [ --time-stamp-precision precision ]
@@ -5572,22 +5543,22 @@ Options:
   -F FILE      从文件读取过滤表达式
   -Z USER      以指定用户运行（dropprivs）
   -D           列出可用接口`,
-    examples: [
-      { description: "抓取 eth0 网卡上的所有数据包", code: "tcpdump -i eth0" },
-      { description: "只抓取 80 端口的 HTTP 流量", code: "tcpdump -i eth0 port 80" },
-      { description: "抓取并保存到文件（用 Wireshark 分析）", code: "tcpdump -i eth0 -w capture.pcap" },
-      { description: "抓取来自特定 IP 的数据包", code: "tcpdump -i eth0 src 192.168.1.100" },
-      { description: "查看帮助文档", code: "tcpdump --help" }
-    ],
-    relatedCommands: ["wireshark", "nmap", "ss", "netstat"]
-  },
-  {
-    name: "nethogs",
-    categoryId: "network",
-    syntax: "nethogs [选项]",
-    simpleExplain: "按进程显示网络流量使用",
-    detailExplain: "按进程维度实时显示网络带宽占用情况，能定位到具体程序而非仅显示连接。常用参数：-d 设置刷新间隔，-p 指定监控的进程，-t 以追踪模式输出便于脚本处理，device 指定网卡。适合排查服务器上某个进程异常消耗带宽的问题。",
-    helpOutput: `Usage: nethogs [-V] [-b] [-d seconds] [-t] [-p] [-a] [-C] [device [device [device ...]]]
+        examples: [
+            { description: "抓取 eth0 网卡上的所有数据包", code: "tcpdump -i eth0" },
+            { description: "只抓取 80 端口的 HTTP 流量", code: "tcpdump -i eth0 port 80" },
+            { description: "抓取并保存到文件（用 Wireshark 分析）", code: "tcpdump -i eth0 -w capture.pcap" },
+            { description: "抓取来自特定 IP 的数据包", code: "tcpdump -i eth0 src 192.168.1.100" },
+            { description: "查看帮助文档", code: "tcpdump --help" }
+        ],
+        relatedCommands: ["wireshark", "nmap", "ss", "netstat"]
+    },
+    {
+        name: "nethogs",
+        categoryId: "network",
+        syntax: "nethogs [选项]",
+        simpleExplain: "按进程显示网络流量，就像查看每个App消耗了多少流量",
+        detailExplain: "就像手机上查看每个 App 用了多少流量——nethogs 按进程维度显示网络带宽占用，让你一眼看出是哪个程序在疯狂吃带宽。比 iftop 更精确，能定位到具体的程序，是排查网络拥堵的好帮手。",
+        helpOutput: `Usage: nethogs [-V] [-b] [-d seconds] [-t] [-p] [-a] [-C] [device [device [device ...]]]
 
 Options:
   -d SECS       刷新间隔（秒）
@@ -5601,22 +5572,22 @@ Options:
   -l            显示命令行
   -V            显示版本
   device        指定网络设备`,
-    examples: [
-      { description: "实时显示各进程的网络流量", code: "nethogs" },
-      { description: "监控指定网卡", code: "nethogs eth0" },
-      { description: "设置刷新间隔为 2 秒", code: "nethogs -d 2" },
-      { description: "以 KB 为单位显示流量", code: "nethogs -k" },
-      { description: "查看帮助文档", code: "nethogs --help" }
-    ],
-    relatedCommands: ["iftop", "nload", "ss", "netstat"]
-  },
-  {
-    name: "iftop",
-    categoryId: "network",
-    syntax: "iftop [选项]",
-    simpleExplain: "实时显示网络带宽使用情况",
-    detailExplain: "实时显示网络连接的带宽使用情况，按连接对（本机与远端 IP）展示当前流量。常用参数：-i 指定接口，-n 不解析主机名，-N 不解析端口名，-P 显示端口，-B 以字节为单位显示。适合快速判断网络拥堵的来源连接，但不区分具体进程。",
-    helpOutput: `Usage: iftop [-hnbNBPblMJ] [-i interface] [-f filter code]
+        examples: [
+            { description: "实时显示各进程的网络流量", code: "nethogs" },
+            { description: "监控指定网卡", code: "nethogs eth0" },
+            { description: "设置刷新间隔为 2 秒", code: "nethogs -d 2" },
+            { description: "以 KB 为单位显示流量", code: "nethogs -k" },
+            { description: "查看帮助文档", code: "nethogs --help" }
+        ],
+        relatedCommands: ["iftop", "nload", "ss", "netstat"]
+    },
+    {
+        name: "iftop",
+        categoryId: "network",
+        syntax: "iftop [选项]",
+        simpleExplain: "实时显示网络带宽使用，就像实时监控道路的车流量",
+        detailExplain: "就像在高速公路旁竖了一块实时车流量显示屏——iftop 实时显示当前网络连接的带宽使用情况，哪个 IP 在和你通信、传了多少数据，一目了然。适合快速判断网络拥堵的来源。",
+        helpOutput: `Usage: iftop [-hnbNBPblMJ] [-i interface] [-f filter code]
        [-F net/mask] [-G net/mask6] [-s seconds]
 
 Options:
@@ -5638,21 +5609,21 @@ Options:
   -m LIMIT     带宽刻度上限
   -B           bytes 模式
   -o OLD        旧版 2s 平均`,
-    examples: [
-      { description: "实时显示 eth0 网卡的流量", code: "iftop -i eth0" },
-      { description: "不解析主机名（显示IP）", code: "iftop -n" },
-      { description: "按流量排序显示", code: "iftop -B" },
-      { description: "查看帮助文档", code: "iftop --help" }
-    ],
-    relatedCommands: ["nethogs", "nload", "ip", "ss"]
-  },
-  {
-    name: "ethtool",
-    categoryId: "network",
-    syntax: "ethtool [选项] 网卡",
-    simpleExplain: "查看和配置网卡参数",
-    detailExplain: "查看和配置网卡底层参数，包括链路速率、双工模式、自协商、唤醒功能、卸载特性等。常用参数：无参数显示当前配置，-s 修改速率/双工，-k 查看卸载特性，-K 修改卸载特性，-g 查看 ring 缓冲区大小，-i 显示驱动信息。用于排查网卡性能和链路协商问题。",
-    helpOutput: `Usage: ethtool [options] devname
+        examples: [
+            { description: "实时显示 eth0 网卡的流量", code: "iftop -i eth0" },
+            { description: "不解析主机名（显示IP）", code: "iftop -n" },
+            { description: "按流量排序显示", code: "iftop -B" },
+            { description: "查看帮助文档", code: "iftop --help" }
+        ],
+        relatedCommands: ["nethogs", "nload", "ip", "ss"]
+    },
+    {
+        name: "ethtool",
+        categoryId: "network",
+        syntax: "ethtool [选项] 网卡",
+        simpleExplain: "查看和修改网卡参数，就像调整汽车发动机的参数",
+        detailExplain: "就像汽车发烧友调整发动机的参数来优化性能——ethtool 让你查看和修改网卡的底层参数，比如速度、双工模式、唤醒功能等。排查网卡性能问题、调整链路速率时非常有用。",
+        helpOutput: `Usage: ethtool [options] devname
        ethtool [options] -s devname [speed N] [duplex half|full] [port tp|aui|bnc|mii|fibre]
        [autoneg on|off] [phyad N] [xcvr internal|external] [wol p|u|m|b|a|g|s|d...]
        [sopass x:x:x:x:x:x] [msglvl N]
@@ -5678,22 +5649,22 @@ Options:
   -n/-N         显示/设置 NFC 规则
   -l/-L         显示/设置通道数
   --show-priv-flags  显示私有标志`,
-    examples: [
-      { description: "查看网卡的基本信息", code: "ethtool eth0", output: "Speed: 1000Mb/s\nDuplex: Full\nAuto-negotiation: on" },
-      { description: "查看网卡驱动和固件信息", code: "ethtool -i eth0" },
-      { description: "查看网卡统计信息（丢包等）", code: "ethtool -S eth0" },
-      { description: "关闭网卡的自动协商并设为千兆全双工", code: "ethtool -s eth0 autoneg off speed 1000 duplex full" },
-      { description: "查看帮助文档", code: "ethtool --help" }
-    ],
-    relatedCommands: ["ip", "ifconfig", "mii-tool", "iwconfig"]
-  },
-  {
-    name: "mtr",
-    categoryId: "network",
-    syntax: "mtr [选项] 主机",
-    simpleExplain: "结合 ping 和 traceroute 的网络诊断工具",
-    detailExplain: "结合 ping 和 traceroute 的网络诊断工具，持续探测到目标的每一跳并实时显示延迟和丢包率。常用参数：-n 不解析主机名，-c 设置探测次数后退出，-r 报告模式，-u 使用 UDP，-T 使用 TCP，-i 设置间隔。比单独使用 traceroute 更直观，是定位网络丢包节点的常用工具。",
-    helpOutput: `Usage: mtr [-hvrwctglspniu46] [-m COUNT] [-s PACKETSIZE] [-t TIMEOUT]
+        examples: [
+            { description: "查看网卡的基本信息", code: "ethtool eth0", output: "Speed: 1000Mb/s\nDuplex: Full\nAuto-negotiation: on" },
+            { description: "查看网卡驱动和固件信息", code: "ethtool -i eth0" },
+            { description: "查看网卡统计信息（丢包等）", code: "ethtool -S eth0" },
+            { description: "关闭网卡的自动协商并设为千兆全双工", code: "ethtool -s eth0 autoneg off speed 1000 duplex full" },
+            { description: "查看帮助文档", code: "ethtool --help" }
+        ],
+        relatedCommands: ["ip", "ifconfig", "mii-tool", "iwconfig"]
+    },
+    {
+        name: "mtr",
+        categoryId: "network",
+        syntax: "mtr [选项] 主机",
+        simpleExplain: "结合ping和traceroute的网络诊断工具，就像同时用雷达和望远镜定位问题",
+        detailExplain: "就像同时用了雷达和望远镜——mtr 把 ping 和 traceroute 合二为一，持续不断地探测到目标主机的每一跳网络节点，实时显示每一跳的延迟和丢包率。比单独用 traceroute 更直观，是网络排障的常用工具。",
+        helpOutput: `Usage: mtr [-hvrwctglspniu46] [-m COUNT] [-s PACKETSIZE] [-t TIMEOUT]
       [-f FIRSTTTL] [-m MAXTTL] [--tcp] [--udp] [--sctp] [--port PORT]
       [--address ADDR] [--interface NAME] HOSTNAME
 
@@ -5720,22 +5691,22 @@ Options:
   -s            显示包大小
   -b            显示 IP 和主机名
   -z            显示 AS 号`,
-    examples: [
-      { description: "诊断到目标主机的网络路径", code: "mtr google.com" },
-      { description: "以报告模式输出（发送10个包）", code: "mtr -r -c 10 google.com" },
-      { description: "不解析主机名（显示IP）", code: "mtr -n google.com" },
-      { description: "使用 TCP 协议探测", code: "mtr --tcp google.com" },
-      { description: "查看帮助文档", code: "mtr --help" }
-    ],
-    relatedCommands: ["ping", "traceroute", "tracepath", "nmap"]
-  },
-  {
-    name: "iwconfig",
-    categoryId: "network",
-    syntax: "iwconfig [接口]",
-    simpleExplain: "配置无线网卡参数",
-    detailExplain: "配置无线网卡参数的工具，包括 SSID、工作模式（Managed/Ad-hoc/Master）、频段、速率、加密密钥等。常用参数：essid 指定网络名，mode 设置模式，key 设置 WEP 密钥，freq 指定频率，txpower 设置发射功率。在新系统中已逐步被 iw 替代，但仍常见于传统环境。",
-    helpOutput: `Usage: iwconfig [interface]
+        examples: [
+            { description: "诊断到目标主机的网络路径", code: "mtr google.com" },
+            { description: "以报告模式输出（发送10个包）", code: "mtr -r -c 10 google.com" },
+            { description: "不解析主机名（显示IP）", code: "mtr -n google.com" },
+            { description: "使用 TCP 协议探测", code: "mtr --tcp google.com" },
+            { description: "查看帮助文档", code: "mtr --help" }
+        ],
+        relatedCommands: ["ping", "traceroute", "tracepath", "nmap"]
+    },
+    {
+        name: "iwconfig",
+        categoryId: "network",
+        syntax: "iwconfig [接口]",
+        simpleExplain: "配置无线网卡，就像调节收音机的频道",
+        detailExplain: "就像调节收音机找到想听的频道——iwconfig 用来查看和配置无线网卡的参数，比如连接哪个 WiFi 网络、信号强度如何、工作模式是什么。是 Linux 下管理无线网络的基础工具。",
+        helpOutput: `Usage: iwconfig [interface]
        iwconfig interface [essid {NN|on|off}]
        [nwid {NN|on|off}]
        [freq N.NNNN[k|M|G]]
@@ -5765,22 +5736,22 @@ Options:
   txpower       设置发射功率
   key/enc       设置加密密钥
   power         设置电源管理`,
-    examples: [
-      { description: "查看所有无线网卡状态", code: "iwconfig" },
-      { description: "查看指定无线网卡信息", code: "iwconfig wlan0" },
-      { description: "连接到指定 WiFi 网络", code: "iwconfig wlan0 essid 'MyWiFi'" },
-      { description: "设置无线网卡为监听模式", code: "iwconfig wlan0 mode monitor" },
-      { description: "查看帮助文档", code: "iwconfig --help" }
-    ],
-    relatedCommands: ["ifconfig", "ip", "ethtool", "iw"]
-  },
-  {
-    name: "ab",
-    categoryId: "network",
-    syntax: "ab [选项] URL",
-    simpleExplain: "Apache HTTP 压力测试工具",
-    detailExplain: "Apache HTTP 服务器压力测试工具，模拟大量并发请求评估服务器性能。常用参数：-n 总请求数，-c 并发数，-t 持续时间，-k 启用 keep-alive，-H 添加请求头，-p 指定 POST 数据文件。输出包括每秒请求数（RPS）、平均响应时间、失败请求数等指标，适合快速基准测试。",
-    helpOutput: `Usage: ab [options] [http[s]://]hostname[:port]/path
+        examples: [
+            { description: "查看所有无线网卡状态", code: "iwconfig" },
+            { description: "查看指定无线网卡信息", code: "iwconfig wlan0" },
+            { description: "连接到指定 WiFi 网络", code: "iwconfig wlan0 essid 'MyWiFi'" },
+            { description: "设置无线网卡为监听模式", code: "iwconfig wlan0 mode monitor" },
+            { description: "查看帮助文档", code: "iwconfig --help" }
+        ],
+        relatedCommands: ["ifconfig", "ip", "ethtool", "iw"]
+    },
+    {
+        name: "ab",
+        categoryId: "network",
+        syntax: "ab [选项] URL",
+        simpleExplain: "Apache压力测试工具，就像模拟一大群人同时涌入商店",
+        detailExplain: "就像模拟一大群人同时涌入商店看看店员能不能忙得过来——ab 能模拟大量并发请求访问你的网站，测试服务器在高负载下的表现。看看响应时间多长、有多少请求失败，帮你评估服务器的承受能力。",
+        helpOutput: `Usage: ab [options] [http[s]://]hostname[:port]/path
 
 Options:
   -n requests     总请求数
@@ -5806,22 +5777,22 @@ Options:
   -V              显示版本
   -k              启用 HTTP keep-alive
   -h              显示帮助`,
-    examples: [
-      { description: "发送 1000 个请求，并发 100", code: "ab -n 1000 -c 100 http://example.com/" },
-      { description: "带自定义 Header 的压力测试", code: "ab -n 500 -c 50 -H 'Authorization: Bearer token' http://api.example.com/" },
-      { description: "测试 POST 请求", code: "ab -n 100 -c 10 -p data.json -T 'application/json' http://api.example.com/submit" },
-      { description: "设置请求超时时间", code: "ab -n 1000 -c 100 -t 30 http://example.com/" },
-      { description: "查看帮助文档", code: "ab --help" }
-    ],
-    relatedCommands: ["curl", "wget", "wrk", "siege"]
-  },
-  {
-    name: "speedtest-cli",
-    categoryId: "network",
-    syntax: "speedtest-cli",
-    simpleExplain: "测试网络上下行带宽速度",
-    detailExplain: "命令行网速测试工具，自动选择最近的 Speedtest 服务器测试下载速度、上传速度和网络延迟。常用参数：--simple 简洁输出，--server 指定服务器 ID，--list 列出可用服务器，--share 生成结果分享链接。适合在无图形界面的服务器上验证带宽是否达标。",
-    helpOutput: `Usage: speedtest-cli [options]
+        examples: [
+            { description: "发送 1000 个请求，并发 100", code: "ab -n 1000 -c 100 http://example.com/" },
+            { description: "带自定义 Header 的压力测试", code: "ab -n 500 -c 50 -H 'Authorization: Bearer token' http://api.example.com/" },
+            { description: "测试 POST 请求", code: "ab -n 100 -c 10 -p data.json -T 'application/json' http://api.example.com/submit" },
+            { description: "设置请求超时时间", code: "ab -n 1000 -c 100 -t 30 http://example.com/" },
+            { description: "查看帮助文档", code: "ab --help" }
+        ],
+        relatedCommands: ["curl", "wget", "wrk", "siege"]
+    },
+    {
+        name: "speedtest-cli",
+        categoryId: "network",
+        syntax: "speedtest-cli",
+        simpleExplain: "测试网络速度，就像用测速仪测试网络快慢",
+        detailExplain: "就像用测速仪测试你家的网速——speedtest-cli 自动选择最近的测速服务器，测试你的下载速度、上传速度和网络延迟。命令行版本适合在没有图形界面的服务器上测试网络性能。",
+        helpOutput: `Usage: speedtest-cli [options]
 
 Options:
   -h, --help            显示帮助
@@ -5843,24 +5814,23 @@ Options:
   --timeout TIMEOUT     HTTP 超时（秒）
   --secure              使用 HTTPS
   --version             显示版本`,
-    examples: [
-      { description: "运行网速测试", code: "speedtest-cli", output: "Download: 95.23 Mbit/s\nUpload: 48.67 Mbit/s" },
-      { description: "以字节为单位显示结果", code: "speedtest-cli --bytes" },
-      { description: "只测试下载速度", code: "speedtest-cli --no-upload" },
-      { description: "生成分享结果图片链接", code: "speedtest-cli --share" },
-      { description: "查看帮助文档", code: "speedtest-cli --help" }
-    ],
-    relatedCommands: ["ping", "curl", "wget", "iftop"]
-  },
-
-  // ==================== 权限管理 ====================
-  {
-    name: "chmod",
-    categoryId: "permission",
-    syntax: "chmod [选项] 模式 文件...",
-    simpleExplain: "修改文件或目录的访问权限",
-    detailExplain: "修改文件或目录的访问权限，权限分为读（r=4）、写（w=2）、执行（x=1），分别针对属主、属组和其他用户。支持符号模式（u+x、g-w、o=r）和数字模式（如 755）。常用参数：-R 递归修改子目录，-v 显示变更详情，+x 添加执行权限。常用于让脚本可执行或调整配置文件访问控制。",
-    helpOutput: `Usage: chmod [OPTION]... MODE[,MODE]... FILE...
+        examples: [
+            { description: "运行网速测试", code: "speedtest-cli", output: "Download: 95.23 Mbit/s\nUpload: 48.67 Mbit/s" },
+            { description: "以字节为单位显示结果", code: "speedtest-cli --bytes" },
+            { description: "只测试下载速度", code: "speedtest-cli --no-upload" },
+            { description: "生成分享结果图片链接", code: "speedtest-cli --share" },
+            { description: "查看帮助文档", code: "speedtest-cli --help" }
+        ],
+        relatedCommands: ["ping", "curl", "wget", "iftop"]
+    },
+    // ==================== 权限管理 ====================
+    {
+        name: "chmod",
+        categoryId: "permission",
+        syntax: "chmod [选项] 模式 文件...",
+        simpleExplain: "修改文件权限，就像设置谁能读、谁能写、谁能执行这个文件",
+        detailExplain: "就像给文件挂上一把锁，并且配了几把钥匙——读钥匙（r）、写钥匙（w）、执行钥匙（x），分别分配给文件的主人、同组成员和其他所有人。chmod 就是决定谁持有哪种钥匙的管理员。",
+        helpOutput: `Usage: chmod [OPTION]... MODE[,MODE]... FILE...
   or:  chmod [OPTION]... OCTAL-MODE FILE...
   or:  chmod [OPTION]... --reference=RFILE FILE...
 Change the mode of each FILE to MODE.
@@ -5884,23 +5854,23 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/chmod>
 or available locally via: info '(coreutils) chmod invocation'
 `,
-    examples: [
-      { description: "给脚本添加执行权限", code: "chmod +x run.sh" },
-      { description: "设置为 755 权限", code: "chmod 755 app.js" },
-      { description: "移除其他用户的写权限", code: "chmod o-w sensitive.txt" },
-      { description: "递归修改目录及内部所有文件的权限", code: "chmod -R 644 public_html/" },
-      { description: "查看帮助文档", code: "chmod --help" }
-    ],
-    relatedCommands: ["chown", "chgrp", "umask", "stat"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "chown",
-    categoryId: "permission",
-    syntax: "chown [选项] 用户[:组] 文件...",
-    simpleExplain: "更改文件或目录的所有者",
-    detailExplain: "修改文件或目录的属主和属组，语法为 chown owner:group file。常用参数：-R 递归修改子目录，-v 显示变更详情，--reference 参照其他文件的属主，-h 修改符号链接本身。只有 root 用户有权将文件转让给其他用户，普通用户只能改属于自己的文件到自己的组。",
-    helpOutput: `Usage: chown [OPTION]... [OWNER][:[GROUP]] FILE...
+        examples: [
+            { description: "给脚本添加执行权限", code: "chmod +x run.sh" },
+            { description: "设置为 755 权限", code: "chmod 755 app.js" },
+            { description: "移除其他用户的写权限", code: "chmod o-w sensitive.txt" },
+            { description: "递归修改目录及内部所有文件的权限", code: "chmod -R 644 public_html/" },
+            { description: "查看帮助文档", code: "chmod --help" }
+        ],
+        relatedCommands: ["chown", "chgrp", "umask", "stat"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "chown",
+        categoryId: "permission",
+        syntax: "chown [选项] 用户[:组] 文件...",
+        simpleExplain: "更改文件所有者，就像把房产证上的户主名字改一下",
+        detailExplain: "就像一套房子的产权变更——原来这套文件归张三所有，现在要过户给李四。chown 可以改变文件的主人和所属的用户组。只有 root 用户才有权把文件转给别人。",
+        helpOutput: `Usage: chown [OPTION]... [OWNER][:[GROUP]] FILE...
   or:  chown [OPTION]... --reference=RFILE FILE...
 Change the owner and/or group of each FILE to OWNER and/or GROUP.
 With --reference, change the owner and group of each FILE to those of RFILE.
@@ -5951,23 +5921,23 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/chown>
 or available locally via: info '(coreutils) chown invocation'
 `,
-    examples: [
-      { description: "将文件所有者改为 www-data 用户", code: "chown www-data:www-data /var/www/html/index.html" },
-      { description: "只改变所有者不变组", code: "chown alice project.tar.gz" },
-      { description: "递归改变目录下所有文件的所有者", code: "chown -R mysql:mysql /var/lib/mysql/" },
-      { description: "参照另一个文件设置所有权", code: "chown --reference=config.old config.new" },
-      { description: "查看帮助文档", code: "chown --help" }
-    ],
-    relatedCommands: ["chmod", "chgrp", "usermod", "stat"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "chgrp",
-    categoryId: "permission",
-    syntax: "chgrp [选项] 组名 文件...",
-    simpleExplain: "更改文件或目录的所属组",
-    detailExplain: "单独修改文件或目录的所属用户组，不影响属主。语法为 chgrp group file，支持组名或 GID。常用参数：-R 递归修改子目录，-v 显示变更详情，--reference 参照其他文件。功能相当于 chown :group，普通用户只能将文件改到自己所属的组。",
-    helpOutput: `Usage: chgrp [OPTION]... GROUP FILE...
+        examples: [
+            { description: "将文件所有者改为 www-data 用户", code: "chown www-data:www-data /var/www/html/index.html" },
+            { description: "只改变所有者不变组", code: "chown alice project.tar.gz" },
+            { description: "递归改变目录下所有文件的所有者", code: "chown -R mysql:mysql /var/lib/mysql/" },
+            { description: "参照另一个文件设置所有权", code: "chown --reference=config.old config.new" },
+            { description: "查看帮助文档", code: "chown --help" }
+        ],
+        relatedCommands: ["chmod", "chgrp", "usermod", "stat"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "chgrp",
+        categoryId: "permission",
+        syntax: "chgrp [选项] 组名 文件...",
+        simpleExplain: "更改文件所属组，就像把一个人从一个部门调到另一个部门",
+        detailExplain: "就像公司里的人事调动——这个人本来属于研发组，现在把他调到市场组。chgrp 只改变文件的所属组，不改变所有者。",
+        helpOutput: `Usage: chgrp [OPTION]... GROUP FILE...
   or:  chgrp [OPTION]... --reference=RFILE FILE...
 Change the group of each FILE to GROUP.
 With --reference, change the group of each FILE to that of RFILE.
@@ -6008,21 +5978,21 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/chgrp>
 or available locally via: info '(coreutils) chgrp invocation'
 `,
-    examples: [
-      { description: "将文件所属组改为 developers", code: "chgrp developers app.js" },
-      { description: "递归改变目录的所属组", code: "chgrp -R docker /opt/container/" },
-      { description: "使用 GID 来指定组", code: "chgrp 1001 shared_file.txt" },
-      { description: "查看帮助文档", code: "chgrp --help" }
-    ],
-    relatedCommands: ["chown", "chmod", "groups", "groupmod"]
-  },
-  {
-    name: "sudo",
-    categoryId: "permission",
-    syntax: "sudo [选项] 命令",
-    simpleExplain: "以管理员权限执行命令",
-    detailExplain: "让普通用户以 root 或其他用户身份执行单条命令，比直接用 root 登录更安全。常用 sudo command 执行需要特权的命令，-u user 指定以哪个用户身份执行，-k 清除缓存的密码，-l 列出当前用户可执行的特权命令。权限规则通过 /etc/sudoers 配置。",
-    helpOutput: `sudo - execute a command as another user
+        examples: [
+            { description: "将文件所属组改为 developers", code: "chgrp developers app.js" },
+            { description: "递归改变目录的所属组", code: "chgrp -R docker /opt/container/" },
+            { description: "使用 GID 来指定组", code: "chgrp 1001 shared_file.txt" },
+            { description: "查看帮助文档", code: "chgrp --help" }
+        ],
+        relatedCommands: ["chown", "chmod", "groups", "groupmod"]
+    },
+    {
+        name: "sudo",
+        categoryId: "permission",
+        syntax: "sudo [选项] 命令",
+        simpleExplain: "以超级管理员身份执行命令，就像出示证件获得临时特权",
+        detailExplain: "就像你需要进入一个只有经理才能进的房间，于是向保安出示你的临时通行证——sudo 让普通用户暂时借用 root 的权限来执行一条命令。比直接用 root 登录更安全。",
+        helpOutput: `sudo - execute a command as another user
 
 usage: sudo -h | -K | -k | -V
 usage: sudo -v [-ABkNnS] [-g group] [-h host] [-p prompt] [-u user]
@@ -6072,22 +6042,22 @@ Options:
   -u, --user=user               run command (or edit file) as specified user
                                 name or ID
   -V, --version                `,
-    examples: [
-      { description: "以 root 权限更新系统软件包", code: "sudo apt update" },
-      { description: "以 root 身份切换到指定用户执行命令", code: "sudo -u postgres pg_dump database" },
-      { description: "以 root 身份打开一个交互式 shell", code: "sudo -i" },
-      { description: "查看当前用户的 sudo 权限", code: "sudo -l" },
-      { description: "查看帮助文档", code: "sudo --help" }
-    ],
-    relatedCommands: ["su", "doas", "pkexec", "run0"]
-  },
-  {
-    name: "su",
-    categoryId: "permission",
-    syntax: "su [选项] [用户]",
-    simpleExplain: "切换当前登录用户身份",
-    detailExplain: "切换当前登录用户身份到指定用户（默认切换到 root），需要目标用户的密码。常用 su - username 完整切换并加载目标用户的环境变量和工作目录，-c command 以目标用户身份执行一条命令后返回。与 sudo 不同，su 是持续切换身份而非单条命令提权。",
-    helpOutput: `
+        examples: [
+            { description: "以 root 权限更新系统软件包", code: "sudo apt update" },
+            { description: "以 root 身份切换到指定用户执行命令", code: "sudo -u postgres pg_dump database" },
+            { description: "以 root 身份打开一个交互式 shell", code: "sudo -i" },
+            { description: "查看当前用户的 sudo 权限", code: "sudo -l" },
+            { description: "查看帮助文档", code: "sudo --help" }
+        ],
+        relatedCommands: ["su", "doas", "pkexec", "run0"]
+    },
+    {
+        name: "su",
+        categoryId: "permission",
+        syntax: "su [选项] [用户]",
+        simpleExplain: "切换用户身份，就像换了一身衣服变成了另一个人",
+        detailExplain: "就像你脱下自己的衣服换上了别人的全套装备——从这一刻起，你就是那个用户了，拥有他的所有权限和环境变量。和 sudo 不同，su 是真正「变成」那个人。",
+        helpOutput: `
 Usage:
  su [options] [-] [<user> [<argument>...]]
 
@@ -6114,22 +6084,22 @@ Options:
 
 For more details see su(1).
 `,
-    examples: [
-      { description: "切换到 root 用户", code: "su -" },
-      { description: "切换到指定用户", code: "su - postgres" },
-      { description: "以指定用户身份执行一条命令", code: "su -c 'whoami' mysql" },
-      { description: "切换用户但不加载环境变量", code: "su testuser" },
-      { description: "查看帮助文档", code: "su --help" }
-    ],
-    relatedCommands: ["sudo", "login", "newgrp", "runuser"]
-  },
-  {
-    name: "umask",
-    categoryId: "permission",
-    syntax: "umask [模式]",
-    simpleExplain: "设置新建文件的默认权限掩码",
-    detailExplain: "设置或显示新建文件和目录的默认权限掩码，采用减法机制从最大权限中扣除掩码位。例如掩码 022 表示新建文件权限为 644、目录为 755。直接执行 umask 查看当前值，umask 022 设置新值，-S 以符号形式显示。常用于统一团队新文件的默认权限。",
-    helpOutput: `Usage: umask [-p] [-S] [mode]
+        examples: [
+            { description: "切换到 root 用户", code: "su -" },
+            { description: "切换到指定用户", code: "su - postgres" },
+            { description: "以指定用户身份执行一条命令", code: "su -c 'whoami' mysql" },
+            { description: "切换用户但不加载环境变量", code: "su testuser" },
+            { description: "查看帮助文档", code: "su --help" }
+        ],
+        relatedCommands: ["sudo", "login", "newgrp", "runuser"]
+    },
+    {
+        name: "umask",
+        categoryId: "permission",
+        syntax: "umask [模式]",
+        simpleExplain: "设置新建文件的默认权限掩码，就像规定新员工的初始权限级别",
+        detailExplain: "就像公司规定新入职员工的初始权限级别——umask 决定了你创建新文件和新目录时，系统默认会给它们什么样的权限。它是一个「减法」机制，从最大权限中扣除掩码位。",
+        helpOutput: `Usage: umask [-p] [-S] [mode]
 
 umask 是 shell 内建命令，设置文件创建时的默认权限掩码。
 
@@ -6139,57 +6109,57 @@ Options:
 
 参数 mode 为八进制数字（如 022）或符号形式（如 u=rwx,g=rx,o=rx）。
 不带参数时显示当前 umask 值。`,
-    examples: [
-      { description: "查看当前的 umask 设置", code: "umask", output: "0022" },
-      { description: "设置新建文件默认权限为 600", code: "umask 077" },
-      { description: "临时设置 umask 并创建文件测试", code: "umask 077; touch secret.txt" },
-      { description: "用符号方式设置 umask", code: "umask u=rwx,g=rx,o=" },
-      { description: "查看帮助文档", code: "umask --help" }
-    ],
-    relatedCommands: ["chmod", "chown", "install", "mknod"]
-  },
-  {
-    name: "chattr",
-    categoryId: "permission",
-    syntax: "chattr [选项] 模式 文件...",
-    simpleExplain: "设置文件的特殊属性（如防删）",
-    detailExplain: "修改文件或目录的扩展属性，提供超越传统权限的保护。常用 +i 设置不可变属性（即使 root 也无法修改、删除、重命名或建立链接），+a 设置只追加属性（只能向文件追加内容），-i/-a 移除对应属性。常用于保护关键系统文件防误删或防篡改。",
-    helpOutput: `Usage: chattr [-RVf] [-+=aAcCdDeijPsStTuFx] [-p project] [-v version] files...
+        examples: [
+            { description: "查看当前的 umask 设置", code: "umask", output: "0022" },
+            { description: "设置新建文件默认权限为 600", code: "umask 077" },
+            { description: "临时设置 umask 并创建文件测试", code: "umask 077; touch secret.txt" },
+            { description: "用符号方式设置 umask", code: "umask u=rwx,g=rx,o=" },
+            { description: "查看帮助文档", code: "umask --help" }
+        ],
+        relatedCommands: ["chmod", "chown", "install", "mknod"]
+    },
+    {
+        name: "chattr",
+        categoryId: "permission",
+        syntax: "chattr [选项] 模式 文件...",
+        simpleExplain: "设置文件特殊属性，就像给文件加上防篡改封条",
+        detailExplain: "就像给重要文件贴上一层特殊的防篡改封条——即使你是 root 用户也无法轻易修改或删除它。最常用的属性是 +i（immutable，不可变），加了之后连 root 都不能改、不能删。",
+        helpOutput: `Usage: chattr [-RVf] [-+=aAcCdDeijPsStTuFx] [-p project] [-v version] files...
 `,
-    examples: [
-      { description: "设置文件为不可变", code: "chattr +i /etc/resolv.conf" },
-      { description: "移除不可变属性", code: "chattr -i /etc/resolv.conf" },
-      { description: "设置只允许追加内容（适合日志文件）", code: "chattr +a /var/log/important.log" },
-      { description: "递归设置目录属性", code: "chattr -R +i /critical/system/files/" },
-      { description: "查看帮助文档", code: "chattr --help" }
-    ],
-    relatedCommands: ["lsattr", "chmod", "chown", "setfacl"]
-  },
-  {
-    name: "lsattr",
-    categoryId: "permission",
-    syntax: "lsattr [选项] 文件...",
-    simpleExplain: "查看文件的特殊属性",
-    detailExplain: "显示文件或目录的扩展属性，是 chattr 的配套查看工具。输出中 i 表示不可变、a 表示只追加、e 表示区段格式等。常用 lsattr file 查看单个文件属性，-R 递归查看目录下所有文件，-a 显示包括隐藏文件在内的所有文件。",
-    helpOutput: `lsattr: invalid option -- '-'
+        examples: [
+            { description: "设置文件为不可变", code: "chattr +i /etc/resolv.conf" },
+            { description: "移除不可变属性", code: "chattr -i /etc/resolv.conf" },
+            { description: "设置只允许追加内容（适合日志文件）", code: "chattr +a /var/log/important.log" },
+            { description: "递归设置目录属性", code: "chattr -R +i /critical/system/files/" },
+            { description: "查看帮助文档", code: "chattr --help" }
+        ],
+        relatedCommands: ["lsattr", "chmod", "chown", "setfacl"]
+    },
+    {
+        name: "lsattr",
+        categoryId: "permission",
+        syntax: "lsattr [选项] 文件...",
+        simpleExplain: "查看文件的特殊属性，就像查看文件上的防伪标签",
+        detailExplain: "就像查看文件上贴了哪些特殊标签——是不是被设成了不可变（i）、是否只能追加（a）等。lsattr 是 chattr 的配套查看工具。",
+        helpOutput: `lsattr: invalid option -- '-'
 Usage: lsattr [-RVadlpv] [files...]
 `,
-    examples: [
-      { description: "查看文件的特殊属性", code: "lsattr /etc/passwd" },
-      { description: "递归显示目录下所有文件的属性", code: "lsattr -R /boot/" },
-      { description: "以长格式显示", code: "lsattr -v /etc/shadow" },
-      { description: "只显示具有指定属性的文件", code: "lsattr -a" },
-      { description: "查看帮助文档", code: "lsattr --help" }
-    ],
-    relatedCommands: ["chattr", "stat", "getfacl", "file"]
-  },
-  {
-    name: "getfacl",
-    categoryId: "permission",
-    syntax: "getfacl [选项] 文件...",
-    simpleExplain: "查看文件的 ACL 访问控制列表",
-    detailExplain: "显示文件或目录的访问控制列表（ACL），ACL 比传统 owner/group/other 权限更细粒度，可对指定用户或组单独设置权限。常用 getfacl file 查看详细权限条目，-R 递归查看目录，-c 省略注释头。常用于审计复杂权限配置。",
-    helpOutput: `Usage: getfacl [-dRLPvh] file ...
+        examples: [
+            { description: "查看文件的特殊属性", code: "lsattr /etc/passwd" },
+            { description: "递归显示目录下所有文件的属性", code: "lsattr -R /boot/" },
+            { description: "以长格式显示", code: "lsattr -v /etc/shadow" },
+            { description: "只显示具有指定属性的文件", code: "lsattr -a" },
+            { description: "查看帮助文档", code: "lsattr --help" }
+        ],
+        relatedCommands: ["chattr", "stat", "getfacl", "file"]
+    },
+    {
+        name: "getfacl",
+        categoryId: "permission",
+        syntax: "getfacl [选项] 文件...",
+        simpleExplain: "查看文件的 ACL 详细权限，就像查看精细化的访客权限清单",
+        detailExplain: "就像传统的权限系统太粗糙了，ACL（访问控制列表）就像是更精细的权限管理系统——可以为任意指定的用户或用户组单独设置权限。getfacl 就是查看这份详细权限清单的工具。",
+        helpOutput: `Usage: getfacl [-dRLPvh] file ...
 
 Options:
   -d, --default       显示默认 ACL
@@ -6204,22 +6174,22 @@ Options:
   --absolute-names    不去除前导斜杠
   -v, --version       显示版本
   -h, --help          显示帮助`,
-    examples: [
-      { description: "查看文件的 ACL 权限详情", code: "getfacl project.doc" },
-      { description: "递归查看目录 ACL", code: "getfacl -R shared_dir/" },
-      { description: "不显示注释头信息", code: "getfacl -q /etc/config" },
-      { description: "只显示有效的 ACL 条目", code: "getfacl -e sensitive_file" },
-      { description: "查看帮助文档", code: "getfacl --help" }
-    ],
-    relatedCommands: ["setfacl", "chmod", "chacl", "lsattr"]
-  },
-  {
-    name: "setfacl",
-    categoryId: "permission",
-    syntax: "setfacl [选项] 规则 文件...",
-    simpleExplain: "设置文件的 ACL 访问控制权限",
-    detailExplain: "设置或修改文件和目录的 ACL 权限，实现细粒度访问控制。常用 -m u:bob:rw 为用户 bob 设置读写权限，-m g:team:rx 为组设置权限，-x 删除指定条目，-b 清除所有 ACL，-R 递归应用，--set 完全替换 ACL。常用于多用户协作场景下的精确授权。",
-    helpOutput: `Usage: setfacl [-bkndRLPvh] [{-m|-x} acl_spec] [{-M|-X} acl_file] file ...
+        examples: [
+            { description: "查看文件的 ACL 权限详情", code: "getfacl project.doc" },
+            { description: "递归查看目录 ACL", code: "getfacl -R shared_dir/" },
+            { description: "不显示注释头信息", code: "getfacl -q /etc/config" },
+            { description: "只显示有效的 ACL 条目", code: "getfacl -e sensitive_file" },
+            { description: "查看帮助文档", code: "getfacl --help" }
+        ],
+        relatedCommands: ["setfacl", "chmod", "chacl", "lsattr"]
+    },
+    {
+        name: "setfacl",
+        categoryId: "permission",
+        syntax: "setfacl [选项] 规则 文件...",
+        simpleExplain: "设置文件的 ACL 精细权限，就像为特定人员定制专属通行证",
+        detailExplain: "就像传统的权限只有三把钥匙太粗放了，setfacl 可以为任意个人或小组单独配一把钥匙——比如「bob 这个用户可以读这个文件但不能写」。这就是 ACL 的威力，比传统权限灵活得多。",
+        helpOutput: `Usage: setfacl [-bkndRLPvh] [{-m|-x} acl_spec] [{-M|-X} acl_file] file ...
 
 Options:
   -m, --modify=acl        修改 ACL
@@ -6238,22 +6208,22 @@ Options:
   -P, --physical          不跟随符号链接
   -v, --version           显示版本
   -h, --help              显示帮助`,
-    examples: [
-      { description: "为用户 bob 单独授予读权限", code: "setfacl -m u:bob:r report.pdf" },
-      { description: "为 test 组授予读写权限", code: "setfacl -m g:test:rw shared_data/" },
-      { description: "递归设置目录的 ACL", code: "setfacl -R -m g:devteam:rwx /opt/project/" },
-      { description: "删除指定用户的 ACL 条目", code: "setfacl -x u:bob report.pdf" },
-      { description: "查看帮助文档", code: "setfacl --help" }
-    ],
-    relatedCommands: ["getfacl", "chmod", "chacl", "chown"]
-  },
-  {
-    name: "visudo",
-    categoryId: "permission",
-    syntax: "visudo",
-    simpleExplain: "安全编辑 sudoers 配置文件",
-    detailExplain: "专门用于安全编辑 /etc/sudoers 文件的工具，保存前自动进行语法检查，防止配置错误导致 sudo 失效。应始终使用 visudo 而非普通编辑器修改 sudoers，-f file 可指定其他 sudoers 文件，-c 仅检查语法不保存。常用于配置用户或组的提权规则。",
-    helpOutput: `visudo - safely edit the sudoers file
+        examples: [
+            { description: "为用户 bob 单独授予读权限", code: "setfacl -m u:bob:r report.pdf" },
+            { description: "为 test 组授予读写权限", code: "setfacl -m g:test:rw shared_data/" },
+            { description: "递归设置目录的 ACL", code: "setfacl -R -m g:devteam:rwx /opt/project/" },
+            { description: "删除指定用户的 ACL 条目", code: "setfacl -x u:bob report.pdf" },
+            { description: "查看帮助文档", code: "setfacl --help" }
+        ],
+        relatedCommands: ["getfacl", "chmod", "chacl", "chown"]
+    },
+    {
+        name: "visudo",
+        categoryId: "permission",
+        syntax: "visudo",
+        simpleExplain: "安全编辑sudoers配置文件，就像由专业人员来修改保险箱密码",
+        detailExplain: "就像由专业人员来修改保险箱密码——visudo 是编辑 /etc/sudoers 文件的专用工具，它会在保存前自动检查语法，防止你写错导致 sudo 失效。千万别用普通编辑器直接改 sudoers 文件！",
+        helpOutput: `visudo - safely edit the sudoers file
 
 usage: visudo [-chqsV] [[-f] sudoers ]
 
@@ -6267,22 +6237,22 @@ Options:
   -V, --version            display version information and exit
 
 `,
-    examples: [
-      { description: "编辑 sudoers 文件", code: "sudo visudo" },
-      { description: "检查 sudoers 文件语法", code: "sudo visudo -c" },
-      { description: "使用指定编辑器打开", code: "sudo EDITOR=vim visudo" },
-      { description: "编辑指定的 sudoers 片段文件", code: "sudo visudo -f /etc/sudoers.d/custom" },
-      { description: "查看帮助文档", code: "visudo --help" }
-    ],
-    relatedCommands: ["sudo", "su", "chmod", "chown"]
-  },
-  {
-    name: "capsh",
-    categoryId: "permission",
-    syntax: "capsh [选项]",
-    simpleExplain: "管理 Linux 进程能力（capabilities）",
-    detailExplain: "查看和操作 Linux capabilities（能力），将 root 权限拆分为数十种细粒度权限（如 CAP_NET_BIND_SERVICE 绑定特权端口、CAP_SYS_ADMIN 系统管理）。常用 --print 显示当前进程能力集，--drop=CAP_xxx 移除指定能力，--caps 设置能力。常用于容器和服务最小权限配置。",
-    helpOutput: `usage: capsh [args ...]
+        examples: [
+            { description: "编辑 sudoers 文件", code: "sudo visudo" },
+            { description: "检查 sudoers 文件语法", code: "sudo visudo -c" },
+            { description: "使用指定编辑器打开", code: "sudo EDITOR=vim visudo" },
+            { description: "编辑指定的 sudoers 片段文件", code: "sudo visudo -f /etc/sudoers.d/custom" },
+            { description: "查看帮助文档", code: "visudo --help" }
+        ],
+        relatedCommands: ["sudo", "su", "chmod", "chown"]
+    },
+    {
+        name: "capsh",
+        categoryId: "permission",
+        syntax: "capsh [选项]",
+        simpleExplain: "Linux能力机制管理，就像给不同员工发放不同级别的门禁卡",
+        detailExplain: "就像给不同员工发放不同级别的门禁卡——Linux 能力（capabilities）机制把 root 权限拆分成几十种细粒度权限，capsh 可以查看和操作这些能力。比如只给一个程序网络权限，而不给它全部 root 权限。",
+        helpOutput: `usage: capsh [args ...]
   --addamb=xxx   add xxx,... capabilities to ambient set
   --cap-uid=<n>  use libcap cap_setuid() to change uid
   --caps=xxx     set caps as per cap_from_text()
@@ -6331,22 +6301,22 @@ Options:
   -+             cap_launch /bin/bash with remaining args
                  (without -- [capsh] will simply exit(0))
 `,
-    examples: [
-      { description: "查看当前进程的所有能力", code: "capsh --print" },
-      { description: "以指定能力运行命令", code: "sudo capsh --caps='cap_net_raw+eip' -- -c 'ping 8.8.8.8'" },
-      { description: "丢弃所有能力后运行 Shell", code: "capsh --drop=all -- -c 'id'" },
-      { description: "查看支持的所有能力", code: "capsh --supports" },
-      { description: "查看帮助文档", code: "capsh --help" }
-    ],
-    relatedCommands: ["sudo", "chmod", "setfacl", "selinux"]
-  },
-  {
-    name: "semanage",
-    categoryId: "permission",
-    syntax: "semanage [选项]",
-    simpleExplain: "管理 SELinux 策略配置",
-    detailExplain: "配置 SELinux 策略的工具，用于管理文件安全上下文、端口标签、用户角色、登录映射等。常用子命令：fcontext 管理文件上下文规则，port 管理端口标签，login 管理用户映射，user 管理角色，-a 添加、-m 修改、-d 删除、-l 列出。SELinux 拒绝访问时常用此工具放行。",
-    helpOutput: `Usage: semanage {login|user|port|interface|fcontext|translation|boolean|...} ...
+        examples: [
+            { description: "查看当前进程的所有能力", code: "capsh --print" },
+            { description: "以指定能力运行命令", code: "sudo capsh --caps='cap_net_raw+eip' -- -c 'ping 8.8.8.8'" },
+            { description: "丢弃所有能力后运行 Shell", code: "capsh --drop=all -- -c 'id'" },
+            { description: "查看支持的所有能力", code: "capsh --supports" },
+            { description: "查看帮助文档", code: "capsh --help" }
+        ],
+        relatedCommands: ["sudo", "chmod", "setfacl", "selinux"]
+    },
+    {
+        name: "semanage",
+        categoryId: "permission",
+        syntax: "semanage [选项]",
+        simpleExplain: "SELinux策略管理，就像管理一个严格安保系统的通行规则",
+        detailExplain: "就像管理一个严格安保系统的通行规则——semanage 用来配置 SELinux 策略的细节，比如给文件设置安全上下文、管理端口标签、设置用户角色等。SELinux 开启后，很多服务访问被拒时就需要用 semanage 来放行。",
+        helpOutput: `Usage: semanage {login|user|port|interface|fcontext|translation|boolean|...} ...
 
 Subcommands:
   login       管理 SELinux 用户映射
@@ -6375,24 +6345,23 @@ Common options:
   -n, --noreload   不重新加载策略
   -S, --store      指定策略存储
   -h, --help       显示帮助`,
-    examples: [
-      { description: "查看所有端口策略", code: "sudo semanage port -l" },
-      { description: "给 HTTP 服务添加自定义端口", code: "sudo semanage port -a -t http_port_t -p tcp 8080" },
-      { description: "查看文件上下文策略", code: "sudo semanage fcontext -l" },
-      { description: "删除自定义端口规则", code: "sudo semanage port -d -t http_port_t -p tcp 8080" },
-      { description: "查看帮助文档", code: "semanage --help" }
-    ],
-    relatedCommands: ["selinux", "getenforce", "chcon", "restorecon"]
-  },
-
-  // ==================== 系统信息 ====================
-  {
-    name: "uname",
-    categoryId: "system",
-    syntax: "uname [选项]",
-    simpleExplain: "显示系统内核和主机信息",
-    detailExplain: "显示系统内核和操作系统信息。常用 -a 显示全部信息（内核名、主机名、内核版本、编译信息、硬件架构等），-r 仅显示内核版本号，-m 显示硬件架构（如 x86_64），-n 显示主机名，-s 显示内核名。常用于排查驱动或软件兼容性问题。",
-    helpOutput: `Usage: uname [OPTION]...
+        examples: [
+            { description: "查看所有端口策略", code: "sudo semanage port -l" },
+            { description: "给 HTTP 服务添加自定义端口", code: "sudo semanage port -a -t http_port_t -p tcp 8080" },
+            { description: "查看文件上下文策略", code: "sudo semanage fcontext -l" },
+            { description: "删除自定义端口规则", code: "sudo semanage port -d -t http_port_t -p tcp 8080" },
+            { description: "查看帮助文档", code: "semanage --help" }
+        ],
+        relatedCommands: ["selinux", "getenforce", "chcon", "restorecon"]
+    },
+    // ==================== 系统信息 ====================
+    {
+        name: "uname",
+        categoryId: "system",
+        syntax: "uname [选项]",
+        simpleExplain: "显示系统基本信息，就像查看电脑的「身份证」",
+        detailExplain: "就像查看电脑的出生证明和身份证——操作系统叫什么名字、内核版本是多少、主机名叫什么、CPU 架构是什么。uname 是了解「这台机器是什么」的最基本命令。",
+        helpOutput: `Usage: uname [OPTION]...
 Print certain system information.  With no OPTION, same as -s.
 
   -a, --all                print all information, in the following order,
@@ -6413,22 +6382,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/uname>
 or available locally via: info '(coreutils) uname invocation'
 `,
-    examples: [
-      { description: "显示所有系统信息", code: "uname -a" },
-      { description: "只显示内核名称", code: "uname -s", output: "Linux" },
-      { description: "显示内核版本号", code: "uname -r" },
-      { description: "显示处理器架构", code: "uname -m", output: "x86_64" },
-      { description: "查看帮助文档", code: "uname --help" }
-    ],
-    relatedCommands: ["hostname", "lsb_release", "arch", "cat /proc/version"]
-  },
-  {
-    name: "hostname",
-    categoryId: "system",
-    syntax: "hostname [选项] [名称]",
-    simpleExplain: "查看或设置系统主机名",
-    detailExplain: "显示或设置系统主机名。直接执行显示当前主机名，hostname newname 临时设置主机名（重启失效），-f 显示 FQDN 完整域名，-I 显示所有 IP 地址，-d 显示域名。永久修改需写入 /etc/hostname 或使用 hostnamectl set-hostname。常用于网络配置和集群节点标识。",
-    helpOutput: `Usage: hostname [-b] {hostname|-F file}         set host name (from file)
+        examples: [
+            { description: "显示所有系统信息", code: "uname -a" },
+            { description: "只显示内核名称", code: "uname -s", output: "Linux" },
+            { description: "显示内核版本号", code: "uname -r" },
+            { description: "显示处理器架构", code: "uname -m", output: "x86_64" },
+            { description: "查看帮助文档", code: "uname --help" }
+        ],
+        relatedCommands: ["hostname", "lsb_release", "arch", "cat /proc/version"]
+    },
+    {
+        name: "hostname",
+        categoryId: "system",
+        syntax: "hostname [选项] [名称]",
+        simpleExplain: "查看或设置主机名，就像查看或修改电脑的昵称",
+        detailExplain: "就像给电脑取个名字——方便在网络中称呼这台机器。hostname 显示或修改当前系统的主机名，让别的电脑可以通过这个名字找到它。",
+        helpOutput: `Usage: hostname [-b] {hostname|-F file}         set host name (from file)
        hostname [-a|-A|-d|-f|-i|-I|-s|-y]       display formatted name
        hostname                                 display host name
 
@@ -6462,22 +6431,22 @@ Description:
    FQDN (Fully Qualified Domain Name) and the DNS domain name (which is
    part of the FQDN) in the /etc/hosts file.
 `,
-    examples: [
-      { description: "查看当前主机名", code: "hostname", output: "my-server-01" },
-      { description: "查看完整域名", code: "hostname -f" },
-      { description: "查看主机所有 IP 地址", code: "hostname -I" },
-      { description: "临时修改主机名", code: "hostname new-name" },
-      { description: "查看帮助文档", code: "hostname --help" }
-    ],
-    relatedCommands: ["uname", "hostnamectl", "dnsdomainname", "nisdomainname"]
-  },
-  {
-    name: "uptime",
-    categoryId: "system",
-    syntax: "uptime [选项]",
-    simpleExplain: "查看系统运行时间和负载",
-    detailExplain: "显示系统运行时长、当前登录用户数和系统平均负载。输出包含当前时间、已连续运行时间、登录用户数、过去 1/5/15 分钟的平均负载。负载值超过 CPU 核心数通常表示系统过载。常用于快速判断服务器运行状态和负载状况。",
-    helpOutput: `
+        examples: [
+            { description: "查看当前主机名", code: "hostname", output: "my-server-01" },
+            { description: "查看完整域名", code: "hostname -f" },
+            { description: "查看主机所有 IP 地址", code: "hostname -I" },
+            { description: "临时修改主机名", code: "hostname new-name" },
+            { description: "查看帮助文档", code: "hostname --help" }
+        ],
+        relatedCommands: ["uname", "hostnamectl", "dnsdomainname", "nisdomainname"]
+    },
+    {
+        name: "uptime",
+        categoryId: "system",
+        syntax: "uptime [选项]",
+        simpleExplain: "查看系统运行时间和负载，就像查看机器连续工作了多久累不累",
+        detailExplain: "就像查看一台机器已经连续运转了多久、目前负载怎么样——uptime 告诉你系统从上次启动到现在过了多长时间、当前有多少用户登录、过去 1/5/15 分钟的平均负载是多少。",
+        helpOutput: `
 Usage:
  uptime [options]
 
@@ -6489,21 +6458,21 @@ Options:
 
 For more details see uptime(1).
 `,
-    examples: [
-      { description: "显示系统运行时间和负载", code: "uptime" },
-      { description: "只显示自启动以来的秒数", code: "uptime -s" },
-      { description: "以简洁格式显示", code: "uptime -p" },
-      { description: "查看帮助文档", code: "uptime --help" }
-    ],
-    relatedCommands: ["w", "top", "free", "who"]
-  },
-  {
-    name: "free",
-    categoryId: "system",
-    syntax: "free [选项]",
-    simpleExplain: "查看内存和交换空间使用情况",
-    detailExplain: "显示系统内存和 swap 交换分区使用情况。默认以 KB 为单位，-h 以人类可读格式显示（自动转 MB/GB），-m/-g 指定单位，-s N 每 N 秒刷新一次，-t 显示合计。输出包含 total/used/free/shared/buff/cache/available，available 是实际可用内存。常用于排查内存不足问题。",
-    helpOutput: `
+        examples: [
+            { description: "显示系统运行时间和负载", code: "uptime" },
+            { description: "只显示自启动以来的秒数", code: "uptime -s" },
+            { description: "以简洁格式显示", code: "uptime -p" },
+            { description: "查看帮助文档", code: "uptime --help" }
+        ],
+        relatedCommands: ["w", "top", "free", "who"]
+    },
+    {
+        name: "free",
+        categoryId: "system",
+        syntax: "free [选项]",
+        simpleExplain: "查看内存使用情况，就像查看电脑还剩多少「脑容量」可用",
+        detailExplain: "就像查看你的大脑（内存 RAM）用了多少、还剩多少——总共有多少 GB 内存、已用多少、空闲多少、有多少被缓存占用了。经常用 free 看看内存健康状况是个好习惯。",
+        helpOutput: `
 Usage:
  free [options]
 
@@ -6534,22 +6503,22 @@ Options:
 
 For more details see free(1).
 `,
-    examples: [
-      { description: "以人类友好的格式显示内存信息", code: "free -h" },
-      { description: "以 MB 为单位显示", code: "free -m" },
-      { description: "每秒刷新显示", code: "free -s 2" },
-      { description: "显示总汇总信息", code: "free -t" },
-      { description: "查看帮助文档", code: "free --help" }
-    ],
-    relatedCommands: ["top", "vmstat", "ps", "pmap"]
-  },
-  {
-    name: "df",
-    categoryId: "system",
-    syntax: "df [选项]",
-    simpleExplain: "查看文件系统磁盘空间使用",
-    detailExplain: "显示文件系统的磁盘空间使用情况。默认显示所有挂载文件系统，-h 以人类可读格式显示，-T 显示文件系统类型，-i 显示 inode 使用情况，-t type 过滤指定文件系统类型，-x type 排除指定类型。常用于排查磁盘空间不足和 inode 耗尽问题。",
-    helpOutput: `Usage: df [OPTION]... [FILE]...
+        examples: [
+            { description: "以人类友好的格式显示内存信息", code: "free -h" },
+            { description: "以 MB 为单位显示", code: "free -m" },
+            { description: "每秒刷新显示", code: "free -s 2" },
+            { description: "显示总汇总信息", code: "free -t" },
+            { description: "查看帮助文档", code: "free --help" }
+        ],
+        relatedCommands: ["top", "vmstat", "ps", "pmap"]
+    },
+    {
+        name: "df",
+        categoryId: "system",
+        syntax: "df [选项]",
+        simpleExplain: "查看磁盘空间使用情况，就像查看仓库还剩多少货架空间",
+        detailExplain: "就像仓库管理员查看每个库房的货架使用率——总空间多大、已经用了多少、还剩多少百分比。当磁盘快满的时候 df 会发出警告。",
+        helpOutput: `Usage: df [OPTION]... [FILE]...
 Show information about the file system on which each FILE resides,
 or all file systems by default.
 
@@ -6594,22 +6563,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/df>
 or available locally via: info '(coreutils) df invocation'
 `,
-    examples: [
-      { description: "以人类易读格式显示磁盘使用情况", code: "df -h" },
-      { description: "显示 inode 使用情况", code: "df -hi" },
-      { description: "只显示本地文件系统", code: "df -hl" },
-      { description: "指定显示某种文件系统类型", code: "df -t ext4" },
-      { description: "查看帮助文档", code: "df --help" }
-    ],
-    relatedCommands: ["du", "lsblk", "fdisk", "mount"]
-  },
-  {
-    name: "du",
-    categoryId: "system",
-    syntax: "du [选项] [目录/文件]",
-    simpleExplain: "查看目录或文件的磁盘占用",
-    detailExplain: "统计文件或目录占用的磁盘空间。默认以 KB 为单位递归统计，-h 人类可读格式，-s 仅显示总计不展开子目录，-d N 或 --max-depth=N 限制递归深度，-a 显示所有文件而不仅是目录，--exclude 排除匹配模式。常用于定位占用空间大的目录。",
-    helpOutput: `Usage: du [OPTION]... [FILE]...
+        examples: [
+            { description: "以人类易读格式显示磁盘使用情况", code: "df -h" },
+            { description: "显示 inode 使用情况", code: "df -hi" },
+            { description: "只显示本地文件系统", code: "df -hl" },
+            { description: "指定显示某种文件系统类型", code: "df -t ext4" },
+            { description: "查看帮助文档", code: "df --help" }
+        ],
+        relatedCommands: ["du", "lsblk", "fdisk", "mount"]
+    },
+    {
+        name: "du",
+        categoryId: "system",
+        syntax: "du [选项] [目录/文件]",
+        simpleExplain: "查看目录或文件占用磁盘大小，就像用秤称每个文件夹有多重",
+        detailExplain: "就像用电子秤一个个称量文件夹的重量——du 告诉你每个目录实际占用了多少磁盘空间。和 df 不同，du 看的是具体的文件和文件夹各自占了多少空间。",
+        helpOutput: `Usage: du [OPTION]... [FILE]...
   or:  du [OPTION]... --files0-from=F
 Summarize device usage of the set of FILEs, recursively for directories.
 
@@ -6657,22 +6626,22 @@ Mandatory arguments to long options are mandatory for short options too.
   -X, --exclude-from=FILE  exclude files that match any pattern in FILE
       --exclude=PATTERN    exclude files that match PATTERN
 `,
-    examples: [
-      { description: "以人类易读格式显示当前目录总大小", code: "du -sh ." },
-      { description: "显示每个子目录的大小并排序", code: "du -sh * | sort -rh | head -10" },
-      { description: "递归显示所有文件和目录的大小", code: "du -ah /var/log/" },
-      { description: "排除某些目录不计入统计", code: "du -sh --exclude='*.git' project/" },
-      { description: "查看帮助文档", code: "du --help" }
-    ],
-    relatedCommands: ["df", "ncdu", "ls", "find"]
-  },
-  {
-    name: "who",
-    categoryId: "system",
-    syntax: "who [选项]",
-    simpleExplain: "查看当前登录的用户列表",
-    detailExplain: "显示当前登录到系统的所有用户信息。输出包含用户名、终端设备、登录时间、来源主机。常用 -b 显示上次系统启动时间，-q 仅显示用户名和总数，-m 仅显示当前终端用户，--count 统计登录数。常用于审计系统访问情况。",
-    helpOutput: `Usage: who [OPTION]... [ FILE | ARG1 ARG2 ]
+        examples: [
+            { description: "以人类易读格式显示当前目录总大小", code: "du -sh ." },
+            { description: "显示每个子目录的大小并排序", code: "du -sh * | sort -rh | head -10" },
+            { description: "递归显示所有文件和目录的大小", code: "du -ah /var/log/" },
+            { description: "排除某些目录不计入统计", code: "du -sh --exclude='*.git' project/" },
+            { description: "查看帮助文档", code: "du --help" }
+        ],
+        relatedCommands: ["df", "ncdu", "ls", "find"]
+    },
+    {
+        name: "who",
+        categoryId: "system",
+        syntax: "who [选项]",
+        simpleExplain: "查看当前登录的用户，就像查看办公室里都有谁在上班",
+        detailExplain: "就像走到办公室门口看一眼签到表——现在都有谁登录在这台机器上、他们是从哪里登录的、登录时间是什么时候。",
+        helpOutput: `Usage: who [OPTION]... [ FILE | ARG1 ARG2 ]
 Print information about users who are currently logged in.
 
   -a, --all         same as -b -d --login -p -r -t -T -u
@@ -6702,22 +6671,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/who>
 or available locally via: info '(coreutils) who invocation'
 `,
-    examples: [
-      { description: "显示当前所有登录用户", code: "who" },
-      { description: "显示系统启动时间", code: "who -b" },
-      { description: "显示死掉的进程", code: "who -d" },
-      { description: "显示所有登录用户的计数", code: "who -q" },
-      { description: "查看帮助文档", code: "who --help" }
-    ],
-    relatedCommands: ["w", "users", "last", "finger"]
-  },
-  {
-    name: "w",
-    categoryId: "system",
-    syntax: "w [选项] [用户]",
-    simpleExplain: "查看登录用户及其活动",
-    detailExplain: "显示当前登录用户及其活动信息，是 who 的增强版。输出顶部显示系统当前时间、运行时长、用户数、平均负载，下方每行包含用户名、终端、来源主机、登录时间、空闲时间、JCPU、PCPU 和当前正在执行的进程。常用于排查用户行为和系统占用。",
-    helpOutput: `
+        examples: [
+            { description: "显示当前所有登录用户", code: "who" },
+            { description: "显示系统启动时间", code: "who -b" },
+            { description: "显示死掉的进程", code: "who -d" },
+            { description: "显示所有登录用户的计数", code: "who -q" },
+            { description: "查看帮助文档", code: "who --help" }
+        ],
+        relatedCommands: ["w", "users", "last", "finger"]
+    },
+    {
+        name: "w",
+        categoryId: "system",
+        syntax: "w [选项] [用户]",
+        simpleExplain: "增强版 who，查看谁在干什么",
+        detailExplain: "就像 who 的增强版——不光告诉你谁登录了，还告诉你他们在干什么（正在执行什么命令）、系统负载如何、登录了多久。",
+        helpOutput: `
 Usage:
  w [options] [user]
 
@@ -6735,22 +6704,22 @@ Options:
 
 For more details see w(1).
 `,
-    examples: [
-      { description: "显示所有登录用户及其活动", code: "w" },
-      { description: "不显示头部信息", code: "w -h" },
-      { description: "只显示指定用户的信息", code: "w alice" },
-      { description: "以旧格式输出", code: "w -o" },
-      { description: "查看帮助文档", code: "w --help" }
-    ],
-    relatedCommands: ["who", "uptime", "users", "finger"]
-  },
-  {
-    name: "lsb_release",
-    categoryId: "system",
-    syntax: "lsb_release [选项]",
-    simpleExplain: "查看 Linux 发行版详细信息",
-    detailExplain: "显示 Linux 发行版信息。常用 -a 显示全部信息（发行版名称、版本号、代号、描述），-d 仅显示描述行，-r 显示版本号，-c 显示代号，-i 显示发行版 ID。部分发行版需安装 lsb-core 包。常用于确认系统版本以选择正确的软件包或配置。",
-    helpOutput: `Usage: lsb_release [options]
+        examples: [
+            { description: "显示所有登录用户及其活动", code: "w" },
+            { description: "不显示头部信息", code: "w -h" },
+            { description: "只显示指定用户的信息", code: "w alice" },
+            { description: "以旧格式输出", code: "w -o" },
+            { description: "查看帮助文档", code: "w --help" }
+        ],
+        relatedCommands: ["who", "uptime", "users", "finger"]
+    },
+    {
+        name: "lsb_release",
+        categoryId: "system",
+        syntax: "lsb_release [选项]",
+        simpleExplain: "查看 Linux 发行版详细信息，就像查看电脑的「品牌型号标签」",
+        detailExplain: "就像查看电脑背面的品牌标签——这是 Ubuntu 还是 CentOS？版本号是多少？lsb_release 专门用来回答这些问题。",
+        helpOutput: `Usage: lsb_release [options]
 
 Options:
   -h, --help         show this help message and exit
@@ -6762,22 +6731,22 @@ Options:
   -a, --all          show all of the above information
   -s, --short        show requested information in short format
 `,
-    examples: [
-      { description: "显示发行版的全部信息", code: "lsb_release -a" },
-      { description: "只显示发行版描述信息", code: "lsb_release -d" },
-      { description: "只显示版本号", code: "lsb_release -r" },
-      { description: "只显示代号名称", code: "lsb_release -c" },
-      { description: "查看帮助文档", code: "lsb_release --help" }
-    ],
-    relatedCommands: ["uname", "cat /etc/os-release", "hostnamectl", "rpm -q"]
-  },
-  {
-    name: "lscpu",
-    categoryId: "system",
-    syntax: "lscpu [选项]",
-    simpleExplain: "查看 CPU 架构和详细信息",
-    detailExplain: "显示 CPU 架构和详细信息。输出包含 CPU 型号、架构、字节序、CPU 数量、每个核心的线程数、核心数、插座数、主频、缓存各级大小、虚拟化支持、标志位等。无需参数即可查看完整信息，常用于性能调优和软件编译优化配置。",
-    helpOutput: `
+        examples: [
+            { description: "显示发行版的全部信息", code: "lsb_release -a" },
+            { description: "只显示发行版描述信息", code: "lsb_release -d" },
+            { description: "只显示版本号", code: "lsb_release -r" },
+            { description: "只显示代号名称", code: "lsb_release -c" },
+            { description: "查看帮助文档", code: "lsb_release --help" }
+        ],
+        relatedCommands: ["uname", "cat /etc/os-release", "hostnamectl", "rpm -q"]
+    },
+    {
+        name: "lscpu",
+        categoryId: "system",
+        syntax: "lscpu [选项]",
+        simpleExplain: "查看 CPU 详细信息，就像查看电脑的「心脏体检报告」",
+        detailExplain: "就像给 CPU 做了一次全面体检——型号是什么、有几颗核心、几个线程、主频多少、支持的指令集有哪些、缓存大小是多少。",
+        helpOutput: `
 Usage:
  lscpu [options]
 
@@ -6836,21 +6805,21 @@ Available output columns for -C:
 
 For more details see lscpu(1).
 `,
-    examples: [
-      { description: "显示 CPU 的完整信息", code: "lscpu" },
-      { description: "以可解析格式输出", code: "lscpu -p" },
-      { description: "只显示缓存信息", code: "lscpu -C" },
-      { description: "查看帮助文档", code: "lscpu --help" }
-    ],
-    relatedCommands: ["uname -m", "nproc", "cat /proc/cpuinfo", "hwinfo"]
-  },
-  {
-    name: "vmstat",
-    categoryId: "system",
-    syntax: "vmstat [选项] [间隔 [次数]]",
-    simpleExplain: "查看系统虚拟内存和进程统计",
-    detailExplain: "报告虚拟内存、进程、IO、CPU 等系统综合状态。常用 vmstat 1 每秒刷新一次，vmstat 1 5 刷新 5 次后退出，-a 显示活跃/非活跃内存，-d 显示磁盘统计，-s 以事件计数形式显示。输出中 r 列表示等待运行的进程数，b 列表示阻塞进程数。常用于排查系统性能瓶颈。",
-    helpOutput: `
+        examples: [
+            { description: "显示 CPU 的完整信息", code: "lscpu" },
+            { description: "以可解析格式输出", code: "lscpu -p" },
+            { description: "只显示缓存信息", code: "lscpu -C" },
+            { description: "查看帮助文档", code: "lscpu --help" }
+        ],
+        relatedCommands: ["uname -m", "nproc", "cat /proc/cpuinfo", "hwinfo"]
+    },
+    {
+        name: "vmstat",
+        categoryId: "system",
+        syntax: "vmstat [选项] [间隔 [次数]]",
+        simpleExplain: "查看系统虚拟内存统计，就像医院的各项生命体征监测仪",
+        detailExplain: "就像医院的重症监护仪——实时监测系统的各项生命体征：进程状态、内存使用、swap 交换、IO 读写、系统中断、CPU 上下文切换等。",
+        helpOutput: `
 Usage:
  vmstat [options] [delay [count]]
 
@@ -6873,22 +6842,22 @@ Options:
 
 For more details see vmstat(8).
 `,
-    examples: [
-      { description: "显示一次系统概要统计", code: "vmstat" },
-      { description: "每 2 秒刷新显示一次，共显示 5 次", code: "vmstat 2 5" },
-      { description: "显示 slab 内核对象缓存信息", code: "vmstat -m" },
-      { description: "显示磁盘统计信息", code: "vmstat -d" },
-      { description: "查看帮助文档", code: "vmstat --help" }
-    ],
-    relatedCommands: ["top", "iostat", "mpstat", "free"]
-  },
-  {
-    name: "iostat",
-    categoryId: "system",
-    syntax: "iostat [选项] [间隔 [次数]]",
-    simpleExplain: "查看磁盘 I/O 统计信息",
-    detailExplain: "报告 CPU 使用率和磁盘 IO 统计信息。常用 iostat 1 每秒刷新，-x 显示扩展统计（await 平均 IO 等待、util 设备利用率等），-d 仅显示磁盘，-c 仅显示 CPU，-m 以 MB 为单位，-p 显示分区级统计。常用于排查磁盘 IO 性能问题和判断是否磁盘瓶颈。",
-    helpOutput: `Usage: iostat [ options ] [ <interval> [ <count> ] ]
+        examples: [
+            { description: "显示一次系统概要统计", code: "vmstat" },
+            { description: "每 2 秒刷新显示一次，共显示 5 次", code: "vmstat 2 5" },
+            { description: "显示 slab 内核对象缓存信息", code: "vmstat -m" },
+            { description: "显示磁盘统计信息", code: "vmstat -d" },
+            { description: "查看帮助文档", code: "vmstat --help" }
+        ],
+        relatedCommands: ["top", "iostat", "mpstat", "free"]
+    },
+    {
+        name: "iostat",
+        categoryId: "system",
+        syntax: "iostat [选项] [间隔 [次数]]",
+        simpleExplain: "查看磁盘 I/O 统计信息，就像查看硬盘的「工作量报表」",
+        detailExplain: "就像查看硬盘的工作日报——每秒读了多少数据、写了多少数据、IO 等待时间有多长。当系统变慢怀疑是磁盘瓶颈时，iostat 能帮你确认。",
+        helpOutput: `Usage: iostat [ options ] [ <interval> [ <count> ] ]
 
 Options:
   -c            显示 CPU 使用统计
@@ -6910,22 +6879,22 @@ Options:
   --human       人类可读格式
   --pretty      美化输出
   -V, --version 显示版本`,
-    examples: [
-      { description: "显示 CPU 和所有设备的 IO 统计", code: "iostat" },
-      { description: "每 3 秒刷新显示，共 10 次", code: "iostat 3 10" },
-      { description: "以人类易读格式显示", code: "iostat -h" },
-      { description: "只显示指定设备", code: "iostat -p sda" },
-      { description: "查看帮助文档", code: "iostat --help" }
-    ],
-    relatedCommands: ["vmstat", "mpstat", "iotop", "sar"]
-  },
-  {
-    name: "mpstat",
-    categoryId: "system",
-    syntax: "mpstat [选项] [间隔 [次数]]",
-    simpleExplain: "查看各 CPU 核心使用情况",
-    detailExplain: "报告每个 CPU 核心的使用率统计。常用 mpstat -P ALL 1 每秒显示所有核心利用率，输出区分 %usr 用户态、%sys 系统态、%iowait IO 等待、%idle 空闲、%soft 软中断等。常用于分析 CPU 负载分布不均、软中断过高或多核性能问题。",
-    helpOutput: `Usage: mpstat [ options ] [ <interval> [ <count> ] ]
+        examples: [
+            { description: "显示 CPU 和所有设备的 IO 统计", code: "iostat" },
+            { description: "每 3 秒刷新显示，共 10 次", code: "iostat 3 10" },
+            { description: "以人类易读格式显示", code: "iostat -h" },
+            { description: "只显示指定设备", code: "iostat -p sda" },
+            { description: "查看帮助文档", code: "iostat --help" }
+        ],
+        relatedCommands: ["vmstat", "mpstat", "iotop", "sar"]
+    },
+    {
+        name: "mpstat",
+        categoryId: "system",
+        syntax: "mpstat [选项] [间隔 [次数]]",
+        simpleExplain: "查看各 CPU 核心的使用情况，就像查看每个工人的工作效率",
+        detailExplain: "就像工厂主管查看每个工人的工作状态——有的在忙碌、有的在做管理、有的在空闲。mpstat 可以分别显示每个 CPU 核心的利用率。",
+        helpOutput: `Usage: mpstat [ options ] [ <interval> [ <count> ] ]
 
 Options:
   -A            等同于 -I SUM -u ALL
@@ -6942,21 +6911,21 @@ Options:
 
 interval 两次输出间隔秒数
 count   输出次数`,
-    examples: [
-      { description: "显示每个 CPU 核心的使用统计", code: "mpstat -P ALL" },
-      { description: "每 5 秒刷新一次", code: "mpstat 5" },
-      { description: "显示 CPU 0 和 CPU 1 的统计", code: "mpstat -P 0,1" },
-      { description: "查看帮助文档", code: "mpstat --help" }
-    ],
-    relatedCommands: ["vmstat", "iostat", "top", "sar"]
-  },
-  {
-    name: "dmesg",
-    categoryId: "system",
-    syntax: "dmesg [选项]",
-    simpleExplain: "查看内核启动和运行日志",
-    detailExplain: "显示内核环形缓冲区中的日志信息，记录硬件检测、驱动加载、内核错误、OOM 事件等启动和运行时事件。常用 -T 显示人类可读时间戳，--level=err 过滤指定级别，-w 实时跟踪新日志，-c 读取并清空缓冲区。常用于排查硬件故障、驱动问题和内核崩溃。",
-    helpOutput: `
+        examples: [
+            { description: "显示每个 CPU 核心的使用统计", code: "mpstat -P ALL" },
+            { description: "每 5 秒刷新一次", code: "mpstat 5" },
+            { description: "显示 CPU 0 和 CPU 1 的统计", code: "mpstat -P 0,1" },
+            { description: "查看帮助文档", code: "mpstat --help" }
+        ],
+        relatedCommands: ["vmstat", "iostat", "top", "sar"]
+    },
+    {
+        name: "dmesg",
+        categoryId: "system",
+        syntax: "dmesg [选项]",
+        simpleExplain: "查看内核消息日志，就像查看系统的「黑匣子飞行记录」",
+        detailExplain: "就像飞机的黑匣子——记录了系统内核启动以来发生的所有大事：硬件检测到了什么设备、驱动加载成功与否、出了什么错误警告等。",
+        helpOutput: `
 Usage:
  dmesg [options]
 
@@ -7021,22 +6990,22 @@ Supported log levels (priorities):
 
 For more details see dmesg(1).
 `,
-    examples: [
-      { description: "查看所有内核消息", code: "dmesg | head -20" },
-      { description: "实时跟踪新的内核消息", code: "dmesg -w" },
-      { description: "显示人类可读的时间戳", code: "dmesg -T" },
-      { description: "只显示错误级别的消息", code: "dmesg -l err,crit,alert,emerg" },
-      { description: "查看帮助文档", code: "dmesg --help" }
-    ],
-    relatedCommands: ["journalctl", "lspci", "lsusb", "kern.log"]
-  },
-  {
-    name: "journalctl",
-    categoryId: "system",
-    syntax: "journalctl [选项]",
-    simpleExplain: "查看 systemd 系统日志",
-    detailExplain: "查询 systemd 日志的命令行工具，集中管理系统的所有日志。常用 -u service 查看指定服务日志，--since/--until 按时间过滤，-p err 按优先级过滤，-f 实时跟踪新日志，-b 查看本次启动日志，-k 仅查看内核日志，--no-pager 不分页输出。常用于排查服务和系统问题。",
-    helpOutput: `journalctl [OPTIONS...] [MATCHES...]
+        examples: [
+            { description: "查看所有内核消息", code: "dmesg | head -20" },
+            { description: "实时跟踪新的内核消息", code: "dmesg -w" },
+            { description: "显示人类可读的时间戳", code: "dmesg -T" },
+            { description: "只显示错误级别的消息", code: "dmesg -l err,crit,alert,emerg" },
+            { description: "查看帮助文档", code: "dmesg --help" }
+        ],
+        relatedCommands: ["journalctl", "lspci", "lsusb", "kern.log"]
+    },
+    {
+        name: "journalctl",
+        categoryId: "system",
+        syntax: "journalctl [选项]",
+        simpleExplain: "查看系统日志，就像查看系统的完整日记本",
+        detailExplain: "就像一本超级详细的系统日记——记录了系统从启动到现在的几乎所有事件。journalctl 是 systemd 的日志管理工具，支持按时间、服务、优先级等多种方式过滤日志。",
+        helpOutput: `journalctl [OPTIONS...] [MATCHES...]
 
 Query the journal.
 
@@ -7087,23 +7056,23 @@ Query the journal.
      --no-tail               Show all lines, even in follow mode
      --truncate-newline      Truncate entries by first newline character
   -q --quiet                 Do not show info messages and privilege `,
-    examples: [
-      { description: "查看最近 20 条系统日志", code: "journalctl -n 20" },
-      { description: "实时跟踪最新日志", code: "journalctl -f" },
-      { description: "只查看 nginx 服务的日志", code: "journalctl -u nginx" },
-      { description: "查看今天产生的日志", code: "journalctl --since today" },
-      { description: "只显示错误和警告级别的日志", code: "journalctl -p err" },
-      { description: "查看帮助文档", code: "journalctl --help" }
-    ],
-    relatedCommands: ["dmesg", "systemctl", "logger", "rsyslog"]
-  },
-  {
-    name: "date",
-    categoryId: "system",
-    syntax: "date [选项] [+格式]",
-    simpleExplain: "显示或设置系统日期时间",
-    detailExplain: "显示或设置系统日期时间。直接执行显示当前时间，+%Y-%m-%d 自定义格式输出，-s \"2024-01-01 10:00:00\" 设置时间（需 root），-u 显示 UTC 时间，-d \"yesterday\" 显示指定日期，-r file 显示文件修改时间。常用于脚本时间戳生成和系统时间校准。",
-    helpOutput: `Usage: date [OPTION]... [+FORMAT]
+        examples: [
+            { description: "查看最近 20 条系统日志", code: "journalctl -n 20" },
+            { description: "实时跟踪最新日志", code: "journalctl -f" },
+            { description: "只查看 nginx 服务的日志", code: "journalctl -u nginx" },
+            { description: "查看今天产生的日志", code: "journalctl --since today" },
+            { description: "只显示错误和警告级别的日志", code: "journalctl -p err" },
+            { description: "查看帮助文档", code: "journalctl --help" }
+        ],
+        relatedCommands: ["dmesg", "systemctl", "logger", "rsyslog"]
+    },
+    {
+        name: "date",
+        categoryId: "system",
+        syntax: "date [选项] [+格式]",
+        simpleExplain: "显示或设置系统时间，就像看手表或调手表",
+        detailExplain: "就像抬起手腕看一眼手表——现在是几点几分几秒、今天是星期几。date 不光能看时间，还能设置系统时间，还能按照你指定的格式输出时间字符串。",
+        helpOutput: `Usage: date [OPTION]... [+FORMAT]
   or:  date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
 Display date and time in the given FORMAT.
 With -s, or with [MMDDhhmm[[CC]YY][.ss]], set the date and time.
@@ -7164,22 +7133,22 @@ FORMAT controls the output.  Interpreted sequences are:
   %P   like %p, but lower case
   %q   quarter of year (1..4)
   %r   locale's 12-hour clock time (e.g.`,
-    examples: [
-      { description: "显示当前日期和时间", code: "date" },
-      { description: "以指定格式显示时间", code: "date '+%Y-%m-%d_%H:%M:%S'" },
-      { description: "显示 Unix 时间戳", code: "date +%s" },
-      { description: "将时间戳转换为可读日期", code: "date -d @1736919000" },
-      { description: "查看帮助文档", code: "date --help" }
-    ],
-    relatedCommands: ["cal", "timedatectl", "hwclock", "tzselect"]
-  },
-  {
-    name: "cal",
-    categoryId: "system",
-    syntax: "cal [选项] [[月] 年]",
-    simpleExplain: "显示月历或年历",
-    detailExplain: "显示日历。直接执行显示当月日历，cal 2024 显示整年日历，cal 3 2024 显示 2024 年 3 月，-3 显示上月、当月、下月，-y 显示整年，-j 以一年中的第几天（儒略日）显示，-m 以周一为每周起始。常用于快速查看日期和编写脚本时确认星期。",
-    helpOutput: `Usage: cal [options] [[[day] month] year]
+        examples: [
+            { description: "显示当前日期和时间", code: "date" },
+            { description: "以指定格式显示时间", code: "date '+%Y-%m-%d_%H:%M:%S'" },
+            { description: "显示 Unix 时间戳", code: "date +%s" },
+            { description: "将时间戳转换为可读日期", code: "date -d @1736919000" },
+            { description: "查看帮助文档", code: "date --help" }
+        ],
+        relatedCommands: ["cal", "timedatectl", "hwclock", "tzselect"]
+    },
+    {
+        name: "cal",
+        categoryId: "system",
+        syntax: "cal [选项] [[月] 年]",
+        simpleExplain: "显示日历，就像撕下来的一页月历",
+        detailExplain: "就像随手撕下一页日历挂在墙上——显示某年某月的完整日历视图。可以看本月、看某个月、看一整年的日历。",
+        helpOutput: `Usage: cal [options] [[[day] month] year]
 
 Options:
   -1, --one          只显示当前月（默认）
@@ -7196,22 +7165,22 @@ Options:
   -r, --reform VAL   历法改革日期
   -V, --version      显示版本
   -h, --help         显示帮助`,
-    examples: [
-      { description: "显示当前月份的日历", code: "cal" },
-      { description: "显示 2025 年整年的日历", code: "cal 2025" },
-      { description: "显示 2025 年 2 月的日历", code: "cal 2 2025" },
-      { description: "显示本周视图", code: "cal -3" },
-      { description: "查看帮助文档", code: "cal --help" }
-    ],
-    relatedCommands: ["date", "timedatectl", "calendar", "gcal"]
-  },
-  {
-    name: "timedatectl",
-    categoryId: "system",
-    syntax: "timedatectl [命令]",
-    simpleExplain: "管理系统时间和时区设置",
-    detailExplain: "查询和修改系统时间、时区及 NTP 同步状态。常用子命令：status 显示当前时间配置，set-timezone 设置时区，set-ntp 开启或关闭网络时间同步。在 systemd 系统上是管理时间的标准工具。",
-    helpOutput: `timedatectl [OPTIONS...] COMMAND ...
+        examples: [
+            { description: "显示当前月份的日历", code: "cal" },
+            { description: "显示 2025 年整年的日历", code: "cal 2025" },
+            { description: "显示 2025 年 2 月的日历", code: "cal 2 2025" },
+            { description: "显示本周视图", code: "cal -3" },
+            { description: "查看帮助文档", code: "cal --help" }
+        ],
+        relatedCommands: ["date", "timedatectl", "calendar", "gcal"]
+    },
+    {
+        name: "timedatectl",
+        categoryId: "system",
+        syntax: "timedatectl [命令]",
+        simpleExplain: "管理系统时间和时区，就像设置智能手表的时间和时区",
+        detailExplain: "就像智能手表的时间设置界面——可以查看和修改系统时间、时区、是否自动同步网络时间（NTP）等。在现代 systemd 系统上，timedatectl 是管理时间的官方推荐工具。",
+        helpOutput: `timedatectl [OPTIONS...] COMMAND ...
 
 Query or change system time and date settings.
 
@@ -7246,22 +7215,22 @@ Options:
 
 See the timedatectl(1) man page for details.
 `,
-    examples: [
-      { description: "显示完整的时间和时区信息", code: "timedatectl status" },
-      { description: "列出所有可用的时区", code: "timedatectl list-timezones" },
-      { description: "设置时区为上海时间", code: "timedatectl set-timezone Asia/Shanghai" },
-      { description: "开启 NTP 自动同步时间", code: "timedatectl set-ntp true" },
-      { description: "查看帮助文档", code: "timedatectl --help" }
-    ],
-    relatedCommands: ["date", "cal", "hwclock", "ntpdate"]
-  },
-  {
-    name: "locale",
-    categoryId: "system",
-    syntax: "locale [选项]",
-    simpleExplain: "查看和设置系统语言区域",
-    detailExplain: "显示或设置系统的语言和地区相关环境变量，影响字符编码、日期格式、货币符号等。不带参数时显示当前 locale 设置，-a 列出系统支持的所有 locale，-m 列出可用的字符映射。终端乱码通常是 locale 配置不当导致。",
-    helpOutput: `Usage: locale [OPTION...] NAME
+        examples: [
+            { description: "显示完整的时间和时区信息", code: "timedatectl status" },
+            { description: "列出所有可用的时区", code: "timedatectl list-timezones" },
+            { description: "设置时区为上海时间", code: "timedatectl set-timezone Asia/Shanghai" },
+            { description: "开启 NTP 自动同步时间", code: "timedatectl set-ntp true" },
+            { description: "查看帮助文档", code: "timedatectl --help" }
+        ],
+        relatedCommands: ["date", "cal", "hwclock", "ntpdate"]
+    },
+    {
+        name: "locale",
+        categoryId: "system",
+        syntax: "locale [选项]",
+        simpleExplain: "查看和设置系统语言区域，就像设置系统的「语言偏好」",
+        detailExplain: "就像操作系统的语言和地区设置——用中文还是英文？日期格式是什么？货币符号是 $ 还是 ¥？当你的终端出现乱码时，往往是 locale 设置不对导致的。",
+        helpOutput: `Usage: locale [OPTION...] NAME
   or:  locale [OPTION...] [-a|-m]
 Get locale-specific information.
 
@@ -7281,22 +7250,22 @@ Get locale-specific information.
 For bug reporting instructions, please see:
 <https://bugs.launchpad.net/ubuntu/+source/glibc/+bugs>.
 `,
-    examples: [
-      { description: "显示当前所有 locale 设置", code: "locale" },
-      { description: "列出系统所有可用的 locale", code: "locale -a" },
-      { description: "显示某个 locale 变量的详细信息", code: "locale -k LC_MONETARY" },
-      { description: "临时修改语言为中文 UTF-8", code: "export LANG=zh_CN.UTF-8" },
-      { description: "查看帮助文档", code: "locale --help" }
-    ],
-    relatedCommands: ["localectl", "charset", "iconv", "env"]
-  },
-  {
-    name: "lsmem",
-    categoryId: "system",
-    syntax: "lsmem [选项]",
-    simpleExplain: "列出系统的内存使用信息",
-    detailExplain: "显示系统物理内存的范围、大小和在线状态。默认输出内存块摘要，--summary 以易读格式显示总内存，--json 输出 JSON 格式便于脚本处理。常用于确认可用内存总量和内存块分布。",
-    helpOutput: `
+        examples: [
+            { description: "显示当前所有 locale 设置", code: "locale" },
+            { description: "列出系统所有可用的 locale", code: "locale -a" },
+            { description: "显示某个 locale 变量的详细信息", code: "locale -k LC_MONETARY" },
+            { description: "临时修改语言为中文 UTF-8", code: "export LANG=zh_CN.UTF-8" },
+            { description: "查看帮助文档", code: "locale --help" }
+        ],
+        relatedCommands: ["localectl", "charset", "iconv", "env"]
+    },
+    {
+        name: "lsmem",
+        categoryId: "system",
+        syntax: "lsmem [选项]",
+        simpleExplain: "列出内存信息，就像查看仓库里有多少货架和空间",
+        detailExplain: "就像查看仓库里有多少货架和空间——lsmem 会显示系统内存的范围、大小、在线状态等信息，让你清楚知道电脑有多少内存可用，哪些内存条是插好的，哪些是空闲的。",
+        helpOutput: `
 Usage:
  lsmem [options]
 
@@ -7329,22 +7298,22 @@ Available output columns:
 
 For more details see lsmem(1).
 `,
-    examples: [
-      { description: "列出所有内存信息", code: "lsmem" },
-      { description: "以字节为单位显示内存大小", code: "lsmem -b" },
-      { description: "以 MB 为单位显示", code: "lsmem --output-size=MB" },
-      { description: "只显示摘要信息", code: "lsmem -s" },
-      { description: "查看帮助文档", code: "lsmem --help" }
-    ],
-    relatedCommands: ["free", "top", "vmstat", "cat /proc/meminfo"]
-  },
-  {
-    name: "lsusb",
-    categoryId: "system",
-    syntax: "lsusb [选项]",
-    simpleExplain: "列出已连接的USB设备",
-    detailExplain: "列出所有连接到 USB 总线的设备，包括厂商 ID、产品 ID 和设备名称。-v 显示详细信息，-s 指定总线或设备号过滤，-t 以树形结构显示。排查 USB 设备识别问题时首选。",
-    helpOutput: `Usage: lsusb [options]
+        examples: [
+            { description: "列出所有内存信息", code: "lsmem" },
+            { description: "以字节为单位显示内存大小", code: "lsmem -b" },
+            { description: "以 MB 为单位显示", code: "lsmem --output-size=MB" },
+            { description: "只显示摘要信息", code: "lsmem -s" },
+            { description: "查看帮助文档", code: "lsmem --help" }
+        ],
+        relatedCommands: ["free", "top", "vmstat", "cat /proc/meminfo"]
+    },
+    {
+        name: "lsusb",
+        categoryId: "system",
+        syntax: "lsusb [选项]",
+        simpleExplain: "列出USB设备，就像查看电脑上插了哪些外设",
+        detailExplain: "就像查看电脑上插了哪些外设——lsusb 会列出所有连接到 USB 总线的设备，包括鼠标、键盘、U盘、摄像头等。当你插了个设备却没反应时，先用 lsusb 看看系统认没认出来。",
+        helpOutput: `Usage: lsusb [options]
 
 Options:
   -v, --verbose          显示详细信息
@@ -7356,22 +7325,22 @@ Options:
   -h, --help             显示帮助
 
 不带参数时列出所有 USB 设备。`,
-    examples: [
-      { description: "列出所有 USB 设备", code: "lsusb" },
-      { description: "显示设备详细信息", code: "lsusb -v" },
-      { description: "只查看指定总线的设备", code: "lsusb -s 001" },
-      { description: "查看指定厂商的设备", code: "lsusb -d 8087:" },
-      { description: "查看帮助文档", code: "lsusb --help" }
-    ],
-    relatedCommands: ["lspci", "lsblk", "dmesg", "usb-devices"]
-  },
-  {
-    name: "lspci",
-    categoryId: "system",
-    syntax: "lspci [选项]",
-    simpleExplain: "列出PCI总线上的设备",
-    detailExplain: "列出所有 PCI 总线设备，包括显卡、网卡、声卡等。-v 显示详细信息，-k 显示内核驱动，-nn 同时显示数字和文本名称。安装驱动或排查硬件问题时常用作第一步。",
-    helpOutput: `Usage: lspci [<switches>]
+        examples: [
+            { description: "列出所有 USB 设备", code: "lsusb" },
+            { description: "显示设备详细信息", code: "lsusb -v" },
+            { description: "只查看指定总线的设备", code: "lsusb -s 001" },
+            { description: "查看指定厂商的设备", code: "lsusb -d 8087:" },
+            { description: "查看帮助文档", code: "lsusb --help" }
+        ],
+        relatedCommands: ["lspci", "lsblk", "dmesg", "usb-devices"]
+    },
+    {
+        name: "lspci",
+        categoryId: "system",
+        syntax: "lspci [选项]",
+        simpleExplain: "列出PCI设备，就像查看主板上插了哪些扩展卡",
+        detailExplain: "就像查看主板上插了哪些扩展卡——lspci 会列出所有 PCI 总线上的设备，包括显卡、网卡、声卡等。当你需要安装驱动或排查硬件问题时，lspci 是第一步。",
+        helpOutput: `Usage: lspci [<switches>]
 
 Options:
   -v              详细信息
@@ -7394,22 +7363,22 @@ Options:
   -PP             按总线层级排序
   -s [[[[domain]:]bus]:][slot][.[func]]  过滤设备
   -x              十六进制转储`,
-    examples: [
-      { description: "列出所有 PCI 设备", code: "lspci" },
-      { description: "显示设备详细信息", code: "lspci -v" },
-      { description: "以树形结构显示设备关系", code: "lspci -t" },
-      { description: "只显示网卡设备", code: "lspci | grep -i network" },
-      { description: "查看帮助文档", code: "lspci --help" }
-    ],
-    relatedCommands: ["lsusb", "lsblk", "lshw", "dmidecode"]
-  },
-  {
-    name: "dmidecode",
-    categoryId: "system",
-    syntax: "dmidecode [选项]",
-    simpleExplain: "读取并显示硬件信息",
-    detailExplain: "从 SMBIOS/DMI 表读取硬件详细信息，包括主板型号、CPU 规格、内存条品牌序列号、BIOS 版本等。-t 按类型过滤（如 memory、bios、processor），需要 root 权限。是硬件信息查询的核心工具。",
-    helpOutput: `Usage: dmidecode [OPTIONS]
+        examples: [
+            { description: "列出所有 PCI 设备", code: "lspci" },
+            { description: "显示设备详细信息", code: "lspci -v" },
+            { description: "以树形结构显示设备关系", code: "lspci -t" },
+            { description: "只显示网卡设备", code: "lspci | grep -i network" },
+            { description: "查看帮助文档", code: "lspci --help" }
+        ],
+        relatedCommands: ["lsusb", "lsblk", "lshw", "dmidecode"]
+    },
+    {
+        name: "dmidecode",
+        categoryId: "system",
+        syntax: "dmidecode [选项]",
+        simpleExplain: "读取硬件信息，就像查看电脑的出生证明和体检报告",
+        detailExplain: "就像查看电脑的出生证明和体检报告——dmidecode 从 BIOS/DMI 中读取硬件详细信息，包括主板型号、CPU 规格、内存条品牌和序列号、BIOS 版本等。是硬件信息查询的终极武器。",
+        helpOutput: `Usage: dmidecode [OPTIONS]
 
 Options:
   -d, --dev-mem FILE    指定内存设备文件（默认 /dev/mem）
@@ -7427,22 +7396,22 @@ Options:
 
 TYPE 类型: bios, system, baseboard, chassis, processor, memory, cache,
            connector, slot, all`,
-    examples: [
-      { description: "显示所有硬件信息", code: "sudo dmidecode" },
-      { description: "只查看 BIOS 信息", code: "sudo dmidecode -t bios" },
-      { description: "只查看内存信息", code: "sudo dmidecode -t memory" },
-      { description: "只查看处理器信息", code: "sudo dmidecode -t processor" },
-      { description: "查看帮助文档", code: "dmidecode --help" }
-    ],
-    relatedCommands: ["lshw", "lspci", "lsusb", "cat /proc/cpuinfo"]
-  },
-  {
-    name: "sensors",
-    categoryId: "system",
-    syntax: "sensors [选项]",
-    simpleExplain: "读取硬件温度和传感器数据",
-    detailExplain: "读取主板、CPU、显卡等硬件的温度、风扇转速和电压传感器数据。首次使用需运行 sensors-detect 检测传感器。常用于监控硬件温度，排查过热导致的死机或重启。",
-    helpOutput: `Usage: sensors [options] [chips]
+        examples: [
+            { description: "显示所有硬件信息", code: "sudo dmidecode" },
+            { description: "只查看 BIOS 信息", code: "sudo dmidecode -t bios" },
+            { description: "只查看内存信息", code: "sudo dmidecode -t memory" },
+            { description: "只查看处理器信息", code: "sudo dmidecode -t processor" },
+            { description: "查看帮助文档", code: "dmidecode --help" }
+        ],
+        relatedCommands: ["lshw", "lspci", "lsusb", "cat /proc/cpuinfo"]
+    },
+    {
+        name: "sensors",
+        categoryId: "system",
+        syntax: "sensors [选项]",
+        simpleExplain: "读取硬件温度传感器，就像给电脑量体温",
+        detailExplain: "就像给电脑量体温——sensors 读取主板、CPU、显卡等硬件上的温度传感器数据，显示当前温度、风扇转速、电压等信息。当电脑经常死机或重启时，先用 sensors 看看是不是过热了。",
+        helpOutput: `Usage: sensors [options] [chips]
 
 Options:
   -c, --config-file FILE  指定配置文件
@@ -7457,22 +7426,22 @@ Options:
       --bus-list          简化总线列表
 
 不带参数时显示所有传感器读数。`,
-    examples: [
-      { description: "显示所有传感器数据", code: "sensors" },
-      { description: "以摄氏度显示温度", code: "sensors -C" },
-      { description: "只显示核心温度", code: "sensors | grep -i core" },
-      { description: "检测可用传感器芯片", code: "sensors-detect" },
-      { description: "查看帮助文档", code: "sensors --help" }
-    ],
-    relatedCommands: ["top", "htop", "dmidecode", "cat /proc/acpi"]
-  },
-  {
-    name: "nproc",
-    categoryId: "system",
-    syntax: "nproc",
-    simpleExplain: "显示可用的CPU核心数",
-    detailExplain: "输出当前进程可用的 CPU 核心数。--all 显示系统全部核心数，--ignore=N 排除指定数量核心。编译时常用于设置并行任务数，如 make -j$(nproc)。",
-    helpOutput: `Usage: nproc [OPTION]...
+        examples: [
+            { description: "显示所有传感器数据", code: "sensors" },
+            { description: "以摄氏度显示温度", code: "sensors -C" },
+            { description: "只显示核心温度", code: "sensors | grep -i core" },
+            { description: "检测可用传感器芯片", code: "sensors-detect" },
+            { description: "查看帮助文档", code: "sensors --help" }
+        ],
+        relatedCommands: ["top", "htop", "dmidecode", "cat /proc/acpi"]
+    },
+    {
+        name: "nproc",
+        categoryId: "system",
+        syntax: "nproc",
+        simpleExplain: "显示可用的CPU核心数，就像数一下有多少个工人可以同时干活",
+        detailExplain: "就像数一下有多少个工人可以同时干活——nproc 显示当前进程可用的 CPU 核心数。编译软件时常用它来决定并行任务数，比如 make -j$(nproc) 就能让所有核心一起开工。",
+        helpOutput: `Usage: nproc [OPTION]...
 Print the number of processing units available to the current process,
 which may be less than the number of online processors
 
@@ -7486,22 +7455,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/nproc>
 or available locally via: info '(coreutils) nproc invocation'
 `,
-    examples: [
-      { description: "显示可用 CPU 核心数", code: "nproc", output: "8" },
-      { description: "显示所有 CPU 核心数（含离线）", code: "nproc --all" },
-      { description: "编译时使用所有核心", code: "make -j$(nproc)" },
-      { description: "忽略一个核心留给系统用", code: "make -j$(nproc --ignore=1)" },
-      { description: "查看帮助文档", code: "nproc --help" }
-    ],
-    relatedCommands: ["lscpu", "top", "htop", "cat /proc/cpuinfo"]
-  },
-  {
-    name: "arch",
-    categoryId: "system",
-    syntax: "arch",
-    simpleExplain: "显示系统的CPU架构类型",
-    detailExplain: "输出系统硬件架构名称，如 x86_64、aarch64、armv7l 等，与 uname -m 输出一致。下载软件包时用于确认所需架构版本。",
-    helpOutput: `Usage: arch [OPTION]...
+        examples: [
+            { description: "显示可用 CPU 核心数", code: "nproc", output: "8" },
+            { description: "显示所有 CPU 核心数（含离线）", code: "nproc --all" },
+            { description: "编译时使用所有核心", code: "make -j$(nproc)" },
+            { description: "忽略一个核心留给系统用", code: "make -j$(nproc --ignore=1)" },
+            { description: "查看帮助文档", code: "nproc --help" }
+        ],
+        relatedCommands: ["lscpu", "top", "htop", "cat /proc/cpuinfo"]
+    },
+    {
+        name: "arch",
+        categoryId: "system",
+        syntax: "arch",
+        simpleExplain: "显示系统架构，就像查看大楼的建筑结构类型",
+        detailExplain: "就像查看大楼的建筑结构类型——arch 显示系统的硬件架构名称，比如 x86_64 表示 64 位 Intel/AMD 处理器，aarch64 表示 ARM 64 位。下载软件时需要选对架构版本。",
+        helpOutput: `Usage: arch [OPTION]...
 Print machine architecture.
 
       --help        display this help and exit
@@ -7512,22 +7481,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/arch>
 or available locally via: info '(coreutils) arch invocation'
 `,
-    examples: [
-      { description: "显示系统架构", code: "arch", output: "x86_64" },
-      { description: "与 uname -m 等效", code: "uname -m" },
-      { description: "判断是否为 64 位系统", code: "[ $(arch) = x86_64 ] && echo '64位'" },
-      { description: "在脚本中根据架构选择软件包", code: "case $(arch) in x86_64) pkg=amd64 ;; aarch64) pkg=arm64 ;; esac" },
-      { description: "查看帮助文档", code: "arch --help" }
-    ],
-    relatedCommands: ["uname", "lscpu", "dpkg", "rpm"]
-  },
-  {
-    name: "printenv",
-    categoryId: "system",
-    syntax: "printenv [变量名]",
-    simpleExplain: "打印当前所有环境变量",
-    detailExplain: "打印环境变量值。不带参数时显示所有环境变量，指定变量名时只输出该变量的值。常用于脚本中检查特定环境变量配置。",
-    helpOutput: `Usage: printenv [OPTION]... [VARIABLE]...
+        examples: [
+            { description: "显示系统架构", code: "arch", output: "x86_64" },
+            { description: "与 uname -m 等效", code: "uname -m" },
+            { description: "判断是否为 64 位系统", code: "[ $(arch) = x86_64 ] && echo '64位'" },
+            { description: "在脚本中根据架构选择软件包", code: "case $(arch) in x86_64) pkg=amd64 ;; aarch64) pkg=arm64 ;; esac" },
+            { description: "查看帮助文档", code: "arch --help" }
+        ],
+        relatedCommands: ["uname", "lscpu", "dpkg", "rpm"]
+    },
+    {
+        name: "printenv",
+        categoryId: "system",
+        syntax: "printenv [变量名]",
+        simpleExplain: "显示环境变量，就像查看系统公告栏上的所有通知",
+        detailExplain: "就像查看系统公告栏上的所有通知——printenv 会把所有环境变量都列出来，包括 PATH、HOME、USER 等。如果你只想看某一条通知，就加上变量名做参数。",
+        helpOutput: `Usage: printenv [OPTION]... [VARIABLE]...
 Print the values of the specified environment VARIABLE(s).
 If no VARIABLE is specified, print name and value pairs for them all.
 
@@ -7544,22 +7513,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/printenv>
 or available locally via: info '(coreutils) printenv invocation'
 `,
-    examples: [
-      { description: "显示所有环境变量", code: "printenv" },
-      { description: "查看 PATH 变量", code: "printenv PATH" },
-      { description: "查看当前用户", code: "printenv USER", output: "zhangsan" },
-      { description: "查看家目录路径", code: "printenv HOME" },
-      { description: "查看帮助文档", code: "printenv --help" }
-    ],
-    relatedCommands: ["env", "export", "set", "echo"]
-  },
-  {
-    name: "env",
-    categoryId: "system",
-    syntax: "env [选项] [命令]",
-    simpleExplain: "在指定环境下运行命令",
-    detailExplain: "显示所有环境变量，或在修改环境变量后执行指定命令。-i 以空环境运行命令，-u 取消指定变量后运行。常用于临时修改环境变量运行程序，如 env LANG=zh_CN.UTF-8 command。",
-    helpOutput: `Usage: env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
+        examples: [
+            { description: "显示所有环境变量", code: "printenv" },
+            { description: "查看 PATH 变量", code: "printenv PATH" },
+            { description: "查看当前用户", code: "printenv USER", output: "zhangsan" },
+            { description: "查看家目录路径", code: "printenv HOME" },
+            { description: "查看帮助文档", code: "printenv --help" }
+        ],
+        relatedCommands: ["env", "export", "set", "echo"]
+    },
+    {
+        name: "env",
+        categoryId: "system",
+        syntax: "env [选项] [命令]",
+        simpleExplain: "在指定环境下运行命令，就像在特定的工作环境中执行任务",
+        detailExplain: "就像在特定的工作环境中执行任务——env 可以显示所有环境变量，也可以在修改了某些环境变量后运行指定命令。比如你想临时用中文环境运行某个程序，但不影响全局设置。",
+        helpOutput: `Usage: env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
 Set each NAME to VALUE in the environment and run COMMAND.
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -7594,22 +7563,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/env>
 or available locally via: info '(coreutils) env invocation'
 `,
-    examples: [
-      { description: "显示所有环境变量", code: "env" },
-      { description: "临时设置变量后运行命令", code: "env LANG=zh_CN.UTF-8 ./myapp" },
-      { description: "清空所有环境变量运行命令", code: "env -i /bin/bash" },
-      { description: "取消某个变量后运行命令", code: "env -u LD_LIBRARY_PATH ./program" },
-      { description: "查看帮助文档", code: "env --help" }
-    ],
-    relatedCommands: ["printenv", "export", "set", "bash"]
-  },
-  {
-    name: "export",
-    categoryId: "system",
-    syntax: "export 变量名=值",
-    simpleExplain: "设置或导出环境变量",
-    detailExplain: "将 Shell 变量导出为环境变量，使其能被子进程继承。不带参数时列出所有已导出变量，-p 显示所有导出变量，-n 取消导出属性。常用于设置 PATH、JAVA_HOME 等供后续程序使用。",
-    helpOutput: `export: export [-fn] [name[=value] ...] or export -p
+        examples: [
+            { description: "显示所有环境变量", code: "env" },
+            { description: "临时设置变量后运行命令", code: "env LANG=zh_CN.UTF-8 ./myapp" },
+            { description: "清空所有环境变量运行命令", code: "env -i /bin/bash" },
+            { description: "取消某个变量后运行命令", code: "env -u LD_LIBRARY_PATH ./program" },
+            { description: "查看帮助文档", code: "env --help" }
+        ],
+        relatedCommands: ["printenv", "export", "set", "bash"]
+    },
+    {
+        name: "export",
+        categoryId: "system",
+        syntax: "export 变量名=值",
+        simpleExplain: "设置环境变量，就像在公告栏上发布一条新通知",
+        detailExplain: "就像在公告栏上发布一条新通知——export 设置的环境变量不仅当前 Shell 能看到，子进程也能继承。比如你设置了一个 JAVA_HOME，之后启动的 Java 程序都能找到它。",
+        helpOutput: `export: export [-fn] [name[=value] ...] or export -p
     Set export attribute for shell variables.
     
     Marks each NAME for automatic export to the environment of subsequently
@@ -7625,22 +7594,22 @@ or available locally via: info '(coreutils) env invocation'
     Exit Status:
     Returns success unless an invalid option is given or NAME is invalid.
 `,
-    examples: [
-      { description: "设置一个环境变量", code: "export JAVA_HOME=/usr/lib/jvm/java-17" },
-      { description: "将目录追加到 PATH", code: "export PATH=$PATH:/opt/bin" },
-      { description: "查看所有已导出的变量", code: "export -p" },
-      { description: "设置代理环境变量", code: "export http_proxy=http://proxy.example.com:8080" },
-      { description: "查看帮助文档", code: "help export" }
-    ],
-    relatedCommands: ["printenv", "env", "set", "unset"]
-  },
-  {
-    name: "set",
-    categoryId: "system",
-    syntax: "set [选项]",
-    simpleExplain: "显示或设置Shell变量",
-    detailExplain: "不带参数时显示所有 Shell 变量和函数。带参数时控制 Shell 行为：-e 出错即退出，-x 启用调试输出，-u 引用未定义变量报错。常用于脚本中控制执行行为。",
-    helpOutput: `set: set [-abefhkmnptuvxBCEHPT] [-o option-name] [--] [-] [arg ...]
+        examples: [
+            { description: "设置一个环境变量", code: "export JAVA_HOME=/usr/lib/jvm/java-17" },
+            { description: "将目录追加到 PATH", code: "export PATH=$PATH:/opt/bin" },
+            { description: "查看所有已导出的变量", code: "export -p" },
+            { description: "设置代理环境变量", code: "export http_proxy=http://proxy.example.com:8080" },
+            { description: "查看帮助文档", code: "help export" }
+        ],
+        relatedCommands: ["printenv", "env", "set", "unset"]
+    },
+    {
+        name: "set",
+        categoryId: "system",
+        syntax: "set [选项]",
+        simpleExplain: "显示或设置Shell变量，就像查看和调整系统的所有设置项",
+        detailExplain: "就像查看和调整系统的所有设置项——set 不带参数时会显示所有 Shell 变量和函数，带参数时可以控制 Shell 的行为模式，比如开启调试模式、设置出错即退出等。",
+        helpOutput: `set: set [-abefhkmnptuvxBCEHPT] [-o option-name] [--] [-] [arg ...]
     Set or unset values of shell options and positional parameters.
     
     Change the value of shell attributes and positional parameters, or
@@ -7699,22 +7668,22 @@ or available locally via: info '(coreutils) env invocation'
       -v  Print shell input lines as they are read.
       -x  Print commands and their arguments as they are executed.
       -B  the shell will perform brace expans`,
-    examples: [
-      { description: "显示所有 Shell 变量和函数", code: "set" },
-      { description: "开启调试模式，显示每条执行的命令", code: "set -x" },
-      { description: "脚本中遇到错误立即退出", code: "set -e" },
-      { description: "使用未定义变量时报错", code: "set -u" },
-      { description: "查看帮助文档", code: "help set" }
-    ],
-    relatedCommands: ["export", "unset", "env", "shopt"]
-  },
-  {
-    name: "unset",
-    categoryId: "system",
-    syntax: "unset 变量名",
-    simpleExplain: "删除指定的环境变量",
-    detailExplain: "删除已设置的环境变量或 Shell 变量，删除后当前 Shell 和子进程均无法访问。-v 删除变量（默认），-f 删除函数。常用于清理不再需要的环境变量。",
-    helpOutput: `unset: unset [-f] [-v] [-n] [name ...]
+        examples: [
+            { description: "显示所有 Shell 变量和函数", code: "set" },
+            { description: "开启调试模式，显示每条执行的命令", code: "set -x" },
+            { description: "脚本中遇到错误立即退出", code: "set -e" },
+            { description: "使用未定义变量时报错", code: "set -u" },
+            { description: "查看帮助文档", code: "help set" }
+        ],
+        relatedCommands: ["export", "unset", "env", "shopt"]
+    },
+    {
+        name: "unset",
+        categoryId: "system",
+        syntax: "unset 变量名",
+        simpleExplain: "删除环境变量，就像从公告栏上撕掉一条通知",
+        detailExplain: "就像从公告栏上撕掉一条通知——unset 用来删除已经设置的环境变量或 Shell 变量。删掉之后，当前 Shell 和后续子进程就再也看不到这个变量了。",
+        helpOutput: `unset: unset [-f] [-v] [-n] [name ...]
     Unset values and attributes of shell variables and functions.
     
     For each NAME, remove the corresponding variable or function.
@@ -7733,22 +7702,22 @@ or available locally via: info '(coreutils) env invocation'
     Exit Status:
     Returns success unless an invalid option is given or a NAME is read-only.
 `,
-    examples: [
-      { description: "删除一个环境变量", code: "unset JAVA_HOME" },
-      { description: "删除多个变量", code: "unset http_proxy https_proxy" },
-      { description: "删除一个函数", code: "unset -f my_func" },
-      { description: "确认变量已被删除", code: "unset MY_VAR && echo $MY_VAR" },
-      { description: "查看帮助文档", code: "help unset" }
-    ],
-    relatedCommands: ["export", "set", "env", "printenv"]
-  },
-  {
-    name: "alias",
-    categoryId: "system",
-    syntax: "alias 别名=命令",
-    simpleExplain: "给命令设置别名",
-    detailExplain: "为命令定义别名，简化常用命令输入。不带参数时列出所有别名，定义格式为 alias name='command'。常用于缩短命令，如 alias ll='ls -l'。",
-    helpOutput: `alias: alias [-p] [name[=value] ... ]
+        examples: [
+            { description: "删除一个环境变量", code: "unset JAVA_HOME" },
+            { description: "删除多个变量", code: "unset http_proxy https_proxy" },
+            { description: "删除一个函数", code: "unset -f my_func" },
+            { description: "确认变量已被删除", code: "unset MY_VAR && echo $MY_VAR" },
+            { description: "查看帮助文档", code: "help unset" }
+        ],
+        relatedCommands: ["export", "set", "env", "printenv"]
+    },
+    {
+        name: "alias",
+        categoryId: "system",
+        syntax: "alias 别名=命令",
+        simpleExplain: "给命令设置别名，就像给朋友起个昵称方便叫",
+        detailExplain: "就像给朋友起个昵称方便叫——alias 可以给常用命令起个短名字，这样每次输入更省事。比如把 ll 当作 ls -l 的别名，输入两个字母就能看到详细列表。",
+        helpOutput: `alias: alias [-p] [name[=value] ... ]
     Define or display aliases.
     
     Without arguments, \`alias' prints the list of aliases in the reusable
@@ -7765,22 +7734,22 @@ or available locally via: info '(coreutils) env invocation'
     alias returns true unless a NAME is supplied for which no alias has been
     defined.
 `,
-    examples: [
-      { description: "给 ls -l 起别名 ll", code: "alias ll='ls -l'" },
-      { description: "查看所有已设置的别名", code: "alias" },
-      { description: "给 rm 加安全确认", code: "alias rm='rm -i'" },
-      { description: "给 grep 加颜色高亮", code: "alias grep='grep --color=auto'" },
-      { description: "查看帮助文档", code: "help alias" }
-    ],
-    relatedCommands: ["unalias", "bash", "source", "type"]
-  },
-  {
-    name: "unalias",
-    categoryId: "system",
-    syntax: "unalias 别名",
-    simpleExplain: "取消已设置的命令别名",
-    detailExplain: "删除已定义的命令别名。-a 删除所有别名。删除后该短名称不再有效，需使用命令全名。常用于临时取消别名以执行原命令。",
-    helpOutput: `unalias: unalias [-a] name [name ...]
+        examples: [
+            { description: "给 ls -l 起别名 ll", code: "alias ll='ls -l'" },
+            { description: "查看所有已设置的别名", code: "alias" },
+            { description: "给 rm 加安全确认", code: "alias rm='rm -i'" },
+            { description: "给 grep 加颜色高亮", code: "alias grep='grep --color=auto'" },
+            { description: "查看帮助文档", code: "help alias" }
+        ],
+        relatedCommands: ["unalias", "bash", "source", "type"]
+    },
+    {
+        name: "unalias",
+        categoryId: "system",
+        syntax: "unalias 别名",
+        simpleExplain: "取消命令别名，就像不再用昵称呼叫朋友",
+        detailExplain: "就像不再用昵称呼叫朋友——unalias 用来删除之前用 alias 设置的命令别名。删掉之后，那个短名字就不再有效了，必须用命令的全名。",
+        helpOutput: `unalias: unalias [-a] name [name ...]
     Remove each NAME from the list of defined aliases.
     
     Options:
@@ -7788,22 +7757,22 @@ or available locally via: info '(coreutils) env invocation'
     
     Return success unless a NAME is not an existing alias.
 `,
-    examples: [
-      { description: "取消 ll 别名", code: "unalias ll" },
-      { description: "取消所有别名", code: "unalias -a" },
-      { description: "取消 rm 的安全别名", code: "unalias rm" },
-      { description: "确认别名已删除", code: "unalias ll && type ll" },
-      { description: "查看帮助文档", code: "help unalias" }
-    ],
-    relatedCommands: ["alias", "bash", "source", "type"]
-  },
-  {
-    name: "history",
-    categoryId: "system",
-    syntax: "history [选项]",
-    simpleExplain: "显示历史命令记录",
-    detailExplain: "列出当前 Shell 中执行过的命令历史记录。-c 清空历史，-d 删除指定行，N 显示最近 N 条。可用 !编号 重新执行历史命令，!! 执行上一条命令。常用于查找和复用之前执行过的命令。",
-    helpOutput: `history: history [-c] [-d offset] [n] or history -anrw [filename] or history -ps arg [arg...]
+        examples: [
+            { description: "取消 ll 别名", code: "unalias ll" },
+            { description: "取消所有别名", code: "unalias -a" },
+            { description: "取消 rm 的安全别名", code: "unalias rm" },
+            { description: "确认别名已删除", code: "unalias ll && type ll" },
+            { description: "查看帮助文档", code: "help unalias" }
+        ],
+        relatedCommands: ["alias", "bash", "source", "type"]
+    },
+    {
+        name: "history",
+        categoryId: "system",
+        syntax: "history [选项]",
+        simpleExplain: "显示命令历史记录，就像查看你的操作日记",
+        detailExplain: "就像查看你的操作日记——history 列出你在终端里输入过的所有命令。忘了之前怎么操作的？翻翻历史记录就知道了。还可以用 !编号 快速重新执行某条命令。",
+        helpOutput: `history: history [-c] [-d offset] [n] or history -anrw [filename] or history -ps arg [arg...]
     Display or manipulate the history list.
     
     Display the history list with line numbers, prefixing each modified
@@ -7835,22 +7804,22 @@ or available locally via: info '(coreutils) env invocation'
     Exit Status:
     Returns success unless an invalid option is given or an error occurs.
 `,
-    examples: [
-      { description: "显示所有历史命令", code: "history" },
-      { description: "只显示最近 10 条", code: "history 10" },
-      { description: "清除所有历史记录", code: "history -c" },
-      { description: "重新执行第 100 条命令", code: "!100" },
-      { description: "查看帮助文档", code: "help history" }
-    ],
-    relatedCommands: ["alias", "bash", "fc", "ctrl+r"]
-  },
-  {
-    name: "sysctl",
-    categoryId: "system",
-    syntax: "sysctl [选项] [变量]",
-    simpleExplain: "查看和修改内核参数",
-    detailExplain: "读取和修改 Linux 内核运行时参数，如网络转发、文件描述符上限、内存策略等。-a 显示所有参数，-w 临时修改参数，-p 从配置文件加载。修改前需确认参数含义，错误配置可能导致系统不稳定。",
-    helpOutput: `
+        examples: [
+            { description: "显示所有历史命令", code: "history" },
+            { description: "只显示最近 10 条", code: "history 10" },
+            { description: "清除所有历史记录", code: "history -c" },
+            { description: "重新执行第 100 条命令", code: "!100" },
+            { description: "查看帮助文档", code: "help history" }
+        ],
+        relatedCommands: ["alias", "bash", "fc", "ctrl+r"]
+    },
+    {
+        name: "sysctl",
+        categoryId: "system",
+        syntax: "sysctl [选项] [变量]",
+        simpleExplain: "查看和修改内核参数，就像调整汽车发动机的底层参数",
+        detailExplain: "就像调整汽车发动机的底层参数——sysctl 可以读取和修改 Linux 内核的运行时参数，比如网络转发、文件描述符上限、内存策略等。调错可能让系统不稳定，所以修改前一定要搞清楚参数含义。",
+        helpOutput: `
 Usage:
  sysctl [options] [variable[=value] ...]
 
@@ -7880,25 +7849,24 @@ Options:
 
 For more details see sysctl(8).
 `,
-    examples: [
-      { description: "查看所有内核参数", code: "sysctl -a" },
-      { description: "查看 IP 转发状态", code: "sysctl net.ipv4.ip_forward" },
-      { description: "开启 IP 转发", code: "sudo sysctl -w net.ipv4.ip_forward=1" },
-      { description: "从配置文件加载参数", code: "sudo sysctl -p" },
-      { description: "查看帮助文档", code: "sysctl --help" }
-    ],
-    relatedCommands: ["proc", "modprobe", "iptables", "ulimit"],
-    dangerLevel: "warning"
-  },
-
-  // ==================== 磁盘管理 ====================
-  {
-    name: "fdisk",
-    categoryId: "disk",
-    syntax: "fdisk [选项] 设备",
-    simpleExplain: "管理磁盘分区表",
-    detailExplain: "管理磁盘分区表，支持创建、删除、调整分区。-l 列出所有磁盘分区，交互模式下可使用 m 查看帮助、n 新建分区、d 删除分区、w 保存退出。常用于 MBR 分区表的磁盘管理。",
-    helpOutput: `Usage: fdisk [options] <disk>
+        examples: [
+            { description: "查看所有内核参数", code: "sysctl -a" },
+            { description: "查看 IP 转发状态", code: "sysctl net.ipv4.ip_forward" },
+            { description: "开启 IP 转发", code: "sudo sysctl -w net.ipv4.ip_forward=1" },
+            { description: "从配置文件加载参数", code: "sudo sysctl -p" },
+            { description: "查看帮助文档", code: "sysctl --help" }
+        ],
+        relatedCommands: ["proc", "modprobe", "iptables", "ulimit"],
+        dangerLevel: "warning"
+    },
+    // ==================== 磁盘管理 ====================
+    {
+        name: "fdisk",
+        categoryId: "disk",
+        syntax: "fdisk [选项] 设备",
+        simpleExplain: "磁盘分区工具，就像给硬盘划分不同的储物柜格子",
+        detailExplain: "就像一间大仓库（硬盘），fdisk 帮你把它隔成若干个小房间（分区）——每个分区可以独立格式化和挂载，存放不同用途的数据。",
+        helpOutput: `Usage: fdisk [options] <disk>
        fdisk -l [<disk>...]
 
 Options:
@@ -7923,22 +7891,22 @@ Options:
 
 交互命令: m(帮助), p(打印), n(新建), d(删除), w(保存), q(退出),
           t(改类型), a(激活), l(类型列表)`,
-    examples: [
-      { description: "列出所有分区表", code: "fdisk -l" },
-      { description: "进入交互模式对磁盘分区", code: "fdisk /dev/sdb" },
-      { description: "创建一个新的 GPT 分区表", code: "fdisk /dev/sdc" },
-      { description: "查看帮助文档", code: "fdisk --help" }
-    ],
-    relatedCommands: ["parted", "mkfs", "lsblk", "cfdisk"],
-    dangerLevel: "danger",
-  },
-  {
-    name: "mkfs",
-    categoryId: "disk",
-    syntax: "mkfs [选项] 设备",
-    simpleExplain: "创建文件系统（格式化分区）",
-    detailExplain: "在分区上创建文件系统，使操作系统能存储和组织文件。-t 指定文件系统类型（如 ext4、xfs、ntfs），如 mkfs -t ext4 /dev/sda1。常用于格式化新建分区或 U 盘。",
-    helpOutput: `
+        examples: [
+            { description: "列出所有分区表", code: "fdisk -l" },
+            { description: "进入交互模式对磁盘分区", code: "fdisk /dev/sdb" },
+            { description: "创建一个新的 GPT 分区表", code: "fdisk /dev/sdc" },
+            { description: "查看帮助文档", code: "fdisk --help" }
+        ],
+        relatedCommands: ["parted", "mkfs", "lsblk", "cfdisk"],
+        dangerLevel: "danger",
+    },
+    {
+        name: "mkfs",
+        categoryId: "disk",
+        syntax: "mkfs [选项] 设备",
+        simpleExplain: "格式化分区，就像给空白的储物柜贴上标签和编号",
+        detailExplain: "就像你买了一块空地，要在上面建楼房前要先做好地基规划——mkfs 在分区上创建文件系统，让操作系统能够在上面存储和组织文件。",
+        helpOutput: `
 Usage:
  mkfs [options] [-t <type>] [fs-options] <device> [<size>]
 
@@ -7956,23 +7924,23 @@ Options:
 
 For more details see mkfs(8).
 `,
-    examples: [
-      { description: "将分区格式化为 ext4 文件系统", code: "mkfs.ext4 /dev/sdb1" },
-      { description: "格式化为 xfs 文件系统", code: "mkfs.xfs -f /dev/sdc1" },
-      { description: "格式化为 FAT32", code: "mkfs.vfat -F 32 /dev/sdd1" },
-      { description: "快速格式化", code: "mkfs.ext4 -T largefile4 /dev/sde1" },
-      { description: "查看帮助文档", code: "mkfs --help" }
-    ],
-    relatedCommands: ["fdisk", "fsck", "mount", "tune2fs"],
-    dangerLevel: "danger",
-  },
-  {
-    name: "mount",
-    categoryId: "disk",
-    syntax: "mount [选项] 设备 挂载点",
-    simpleExplain: "挂载文件系统到目录",
-    detailExplain: "将设备挂载到指定目录，使该目录成为访问设备文件的入口。-t 指定文件系统类型，-o 指定挂载选项（如 ro 只读、remount 重新挂载），-a 挂载 /etc/fstab 中所有条目。硬盘分区、U 盘、网络共享均需挂载后才能访问。",
-    helpOutput: `
+        examples: [
+            { description: "将分区格式化为 ext4 文件系统", code: "mkfs.ext4 /dev/sdb1" },
+            { description: "格式化为 xfs 文件系统", code: "mkfs.xfs -f /dev/sdc1" },
+            { description: "格式化为 FAT32", code: "mkfs.vfat -F 32 /dev/sdd1" },
+            { description: "快速格式化", code: "mkfs.ext4 -T largefile4 /dev/sde1" },
+            { description: "查看帮助文档", code: "mkfs --help" }
+        ],
+        relatedCommands: ["fdisk", "fsck", "mount", "tune2fs"],
+        dangerLevel: "danger",
+    },
+    {
+        name: "mount",
+        categoryId: "disk",
+        syntax: "mount [选项] 设备 挂载点",
+        simpleExplain: "挂载文件系统，就像把 U 盘插上去让系统能访问里面的文件",
+        detailExplain: "就像你把 U 盘插入电脑——操作系统需要把设备「挂载」到某个目录下，你才能通过那个目录访问 U 盘里的文件。硬盘分区、光盘、网络共享目录都需要 mount 才能使用。",
+        helpOutput: `
 Usage:
  mount [-lhV]
  mount -a [options]
@@ -8037,22 +8005,22 @@ Operations:
  --make-rshared          recursively mark a whole subtree as shared
  --make-rslave           recursively mark a whole subtree as slave
  --make-rprivate         recursively mar`,
-    examples: [
-      { description: "将 /dev/sdb1 挂载到 /mnt/data 目录", code: "mount /dev/sdb1 /mnt/data" },
-      { description: "挂载 ISO 镜像文件", code: "mount -o loop ubuntu.iso /mnt/cdrom" },
-      { description: "以只读方式挂载", code: "mount -o ro /dev/sdc1 /mnt/readonly" },
-      { description: "挂载 NFS 网络共享目录", code: "mount -t nfs 192.168.1.100:/share /mnt/nfs_share" },
-      { description: "查看帮助文档", code: "mount --help" }
-    ],
-    relatedCommands: ["umount", "fstab", "automount", "bindfs"]
-  },
-  {
-    name: "umount",
-    categoryId: "disk",
-    syntax: "umount [选项] 挂载点/设备",
-    simpleExplain: "卸载已挂载的文件系统",
-    detailExplain: "卸载已挂载的设备，卸载前确保数据全部写入完毕，避免数据丢失。-f 强制卸载，-l 懒卸载（设备空闲时卸载），-a 卸载所有设备。常用于安全移除 U 盘或断开网络共享。",
-    helpOutput: `
+        examples: [
+            { description: "将 /dev/sdb1 挂载到 /mnt/data 目录", code: "mount /dev/sdb1 /mnt/data" },
+            { description: "挂载 ISO 镜像文件", code: "mount -o loop ubuntu.iso /mnt/cdrom" },
+            { description: "以只读方式挂载", code: "mount -o ro /dev/sdc1 /mnt/readonly" },
+            { description: "挂载 NFS 网络共享目录", code: "mount -t nfs 192.168.1.100:/share /mnt/nfs_share" },
+            { description: "查看帮助文档", code: "mount --help" }
+        ],
+        relatedCommands: ["umount", "fstab", "automount", "bindfs"]
+    },
+    {
+        name: "umount",
+        categoryId: "disk",
+        syntax: "umount [选项] 挂载点/设备",
+        simpleExplain: "卸载文件系统，就像安全弹出 U 盘",
+        detailExplain: "就像你点击「安全弹出硬件」按钮拔出 U 盘——umount 在断开设备和系统的关联前，确保所有数据都已经写入完毕，避免数据丢失。",
+        helpOutput: `
 Usage:
  umount [-hV]
  umount -a [options]
@@ -8084,23 +8052,23 @@ Options:
 
 For more details see umount(8).
 `,
-    examples: [
-      { description: "卸载 /mnt/data 目录", code: "umount /mnt/data" },
-      { description: "通过设备路径卸载", code: "umount /dev/sdb1" },
-      { description: "强制卸载（慎用）", code: "umount -l /mnt/busy" },
-      { description: "卸载所有 NFS 类型的文件系统", code: "umount -a -t nfs" },
-      { description: "查看帮助文档", code: "umount --help" }
-    ],
-    relatedCommands: ["mount", "fuser", "lsof", "lazy unmount"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "fsck",
-    categoryId: "disk",
-    syntax: "fsck [选项] 设备",
-    simpleExplain: "检查并修复文件系统",
-    detailExplain: "检查并修复文件系统错误，如损坏的数据块、丢失的 inode 等。-A 检查 /etc/fstab 中所有分区，-y 自动修复，-t 指定文件系统类型。系统异常关机后启动时通常自动运行。",
-    helpOutput: `
+        examples: [
+            { description: "卸载 /mnt/data 目录", code: "umount /mnt/data" },
+            { description: "通过设备路径卸载", code: "umount /dev/sdb1" },
+            { description: "强制卸载（慎用）", code: "umount -l /mnt/busy" },
+            { description: "卸载所有 NFS 类型的文件系统", code: "umount -a -t nfs" },
+            { description: "查看帮助文档", code: "umount --help" }
+        ],
+        relatedCommands: ["mount", "fuser", "lsof", "lazy unmount"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "fsck",
+        categoryId: "disk",
+        syntax: "fsck [选项] 设备",
+        simpleExplain: "检查和修复文件系统，就像请医生给硬盘做体检和治病",
+        detailExplain: "就像定期去医院做身体检查——fsck 扫描文件系统是否有损坏的数据、丢失的节点等「病症」，发现问题还会尝试修复。通常在系统异常关机后启动时自动运行。",
+        helpOutput: `
 Usage:
  fsck [options] -- [fs-options] [<filesystem> ...]
 
@@ -8128,23 +8096,23 @@ Options:
 See the specific fsck.* commands for available fs-options.
 For more details see fsck(8).
 `,
-    examples: [
-      { description: "检查分区的文件系统", code: "fsck /dev/sda1" },
-      { description: "自动修复发现的问题", code: "fsck -y /dev/sdb1" },
-      { description: "强制检查", code: "fsck -f /dev/sdc1" },
-      { description: "指定文件系统类型", code: "fsck -t ext4 /dev/sdd1" },
-      { description: "查看帮助文档", code: "fsck --help" }
-    ],
-    relatedCommands: ["mkfs", "dumpe2fs", "tune2fs", "badblocks"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "blkid",
-    categoryId: "disk",
-    syntax: "blkid [选项] [设备]",
-    simpleExplain: "查看块设备的UUID和类型",
-    detailExplain: "显示块设备的 UUID、文件系统类型和卷标等属性。UUID 不随设备名变化，配置 /etc/fstab 时使用 UUID 比设备名更稳定。常用于获取分区唯一标识以配置挂载。",
-    helpOutput: `
+        examples: [
+            { description: "检查分区的文件系统", code: "fsck /dev/sda1" },
+            { description: "自动修复发现的问题", code: "fsck -y /dev/sdb1" },
+            { description: "强制检查", code: "fsck -f /dev/sdc1" },
+            { description: "指定文件系统类型", code: "fsck -t ext4 /dev/sdd1" },
+            { description: "查看帮助文档", code: "fsck --help" }
+        ],
+        relatedCommands: ["mkfs", "dumpe2fs", "tune2fs", "badblocks"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "blkid",
+        categoryId: "disk",
+        syntax: "blkid [选项] [设备]",
+        simpleExplain: "查看块设备的 UUID 和类型，就像查看硬盘的「身份证号」",
+        detailExplain: "就像查看每块硬盘/分区的身份证——UUID（全局唯一标识符）、文件系统类型、卷标等。UUID 在配置 /etc/fstab 时特别有用，因为它不随设备名称变化。",
+        helpOutput: `
 Usage:
  blkid --label <label> | --uuid <uuid>
 
@@ -8191,22 +8159,22 @@ Arguments:
 
 For more details see blkid(8).
 `,
-    examples: [
-      { description: "显示所有块设备的信息", code: "blkid" },
-      { description: "只显示指定设备的信息", code: "blkid /dev/sda2" },
-      { description: "只显示 UUID", code: "blkid -s UUID -o value /dev/sda1" },
-      { description: "显示更详细的信息", code: "blkid -p /dev/sdb1" },
-      { description: "查看帮助文档", code: "blkid --help" }
-    ],
-    relatedCommands: ["lsblk", "fdisk -l", "fstab", "libuuid"]
-  },
-  {
-    name: "lsblk",
-    categoryId: "disk",
-    syntax: "lsblk [选项]",
-    simpleExplain: "列出所有块设备信息",
-    detailExplain: "以树形结构列出所有块设备及其分区、大小、挂载点等信息。-f 显示文件系统信息，-o 指定输出列，-d 只显示设备不显示分区。比 fdisk -l 更直观，常用于查看磁盘和分区布局。",
-    helpOutput: `
+        examples: [
+            { description: "显示所有块设备的信息", code: "blkid" },
+            { description: "只显示指定设备的信息", code: "blkid /dev/sda2" },
+            { description: "只显示 UUID", code: "blkid -s UUID -o value /dev/sda1" },
+            { description: "显示更详细的信息", code: "blkid -p /dev/sdb1" },
+            { description: "查看帮助文档", code: "blkid --help" }
+        ],
+        relatedCommands: ["lsblk", "fdisk -l", "fstab", "libuuid"]
+    },
+    {
+        name: "lsblk",
+        categoryId: "disk",
+        syntax: "lsblk [选项]",
+        simpleExplain: "列出块设备信息，就像查看电脑的「硬盘全家福」",
+        detailExplain: "就像给所有硬盘和分区拍了一张全家福照片——以树形结构展示每个磁盘设备、上面的分区、每个分区的大小、挂载点等。比 fdisk -l 更直观。",
+        helpOutput: `
 Usage:
  lsblk [options] [<device> ...]
 
@@ -8281,22 +8249,22 @@ Available output columns:
         OWNER  user name
     PARTFLAGS  partition flags
     PA`,
-    examples: [
-      { description: "以树形结构显示所有块设备", code: "lsblk" },
-      { description: "显示 UUID 和文件系统类型", code: "lsblk -f" },
-      { description: "以 JSON 格式输出", code: "lsblk -J" },
-      { description: "只显示指定设备", code: "lsblk /dev/sda" },
-      { description: "查看帮助文档", code: "lsblk --help" }
-    ],
-    relatedCommands: ["blkid", "fdisk", "df", "tree"]
-  },
-  {
-    name: "dd",
-    categoryId: "disk",
-    syntax: "dd [选项]",
-    simpleExplain: "按块复制和转换文件",
-    detailExplain: "按字节复制数据，可复制磁盘、制作启动 U 盘、备份分区表。常用参数：if 指定输入文件，of 指定输出文件，bs 设置块大小，count 指定块数。功能强大但参数错误可能造成数据丢失，使用时需仔细核对。",
-    helpOutput: `Usage: dd [OPERAND]...
+        examples: [
+            { description: "以树形结构显示所有块设备", code: "lsblk" },
+            { description: "显示 UUID 和文件系统类型", code: "lsblk -f" },
+            { description: "以 JSON 格式输出", code: "lsblk -J" },
+            { description: "只显示指定设备", code: "lsblk /dev/sda" },
+            { description: "查看帮助文档", code: "lsblk --help" }
+        ],
+        relatedCommands: ["blkid", "fdisk", "df", "tree"]
+    },
+    {
+        name: "dd",
+        categoryId: "disk",
+        syntax: "dd [选项]",
+        simpleExplain: "底层磁盘拷贝工具，就像一台精密的磁盘复印机",
+        detailExplain: "就像一台超级精密的磁盘复印机——可以逐字节地复制整个磁盘、制作启动 U 盘、备份分区表。dd 功能强大但也很危险，一个参数写错就可能把整个硬盘数据抹掉，所以有「dd = Disk Destroyer」的戏称。",
+        helpOutput: `Usage: dd [OPERAND]...
   or:  dd OPTION
 Copy a file, converting and formatting according to the operands.
 
@@ -8362,23 +8330,23 @@ Sending a USR1 signal to a running 'dd' process makes it
 print I/O statistics to standard error and then resume copying.
 
 Option`,
-    examples: [
-      { description: "制作启动 U 盘", code: "dd if=ubuntu.iso of=/dev/sdb bs=4M status=progress" },
-      { description: "备份整个磁盘为镜像文件", code: "dd if=/dev/sda of=disk_backup.img bs=64K" },
-      { description: "安全擦除硬盘数据", code: "dd if=/dev/urandom of=/dev/sdb bs=1M" },
-      { description: "测试磁盘写入速度", code: "dd if=/dev/zero of=testfile bs=1M count=1024 oflag=dsync" },
-      { description: "查看帮助文档", code: "dd --help" }
-    ],
-    relatedCommands: ["cp", "cat", "rsync", "shred"],
-    dangerLevel: "danger",
-  },
-  {
-    name: "parted",
-    categoryId: "disk",
-    syntax: "parted [选项] 设备",
-    simpleExplain: "高级磁盘分区工具",
-    detailExplain: "磁盘分区工具，支持 GPT 分区表和超过 2TB 的大硬盘，可调整分区大小。-l 列出所有分区，交互模式下支持 mkpart 新建分区、resizepart 调整分区、rm 删除分区。是现代大容量硬盘分区的首选工具。",
-    helpOutput: `Usage: parted [OPTION]... [DEVICE [COMMAND [PARAMETER]...]...]
+        examples: [
+            { description: "制作启动 U 盘", code: "dd if=ubuntu.iso of=/dev/sdb bs=4M status=progress" },
+            { description: "备份整个磁盘为镜像文件", code: "dd if=/dev/sda of=disk_backup.img bs=64K" },
+            { description: "安全擦除硬盘数据", code: "dd if=/dev/urandom of=/dev/sdb bs=1M" },
+            { description: "测试磁盘写入速度", code: "dd if=/dev/zero of=testfile bs=1M count=1024 oflag=dsync" },
+            { description: "查看帮助文档", code: "dd --help" }
+        ],
+        relatedCommands: ["cp", "cat", "rsync", "shred"],
+        dangerLevel: "danger",
+    },
+    {
+        name: "parted",
+        categoryId: "disk",
+        syntax: "parted [选项] 设备",
+        simpleExplain: "高级磁盘分区工具，就像 fdisk 的升级版能处理更大的硬盘",
+        detailExplain: "就像 fdisk 的升级版——支持 GPT 分区表、支持超过 2TB 的大硬盘、可以调整分区大小而不丢失数据。parted 是现代大容量硬盘分区的首选工具。",
+        helpOutput: `Usage: parted [OPTION]... [DEVICE [COMMAND [PARAMETER]...]...]
 
 Options:
   -h, --help           显示帮助
@@ -8401,22 +8369,22 @@ Commands:
   unit UNIT                设置默认单位
   rescue START END         恢复丢失分区
   move NUMBER START END    移动分区`,
-    examples: [
-      { description: "进入交互模式对磁盘分区", code: "parted /dev/sdb" },
-      { description: "创建 GPT 分区表", code: "parted /dev/sdb mklabel gpt" },
-      { description: "创建新分区", code: "parted /dev/sdb mkpart primary ext4 0% 50%" },
-      { description: "打印分区信息", code: "parted /dev/sdb print" },
-      { description: "查看帮助文档", code: "parted --help" }
-    ],
-    relatedCommands: ["fdisk", "cfdisk", "gparted", "mkfs"]
-  },
-  {
-    name: "mkswap",
-    categoryId: "disk",
-    syntax: "mkswap [选项] 设备",
-    simpleExplain: "创建交换分区",
-    detailExplain: "在指定设备或文件上建立 swap 交换区，将其格式化为 swap 格式以便系统使用。常用参数：-c 在建立前检查坏块，-L 设置卷标，-p 指定页面大小，-U 设置 UUID。典型用法是先创建 swap 分区或文件，再用 mkswap 初始化，最后用 swapon 启用。",
-    helpOutput: `
+        examples: [
+            { description: "进入交互模式对磁盘分区", code: "parted /dev/sdb" },
+            { description: "创建 GPT 分区表", code: "parted /dev/sdb mklabel gpt" },
+            { description: "创建新分区", code: "parted /dev/sdb mkpart primary ext4 0% 50%" },
+            { description: "打印分区信息", code: "parted /dev/sdb print" },
+            { description: "查看帮助文档", code: "parted --help" }
+        ],
+        relatedCommands: ["fdisk", "cfdisk", "gparted", "mkfs"]
+    },
+    {
+        name: "mkswap",
+        categoryId: "disk",
+        syntax: "mkswap [选项] 设备",
+        simpleExplain: "创建交换分区，就像给电脑准备一张「应急内存卡」",
+        detailExplain: "就像给电脑准备了一张应急备用内存卡——当真实内存（RAM）不够用时，系统会把一部分数据临时存到 swap 分区里。mkswap 就是把一个分区格式化为 swap 格式。",
+        helpOutput: `
 Usage:
  mkswap [options] device [size]
 
@@ -8438,22 +8406,22 @@ Options:
 
 For more details see mkswap(8).
 `,
-    examples: [
-      { description: "将分区格式化为 swap 格式", code: "mkswap /dev/sdb1" },
-      { description: "创建 swap 文件", code: "dd if=/dev/zero of=/swapfile bs=1M count=4096 && mkswap /swapfile" },
-      { description: "指定 UUID 创建 swap", code: "mkswap -U custom-uuid /dev/sdc1" },
-      { description: "查看帮助文档", code: "mkswap --help" }
-    ],
-    relatedCommands: ["swapon", "swapoff", "free", "dd"],
-    dangerLevel: "warning",
-  },
-  {
-    name: "swapon",
-    categoryId: "disk",
-    syntax: "swapon [选项] 设备",
-    simpleExplain: "启用交换分区",
-    detailExplain: "启用指定的 swap 分区或 swap 文件，让系统在物理内存不足时使用该交换空间。常用参数：-a 启用 /etc/fstab 中所有 swap 项，-s 显示当前 swap 使用情况，-p 设置优先级（数值越大越优先使用）。通常在 mkswap 初始化之后执行。",
-    helpOutput: `
+        examples: [
+            { description: "将分区格式化为 swap 格式", code: "mkswap /dev/sdb1" },
+            { description: "创建 swap 文件", code: "dd if=/dev/zero of=/swapfile bs=1M count=4096 && mkswap /swapfile" },
+            { description: "指定 UUID 创建 swap", code: "mkswap -U custom-uuid /dev/sdc1" },
+            { description: "查看帮助文档", code: "mkswap --help" }
+        ],
+        relatedCommands: ["swapon", "swapoff", "free", "dd"],
+        dangerLevel: "warning",
+    },
+    {
+        name: "swapon",
+        categoryId: "disk",
+        syntax: "swapon [选项] 设备",
+        simpleExplain: "启用交换分区，就像激活那张「应急内存卡」让它随时待命",
+        detailExplain: "就像把你准备好的应急内存卡插进卡槽激活——swapon 让系统开始使用指定的 swap 分区或 swap 文件。启用后，当物理内存不足时，系统就会自动使用 swap 空间。",
+        helpOutput: `
 Usage:
  swapon [options] [<spec>]
 
@@ -8503,22 +8471,22 @@ Available output columns:
 
 For more details see swapon(8).
 `,
-    examples: [
-      { description: "启用 swap 分区", code: "swapon /dev/sdb1" },
-      { description: "启用 swap 文件", code: "swapon /swapfile" },
-      { description: "查看当前所有 swap 设备", code: "swapon --show" },
-      { description: "启用所有 swap 设备", code: "swapon -a" },
-      { description: "查看帮助文档", code: "swapon --help" }
-    ],
-    relatedCommands: ["swapoff", "mkswap", "free", "fstab"]
-  },
-  {
-    name: "swapoff",
-    categoryId: "disk",
-    syntax: "swapoff [选项] 设备",
-    simpleExplain: "禁用交换分区",
-    detailExplain: "停用指定的 swap 分区或文件，禁用前系统会先把 swap 中的数据搬回物理内存。常用参数：-a 停用所有 swap，-v 显示详细信息。常用于关闭 swap 或调整 swap 配置前，需确保内存足够容纳搬回的数据。",
-    helpOutput: `
+        examples: [
+            { description: "启用 swap 分区", code: "swapon /dev/sdb1" },
+            { description: "启用 swap 文件", code: "swapon /swapfile" },
+            { description: "查看当前所有 swap 设备", code: "swapon --show" },
+            { description: "启用所有 swap 设备", code: "swapon -a" },
+            { description: "查看帮助文档", code: "swapon --help" }
+        ],
+        relatedCommands: ["swapoff", "mkswap", "free", "fstab"]
+    },
+    {
+        name: "swapoff",
+        categoryId: "disk",
+        syntax: "swapoff [选项] 设备",
+        simpleExplain: "禁用交换分区，就像拔掉那张「应急内存卡」",
+        detailExplain: "就像把应急内存卡从卡槽里拔出来——swapoff 让系统停止使用指定的 swap 分区或文件。禁用前系统会先把 swap 里的数据搬回内存。",
+        helpOutput: `
 Usage:
  swapoff [options] [<spec>]
 
@@ -8541,39 +8509,39 @@ The <spec> parameter:
 
 For more details see swapoff(8).
 `,
-    examples: [
-      { description: "禁用指定的 swap 分区", code: "swapoff /dev/sdb1" },
-      { description: "禁用所有 swap 设备", code: "swapoff -a" },
-      { description: "禁用 swap 文件", code: "swapoff /swapfile" },
-      { description: "查看帮助文档", code: "swapoff --help" }
-    ],
-    relatedCommands: ["swapon", "mkswap", "free", "fstab"]
-  },
-  {
-    name: "dumpe2fs",
-    categoryId: "disk",
-    syntax: "dumpe2fs [选项] 设备",
-    simpleExplain: "查看ext文件系统详细信息",
-    detailExplain: "输出 ext2/ext3/ext4 文件系统的详细信息，包括超级块、块组描述符、inode 数量、块大小、挂载次数等。常用参数：-h 只显示超级块信息，-b 显示坏块列表。常用于诊断文件系统问题和检查文件系统参数。",
-    helpOutput: `dumpe2fs 1.47.0 (5-Feb-2023)
+        examples: [
+            { description: "禁用指定的 swap 分区", code: "swapoff /dev/sdb1" },
+            { description: "禁用所有 swap 设备", code: "swapoff -a" },
+            { description: "禁用 swap 文件", code: "swapoff /swapfile" },
+            { description: "查看帮助文档", code: "swapoff --help" }
+        ],
+        relatedCommands: ["swapon", "mkswap", "free", "fstab"]
+    },
+    {
+        name: "dumpe2fs",
+        categoryId: "disk",
+        syntax: "dumpe2fs [选项] 设备",
+        simpleExplain: "查看 ext 文件系统的详细信息，就像查看 ext 硬盘的「体检报告」",
+        detailExplain: "就像给 ext2/ext3/ext4 文件系统做一次详细的体检报告——显示超级块信息、块组描述、inode 数量等。这些信息对于诊断文件系统问题和优化性能非常有用。",
+        helpOutput: `dumpe2fs 1.47.0 (5-Feb-2023)
 dumpe2fs: invalid option -- '-'
 Usage: dumpe2fs [-bfghimxV] [-o superblock=<num>] [-o blocksize=<num>] device
 `,
-    examples: [
-      { description: "查看 ext4 文件系统的详细信息", code: "dumpe2fs /dev/sda1" },
-      { description: "只显示超级块信息", code: "dumpe2fs -h /dev/sda1" },
-      { description: "显示块组描述信息", code: "dumpe2fs /dev/sda1 | grep -i 'group'" },
-      { description: "查看帮助文档", code: "dumpe2fs --help" }
-    ],
-    relatedCommands: ["tune2fs", "fsck", "mkfs.ext4", "blkid"]
-  },
-  {
-    name: "ncdu",
-    categoryId: "disk",
-    syntax: "ncdu [目录]",
-    simpleExplain: "交互式磁盘使用分析工具",
-    detailExplain: "扫描指定目录并以交互式界面按大小排序显示各文件和子目录的磁盘占用情况，支持方向键浏览和删除操作。常用参数：-x 不跨越文件系统边界，-r 只读模式（禁止删除），-e 显示扩展信息。常用于快速定位占用磁盘空间的大文件或目录。",
-    helpOutput: `Usage: ncdu [options] dir
+        examples: [
+            { description: "查看 ext4 文件系统的详细信息", code: "dumpe2fs /dev/sda1" },
+            { description: "只显示超级块信息", code: "dumpe2fs -h /dev/sda1" },
+            { description: "显示块组描述信息", code: "dumpe2fs /dev/sda1 | grep -i 'group'" },
+            { description: "查看帮助文档", code: "dumpe2fs --help" }
+        ],
+        relatedCommands: ["tune2fs", "fsck", "mkfs.ext4", "blkid"]
+    },
+    {
+        name: "ncdu",
+        categoryId: "disk",
+        syntax: "ncdu [目录]",
+        simpleExplain: "交互式磁盘使用分析工具，就像一个可视化的仓库盘点员",
+        detailExplain: "就像一个可视化的仓库盘点员——ncdu 会扫描指定目录，然后用交互式界面按大小排序显示各文件和文件夹的占用情况。你可以用方向键上下浏览，快速找到吃空间的「大户」。",
+        helpOutput: `Usage: ncdu [options] dir
 
 Options:
   -h,--help          显示帮助
@@ -8593,22 +8561,22 @@ Options:
   -L                 跟随符号链接
   --confirm-quit     退出时确认
   --ignore-config    忽略配置文件`,
-    examples: [
-      { description: "分析当前目录的磁盘使用", code: "ncdu" },
-      { description: "分析指定目录", code: "ncdu /home/user" },
-      { description: "不扫描隐藏文件", code: "ncdu --exclude-hidden /home" },
-      { description: "导出扫描结果到文件", code: "ncdu -o /tmp/scan_result" },
-      { description: "查看帮助文档", code: "ncdu --help" }
-    ],
-    relatedCommands: ["du", "df", "ls", "find"]
-  },
-  {
-    name: "hdparm",
-    categoryId: "disk",
-    syntax: "hdparm [选项] 设备",
-    simpleExplain: "查看和设置硬盘参数",
-    detailExplain: "查看和设置 SATA/IDE 硬盘参数，可显示硬盘型号、序列号、缓存大小，测试读取速度，开启或关闭 DMA 模式等。常用参数：-i 显示硬盘基本信息，-I 显示详细信息，-t 测试磁盘读取速度，-T 测试缓存读取速度。修改参数有数据丢失风险，需谨慎使用。",
-    helpOutput: `Usage: hdparm [options] [device ...]
+        examples: [
+            { description: "分析当前目录的磁盘使用", code: "ncdu" },
+            { description: "分析指定目录", code: "ncdu /home/user" },
+            { description: "不扫描隐藏文件", code: "ncdu --exclude-hidden /home" },
+            { description: "导出扫描结果到文件", code: "ncdu -o /tmp/scan_result" },
+            { description: "查看帮助文档", code: "ncdu --help" }
+        ],
+        relatedCommands: ["du", "df", "ls", "find"]
+    },
+    {
+        name: "hdparm",
+        categoryId: "disk",
+        syntax: "hdparm [选项] 设备",
+        simpleExplain: "查看和设置硬盘参数，就像给硬盘做性能调校",
+        detailExplain: "就像给硬盘做性能调校——hdparm 可以查看硬盘的型号、序列号、缓存大小，还能测试读取速度、开启或关闭 DMA 模式等。不过设置参数有风险，调错可能导致数据丢失。",
+        helpOutput: `Usage: hdparm [options] [device ...]
 
 Options:
   -a   获取/设置预读扇区数
@@ -8651,22 +8619,22 @@ Options:
   -z   重新读取分区表
   -Z   禁用 Seagate 自动省电
   --security-help  安全选项帮助`,
-    examples: [
-      { description: "查看硬盘基本信息", code: "sudo hdparm -i /dev/sda" },
-      { description: "测试硬盘读取速度", code: "sudo hdparm -tT /dev/sda" },
-      { description: "查看硬盘电源管理状态", code: "sudo hdparm -C /dev/sda" },
-      { description: "开启 DMA 传输模式", code: "sudo hdparm -d1 /dev/sda" },
-      { description: "查看帮助文档", code: "hdparm --help" }
-    ],
-    relatedCommands: ["smartctl", "fdisk", "lsblk", "badblocks"]
-  },
-  {
-    name: "smartctl",
-    categoryId: "disk",
-    syntax: "smartctl [选项] 设备",
-    simpleExplain: "查看硬盘SMART健康信息",
-    detailExplain: "读取硬盘的 SMART（自监测分析报告技术）数据，包括温度、通电时间、坏扇区计数、错误日志等。常用参数：-a 显示所有 SMART 信息，-H 显示健康状态，-t 运行自检测试，-l 查指定日志。常用于提前发现硬盘健康隐患，避免数据丢失。",
-    helpOutput: `Usage: smartctl [options] device
+        examples: [
+            { description: "查看硬盘基本信息", code: "sudo hdparm -i /dev/sda" },
+            { description: "测试硬盘读取速度", code: "sudo hdparm -tT /dev/sda" },
+            { description: "查看硬盘电源管理状态", code: "sudo hdparm -C /dev/sda" },
+            { description: "开启 DMA 传输模式", code: "sudo hdparm -d1 /dev/sda" },
+            { description: "查看帮助文档", code: "hdparm --help" }
+        ],
+        relatedCommands: ["smartctl", "fdisk", "lsblk", "badblocks"]
+    },
+    {
+        name: "smartctl",
+        categoryId: "disk",
+        syntax: "smartctl [选项] 设备",
+        simpleExplain: "查看硬盘SMART健康信息，就像给硬盘做健康体检",
+        detailExplain: "就像给硬盘做健康体检——smartctl 读取硬盘的 SMART（自监测分析报告技术）数据，包括温度、通电时间、坏扇区计数等。提前发现硬盘健康隐患，避免数据突然丢失。",
+        helpOutput: `Usage: smartctl [options] device
 
 Options:
   -h, --help           显示帮助
@@ -8693,22 +8661,22 @@ Options:
   -F TYPE              固件 bug 修复
   -P TYPE              预设
   -B TYPE              固件 bug`,
-    examples: [
-      { description: "查看硬盘整体健康状态", code: "sudo smartctl -H /dev/sda" },
-      { description: "显示所有 SMART 信息", code: "sudo smartctl -a /dev/sda" },
-      { description: "查看硬盘温度", code: "sudo smartctl -A /dev/sda | grep Temperature" },
-      { description: "运行硬盘自检", code: "sudo smartctl -t long /dev/sda" },
-      { description: "查看帮助文档", code: "smartctl --help" }
-    ],
-    relatedCommands: ["hdparm", "lsblk", "fdisk", "badblocks"]
-  },
-  {
-    name: "losetup",
-    categoryId: "disk",
-    syntax: "losetup [选项] 循环设备 文件",
-    simpleExplain: "设置和管理循环设备",
-    detailExplain: "将普通文件（如 ISO 镜像）关联到循环设备 /dev/loopX，使其可以像真实硬盘一样被挂载和访问。常用参数：-a 列出所有循环设备，-d 卸载指定循环设备，-f 查找空闲循环设备，-o 设置偏移量。常用于挂载 ISO 镜像或访问磁盘镜像文件。",
-    helpOutput: `
+        examples: [
+            { description: "查看硬盘整体健康状态", code: "sudo smartctl -H /dev/sda" },
+            { description: "显示所有 SMART 信息", code: "sudo smartctl -a /dev/sda" },
+            { description: "查看硬盘温度", code: "sudo smartctl -A /dev/sda | grep Temperature" },
+            { description: "运行硬盘自检", code: "sudo smartctl -t long /dev/sda" },
+            { description: "查看帮助文档", code: "smartctl --help" }
+        ],
+        relatedCommands: ["hdparm", "lsblk", "fdisk", "badblocks"]
+    },
+    {
+        name: "losetup",
+        categoryId: "disk",
+        syntax: "losetup [选项] 循环设备 文件",
+        simpleExplain: "设置循环设备，就像把一个文件虚拟成一块硬盘",
+        detailExplain: "就像把一个文件虚拟成一块硬盘——losetup 可以把一个普通文件（比如 ISO 镜像）关联到一个循环设备（/dev/loopX），然后就可以像操作真实硬盘一样挂载和访问它。",
+        helpOutput: `
 Usage:
  losetup [options] [<loopdev>]
  losetup [options] -f | <loopdev> <file>
@@ -8759,81 +8727,81 @@ Available output columns:
 
 For more details see losetup(8).
 `,
-    examples: [
-      { description: "查看所有循环设备", code: "losetup -a" },
-      { description: "将 ISO 文件关联到循环设备", code: "sudo losetup /dev/loop0 ubuntu.iso" },
-      { description: "自动寻找空闲循环设备并关联", code: "sudo losetup -f ubuntu.iso" },
-      { description: "解除循环设备关联", code: "sudo losetup -d /dev/loop0" },
-      { description: "查看帮助文档", code: "losetup --help" }
-    ],
-    relatedCommands: ["mount", "mkfs", "dd", "fdisk"]
-  },
-  {
-    name: "tune2fs",
-    categoryId: "disk",
-    syntax: "tune2fs [选项] 设备",
-    simpleExplain: "调整ext文件系统参数",
-    detailExplain: "调整 ext2/ext3/ext4 文件系统的参数，如保留空间比例、文件系统标签、自检间隔、最大挂载次数等。常用参数：-l 列出文件系统参数，-L 设置卷标，-m 设置保留块百分比，-i 设置自检间隔，-c 设置最大挂载次数。操作可能影响文件系统，务必谨慎。",
-    helpOutput: `tune2fs 1.47.0 (5-Feb-2023)
+        examples: [
+            { description: "查看所有循环设备", code: "losetup -a" },
+            { description: "将 ISO 文件关联到循环设备", code: "sudo losetup /dev/loop0 ubuntu.iso" },
+            { description: "自动寻找空闲循环设备并关联", code: "sudo losetup -f ubuntu.iso" },
+            { description: "解除循环设备关联", code: "sudo losetup -d /dev/loop0" },
+            { description: "查看帮助文档", code: "losetup --help" }
+        ],
+        relatedCommands: ["mount", "mkfs", "dd", "fdisk"]
+    },
+    {
+        name: "tune2fs",
+        categoryId: "disk",
+        syntax: "tune2fs [选项] 设备",
+        simpleExplain: "调整ext文件系统参数，就像给文件系统做微调手术",
+        detailExplain: "就像给文件系统做微调手术——tune2fs 可以调整 ext2/ext3/ext4 文件系统的各种参数，比如保留空间比例、文件系统标签、自检间隔等。操作不当可能损坏文件系统，务必谨慎。",
+        helpOutput: `tune2fs 1.47.0 (5-Feb-2023)
 `,
-    examples: [
-      { description: "查看文件系统参数", code: "sudo tune2fs -l /dev/sda1" },
-      { description: "设置文件系统标签", code: "sudo tune2fs -L mydata /dev/sda1" },
-      { description: "将 ext2 转换为 ext3", code: "sudo tune2fs -j /dev/sda1" },
-      { description: "设置每 30 天自检一次", code: "sudo tune2fs -i 30d /dev/sda1" },
-      { description: "查看帮助文档", code: "tune2fs --help" }
-    ],
-    relatedCommands: ["dumpe2fs", "fsck", "mkfs.ext4", "resize2fs"],
-    dangerLevel: "warning"
-  },
-  {
-    name: "resize2fs",
-    categoryId: "disk",
-    syntax: "resize2fs [选项] 设备 [大小]",
-    simpleExplain: "调整ext文件系统大小",
-    detailExplain: "扩大或缩小 ext2/ext3/ext4 文件系统的大小，通常在调整分区大小后使用，让文件系统填满新的分区空间。常用参数：-d 调试模式，-f 强制执行，-M 缩小到最小尺寸，-p 显示进度。扩大文件系统可在线执行，缩小需先卸载。",
-    helpOutput: `resize2fs 1.47.0 (5-Feb-2023)
+        examples: [
+            { description: "查看文件系统参数", code: "sudo tune2fs -l /dev/sda1" },
+            { description: "设置文件系统标签", code: "sudo tune2fs -L mydata /dev/sda1" },
+            { description: "将 ext2 转换为 ext3", code: "sudo tune2fs -j /dev/sda1" },
+            { description: "设置每 30 天自检一次", code: "sudo tune2fs -i 30d /dev/sda1" },
+            { description: "查看帮助文档", code: "tune2fs --help" }
+        ],
+        relatedCommands: ["dumpe2fs", "fsck", "mkfs.ext4", "resize2fs"],
+        dangerLevel: "warning"
+    },
+    {
+        name: "resize2fs",
+        categoryId: "disk",
+        syntax: "resize2fs [选项] 设备 [大小]",
+        simpleExplain: "调整ext文件系统大小，就像给房间扩容或缩小",
+        detailExplain: "就像给房间扩容或缩小——resize2fs 可以扩大或缩小 ext2/ext3/ext4 文件系统的大小。通常在调整了分区大小后使用，让文件系统填满新的分区空间。",
+        helpOutput: `resize2fs 1.47.0 (5-Feb-2023)
 resize2fs: invalid option -- '-'
 Usage: resize2fs [-d debug_flags] [-f] [-F] [-M] [-P] [-p] device [-b|-s|new_size] [-S RAID-stride] [-z undo_file]
 
 `,
-    examples: [
-      { description: "扩大文件系统到分区最大容量", code: "sudo resize2fs /dev/sda1" },
-      { description: "将文件系统缩小到指定大小", code: "sudo resize2fs /dev/sda1 50G" },
-      { description: "强制调整前先检查", code: "sudo resize2fs -p /dev/sda1" },
-      { description: "查看最小可缩小到多少", code: "sudo resize2fs -P /dev/sda1" },
-      { description: "查看帮助文档", code: "resize2fs --help" }
-    ],
-    relatedCommands: ["tune2fs", "fdisk", "lvextend", "fsck"]
-  },
-  {
-    name: "badblocks",
-    categoryId: "disk",
-    syntax: "badblocks [选项] 设备",
-    simpleExplain: "检查磁盘坏道",
-    detailExplain: "扫描磁盘上的每个扇区，找出无法正常读写的坏道。常用参数：-v 显示详细进度，-w 写模式测试（会破坏数据），-n 非破坏性读写测试，-s 显示进度条。发现坏道意味着硬盘可能即将损坏，应及时备份数据。",
-    helpOutput: `badblocks: invalid option -- '-'
+        examples: [
+            { description: "扩大文件系统到分区最大容量", code: "sudo resize2fs /dev/sda1" },
+            { description: "将文件系统缩小到指定大小", code: "sudo resize2fs /dev/sda1 50G" },
+            { description: "强制调整前先检查", code: "sudo resize2fs -p /dev/sda1" },
+            { description: "查看最小可缩小到多少", code: "sudo resize2fs -P /dev/sda1" },
+            { description: "查看帮助文档", code: "resize2fs --help" }
+        ],
+        relatedCommands: ["tune2fs", "fdisk", "lvextend", "fsck"]
+    },
+    {
+        name: "badblocks",
+        categoryId: "disk",
+        syntax: "badblocks [选项] 设备",
+        simpleExplain: "检查磁盘坏道，就像给硬盘做坏点检测",
+        detailExplain: "就像给硬盘做坏点检测——badblocks 扫描磁盘上的每个扇区，找出无法正常读写的坏道。发现坏道意味着硬盘可能快坏了，要及时备份数据。",
+        helpOutput: `badblocks: invalid option -- '-'
 Usage: badblocks [-b block_size] [-i input_file] [-o output_file] [-svwnfBX]
        [-c blocks_at_once] [-d delay_factor_between_reads] [-e max_bad_blocks]
        [-p num_passes] [-t test_pattern [-t test_pattern [...]]]
        device [last_block [first_block]]
 `,
-    examples: [
-      { description: "只读模式扫描坏道", code: "sudo badblocks -s /dev/sda" },
-      { description: "非破坏性读写测试", code: "sudo badblocks -n /dev/sda" },
-      { description: "将坏道列表保存到文件", code: "sudo badblocks -o bad.txt /dev/sda" },
-      { description: "指定扫描的起止块", code: "sudo badblocks -s /dev/sda 1000000 0" },
-      { description: "查看帮助文档", code: "badblocks --help" }
-    ],
-    relatedCommands: ["fsck", "smartctl", "hdparm", "e2fsck"]
-  },
-  {
-    name: "sync",
-    categoryId: "disk",
-    syntax: "sync",
-    simpleExplain: "将缓存数据写入磁盘",
-    detailExplain: "强制将内存中缓存的文件数据立即写入磁盘。Linux 为提高性能会将数据先放在内存缓存中稍后写入，sync 命令确保数据落盘。常用参数：-f 同步文件系统，-d 仅同步文件数据（不同步元数据）。常在关机、拔出存储设备或重要写入后使用以确保数据安全。",
-    helpOutput: `Usage: sync [OPTION] [FILE]...
+        examples: [
+            { description: "只读模式扫描坏道", code: "sudo badblocks -s /dev/sda" },
+            { description: "非破坏性读写测试", code: "sudo badblocks -n /dev/sda" },
+            { description: "将坏道列表保存到文件", code: "sudo badblocks -o bad.txt /dev/sda" },
+            { description: "指定扫描的起止块", code: "sudo badblocks -s /dev/sda 1000000 0" },
+            { description: "查看帮助文档", code: "badblocks --help" }
+        ],
+        relatedCommands: ["fsck", "smartctl", "hdparm", "e2fsck"]
+    },
+    {
+        name: "sync",
+        categoryId: "disk",
+        syntax: "sync",
+        simpleExplain: "将缓存数据写入磁盘，就像把草稿本上的内容正式抄写到笔记本上",
+        detailExplain: "就像把草稿本上的内容正式抄写到笔记本上——Linux 为了提高性能，会把数据先放在内存缓存中，稍后再写入磁盘。sync 命令强制把所有缓存数据立即写入磁盘，确保数据安全。",
+        helpOutput: `Usage: sync [OPTION] [FILE]...
 Synchronize cached writes to persistent storage
 
 If one or more files are specified, sync only them,
@@ -8849,24 +8817,23 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/sync>
 or available locally via: info '(coreutils) sync invocation'
 `,
-    examples: [
-      { description: "将所有缓存数据写入磁盘", code: "sync" },
-      { description: "拔 U 盘前确保数据写入", code: "sync && sudo eject /dev/sdb" },
-      { description: "重启前同步数据", code: "sync && sudo reboot" },
-      { description: "显示同步进度信息", code: "sync -v" },
-      { description: "查看帮助文档", code: "sync --help" }
-    ],
-    relatedCommands: ["fsck", "mount", "umount", "dd"]
-  },
-
-  // ==================== 压缩解压 ====================
-  {
-    name: "tar",
-    categoryId: "compress",
-    syntax: "tar [选项] 文件...",
-    simpleExplain: "打包和解包文件",
-    detailExplain: "将多个文件和目录打包成单个归档文件，tar 本身只负责打包不压缩，通常配合 gzip 或 bzip2 一起使用实现打包压缩。常用参数：-c 创建归档，-x 解包，-t 列出内容，-v 显示过程，-f 指定文件名，-z 用 gzip 压缩/解压，-j 用 bzip2，-J 用 xz。常用于备份和软件分发包。",
-    helpOutput: `Usage: tar [OPTION...] [FILE]...
+        examples: [
+            { description: "将所有缓存数据写入磁盘", code: "sync" },
+            { description: "拔 U 盘前确保数据写入", code: "sync && sudo eject /dev/sdb" },
+            { description: "重启前同步数据", code: "sync && sudo reboot" },
+            { description: "显示同步进度信息", code: "sync -v" },
+            { description: "查看帮助文档", code: "sync --help" }
+        ],
+        relatedCommands: ["fsck", "mount", "umount", "dd"]
+    },
+    // ==================== 压缩解压 ====================
+    {
+        name: "tar",
+        categoryId: "compress",
+        syntax: "tar [选项] 文件...",
+        simpleExplain: "打包和解包文件，就像用纸箱把一堆东西装箱打包",
+        detailExplain: "就像搬家时用纸箱把一堆零散的东西打包在一起——tar 本身只负责「打包」，不压缩。但通常配合 gzip 或 bzip2 一起使用，边打包边压缩，就像把东西装箱后再用真空袋抽气压缩。",
+        helpOutput: `Usage: tar [OPTION...] [FILE]...
 GNU 'tar' saves many files together into a single tape or disk archive, and can
 restore individual files from the archive.
 
@@ -8920,22 +8887,22 @@ Examples:
                              CACHEDIR.TAG, except for the tag file itself
       --exclude-caches-all   exclude directories containing CACHEDIR.TAG
       --exclude-caches-under exclude everything under d`,
-    examples: [
-      { description: "打包并压缩为 .tar.gz", code: "tar -czf backup.tar.gz /home/user/project/" },
-      { description: "解压 .tar.gz 文件", code: "tar -xzf backup.tar.gz" },
-      { description: "打包并压缩为 .tar.bz2", code: "tar -cjf archive.tar.bz2 documents/" },
-      { description: "查看压缩包内容（不解压）", code: "tar -tzf backup.tar.gz" },
-      { description: "查看帮助文档", code: "tar --help" }
-    ],
-    relatedCommands: ["gzip", "bzip2", "zip", "7z"]
-  },
-  {
-    name: "gzip",
-    categoryId: "compress",
-    syntax: "gzip [选项] 文件...",
-    simpleExplain: "压缩文件为gzip格式",
-    detailExplain: "压缩文件以节省磁盘空间和网络传输时间，压缩后原文件被替换为 .gz 文件，是 Linux 上最常用的压缩格式。常用参数：-d 解压，-k 保留原文件，-r 递归压缩目录，-1 到 -9 设置压缩级别（数字越大压缩率越高但越慢）。常用于日志文件压缩和配合 tar 使用。",
-    helpOutput: `Usage: gzip [OPTION]... [FILE]...
+        examples: [
+            { description: "打包并压缩为 .tar.gz", code: "tar -czf backup.tar.gz /home/user/project/" },
+            { description: "解压 .tar.gz 文件", code: "tar -xzf backup.tar.gz" },
+            { description: "打包并压缩为 .tar.bz2", code: "tar -cjf archive.tar.bz2 documents/" },
+            { description: "查看压缩包内容（不解压）", code: "tar -tzf backup.tar.gz" },
+            { description: "查看帮助文档", code: "tar --help" }
+        ],
+        relatedCommands: ["gzip", "bzip2", "zip", "7z"]
+    },
+    {
+        name: "gzip",
+        categoryId: "compress",
+        syntax: "gzip [选项] 文件...",
+        simpleExplain: "压缩文件，就像用真空袋把衣服压缩变小",
+        detailExplain: "就像用真空压缩袋把蓬松的冬衣压扁——gzip 把文件压缩变小，节省磁盘空间和网络传输时间。压缩后原文件会被替换为 .gz 文件。gzip 是 Linux 上最常用的压缩格式。",
+        helpOutput: `Usage: gzip [OPTION]... [FILE]...
 Compress or uncompress FILEs (by default, compress FILES in-place).
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -8964,22 +8931,22 @@ With no FILE, or when FILE is -, read standard input.
 
 Report bugs to <bug-gzip@gnu.org>.
 `,
-    examples: [
-      { description: "压缩文件", code: "gzip access.log" },
-      { description: "保留原文件同时压缩", code: "gzip -k important_data.csv" },
-      { description: "指定压缩级别（1 最快，9 最小）", code: "gzip -9 large_file.bin" },
-      { description: "递归压缩目录下所有文件", code: "gzip -r logs/" },
-      { description: "查看帮助文档", code: "gzip --help" }
-    ],
-    relatedCommands: ["gunzip", "bzip2", "xz", "zcat"]
-  },
-  {
-    name: "gunzip",
-    categoryId: "compress",
-    syntax: "gunzip [选项] 文件...",
-    simpleExplain: "解压gzip压缩文件",
-    detailExplain: "将 .gz 文件解压还原成原始文件，等价于 gzip -d。常用参数：-k 保留 .gz 原文件，-r 递归解压，-S 指定后缀名，-f 强制覆盖。常用于解压 gzip 压缩的文件。",
-    helpOutput: `Usage: /usr/bin/gunzip [OPTION]... [FILE]...
+        examples: [
+            { description: "压缩文件", code: "gzip access.log" },
+            { description: "保留原文件同时压缩", code: "gzip -k important_data.csv" },
+            { description: "指定压缩级别（1 最快，9 最小）", code: "gzip -9 large_file.bin" },
+            { description: "递归压缩目录下所有文件", code: "gzip -r logs/" },
+            { description: "查看帮助文档", code: "gzip --help" }
+        ],
+        relatedCommands: ["gunzip", "bzip2", "xz", "zcat"]
+    },
+    {
+        name: "gunzip",
+        categoryId: "compress",
+        syntax: "gunzip [选项] 文件...",
+        simpleExplain: "解压 gzip 文件，就像打开真空袋让衣服恢复原状",
+        detailExplain: "就像打开真空压缩袋，让被压扁的衣服恢复蓬松——gunzip 把 .gz 文件解压还原成原始文件。gunzip 其实就是 gzip -d。",
+        helpOutput: `Usage: /usr/bin/gunzip [OPTION]... [FILE]...
 Uncompress FILEs (by default, in-place).
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -9003,21 +8970,21 @@ With no FILE, or when FILE is -, read standard input.
 
 Report bugs to <bug-gzip@gnu.org>.
 `,
-    examples: [
-      { description: "解压 .gz 文件", code: "gunzip access.log.gz" },
-      { description: "保留压缩文件同时解压", code: "gunzip -k archive.gz" },
-      { description: "递归解压目录下所有 .gz 文件", code: "gunzip -r logs/" },
-      { description: "查看帮助文档", code: "gunzip --help" }
-    ],
-    relatedCommands: ["gzip", "zcat", "bunzip2", "unxz"]
-  },
-  {
-    name: "bzip2",
-    categoryId: "compress",
-    syntax: "bzip2 [选项] 文件...",
-    simpleExplain: "高压缩比压缩文件",
-    detailExplain: "压缩文件，压缩率高于 gzip 但压缩速度更慢，适合对文件大小敏感、不太在乎压缩时间的场景。常用参数：-d 解压，-k 保留原文件，-1 到 -9 设置压缩级别，-f 强制覆盖。压缩后生成 .bz2 文件，原文件默认被删除。",
-    helpOutput: `bzip2, a block-sorting file compressor.  Version 1.0.8, 13-Jul-2019.
+        examples: [
+            { description: "解压 .gz 文件", code: "gunzip access.log.gz" },
+            { description: "保留压缩文件同时解压", code: "gunzip -k archive.gz" },
+            { description: "递归解压目录下所有 .gz 文件", code: "gunzip -r logs/" },
+            { description: "查看帮助文档", code: "gunzip --help" }
+        ],
+        relatedCommands: ["gzip", "zcat", "bunzip2", "unxz"]
+    },
+    {
+        name: "bzip2",
+        categoryId: "compress",
+        syntax: "bzip2 [选项] 文件...",
+        simpleExplain: "高压缩比压缩工具，就像一台更厉害的真空压缩机",
+        detailExplain: "就像比 gzip 更强力的高级真空压缩机——压缩率比 gzip 更高，但压缩速度更慢。适合对文件大小敏感、不太在乎压缩时间的场景。",
+        helpOutput: `bzip2, a block-sorting file compressor.  Version 1.0.8, 13-Jul-2019.
 
    usage: bzip2 [flags and input files in any order]
 
@@ -9046,22 +9013,22 @@ Report bugs to <bug-gzip@gnu.org>.
    short flags, so \`-v -4' means the same as -v4 or -4v, &c.
 
 `,
-    examples: [
-      { description: "压缩文件为 .bz2 格式", code: "bzip2 big_file.txt" },
-      { description: "保留原文件同时压缩", code: "bzip2 -k data.csv" },
-      { description: "使用最高压缩级别", code: "bzip2 -9 archive.dat" },
-      { description: "解压 bzip2 文件", code: "bzip2 -d compressed.bz2" },
-      { description: "查看帮助文档", code: "bzip2 --help" }
-    ],
-    relatedCommands: ["bunzip2", "gzip", "xz", "bzcat"]
-  },
-  {
-    name: "bunzip2",
-    categoryId: "compress",
-    syntax: "bunzip2 [选项] 文件...",
-    simpleExplain: "解压bzip2压缩文件",
-    detailExplain: "将 .bz2 文件解压还原成原始文件，等价于 bzip2 -d。常用参数：-k 保留 .bz2 原文件，-f 强制覆盖。常用于解压 bzip2 压缩的文件。",
-    helpOutput: `bzip2, a block-sorting file compressor.  Version 1.0.8, 13-Jul-2019.
+        examples: [
+            { description: "压缩文件为 .bz2 格式", code: "bzip2 big_file.txt" },
+            { description: "保留原文件同时压缩", code: "bzip2 -k data.csv" },
+            { description: "使用最高压缩级别", code: "bzip2 -9 archive.dat" },
+            { description: "解压 bzip2 文件", code: "bzip2 -d compressed.bz2" },
+            { description: "查看帮助文档", code: "bzip2 --help" }
+        ],
+        relatedCommands: ["bunzip2", "gzip", "xz", "bzcat"]
+    },
+    {
+        name: "bunzip2",
+        categoryId: "compress",
+        syntax: "bunzip2 [选项] 文件...",
+        simpleExplain: "解压 bzip2 文件，就像打开高级真空袋恢复原状",
+        detailExplain: "就像打开 bzip2 这个高级真空压缩袋——把 .bz2 文件解压还原成原始文件。bunzip2 其实就是 bzip2 -d。",
+        helpOutput: `bzip2, a block-sorting file compressor.  Version 1.0.8, 13-Jul-2019.
 
    usage: bunzip2 [flags and input files in any order]
 
@@ -9090,20 +9057,20 @@ Report bugs to <bug-gzip@gnu.org>.
    short flags, so \`-v -4' means the same as -v4 or -4v, &c.
 
 `,
-    examples: [
-      { description: "解压 .bz2 文件", code: "bunzip2 archive.bz2" },
-      { description: "保留压缩文件同时解压", code: "bunzip2 -k archive.bz2" },
-      { description: "查看帮助文档", code: "bunzip2 --help" }
-    ],
-    relatedCommands: ["bzip2", "bzcat", "gunzip", "unxz"]
-  },
-  {
-    name: "zip",
-    categoryId: "compress",
-    syntax: "zip [选项] 压缩包名 文件...",
-    simpleExplain: "创建ZIP压缩包",
-    detailExplain: "将文件压缩为 zip 格式，这是跨平台的压缩标准，Windows、Mac、Linux 都能直接打开。zip 压缩时会保留原文件，适合与 Windows 用户交换文件。常用参数：-r 递归压缩目录，-e 加密压缩包，-9 最高压缩率，-j 不保留目录路径。常用于跨平台文件分发。",
-    helpOutput: `Copyright (c) 1990-2008 Info-ZIP - Type 'zip "-L"' for software license.
+        examples: [
+            { description: "解压 .bz2 文件", code: "bunzip2 archive.bz2" },
+            { description: "保留压缩文件同时解压", code: "bunzip2 -k archive.bz2" },
+            { description: "查看帮助文档", code: "bunzip2 --help" }
+        ],
+        relatedCommands: ["bzip2", "bzcat", "gunzip", "unxz"]
+    },
+    {
+        name: "zip",
+        categoryId: "compress",
+        syntax: "zip [选项] 压缩包名 文件...",
+        simpleExplain: "创建 ZIP 压缩包，就像 Windows 用户最熟悉的那个压缩工具",
+        detailExplain: "就像 Windows 上大家最常用的那个压缩工具——zip 格式是跨平台的压缩标准，Windows、Mac、Linux 都能直接打开。zip 压缩时会保留原文件，非常适合和 Windows 用户交换文件。",
+        helpOutput: `Copyright (c) 1990-2008 Info-ZIP - Type 'zip "-L"' for software license.
 Zip 3.0 (July 5th 2008). Usage:
 zip [-options] [-b path] [-t mmddyyyy] [-n suffixes] [zipfile list] [-xi list]
   The default action is to add or replace zipfile entries from list, which
@@ -9126,22 +9093,22 @@ zip [-options] [-b path] [-t mmddyyyy] [-n suffixes] [zipfile list] [-xi list]
   -h2  show more help
   
 `,
-    examples: [
-      { description: "将多个文件压缩为 zip 包", code: "zip archive.zip file1.txt file2.txt" },
-      { description: "递归压缩整个目录", code: "zip -r project.zip project_folder/" },
-      { description: "添加文件到已有的 zip 包", code: "zip -u archive.zip newfile.txt" },
-      { description: "加密压缩", code: "zip -e secret.zip confidential.pdf" },
-      { description: "查看帮助文档", code: "zip --help" }
-    ],
-    relatedCommands: ["unzip", "gzip", "tar", "7z"]
-  },
-  {
-    name: "unzip",
-    categoryId: "compress",
-    syntax: "unzip [选项] 压缩包",
-    simpleExplain: "解压ZIP压缩文件",
-    detailExplain: "将 .zip 压缩包中的文件解压出来，可解压到当前目录或指定目标目录。常用参数：-d 指定目标目录，-l 列出压缩包内容而不解压，-o 覆盖已存在文件，-q 静默模式。常用于解压 zip 格式的压缩文件。",
-    helpOutput: `UnZip 6.00 of 20 April 2009, by Debian. Original by Info-ZIP.
+        examples: [
+            { description: "将多个文件压缩为 zip 包", code: "zip archive.zip file1.txt file2.txt" },
+            { description: "递归压缩整个目录", code: "zip -r project.zip project_folder/" },
+            { description: "添加文件到已有的 zip 包", code: "zip -u archive.zip newfile.txt" },
+            { description: "加密压缩", code: "zip -e secret.zip confidential.pdf" },
+            { description: "查看帮助文档", code: "zip --help" }
+        ],
+        relatedCommands: ["unzip", "gzip", "tar", "7z"]
+    },
+    {
+        name: "unzip",
+        categoryId: "compress",
+        syntax: "unzip [选项] 压缩包",
+        simpleExplain: "解压 ZIP 文件，就像打开一个拉链袋取出里面的东西",
+        detailExplain: "就像拉开一个拉链袋取出里面的东西——unzip 把 .zip 压缩包里的文件解压出来。可以解压到当前目录，也可以指定目标目录。",
+        helpOutput: `UnZip 6.00 of 20 April 2009, by Debian. Original by Info-ZIP.
 
 Usage: unzip [-Z] [-opts[modifiers]] file[.zip] [list] [-x xlist] [-d exdir]
   Default action is to extract files in list, except those in xlist, to exdir;
@@ -9168,22 +9135,22 @@ See "unzip -hh" or unzip.txt for more help.  Examples:
   unzip -p foo | more  => send contents of foo.zip via pipe into program more
   unzip -fo foo ReadMe => quietly replace existing ReadMe if archive file newer
 `,
-    examples: [
-      { description: "解压 zip 文件到当前目录", code: "unzip archive.zip" },
-      { description: "解压到指定目录", code: "unzip archive.zip -d /target/path/" },
-      { description: "查看压缩包内容（不解压）", code: "unzip -l archive.zip" },
-      { description: "只解压特定文件", code: "unzip archive.zip \"*.txt\"" },
-      { description: "查看帮助文档", code: "unzip --help" }
-    ],
-    relatedCommands: ["zip", "tar", "7z", "jar"]
-  },
-  {
-    name: "xz",
-    categoryId: "compress",
-    syntax: "xz [选项] 文件...",
-    simpleExplain: "高压缩比压缩文件",
-    detailExplain: "压缩文件，压缩率最高但压缩速度也最慢，适合需要极致压缩的场景，如发布大型软件源码包。常用参数：-d 解压，-k 保留原文件，-1 到 -9 设置压缩级别，-z 压缩（默认操作）。压缩后生成 .xz 文件，原文件默认被删除。",
-    helpOutput: `Usage: xz [OPTION]... [FILE]...
+        examples: [
+            { description: "解压 zip 文件到当前目录", code: "unzip archive.zip" },
+            { description: "解压到指定目录", code: "unzip archive.zip -d /target/path/" },
+            { description: "查看压缩包内容（不解压）", code: "unzip -l archive.zip" },
+            { description: "只解压特定文件", code: "unzip archive.zip \"*.txt\"" },
+            { description: "查看帮助文档", code: "unzip --help" }
+        ],
+        relatedCommands: ["zip", "tar", "7z", "jar"]
+    },
+    {
+        name: "xz",
+        categoryId: "compress",
+        syntax: "xz [选项] 文件...",
+        simpleExplain: "超高压缩比工具，就像一台终极真空压缩机",
+        detailExplain: "就像比 bzip2 还要厉害的终极真空压缩机——压缩率最高，但压缩速度也最慢。适合需要极致压缩的场景，比如发布大型软件源码包。",
+        helpOutput: `Usage: xz [OPTION]... [FILE]...
 Compress or decompress FILEs in the .xz format.
 
   -z, --compress      force compression
@@ -9210,22 +9177,22 @@ With no FILE, or when FILE is -, read standard input.
 Report bugs to <xz@tukaani.org> (in English or Finnish).
 XZ Utils home page: <https://tukaani.org/xz/>
 `,
-    examples: [
-      { description: "压缩文件为 .xz 格式", code: "xz huge_file.bin" },
-      { description: "保留原文件同时压缩", code: "xz -k data.tar" },
-      { description: "使用极速压缩", code: "xz -0 quick_compress.dat" },
-      { description: "使用极限压缩", code: "xz -9e massive_database.sql" },
-      { description: "查看帮助文档", code: "xz --help" }
-    ],
-    relatedCommands: ["unxz", "xzcat", "gzip", "bzip2"]
-  },
-  {
-    name: "unxz",
-    categoryId: "compress",
-    syntax: "unxz [选项] 文件...",
-    simpleExplain: "解压xz压缩文件",
-    detailExplain: "将 .xz 文件解压还原成原始文件，等价于 xz -d。常用参数：-k 保留 .xz 原文件，-f 强制覆盖。常用于解压 xz 压缩的文件，如内核源码包等。",
-    helpOutput: `Usage: unxz [OPTION]... [FILE]...
+        examples: [
+            { description: "压缩文件为 .xz 格式", code: "xz huge_file.bin" },
+            { description: "保留原文件同时压缩", code: "xz -k data.tar" },
+            { description: "使用极速压缩", code: "xz -0 quick_compress.dat" },
+            { description: "使用极限压缩", code: "xz -9e massive_database.sql" },
+            { description: "查看帮助文档", code: "xz --help" }
+        ],
+        relatedCommands: ["unxz", "xzcat", "gzip", "bzip2"]
+    },
+    {
+        name: "unxz",
+        categoryId: "compress",
+        syntax: "unxz [选项] 文件...",
+        simpleExplain: "解压 xz 文件，就像打开终极真空袋恢复原状",
+        detailExplain: "就像打开 xz 这个终极真空压缩袋——把 .xz 文件解压还原成原始文件。unxz 其实就是 xz -d。",
+        helpOutput: `Usage: unxz [OPTION]... [FILE]...
 Compress or decompress FILEs in the .xz format.
 
   -z, --compress      force compression
@@ -9252,20 +9219,20 @@ With no FILE, or when FILE is -, read standard input.
 Report bugs to <xz@tukaani.org> (in English or Finnish).
 XZ Utils home page: <https://tukaani.org/xz/>
 `,
-    examples: [
-      { description: "解压 .xz 文件", code: "unxz archive.xz" },
-      { description: "保留压缩文件同时解压", code: "unxz -k archive.xz" },
-      { description: "查看帮助文档", code: "unxz --help" }
-    ],
-    relatedCommands: ["xz", "xzcat", "gunzip", "bunzip2"]
-  },
-  {
-    name: "7z",
-    categoryId: "compress",
-    syntax: "7z [命令] [选项] 压缩包 文件...",
-    simpleExplain: "7-Zip压缩工具",
-    detailExplain: "支持 7z、zip、rar、tar、gzip 等几乎所有常见压缩格式的全能压缩工具，7z 格式压缩率极高。常用参数：a 添加到压缩包，x 带完整路径解压，l 列出内容，t 测试完整性。常用于需要处理多种压缩格式或追求高压缩率的场景。",
-    helpOutput: `Usage: 7z <command> [<switches>...] <archive_name> [<file_names>...]
+        examples: [
+            { description: "解压 .xz 文件", code: "unxz archive.xz" },
+            { description: "保留压缩文件同时解压", code: "unxz -k archive.xz" },
+            { description: "查看帮助文档", code: "unxz --help" }
+        ],
+        relatedCommands: ["xz", "xzcat", "gunzip", "bunzip2"]
+    },
+    {
+        name: "7z",
+        categoryId: "compress",
+        syntax: "7z [命令] [选项] 压缩包 文件...",
+        simpleExplain: "7-Zip 压缩工具，就像压缩界的全能冠军",
+        detailExplain: "就像压缩界的全能冠军——支持 7z、zip、rar、tar、gzip 等几乎所有常见压缩格式，而且 7z 格式的压缩率极高。如果你只想装一个压缩工具，7z 几乎能搞定所有格式。",
+        helpOutput: `Usage: 7z <command> [<switches>...] <archive_name> [<file_names>...]
        [<@listfiles...>]
 
 Commands:
@@ -9295,22 +9262,22 @@ Switches:
   -si    从 stdin 读取
   -so    输出到 stdout
   -y     全部回答 yes`,
-    examples: [
-      { description: "压缩为 7z 格式", code: "7z a archive.7z folder/" },
-      { description: "解压 7z 文件", code: "7z x archive.7z" },
-      { description: "解压 rar 文件", code: "7z x file.rar" },
-      { description: "列出压缩包内容", code: "7z l archive.7z" },
-      { description: "查看帮助文档", code: "7z --help" }
-    ],
-    relatedCommands: ["zip", "unzip", "rar", "tar"]
-  },
-  {
-    name: "zcat",
-    categoryId: "compress",
-    syntax: "zcat [选项] 文件...",
-    simpleExplain: "不解压直接查看gzip文件内容",
-    detailExplain: "不解压 .gz 文件即可直接将其内容输出到标准输出，等价于 gunzip -c。常用参数：-f 强制解压（即使文件后缀不是 .gz），-h 显示帮助。常用于查看压缩日志文件内容或配合管道处理压缩数据。",
-    helpOutput: `Usage: /usr/bin/zcat [OPTION]... [FILE]...
+        examples: [
+            { description: "压缩为 7z 格式", code: "7z a archive.7z folder/" },
+            { description: "解压 7z 文件", code: "7z x archive.7z" },
+            { description: "解压 rar 文件", code: "7z x file.rar" },
+            { description: "列出压缩包内容", code: "7z l archive.7z" },
+            { description: "查看帮助文档", code: "7z --help" }
+        ],
+        relatedCommands: ["zip", "unzip", "rar", "tar"]
+    },
+    {
+        name: "zcat",
+        categoryId: "compress",
+        syntax: "zcat [选项] 文件...",
+        simpleExplain: "不解压直接查看 gzip 压缩文件内容，就像隔着透明袋看里面的东西",
+        detailExplain: "就像真空袋是透明的，你不用打开袋子就能看到里面装了什么——zcat 不需要先解压 .gz 文件，就能直接把压缩文件的内容输出到屏幕上。",
+        helpOutput: `Usage: /usr/bin/zcat [OPTION]... [FILE]...
 Uncompress FILEs to standard output.
 
   -f, --force       force; read compressed data even from a terminal
@@ -9328,21 +9295,21 @@ With no FILE, or when FILE is -, read standard input.
 
 Report bugs to <bug-gzip@gnu.org>.
 `,
-    examples: [
-      { description: "查看 gzip 压缩文件的内容", code: "zcat access.log.gz" },
-      { description: "配合 grep 搜索压缩日志", code: "zcat access.log.gz | grep 'error'" },
-      { description: "查看多个压缩文件", code: "zcat file1.gz file2.gz" },
-      { description: "查看帮助文档", code: "zcat --help" }
-    ],
-    relatedCommands: ["gzip", "gunzip", "bzcat", "xzcat"]
-  },
-  {
-    name: "bzcat",
-    categoryId: "compress",
-    syntax: "bzcat [选项] 文件...",
-    simpleExplain: "不解压直接查看bzip2文件内容",
-    detailExplain: "不解压 .bz2 文件即可直接将其内容输出到标准输出，是 bzip2 版本的 zcat，等价于 bunzip2 -c。常用参数：-f 强制解压。常用于查看 bzip2 压缩的文件内容或配合管道处理压缩数据。",
-    helpOutput: `bzip2, a block-sorting file compressor.  Version 1.0.8, 13-Jul-2019.
+        examples: [
+            { description: "查看 gzip 压缩文件的内容", code: "zcat access.log.gz" },
+            { description: "配合 grep 搜索压缩日志", code: "zcat access.log.gz | grep 'error'" },
+            { description: "查看多个压缩文件", code: "zcat file1.gz file2.gz" },
+            { description: "查看帮助文档", code: "zcat --help" }
+        ],
+        relatedCommands: ["gzip", "gunzip", "bzcat", "xzcat"]
+    },
+    {
+        name: "bzcat",
+        categoryId: "compress",
+        syntax: "bzcat [选项] 文件...",
+        simpleExplain: "不解压直接查看 bzip2 压缩文件内容",
+        detailExplain: "就像 zcat 的 bzip2 版本——不需要先解压 .bz2 文件，就能直接把压缩文件的内容输出到屏幕上。",
+        helpOutput: `bzip2, a block-sorting file compressor.  Version 1.0.8, 13-Jul-2019.
 
    usage: bzcat [flags and input files in any order]
 
@@ -9371,20 +9338,20 @@ Report bugs to <bug-gzip@gnu.org>.
    short flags, so \`-v -4' means the same as -v4 or -4v, &c.
 
 `,
-    examples: [
-      { description: "查看 bzip2 压缩文件的内容", code: "bzcat archive.bz2" },
-      { description: "配合 grep 搜索", code: "bzcat log.bz2 | grep 'warning'" },
-      { description: "查看帮助文档", code: "bzcat --help" }
-    ],
-    relatedCommands: ["bzip2", "bunzip2", "zcat", "xzcat"]
-  },
-  {
-    name: "compress",
-    categoryId: "compress",
-    syntax: "compress [选项] 文件...",
-    simpleExplain: "老式Unix压缩工具",
-    detailExplain: "Unix 系统上最早的压缩工具之一，压缩后文件后缀为 .Z，压缩率不如 gzip，现在基本已被淘汰。常用参数：-f 强制覆盖，-v 显示压缩率，-r 递归压缩目录，-b 设置压缩位数。主要用于处理历史遗留的 .Z 格式文件。",
-    helpOutput: `Usage: compress [ -f ] [ -v ] [ -c ] [ -V ] [ -r ] [ -b bits ] [ name ... ]
+        examples: [
+            { description: "查看 bzip2 压缩文件的内容", code: "bzcat archive.bz2" },
+            { description: "配合 grep 搜索", code: "bzcat log.bz2 | grep 'warning'" },
+            { description: "查看帮助文档", code: "bzcat --help" }
+        ],
+        relatedCommands: ["bzip2", "bunzip2", "zcat", "xzcat"]
+    },
+    {
+        name: "compress",
+        categoryId: "compress",
+        syntax: "compress [选项] 文件...",
+        simpleExplain: "老式 Unix 压缩工具，就像压缩界的「老爷爷」",
+        detailExplain: "就像压缩界的「老爷爷」——是 Unix 系统上最早的压缩工具之一，压缩后文件后缀为 .Z。压缩率不如 gzip，现在基本已经被淘汰了。",
+        helpOutput: `Usage: compress [ -f ] [ -v ] [ -c ] [ -V ] [ -r ] [ -b bits ] [ name ... ]
 
 Options:
   -f       强制压缩（覆盖已存在的 .Z 文件）
@@ -9394,20 +9361,20 @@ Options:
   -r       递归处理目录
   -b BITS  设置压缩位数（9-16，默认 16）
   -d       解压（等同于 uncompress）`,
-    examples: [
-      { description: "压缩文件为 .Z 格式", code: "compress large_file.txt" },
-      { description: "强制压缩", code: "compress -f data.log" },
-      { description: "查看帮助文档", code: "compress --help" }
-    ],
-    relatedCommands: ["uncompress", "gzip", "zip", "zcat"]
-  },
-  {
-    name: "uncompress",
-    categoryId: "compress",
-    syntax: "uncompress [选项] 文件...",
-    simpleExplain: "解压.Z格式文件",
-    detailExplain: "解压 compress 命令生成的 .Z 格式文件，等价于 compress -d。常用参数：-f 强制覆盖，-v 显示解压信息，-r 递归解压。常用于处理历史遗留的 .Z 格式压缩文件。",
-    helpOutput: `Usage: /usr/bin/uncompress [OPTION]... [FILE]...
+        examples: [
+            { description: "压缩文件为 .Z 格式", code: "compress large_file.txt" },
+            { description: "强制压缩", code: "compress -f data.log" },
+            { description: "查看帮助文档", code: "compress --help" }
+        ],
+        relatedCommands: ["uncompress", "gzip", "zip", "zcat"]
+    },
+    {
+        name: "uncompress",
+        categoryId: "compress",
+        syntax: "uncompress [选项] 文件...",
+        simpleExplain: "解压 .Z 格式文件，就像帮老爷爷打开他的老式压缩袋",
+        detailExplain: "就像帮老爷爷打开他那老式的压缩袋——uncompress 专门用来解压 compress 命令生成的 .Z 格式文件。",
+        helpOutput: `Usage: /usr/bin/uncompress [OPTION]... [FILE]...
 Uncompress FILEs (by default, in-place).
 
 Mandatory arguments to long options are mandatory for short options too.
@@ -9431,20 +9398,20 @@ With no FILE, or when FILE is -, read standard input.
 
 Report bugs to <bug-gzip@gnu.org>.
 `,
-    examples: [
-      { description: "解压 .Z 文件", code: "uncompress archive.Z" },
-      { description: "强制解压", code: "uncompress -f data.log.Z" },
-      { description: "查看帮助文档", code: "uncompress --help" }
-    ],
-    relatedCommands: ["compress", "gunzip", "bunzip2", "zcat"]
-  },
-  {
-    name: "rar",
-    categoryId: "compress",
-    syntax: "rar [命令] [选项] 压缩包 文件...",
-    simpleExplain: "RAR格式压缩工具",
-    detailExplain: "创建或管理 RAR 格式压缩包，压缩率高、支持分卷压缩和恢复记录，但 rar 是商业软件，Linux 上通常用 7z 或 unrar 来处理 rar 文件。常用参数：a 添加文件到压缩包，x 带路径解压，-v 分卷压缩，-r 修复压缩包。常用于大文件分卷传输或需要恢复记录的场景。",
-    helpOutput: `Usage: rar <command> [-<switches>] <archive> [<files>]
+        examples: [
+            { description: "解压 .Z 文件", code: "uncompress archive.Z" },
+            { description: "强制解压", code: "uncompress -f data.log.Z" },
+            { description: "查看帮助文档", code: "uncompress --help" }
+        ],
+        relatedCommands: ["compress", "gunzip", "bunzip2", "zcat"]
+    },
+    {
+        name: "rar",
+        categoryId: "compress",
+        syntax: "rar [命令] [选项] 压缩包 文件...",
+        simpleExplain: "RAR 格式压缩工具，就像压缩界的「专业选手」",
+        detailExplain: "就像压缩界的专业选手——RAR 格式压缩率高、支持分卷压缩、支持恢复记录。不过 rar 是商业软件，Linux 上通常用 7z 或 unrar 来处理 rar 文件。",
+        helpOutput: `Usage: rar <command> [-<switches>] <archive> [<files>]
 
 Commands:
   a      添加文件到压缩包
@@ -9486,22 +9453,22 @@ Switches:
   -ed     不添加空目录
   -e+d    仅添加目录
   -ts     保存时间戳`,
-    examples: [
-      { description: "压缩为 rar 格式", code: "rar a archive.rar folder/" },
-      { description: "分卷压缩（每卷 100MB）", code: "rar a -v100m archive.rar large_file.iso" },
-      { description: "解压 rar 文件", code: "rar x archive.rar" },
-      { description: "测试压缩包完整性", code: "rar t archive.rar" },
-      { description: "查看帮助文档", code: "rar --help" }
-    ],
-    relatedCommands: ["unrar", "7z", "zip", "tar"]
-  },
-  {
-    name: "lz4",
-    categoryId: "compress",
-    syntax: "lz4 [选项] 文件",
-    simpleExplain: "极速压缩工具",
-    detailExplain: "使用 LZ4 算法的压缩/解压工具，压缩和解压速度极快，远超 gzip 和 bzip2，但压缩比相对较低。常用参数：-1 到 -12 设置压缩级别（默认 1），-d 解压，-z 强制压缩，-k 保留原文件，-c 输出到标准输出。常用于实时数据传输、日志压缩等对速度要求高的场景。",
-    helpOutput: `Usage: lz4 [arg] [input] [output]
+        examples: [
+            { description: "压缩为 rar 格式", code: "rar a archive.rar folder/" },
+            { description: "分卷压缩（每卷 100MB）", code: "rar a -v100m archive.rar large_file.iso" },
+            { description: "解压 rar 文件", code: "rar x archive.rar" },
+            { description: "测试压缩包完整性", code: "rar t archive.rar" },
+            { description: "查看帮助文档", code: "rar --help" }
+        ],
+        relatedCommands: ["unrar", "7z", "zip", "tar"]
+    },
+    {
+        name: "lz4",
+        categoryId: "compress",
+        syntax: "lz4 [选项] 文件",
+        simpleExplain: "极速压缩工具，就像一个动作飞快的打包员",
+        detailExplain: "就像一个动作飞快的打包员——lz4 的压缩和解压速度极快，远超 gzip 和 bzip2，虽然压缩比不是最高，但在需要速度的场景下是首选。常用于实时数据传输和日志压缩。",
+        helpOutput: `Usage: lz4 [arg] [input] [output]
 
 Commands:
   -z     强制压缩（默认）
@@ -9527,22 +9494,22 @@ Options:
   --rm   成功后删除原文件
   --no-frame-crc  禁用帧 CRC 校验
   -V     显示版本`,
-    examples: [
-      { description: "压缩文件", code: "lz4 logfile logfile.lz4" },
-      { description: "解压文件", code: "lz4 -d logfile.lz4 logfile" },
-      { description: "高压缩比模式（更慢但更小）", code: "lz4 -9 bigfile bigfile.lz4" },
-      { description: "流式压缩（配合管道使用）", code: "tar -cf - mydir/ | lz4 > backup.tar.lz4" },
-      { description: "查看帮助文档", code: "lz4 --help" }
-    ],
-    relatedCommands: ["gzip", "zstd", "bzip2", "tar"]
-  },
-  {
-    name: "zstd",
-    categoryId: "compress",
-    syntax: "zstd [选项] 文件",
-    simpleExplain: "高压缩比的新型压缩工具",
-    detailExplain: "Zstandard 压缩工具，由 Facebook 开发，兼顾压缩速度和压缩比，比 gzip 更快更小，正成为 Linux 生态的新标准。常用参数：-1 到 -19 设置压缩级别（默认 3），-d 解压，-T 多线程压缩，--ultra -22 极限压缩。广泛用于内核、软件包压缩等场景。",
-    helpOutput: `Usage: zstd [args] [FILE(s)] [-o file]
+        examples: [
+            { description: "压缩文件", code: "lz4 logfile logfile.lz4" },
+            { description: "解压文件", code: "lz4 -d logfile.lz4 logfile" },
+            { description: "高压缩比模式（更慢但更小）", code: "lz4 -9 bigfile bigfile.lz4" },
+            { description: "流式压缩（配合管道使用）", code: "tar -cf - mydir/ | lz4 > backup.tar.lz4" },
+            { description: "查看帮助文档", code: "lz4 --help" }
+        ],
+        relatedCommands: ["gzip", "zstd", "bzip2", "tar"]
+    },
+    {
+        name: "zstd",
+        categoryId: "compress",
+        syntax: "zstd [选项] 文件",
+        simpleExplain: "高压缩比的新型压缩工具，就像一个既快又省空间的收纳大师",
+        detailExplain: "就像一个既快又省空间的收纳大师——zstd（Zstandard）由 Facebook 开发，兼顾了压缩速度和压缩比，比 gzip 更快更小，正在成为 Linux 生态的新标准。很多现代软件已开始默认使用 zstd。",
+        helpOutput: `Usage: zstd [args] [FILE(s)] [-o file]
 
 Commands:
   -z     强制压缩
@@ -9570,22 +9537,22 @@ Options:
   --format=zstd/gzip/xz/lz4  指定输出格式
   -D FILE 使用 FILE 作为字典
   --train  训练字典`,
-    examples: [
-      { description: "压缩文件", code: "zstd data.txt" },
-      { description: "解压文件", code: "zstd -d data.txt.zst" },
-      { description: "指定压缩级别（1-19）", code: "zstd -15 large_file" },
-      { description: "递归压缩目录", code: "tar --zstd -cf archive.tar.zst mydir/" },
-      { description: "查看帮助文档", code: "zstd --help" }
-    ],
-    relatedCommands: ["gzip", "lz4", "xz", "tar"]
-  },
-  {
-    name: "lzma",
-    categoryId: "compress",
-    syntax: "lzma [选项] 文件",
-    simpleExplain: "高压缩比压缩工具",
-    detailExplain: "使用 LZMA 算法的压缩工具，压缩比非常高，但速度较慢。常用参数：-1 到 -9 设置压缩级别，-d 解压，-k 保留原文件，-c 输出到标准输出。适合对体积敏感而对时间不敏感的场景，如发布软件源码包。xz 是其继任者，功能更强大。",
-    helpOutput: `Usage: lzma [OPTION]... [FILE]...
+        examples: [
+            { description: "压缩文件", code: "zstd data.txt" },
+            { description: "解压文件", code: "zstd -d data.txt.zst" },
+            { description: "指定压缩级别（1-19）", code: "zstd -15 large_file" },
+            { description: "递归压缩目录", code: "tar --zstd -cf archive.tar.zst mydir/" },
+            { description: "查看帮助文档", code: "zstd --help" }
+        ],
+        relatedCommands: ["gzip", "lz4", "xz", "tar"]
+    },
+    {
+        name: "lzma",
+        categoryId: "compress",
+        syntax: "lzma [选项] 文件",
+        simpleExplain: "高压缩比压缩工具，就像把行李箱压缩到极致",
+        detailExplain: "就像把行李箱压缩到极致——lzma 使用 LZMA 算法，压缩比非常高，但速度较慢。适合对体积敏感而对时间不敏感的场景，比如发布软件源码包。xz 是 lzma 的继任者，功能更强大。",
+        helpOutput: `Usage: lzma [OPTION]... [FILE]...
 Compress or decompress FILEs in the .xz format.
 
   -z, --compress      force compression
@@ -9612,22 +9579,22 @@ With no FILE, or when FILE is -, read standard input.
 Report bugs to <xz@tukaani.org> (in English or Finnish).
 XZ Utils home page: <https://tukaani.org/xz/>
 `,
-    examples: [
-      { description: "压缩文件", code: "lzma bigfile" },
-      { description: "解压文件", code: "lzma -d bigfile.lzma" },
-      { description: "保留原文件压缩", code: "lzma -k data.tar" },
-      { description: "指定压缩级别", code: "lzma -9 archive.tar" },
-      { description: "查看帮助文档", code: "lzma --help" }
-    ],
-    relatedCommands: ["xz", "gzip", "bzip2", "tar"]
-  },
-  {
-    name: "cpio",
-    categoryId: "compress",
-    syntax: "cpio [选项]",
-    simpleExplain: "文件归档工具",
-    detailExplain: "从标准输入读取文件列表，将文件打包成归档文件（copy in/out）。支持多种格式：binary、old ASCII、new ASCII、crc、old tar、POSIX.1 tar 等。常用参数：-o 创建归档（copy out），-i 解包（copy in），-t 列出内容，-H 指定格式。常与 find 命令配合使用，也用于处理 RPM 包和内核镜像文件（initramfs）。",
-    helpOutput: `Usage: cpio [-o|-i|-p] [options]
+        examples: [
+            { description: "压缩文件", code: "lzma bigfile" },
+            { description: "解压文件", code: "lzma -d bigfile.lzma" },
+            { description: "保留原文件压缩", code: "lzma -k data.tar" },
+            { description: "指定压缩级别", code: "lzma -9 archive.tar" },
+            { description: "查看帮助文档", code: "lzma --help" }
+        ],
+        relatedCommands: ["xz", "gzip", "bzip2", "tar"]
+    },
+    {
+        name: "cpio",
+        categoryId: "compress",
+        syntax: "cpio [选项]",
+        simpleExplain: "文件归档工具，就像把文件按顺序打包进集装箱",
+        detailExplain: "就像把文件按顺序打包进集装箱——cpio 从标准输入读取文件列表，将它们打包成一个归档文件。常与 find 命令配合使用，也用于处理 RPM 包和内核镜像文件。",
+        helpOutput: `Usage: cpio [-o|-i|-p] [options]
 
 Modes:
   -o, --create       copy-out 模式（创建压缩包）
@@ -9670,22 +9637,22 @@ Options:
   -v                 详细输出
   -V                 显示点进度
   --version          显示版本`,
-    examples: [
-      { description: "将当前目录所有文件打包", code: "find . | cpio -o > archive.cpio" },
-      { description: "从归档中解包文件", code: "cpio -id < archive.cpio" },
-      { description: "查看归档内容列表", code: "cpio -t < archive.cpio" },
-      { description: "打包并用 gzip 压缩", code: "find . | cpio -o | gzip > archive.cpio.gz" },
-      { description: "查看帮助文档", code: "cpio --help" }
-    ],
-    relatedCommands: ["tar", "gzip", "find", "rpm2cpio"]
-  },
-  {
-    name: "shar",
-    categoryId: "compress",
-    syntax: "shar 文件... > archive.shar",
-    simpleExplain: "创建 Shell 自解压包",
-    detailExplain: "将多个文件打包成一个 Shell 脚本，运行该脚本即可自动解出所有文件。无需额外解包工具，只要有 Shell 即可解包。注意安全性，不要运行来源不明的 shar 包，因为脚本会执行任意命令。常用于在不保证有 tar/cpio 的环境中分发文件。",
-    helpOutput: `Usage: shar [OPTION]... FILE ...
+        examples: [
+            { description: "将当前目录所有文件打包", code: "find . | cpio -o > archive.cpio" },
+            { description: "从归档中解包文件", code: "cpio -id < archive.cpio" },
+            { description: "查看归档内容列表", code: "cpio -t < archive.cpio" },
+            { description: "打包并用 gzip 压缩", code: "find . | cpio -o | gzip > archive.cpio.gz" },
+            { description: "查看帮助文档", code: "cpio --help" }
+        ],
+        relatedCommands: ["tar", "gzip", "find", "rpm2cpio"]
+    },
+    {
+        name: "shar",
+        categoryId: "compress",
+        syntax: "shar 文件... > archive.shar",
+        simpleExplain: "创建Shell自解压包，就像把东西装进一个能自己打开的箱子",
+        detailExplain: "就像把东西装进一个能自己打开的箱子——shar 把多个文件打包成一个 Shell 脚本，运行这个脚本就能自动解出所有文件。不需要额外工具，只要有 Shell 就能解包，但注意安全性——不要运行来源不明的 shar 包。",
+        helpOutput: `Usage: shar [OPTION]... FILE ...
 
 Options:
   -o PREFIX          输出文件前缀（生成 .shar 文件）
@@ -9710,22 +9677,22 @@ Options:
   -w                 等待
   -V                 显示版本
   --help             显示帮助`,
-    examples: [
-      { description: "打包多个文件为自解压脚本", code: "shar file1.txt file2.txt > archive.shar" },
-      { description: "打包整个目录", code: "shar mydir/ > mydir.shar" },
-      { description: "解包自解压脚本", code: "sh archive.shar" },
-      { description: "先查看脚本内容再解包", code: "less archive.shar" },
-      { description: "查看帮助文档", code: "shar --help" }
-    ],
-    relatedCommands: ["tar", "cpio", "ar", "gzip"]
-  },
-  {
-    name: "ar",
-    categoryId: "compress",
-    syntax: "ar [选项] 归档文件 成员文件",
-    simpleExplain: "创建或管理归档文件",
-    detailExplain: "创建、修改和提取归档文件，主要用于创建和管理静态库（.a 文件），是 C/C++ 编译工具链的一部分。常用参数：r 插入文件，t 列出内容，x 提取文件，d 删除文件，v 显示详细信息。也用于打包 Debian 软件包（.deb 文件本质是 ar 归档）。",
-    helpOutput: `Usage: ar [emulation options] [-]{dmpqrstx}[abcDfilMNoOPsSTuvV] [--plugin <name>] [member-name] [count] archive-file file...
+        examples: [
+            { description: "打包多个文件为自解压脚本", code: "shar file1.txt file2.txt > archive.shar" },
+            { description: "打包整个目录", code: "shar mydir/ > mydir.shar" },
+            { description: "解包自解压脚本", code: "sh archive.shar" },
+            { description: "先查看脚本内容再解包", code: "less archive.shar" },
+            { description: "查看帮助文档", code: "shar --help" }
+        ],
+        relatedCommands: ["tar", "cpio", "ar", "gzip"]
+    },
+    {
+        name: "ar",
+        categoryId: "compress",
+        syntax: "ar [选项] 归档文件 成员文件",
+        simpleExplain: "创建或管理归档文件，就像图书馆管理员整理和查找档案",
+        detailExplain: "就像图书馆管理员整理和查找档案——ar 主要用于创建和管理静态库（.a 文件），是 C/C++ 编译工具链的一部分。也可以用来打包 Debian 软件包（.deb 文件本质就是 ar 归档）。",
+        helpOutput: `Usage: ar [emulation options] [-]{dmpqrstx}[abcDfilMNoOPsSTuvV] [--plugin <name>] [member-name] [count] archive-file file...
        ar -M [<mri-script]
  commands:
   d            - delete file(s) from the archive
@@ -9767,24 +9734,23 @@ Options:
 ar: supported targets: elf64-x86-64 elf32-i386 elf32-iamcu elf32-x86-64 pei-i386 pe-x86-64 pei-x86-64 elf64-little elf64-big elf32-little elf32-big pe-bigobj-x86-64 pe-i386 pdb srec symbolsrec verilog tekhex binary ihex plugin
 Report bugs to <https://sourceware.org/bugzilla/>
 `,
-    examples: [
-      { description: "创建静态库", code: "ar rcs libmath.a add.o sub.o mul.o" },
-      { description: "列出归档中的文件", code: "ar t libmath.a" },
-      { description: "从归档中提取文件", code: "ar x libmath.a add.o" },
-      { description: "查看 .deb 包内容", code: "ar t package.deb" },
-      { description: "查看帮助文档", code: "ar --help" }
-    ],
-    relatedCommands: ["tar", "cpio", "gcc", "dpkg"]
-  },
-
-  // ==================== 用户管理 ====================
-  {
-    name: "useradd",
-    categoryId: "user",
-    syntax: "useradd [选项] 用户名",
-    simpleExplain: "创建新用户账户",
-    detailExplain: "创建新用户账号，分配用户 ID、设置家目录、指定默认 shell。常用参数：-m 创建家目录，-s 指定登录 shell，-g 指定主组，-G 指定附加组，-u 指定 UID，-e 设置账号过期日期。配置文件 /etc/login.defs 定义默认行为，修改 /etc/passwd、/etc/shadow 等文件。",
-    helpOutput: `Usage: useradd [options] LOGIN
+        examples: [
+            { description: "创建静态库", code: "ar rcs libmath.a add.o sub.o mul.o" },
+            { description: "列出归档中的文件", code: "ar t libmath.a" },
+            { description: "从归档中提取文件", code: "ar x libmath.a add.o" },
+            { description: "查看 .deb 包内容", code: "ar t package.deb" },
+            { description: "查看帮助文档", code: "ar --help" }
+        ],
+        relatedCommands: ["tar", "cpio", "gcc", "dpkg"]
+    },
+    // ==================== 用户管理 ====================
+    {
+        name: "useradd",
+        categoryId: "user",
+        syntax: "useradd [选项] 用户名",
+        simpleExplain: "创建新用户，就像给新员工办入职手续发工牌",
+        detailExplain: "就像 HR 给新入职的员工办理入职手续——创建用户账号、分配用户 ID、设置家目录、指定默认 shell。",
+        helpOutput: `Usage: useradd [options] LOGIN
        useradd -D
        useradd -D [options]
 
@@ -9825,22 +9791,22 @@ Options:
       --extrausers              Use the extra users database
 
 `,
-    examples: [
-      { description: "创建新用户", code: "useradd zhangsan" },
-      { description: "创建用户并指定家目录和 shell", code: "useradd -m -s /bin/bash lisi" },
-      { description: "创建用户并加入附加组", code: "useradd -G docker,sudo wangwu" },
-      { description: "创建系统用户（无登录权限）", code: "useradd -r -s /sbin/nologin nginx" },
-      { description: "查看帮助文档", code: "useradd --help" }
-    ],
-    relatedCommands: ["userdel", "usermod", "adduser", "passwd"]
-  },
-  {
-    name: "userdel",
-    categoryId: "user",
-    syntax: "userdel [选项] 用户名",
-    simpleExplain: "删除用户账户",
-    detailExplain: "删除用户账号。默认只删除账号信息，不删除家目录。常用参数：-r 连同家目录和邮件池一起删除，-f 强制删除即使用户仍登录。修改 /etc/passwd、/etc/shadow、/etc/group 等文件。",
-    helpOutput: `Usage: userdel [options] LOGIN
+        examples: [
+            { description: "创建新用户", code: "useradd zhangsan" },
+            { description: "创建用户并指定家目录和 shell", code: "useradd -m -s /bin/bash lisi" },
+            { description: "创建用户并加入附加组", code: "useradd -G docker,sudo wangwu" },
+            { description: "创建系统用户（无登录权限）", code: "useradd -r -s /sbin/nologin nginx" },
+            { description: "查看帮助文档", code: "useradd --help" }
+        ],
+        relatedCommands: ["userdel", "usermod", "adduser", "passwd"]
+    },
+    {
+        name: "userdel",
+        categoryId: "user",
+        syntax: "userdel [选项] 用户名",
+        simpleExplain: "删除用户，就像给离职员工办理退工手续",
+        detailExplain: "就像 HR 给离职员工办理退工手续——删除用户账号。默认只删除账号信息，不删除家目录。加 -r 参数会连同家目录一起删除。",
+        helpOutput: `Usage: userdel [options] LOGIN
 
 Options:
   -f, --force                   force some actions that would fail otherwise
@@ -9854,22 +9820,22 @@ Options:
   -Z, --selinux-user            remove any SELinux user mapping for the user
 
 `,
-    examples: [
-      { description: "删除用户（保留家目录）", code: "userdel zhangsan" },
-      { description: "删除用户并连同家目录一起删除", code: "userdel -r lisi" },
-      { description: "强制删除正在登录的用户", code: "userdel -f wangwu" },
-      { description: "查看帮助文档", code: "userdel --help" }
-    ],
-    relatedCommands: ["useradd", "usermod", "groupdel", "passwd"],
-    dangerLevel: "danger",
-  },
-  {
-    name: "usermod",
-    categoryId: "user",
-    syntax: "usermod [选项] 用户名",
-    simpleExplain: "修改用户账户信息",
-    detailExplain: "修改用户账号属性，可改用户名、家目录、默认 shell、加组减组、设账号过期时间等。常用参数：-l 改用户名，-d 改家目录（-m 同时迁移内容），-s 改 shell，-G 设置附加组，-aG 追加附加组，-L 锁定账号，-U 解锁账号。",
-    helpOutput: `Usage: usermod [options] LOGIN
+        examples: [
+            { description: "删除用户（保留家目录）", code: "userdel zhangsan" },
+            { description: "删除用户并连同家目录一起删除", code: "userdel -r lisi" },
+            { description: "强制删除正在登录的用户", code: "userdel -f wangwu" },
+            { description: "查看帮助文档", code: "userdel --help" }
+        ],
+        relatedCommands: ["useradd", "usermod", "groupdel", "passwd"],
+        dangerLevel: "danger",
+    },
+    {
+        name: "usermod",
+        categoryId: "user",
+        syntax: "usermod [选项] 用户名",
+        simpleExplain: "修改用户信息，就像修改员工的档案信息",
+        detailExplain: "就像 HR 修改员工的人事档案——可以改用户名、改家目录、改默认 shell、加组减组、设账号过期时间等。usermod 是用户管理的「万能修改器」。",
+        helpOutput: `Usage: usermod [options] LOGIN
 
 Options:
   -a, --append                  append the user to the supplemental GROUPS
@@ -9905,22 +9871,22 @@ Options:
   -Z, --selinux-user SEUSER     new SELinux user mapping for the user account
 
 `,
-    examples: [
-      { description: "将用户加入附加组", code: "usermod -aG docker zhangsan" },
-      { description: "修改用户的默认 shell", code: "usermod -s /bin/zsh lisi" },
-      { description: "修改用户名", code: "usermod -l newname oldname" },
-      { description: "锁定用户账号", code: "usermod -L wangwu" },
-      { description: "查看帮助文档", code: "usermod --help" }
-    ],
-    relatedCommands: ["useradd", "userdel", "groupmod", "chage"]
-  },
-  {
-    name: "passwd",
-    categoryId: "user",
-    syntax: "passwd [选项] [用户名]",
-    simpleExplain: "修改用户密码",
-    detailExplain: "设置或修改用户密码。普通用户只能改自己的密码，root 可以改任何人的密码且不验证旧密码。常用参数：-l 锁定密码，-u 解锁，-d 删除密码，-e 强制下次登录修改密码，-S 显示密码状态。修改 /etc/shadow 文件。",
-    helpOutput: `Usage: passwd [options] [LOGIN]
+        examples: [
+            { description: "将用户加入附加组", code: "usermod -aG docker zhangsan" },
+            { description: "修改用户的默认 shell", code: "usermod -s /bin/zsh lisi" },
+            { description: "修改用户名", code: "usermod -l newname oldname" },
+            { description: "锁定用户账号", code: "usermod -L wangwu" },
+            { description: "查看帮助文档", code: "usermod --help" }
+        ],
+        relatedCommands: ["useradd", "userdel", "groupmod", "chage"]
+    },
+    {
+        name: "passwd",
+        categoryId: "user",
+        syntax: "passwd [选项] [用户名]",
+        simpleExplain: "修改用户密码，就像重置门禁卡的密码",
+        detailExplain: "就像重置门禁卡的密码——passwd 用来设置或修改用户密码。普通用户只能改自己的密码，root 可以改任何人的密码。",
+        helpOutput: `Usage: passwd [options] [LOGIN]
 
 Options:
   -a, --all                     report password status on all accounts
@@ -9943,22 +9909,22 @@ Options:
                                 change to MAX_DAYS
 
 `,
-    examples: [
-      { description: "修改当前用户密码", code: "passwd" },
-      { description: "root 修改其他用户密码", code: "passwd zhangsan" },
-      { description: "锁定用户账号", code: "passwd -l lisi" },
-      { description: "强制用户下次登录时修改密码", code: "passwd -e wangwu" },
-      { description: "查看帮助文档", code: "passwd --help" }
-    ],
-    relatedCommands: ["usermod", "useradd", "chage", "shadow"]
-  },
-  {
-    name: "groupadd",
-    categoryId: "user",
-    syntax: "groupadd [选项] 组名",
-    simpleExplain: "创建新用户组",
-    detailExplain: "创建新的用户组，用于把多个用户归到一起统一管理权限。常用参数：-g 指定 GID，-r 创建系统组（GID 小于 1000），-f 若组已存在则不报错。配置写入 /etc/group 文件。",
-    helpOutput: `Usage: groupadd [options] GROUP
+        examples: [
+            { description: "修改当前用户密码", code: "passwd" },
+            { description: "root 修改其他用户密码", code: "passwd zhangsan" },
+            { description: "锁定用户账号", code: "passwd -l lisi" },
+            { description: "强制用户下次登录时修改密码", code: "passwd -e wangwu" },
+            { description: "查看帮助文档", code: "passwd --help" }
+        ],
+        relatedCommands: ["usermod", "useradd", "chage", "shadow"]
+    },
+    {
+        name: "groupadd",
+        categoryId: "user",
+        syntax: "groupadd [选项] 组名",
+        simpleExplain: "创建新用户组，就像公司里新建一个部门",
+        detailExplain: "就像公司里新成立了一个部门——groupadd 创建一个新的用户组。用户组的作用是把多个用户归到一起，方便统一管理权限。",
+        helpOutput: `Usage: groupadd [options] GROUP
 
 Options:
   -f, --force                   exit successfully if the group already exists,
@@ -9976,21 +9942,21 @@ Options:
       --extrausers              Use the extra users database
 
 `,
-    examples: [
-      { description: "创建新用户组", code: "groupadd developers" },
-      { description: "创建指定 GID 的用户组", code: "groupadd -g 2000 testers" },
-      { description: "创建系统组", code: "groupadd -r nginx" },
-      { description: "查看帮助文档", code: "groupadd --help" }
-    ],
-    relatedCommands: ["groupdel", "groupmod", "useradd", "usermod"]
-  },
-  {
-    name: "groupdel",
-    categoryId: "user",
-    syntax: "groupdel [选项] 组名",
-    simpleExplain: "删除用户组",
-    detailExplain: "删除指定的用户组。不能删除某个用户的主组（需先删除该用户或修改其主组）。修改 /etc/group 和 /etc/gshadow 文件。常用于清理不再使用的组，配合用户管理维护组结构。",
-    helpOutput: `Usage: groupdel [options] GROUP
+        examples: [
+            { description: "创建新用户组", code: "groupadd developers" },
+            { description: "创建指定 GID 的用户组", code: "groupadd -g 2000 testers" },
+            { description: "创建系统组", code: "groupadd -r nginx" },
+            { description: "查看帮助文档", code: "groupadd --help" }
+        ],
+        relatedCommands: ["groupdel", "groupmod", "useradd", "usermod"]
+    },
+    {
+        name: "groupdel",
+        categoryId: "user",
+        syntax: "groupdel [选项] 组名",
+        simpleExplain: "删除用户组，就像撤销一个部门",
+        detailExplain: "就像公司撤销了一个部门——groupdel 删除指定的用户组。注意：不能删除某个用户的主组，就像不能撤销一个还有人上班的部门。",
+        helpOutput: `Usage: groupdel [options] GROUP
 
 Options:
   -h, --help                    display this help message and exit
@@ -10000,21 +9966,21 @@ Options:
       --extrausers              Use the extra users database
 
 `,
-    examples: [
-      { description: "删除用户组", code: "groupdel developers" },
-      { description: "强制删除", code: "groupdel -f testers" },
-      { description: "查看帮助文档", code: "groupdel --help" }
-    ],
-    relatedCommands: ["groupadd", "groupmod", "userdel", "usermod"],
-    dangerLevel: "danger",
-  },
-  {
-    name: "id",
-    categoryId: "user",
-    syntax: "id [选项] [用户名]",
-    simpleExplain: "查看用户和组的 ID 信息",
-    detailExplain: "显示用户的用户 ID（UID）、主组 ID（GID）以及所属的所有附加组。默认显示当前用户信息。常用参数：-u 只显示 UID，-g 只显示 GID，-G 显示所有附加组 GID，-n 配合上述参数显示名称而非数字，-r 显示真实 ID。",
-    helpOutput: `Usage: id [OPTION]... [USER]...
+        examples: [
+            { description: "删除用户组", code: "groupdel developers" },
+            { description: "强制删除", code: "groupdel -f testers" },
+            { description: "查看帮助文档", code: "groupdel --help" }
+        ],
+        relatedCommands: ["groupadd", "groupmod", "userdel", "usermod"],
+        dangerLevel: "danger",
+    },
+    {
+        name: "id",
+        categoryId: "user",
+        syntax: "id [选项] [用户名]",
+        simpleExplain: "查看用户的 ID 信息，就像查看员工的工号和所属部门",
+        detailExplain: "就像查看员工的工号（UID）和所属部门（GID）——id 显示用户的用户 ID、主组 ID、以及所属的所有附加组。",
+        helpOutput: `Usage: id [OPTION]... [USER]...
 Print user and group information for each specified USER,
 or (when USER omitted) for the current process.
 
@@ -10037,22 +10003,22 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/id>
 or available locally via: info '(coreutils) id invocation'
 `,
-    examples: [
-      { description: "查看当前用户的 ID 信息", code: "id", output: "uid=1000(alice) gid=1000(alice) groups=1000(alice),27(sudo),998(docker)" },
-      { description: "查看指定用户的 ID 信息", code: "id zhangsan" },
-      { description: "只显示 UID", code: "id -u" },
-      { description: "只显示 GID", code: "id -g" },
-      { description: "查看帮助文档", code: "id --help" }
-    ],
-    relatedCommands: ["whoami", "groups", "finger", "getent"]
-  },
-  {
-    name: "whoami",
-    categoryId: "user",
-    syntax: "whoami",
-    simpleExplain: "显示当前登录用户名",
-    detailExplain: "显示当前有效用户名，等效于 id -un。读取 /etc/passwd 中对应 UID 的用户名。在用 sudo 或 su 切换用户后，确认当前身份时非常有用。",
-    helpOutput: `Usage: whoami [OPTION]...
+        examples: [
+            { description: "查看当前用户的 ID 信息", code: "id", output: "uid=1000(alice) gid=1000(alice) groups=1000(alice),27(sudo),998(docker)" },
+            { description: "查看指定用户的 ID 信息", code: "id zhangsan" },
+            { description: "只显示 UID", code: "id -u" },
+            { description: "只显示 GID", code: "id -g" },
+            { description: "查看帮助文档", code: "id --help" }
+        ],
+        relatedCommands: ["whoami", "groups", "finger", "getent"]
+    },
+    {
+        name: "whoami",
+        categoryId: "user",
+        syntax: "whoami",
+        simpleExplain: "显示当前用户名，就像问自己「我是谁」",
+        detailExplain: "就像你突然失忆了，问自己「我是谁？」——whoami 告诉你当前登录的用户名是什么。在用 sudo su 切换了一堆用户后，确认自己当前身份时非常有用。",
+        helpOutput: `Usage: whoami [OPTION]...
 Print the user name associated with the current effective user ID.
 Same as id -un.
 
@@ -10064,20 +10030,20 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/whoami>
 or available locally via: info '(coreutils) whoami invocation'
 `,
-    examples: [
-      { description: "显示当前用户名", code: "whoami", output: "alice" },
-      { description: "配合其他命令使用", code: "echo \"Current user: $(whoami)\"" },
-      { description: "查看帮助文档", code: "whoami --help" }
-    ],
-    relatedCommands: ["id", "who", "logname", "su"]
-  },
-  {
-    name: "groups",
-    categoryId: "user",
-    syntax: "groups [用户名]",
-    simpleExplain: "查看用户所属的用户组",
-    detailExplain: "列出指定用户所属的所有用户组（包括主组和附加组）。无参数时显示当前用户的组。信息来源于 /etc/group 文件。了解用户所属组对于理解文件权限很重要。",
-    helpOutput: `Usage: groups [OPTION]... [USERNAME]...
+        examples: [
+            { description: "显示当前用户名", code: "whoami", output: "alice" },
+            { description: "配合其他命令使用", code: "echo \"Current user: $(whoami)\"" },
+            { description: "查看帮助文档", code: "whoami --help" }
+        ],
+        relatedCommands: ["id", "who", "logname", "su"]
+    },
+    {
+        name: "groups",
+        categoryId: "user",
+        syntax: "groups [用户名]",
+        simpleExplain: "查看用户所属的组，就像查看员工属于哪些部门",
+        detailExplain: "就像查看一个员工同时属于哪些部门——groups 列出指定用户所属的所有用户组。了解用户所属组对于理解权限很重要。",
+        helpOutput: `Usage: groups [OPTION]... [USERNAME]...
 Print group memberships for each USERNAME or, if no USERNAME is specified, for
 the current process (which may differ if the groups database has changed).
       --help        display this help and exit
@@ -10088,20 +10054,20 @@ Report any translation bugs to <https://translationproject.org/team/>
 Full documentation <https://www.gnu.org/software/coreutils/groups>
 or available locally via: info '(coreutils) groups invocation'
 `,
-    examples: [
-      { description: "查看当前用户所属的组", code: "groups", output: "alice sudo docker" },
-      { description: "查看指定用户所属的组", code: "groups zhangsan", output: "zhangsan developers testers" },
-      { description: "查看帮助文档", code: "groups --help" }
-    ],
-    relatedCommands: ["id", "groupadd", "usermod", "getent"]
-  },
-  {
-    name: "finger",
-    categoryId: "user",
-    syntax: "finger [选项] [用户名]",
-    simpleExplain: "查看用户详细信息",
-    detailExplain: "显示用户的登录名、真实姓名、家目录、默认 shell、最近登录时间、未读邮件等信息。常用参数：-s 简短格式，-l 长格式（默认），-p 不显示 plan 信息。信息来自 /etc/passwd 和用户家目录下的 .plan、.project 等文件。",
-    helpOutput: `Usage: finger [-lmsp] [user ...] [user@host ...]
+        examples: [
+            { description: "查看当前用户所属的组", code: "groups", output: "alice sudo docker" },
+            { description: "查看指定用户所属的组", code: "groups zhangsan", output: "zhangsan developers testers" },
+            { description: "查看帮助文档", code: "groups --help" }
+        ],
+        relatedCommands: ["id", "groupadd", "usermod", "getent"]
+    },
+    {
+        name: "finger",
+        categoryId: "user",
+        syntax: "finger [选项] [用户名]",
+        simpleExplain: "查看用户详细信息，就像查看员工的详细档案",
+        detailExplain: "就像查看员工的详细人事档案——finger 显示用户的登录名、真实姓名、家目录、默认 shell、最近登录时间等信息。",
+        helpOutput: `Usage: finger [-lmsp] [user ...] [user@host ...]
 
 Options:
   -s    短格式输出（默认）
@@ -10111,21 +10077,21 @@ Options:
   -h    显示帮助
 
 不带参数时显示当前所有登录用户信息。`,
-    examples: [
-      { description: "查看指定用户的详细信息", code: "finger zhangsan" },
-      { description: "查看所有登录用户的信息", code: "finger" },
-      { description: "显示长格式信息", code: "finger -l lisi" },
-      { description: "查看帮助文档", code: "finger --help" }
-    ],
-    relatedCommands: ["id", "who", "w", "pinky"]
-  },
-  {
-    name: "last",
-    categoryId: "user",
-    syntax: "last [选项] [用户名]",
-    simpleExplain: "查看用户登录历史记录",
-    detailExplain: "显示所有用户或指定用户的最近登录历史，包括登录用户、终端、来源 IP、登录时间和持续时间。数据来源 /var/log/wtmp 文件。常用参数：-n 指定显示条数，-x 显示关机和运行级别变化，-i 显示 IP。用于安全审计和排查登录问题。",
-    helpOutput: `
+        examples: [
+            { description: "查看指定用户的详细信息", code: "finger zhangsan" },
+            { description: "查看所有登录用户的信息", code: "finger" },
+            { description: "显示长格式信息", code: "finger -l lisi" },
+            { description: "查看帮助文档", code: "finger --help" }
+        ],
+        relatedCommands: ["id", "who", "w", "pinky"]
+    },
+    {
+        name: "last",
+        categoryId: "user",
+        syntax: "last [选项] [用户名]",
+        simpleExplain: "查看用户登录历史，就像查看考勤打卡记录",
+        detailExplain: "就像查看公司的考勤打卡记录——last 显示所有用户（或指定用户）的最近登录历史：谁登录了、从哪里登录的、登录了多久。对于安全审计和排查问题非常有用。",
+        helpOutput: `
 Usage:
  last [options] [<username>...] [<tty>...]
 
@@ -10153,37 +10119,37 @@ Options:
 
 For more details see last(1).
 `,
-    examples: [
-      { description: "查看所有用户的登录历史", code: "last" },
-      { description: "查看指定用户的登录历史", code: "last zhangsan" },
-      { description: "只显示最近 5 条记录", code: "last -n 5" },
-      { description: "显示完整的登录时间和主机名", code: "last -a" },
-      { description: "查看帮助文档", code: "last --help" }
-    ],
-    relatedCommands: ["who", "w", "lastlog", "finger"]
-  },
-  {
-    name: "newgrp",
-    categoryId: "user",
-    syntax: "newgrp [组名]",
-    simpleExplain: "切换当前用户的有效用户组",
-    detailExplain: "切换当前会话的主组（GID），使新创建的文件属于新的组。会启动一个新的子 shell。直接跟组名切换（需是该组成员），加 - 切换到登录时默认组。退出时使用 exit 返回原 shell。",
-    helpOutput: `Usage: newgrp [-] [group]
+        examples: [
+            { description: "查看所有用户的登录历史", code: "last" },
+            { description: "查看指定用户的登录历史", code: "last zhangsan" },
+            { description: "只显示最近 5 条记录", code: "last -n 5" },
+            { description: "显示完整的登录时间和主机名", code: "last -a" },
+            { description: "查看帮助文档", code: "last --help" }
+        ],
+        relatedCommands: ["who", "w", "lastlog", "finger"]
+    },
+    {
+        name: "newgrp",
+        categoryId: "user",
+        syntax: "newgrp [组名]",
+        simpleExplain: "切换当前用户的主组，就像临时换一个部门身份",
+        detailExplain: "就像你临时换了一个部门身份去办事——newgrp 让你切换当前会话的主组（GID），这样你新创建的文件就属于新的组了。注意这会启动一个新的 shell。",
+        helpOutput: `Usage: newgrp [-] [group]
 `,
-    examples: [
-      { description: "切换到 docker 组", code: "newgrp docker" },
-      { description: "切换到 developers 组", code: "newgrp developers" },
-      { description: "查看帮助文档", code: "newgrp --help" }
-    ],
-    relatedCommands: ["groups", "id", "usermod", "sg"]
-  },
-  {
-    name: "chage",
-    categoryId: "user",
-    syntax: "chage [选项] 用户名",
-    simpleExplain: "管理用户密码过期策略",
-    detailExplain: "设置用户密码的过期策略，包括最短使用期限、最长使用期限、过期前警告天数、密码过期后账号失效天数等。常用参数：-l 查看策略，-M 设置最长使用天数，-m 最短使用天数，-W 警告天数，-E 账号过期日期。是安全合规的重要工具。",
-    helpOutput: `Usage: chage [options] LOGIN
+        examples: [
+            { description: "切换到 docker 组", code: "newgrp docker" },
+            { description: "切换到 developers 组", code: "newgrp developers" },
+            { description: "查看帮助文档", code: "newgrp --help" }
+        ],
+        relatedCommands: ["groups", "id", "usermod", "sg"]
+    },
+    {
+        name: "chage",
+        categoryId: "user",
+        syntax: "chage [选项] 用户名",
+        simpleExplain: "管理用户密码过期策略，就像设置员工密码的有效期",
+        detailExplain: "就像公司规定员工必须每 90 天改一次密码——chage 用来设置用户密码的过期时间、最短使用期限、最长使用期限、过期前警告天数等。这是安全合规的重要工具。",
+        helpOutput: `Usage: chage [options] LOGIN
 
 Options:
   -d, --lastday LAST_DAY        set date of last password change to LAST_DAY
@@ -10201,40 +10167,40 @@ Options:
   -W, --warndays WARN_DAYS      set expiration warning days to WARN_DAYS
 
 `,
-    examples: [
-      { description: "查看用户的密码过期信息", code: "chage -l zhangsan" },
-      { description: "设置密码 90 天后过期", code: "chage -M 90 zhangsan" },
-      { description: "设置密码过期前 7 天警告", code: "chage -W 7 zhangsan" },
-      { description: "强制用户下次登录时修改密码", code: "chage -d 0 zhangsan" },
-      { description: "查看帮助文档", code: "chage --help" }
-    ],
-    relatedCommands: ["passwd", "usermod", "shadow", "id"]
-  },
-  {
-    name: "login",
-    categoryId: "user",
-    syntax: "login [用户名]",
-    simpleExplain: "登录系统",
-    detailExplain: "登录系统命令，输入用户名和密码后进入工作环境。通常由系统在终端启动时自动调用（如 getty），一般不需要手动执行。常用参数：-f 跳过认证直接登录指定用户（root 专用），-h 指定主机名。登录成功后启动用户的登录 shell。",
-    helpOutput: `Usage: login [-p] [name]
+        examples: [
+            { description: "查看用户的密码过期信息", code: "chage -l zhangsan" },
+            { description: "设置密码 90 天后过期", code: "chage -M 90 zhangsan" },
+            { description: "设置密码过期前 7 天警告", code: "chage -W 7 zhangsan" },
+            { description: "强制用户下次登录时修改密码", code: "chage -d 0 zhangsan" },
+            { description: "查看帮助文档", code: "chage --help" }
+        ],
+        relatedCommands: ["passwd", "usermod", "shadow", "id"]
+    },
+    {
+        name: "login",
+        categoryId: "user",
+        syntax: "login [用户名]",
+        simpleExplain: "登录系统，就像刷卡进入办公大楼",
+        detailExplain: "就像刷卡进入办公大楼——login 命令用于登录系统，输入用户名和密码后进入你的工作环境。通常由系统在终端启动时自动调用，一般不需要手动执行。",
+        helpOutput: `Usage: login [-p] [name]
        login [-p] [-h host] [-f name]
 `,
-    examples: [
-      { description: "以指定用户登录", code: "login zhangsan" },
-      { description: "登录时显示系统信息", code: "login -p zhangsan" },
-      { description: "不执行启动脚本直接登录", code: "login -f zhangsan" },
-      { description: "在远程终端上登录", code: "login -h terminal1 zhangsan" },
-      { description: "查看帮助文档", code: "login --help" }
-    ],
-    relatedCommands: ["logout", "su", "ssh", "who"]
-  },
-  {
-    name: "logout",
-    categoryId: "user",
-    syntax: "logout",
-    simpleExplain: "退出系统登录",
-    detailExplain: "退出当前登录的 Shell 会话。仅在登录 shell 中有效（即通过 login 启动的 shell）。在图形界面终端中通常用 exit 代替。退出后若为登录终端，会重新回到登录提示符。",
-    helpOutput: `logout 是 shell 内建命令，用于退出当前登录的 Shell 会话。
+        examples: [
+            { description: "以指定用户登录", code: "login zhangsan" },
+            { description: "登录时显示系统信息", code: "login -p zhangsan" },
+            { description: "不执行启动脚本直接登录", code: "login -f zhangsan" },
+            { description: "在远程终端上登录", code: "login -h terminal1 zhangsan" },
+            { description: "查看帮助文档", code: "login --help" }
+        ],
+        relatedCommands: ["logout", "su", "ssh", "who"]
+    },
+    {
+        name: "logout",
+        categoryId: "user",
+        syntax: "logout",
+        simpleExplain: "退出登录，就像下班刷卡离开办公大楼",
+        detailExplain: "就像下班刷卡离开办公大楼——logout 命令用于退出当前登录的 Shell 会话。在图形界面的终端里通常用 exit 代替，但在真正的登录终端上 logout 更合适。",
+        helpOutput: `logout 是 shell 内建命令，用于退出当前登录的 Shell 会话。
 
 用法: logout
 
@@ -10242,22 +10208,22 @@ Options:
 在非登录 Shell 中使用会报错，应改用 exit。
 
 相关: exit, login, who`,
-    examples: [
-      { description: "退出当前登录", code: "logout" },
-      { description: "与 exit 等效", code: "exit" },
-      { description: "在脚本中检查是否可以退出", code: "shopt -q login_shell && logout || exit" },
-      { description: "快捷键退出", code: "Ctrl+D" },
-      { description: "查看帮助文档", code: "help logout" }
-    ],
-    relatedCommands: ["login", "exit", "su", "who"]
-  },
-  {
-    name: "nologin",
-    categoryId: "user",
-    syntax: "nologin",
-    simpleExplain: "禁止用户登录系统",
-    detailExplain: "一个特殊的 Shell 程序，当用户的登录 Shell 被设为 /sbin/nologin 时，该用户无法登录系统，会返回 This account is currently not available 提示。常用于系统服务账户（如 nginx、mysql），防止它们被用来登录系统。",
-    helpOutput: `nologin 是一个特殊的 Shell 程序，用于拒绝用户登录。
+        examples: [
+            { description: "退出当前登录", code: "logout" },
+            { description: "与 exit 等效", code: "exit" },
+            { description: "在脚本中检查是否可以退出", code: "shopt -q login_shell && logout || exit" },
+            { description: "快捷键退出", code: "Ctrl+D" },
+            { description: "查看帮助文档", code: "help logout" }
+        ],
+        relatedCommands: ["login", "exit", "su", "who"]
+    },
+    {
+        name: "nologin",
+        categoryId: "user",
+        syntax: "nologin",
+        simpleExplain: "阻止用户登录，就像在门口挂上「谢绝入内」的牌子",
+        detailExplain: "就像在门口挂上「谢绝入内」的牌子——nologin 是一个特殊的 Shell 程序，当用户的登录 Shell 被设为 /sbin/nologin 时，该用户就无法登录系统了。常用于系统服务账户，防止它们被用来登录。",
+        helpOutput: `nologin 是一个特殊的 Shell 程序，用于拒绝用户登录。
 
 用法: nologin
 
@@ -10269,22 +10235,22 @@ Options:
 
 设置方法: usermod -s /sbin/nologin 用户名
 创建时指定: useradd -s /sbin/nologin 用户名`,
-    examples: [
-      { description: "将用户 Shell 设为 nologin 禁止登录", code: "sudo usermod -s /sbin/nologin guest" },
-      { description: "创建不能登录的系统用户", code: "sudo useradd -s /sbin/nologin mysql" },
-      { description: "自定义拒绝登录提示", code: "echo '此账户已禁用' > /etc/nologin.txt" },
-      { description: "临时禁止所有非 root 用户登录", code: "sudo touch /etc/nologin" },
-      { description: "查看帮助文档", code: "nologin --help" }
-    ],
-    relatedCommands: ["usermod", "useradd", "passwd", "login"]
-  },
-  {
-    name: "pwck",
-    categoryId: "user",
-    syntax: "pwck [选项]",
-    simpleExplain: "检查密码文件完整性",
-    detailExplain: "检查 /etc/passwd 和 /etc/shadow 文件的完整性和一致性，包括重复的用户名、无效的 UID、缺失的家目录、不一致的密码字段等。常用参数：-r 只读模式只报告不询问，-s 按 UID 排序。是系统维护的重要工具。",
-    helpOutput: `Usage: pwck [options] [passwd [shadow]]
+        examples: [
+            { description: "将用户 Shell 设为 nologin 禁止登录", code: "sudo usermod -s /sbin/nologin guest" },
+            { description: "创建不能登录的系统用户", code: "sudo useradd -s /sbin/nologin mysql" },
+            { description: "自定义拒绝登录提示", code: "echo '此账户已禁用' > /etc/nologin.txt" },
+            { description: "临时禁止所有非 root 用户登录", code: "sudo touch /etc/nologin" },
+            { description: "查看帮助文档", code: "nologin --help" }
+        ],
+        relatedCommands: ["usermod", "useradd", "passwd", "login"]
+    },
+    {
+        name: "pwck",
+        categoryId: "user",
+        syntax: "pwck [选项]",
+        simpleExplain: "检查密码文件完整性，就像审计员检查账本有没有错误",
+        detailExplain: "就像审计员检查账本有没有错误——pwck 检查 /etc/passwd 和 /etc/shadow 文件的完整性和一致性，比如有没有重复的用户名、无效的 UID、缺失的家目录等。是系统维护的好帮手。",
+        helpOutput: `Usage: pwck [options] [passwd [shadow]]
 
 Options:
   -b, --badname                 allow bad names
@@ -10296,22 +10262,22 @@ Options:
   -s, --sort                    sort entries by UID
 
 `,
-    examples: [
-      { description: "检查密码文件完整性", code: "sudo pwck" },
-      { description: "只读模式检查（不提示修复）", code: "sudo pwck -r" },
-      { description: "检查指定文件", code: "sudo pwck /etc/passwd /etc/shadow" },
-      { description: "静默模式，只显示错误", code: "sudo pwck -q" },
-      { description: "查看帮助文档", code: "pwck --help" }
-    ],
-    relatedCommands: ["grpck", "passwd", "useradd", "usermod"]
-  },
-  {
-    name: "grpck",
-    categoryId: "user",
-    syntax: "grpck [选项]",
-    simpleExplain: "检查组文件完整性",
-    detailExplain: "检查 /etc/group 和 /etc/gshadow 文件的完整性和一致性，包括重复的组名、不存在的组成员、不一致的管理员字段等。常用参数：-r 只读模式只报告不询问，-s 按 GID 排序。与 pwck 配合用于系统维护。",
-    helpOutput: `Usage: grpck [options] [group [gshadow]]
+        examples: [
+            { description: "检查密码文件完整性", code: "sudo pwck" },
+            { description: "只读模式检查（不提示修复）", code: "sudo pwck -r" },
+            { description: "检查指定文件", code: "sudo pwck /etc/passwd /etc/shadow" },
+            { description: "静默模式，只显示错误", code: "sudo pwck -q" },
+            { description: "查看帮助文档", code: "pwck --help" }
+        ],
+        relatedCommands: ["grpck", "passwd", "useradd", "usermod"]
+    },
+    {
+        name: "grpck",
+        categoryId: "user",
+        syntax: "grpck [选项]",
+        simpleExplain: "检查组文件完整性，就像审计员检查团队名册有没有问题",
+        detailExplain: "就像审计员检查团队名册有没有问题——grpck 检查 /etc/group 和 /etc/gshadow 文件的完整性和一致性，比如有没有重复的组名、不存在的组成员等。和 pwck 是一对好搭档。",
+        helpOutput: `Usage: grpck [options] [group [gshadow]]
 
 Options:
   -h, --help                    display this help message and exit
@@ -10322,22 +10288,22 @@ Options:
   -S, --silence-warnings        silence controversial/paranoid warnings
 
 `,
-    examples: [
-      { description: "检查组文件完整性", code: "sudo grpck" },
-      { description: "只读模式检查", code: "sudo grpck -r" },
-      { description: "检查指定文件", code: "sudo grpck /etc/group /etc/gshadow" },
-      { description: "静默模式", code: "sudo grpck -q" },
-      { description: "查看帮助文档", code: "grpck --help" }
-    ],
-    relatedCommands: ["pwck", "groupadd", "groupmod", "groups"]
-  },
-  {
-    name: "chsh",
-    categoryId: "user",
-    syntax: "chsh [选项] [用户名]",
-    simpleExplain: "修改用户的登录 Shell",
-    detailExplain: "修改用户的默认登录 Shell。常用参数：-s 指定新 shell（必须是 /etc/shells 中列出的合法 shell），-l 列出 /etc/shells 中的可用 shell。普通用户只能修改自己的 shell，root 可修改任何用户的。修改 /etc/passwd 文件。",
-    helpOutput: `Usage: chsh [options] [LOGIN]
+        examples: [
+            { description: "检查组文件完整性", code: "sudo grpck" },
+            { description: "只读模式检查", code: "sudo grpck -r" },
+            { description: "检查指定文件", code: "sudo grpck /etc/group /etc/gshadow" },
+            { description: "静默模式", code: "sudo grpck -q" },
+            { description: "查看帮助文档", code: "grpck --help" }
+        ],
+        relatedCommands: ["pwck", "groupadd", "groupmod", "groups"]
+    },
+    {
+        name: "chsh",
+        categoryId: "user",
+        syntax: "chsh [选项] [用户名]",
+        simpleExplain: "修改用户的登录Shell，就像给员工换一个工作台",
+        detailExplain: "就像给员工换一个工作台——chsh 可以修改用户的默认登录 Shell，比如从 bash 换成 zsh 或 fish。不同的 Shell 有不同的操作习惯和功能，选一个用着顺手的很重要。",
+        helpOutput: `Usage: chsh [options] [LOGIN]
 
 Options:
   -h, --help                    display this help message and exit
@@ -10345,22 +10311,22 @@ Options:
   -s, --shell SHELL             new login shell for the user account
 
 `,
-    examples: [
-      { description: "修改自己的登录 Shell", code: "chsh -s /bin/zsh" },
-      { description: "修改其他用户的 Shell", code: "sudo chsh -s /bin/bash zhangsan" },
-      { description: "列出系统可用的 Shell", code: "chsh -l" },
-      { description: "查看当前用户的 Shell", code: "echo $SHELL" },
-      { description: "查看帮助文档", code: "chsh --help" }
-    ],
-    relatedCommands: ["bash", "zsh", "usermod", "cat /etc/shells"]
-  },
-  {
-    name: "chfn",
-    categoryId: "user",
-    syntax: "chfn [选项] [用户名]",
-    simpleExplain: "修改用户的个人信息",
-    detailExplain: "修改用户的全名、办公室房间号、工作电话、家庭电话等个人信息（finger information）。这些信息存储在 /etc/passwd 的 GECOS 字段中，可用 finger 命令查看。普通用户只能改自己的信息，root 可改任何用户的。",
-    helpOutput: `Usage: chfn [options] [LOGIN]
+        examples: [
+            { description: "修改自己的登录 Shell", code: "chsh -s /bin/zsh" },
+            { description: "修改其他用户的 Shell", code: "sudo chsh -s /bin/bash zhangsan" },
+            { description: "列出系统可用的 Shell", code: "chsh -l" },
+            { description: "查看当前用户的 Shell", code: "echo $SHELL" },
+            { description: "查看帮助文档", code: "chsh --help" }
+        ],
+        relatedCommands: ["bash", "zsh", "usermod", "cat /etc/shells"]
+    },
+    {
+        name: "chfn",
+        categoryId: "user",
+        syntax: "chfn [选项] [用户名]",
+        simpleExplain: "修改用户的个人信息，就像更新通讯录里的联系人资料",
+        detailExplain: "就像更新通讯录里的联系人资料——chfn 修改用户的全名、办公室房间号、工作电话、家庭电话等个人信息（finger information）。这些信息存在 /etc/passwd 中，用 finger 命令可以查看。",
+        helpOutput: `Usage: chfn [options] [LOGIN]
 
 Options:
   -f, --full-name FULL_NAME     change user's full name
@@ -10373,24 +10339,23 @@ Options:
       --extrausers              Use the extra users database
 
 `,
-    examples: [
-      { description: "交互式修改个人信息", code: "chfn" },
-      { description: "修改用户全名", code: "sudo chfn -f '张三' zhangsan" },
-      { description: "修改办公电话", code: "sudo chfn -w '010-12345678' zhangsan" },
-      { description: "查看用户信息", code: "finger zhangsan" },
-      { description: "查看帮助文档", code: "chfn --help" }
-    ],
-    relatedCommands: ["usermod", "passwd", "chsh", "finger"]
-  },
-
-  // ==================== 软件包管理 ====================
-  {
-    name: "apt",
-    categoryId: "package",
-    syntax: "apt [命令] [选项] [包名]",
-    simpleExplain: "Debian/Ubuntu 软件包管理器",
-    detailExplain: "Ubuntu/Debian 系统上的软件包管理工具，提供搜索、安装、更新、卸载软件等功能，自动处理依赖关系。常用子命令：install 安装，remove 卸载，update 刷新软件源索引，upgrade 升级所有包，search 搜索，show 显示包信息。比 apt-get 等老命令输出更友好。",
-    helpOutput: `apt 2.8.3 (amd64)
+        examples: [
+            { description: "交互式修改个人信息", code: "chfn" },
+            { description: "修改用户全名", code: "sudo chfn -f '张三' zhangsan" },
+            { description: "修改办公电话", code: "sudo chfn -w '010-12345678' zhangsan" },
+            { description: "查看用户信息", code: "finger zhangsan" },
+            { description: "查看帮助文档", code: "chfn --help" }
+        ],
+        relatedCommands: ["usermod", "passwd", "chsh", "finger"]
+    },
+    // ==================== 软件包管理 ====================
+    {
+        name: "apt",
+        categoryId: "package",
+        syntax: "apt [命令] [选项] [包名]",
+        simpleExplain: "Ubuntu/Debian 的软件包管理器，就像手机上的应用商店",
+        detailExplain: "就像手机上的应用商店——apt 是 Ubuntu/Debian 系统上的软件包管理工具，可以搜索、安装、更新、卸载软件。一条命令就能自动下载安装软件及其所有依赖，比手动下载安装方便太多了。",
+        helpOutput: `apt 2.8.3 (amd64)
 Usage: apt [options] command
 
 apt is a commandline package manager and provides commands for
@@ -10420,23 +10385,23 @@ Package and version choices can be expressed via apt_preferences(5).
 Security details are available in apt-secure(8).
                                         This APT has Super Cow Powers.
 `,
-    examples: [
-      { description: "更新软件源列表", code: "sudo apt update" },
-      { description: "升级所有已安装的软件", code: "sudo apt upgrade" },
-      { description: "安装软件包", code: "sudo apt install nginx" },
-      { description: "卸载软件包", code: "sudo apt remove nginx" },
-      { description: "搜索软件包", code: "apt search text editor" },
-      { description: "查看帮助文档", code: "apt --help" }
-    ],
-    relatedCommands: ["apt-get", "dpkg", "snap", "aptitude"]
-  },
-  {
-    name: "apt-get",
-    categoryId: "package",
-    syntax: "apt-get [命令] [选项] [包名]",
-    simpleExplain: "Debian 系底层包管理工具",
-    detailExplain: "Debian 系底层包管理工具，用于安装、升级、卸载软件包并自动处理依赖关系。常用命令：apt-get install 安装包，apt-get update 刷新软件源索引，apt-get upgrade 升级所有已安装包，apt-get remove 卸载包，apt-get autoremove 清理无用依赖。输出格式稳定，适合在脚本中使用；交互场景推荐使用更友好的 apt 命令。",
-    helpOutput: `apt 2.8.3 (amd64)
+        examples: [
+            { description: "更新软件源列表", code: "sudo apt update" },
+            { description: "升级所有已安装的软件", code: "sudo apt upgrade" },
+            { description: "安装软件包", code: "sudo apt install nginx" },
+            { description: "卸载软件包", code: "sudo apt remove nginx" },
+            { description: "搜索软件包", code: "apt search text editor" },
+            { description: "查看帮助文档", code: "apt --help" }
+        ],
+        relatedCommands: ["apt-get", "dpkg", "snap", "aptitude"]
+    },
+    {
+        name: "apt-get",
+        categoryId: "package",
+        syntax: "apt-get [命令] [选项] [包名]",
+        simpleExplain: "Debian 系底层包管理工具，就像 apt 的老版本",
+        detailExplain: "就像 apt 的老版本——apt-get 是 Debian 系的底层包管理工具，功能比 apt 更丰富但语法更复杂。在脚本中推荐用 apt-get（输出更稳定），交互使用推荐用 apt（更友好）。",
+        helpOutput: `apt 2.8.3 (amd64)
 Usage: apt-get [options] command
        apt-get [options] install|remove pkg1 [pkg2 ...]
        apt-get [options] source pkg1 [pkg2 ...]
@@ -10472,22 +10437,22 @@ Package and version choices can be expressed via apt_preferences(5).
 Security details are available in apt-secure(8).
                                         This APT has Super Cow Powers.
 `,
-    examples: [
-      { description: "更新软件源", code: "sudo apt-get update" },
-      { description: "安装软件包", code: "sudo apt-get install -y build-essential" },
-      { description: "彻底卸载软件（含配置文件）", code: "sudo apt-get purge nginx" },
-      { description: "清理不再需要的依赖包", code: "sudo apt-get autoremove" },
-      { description: "查看帮助文档", code: "apt-get --help" }
-    ],
-    relatedCommands: ["apt", "dpkg", "aptitude", "synaptic"]
-  },
-  {
-    name: "yum",
-    categoryId: "package",
-    syntax: "yum [命令] [选项] [包名]",
-    simpleExplain: "CentOS/RHEL 软件包管理器",
-    detailExplain: "RedHat/CentOS 系统的软件包管理工具，自动解决依赖关系并从仓库安装、升级、卸载 RPM 包。常用命令：yum install 安装，yum update 升级，yum remove 卸载，yum search 搜索包，yum list 列出可用包。在 CentOS 8+ 上已被 dnf 取代。",
-    helpOutput: `Usage: yum [options] COMMAND
+        examples: [
+            { description: "更新软件源", code: "sudo apt-get update" },
+            { description: "安装软件包", code: "sudo apt-get install -y build-essential" },
+            { description: "彻底卸载软件（含配置文件）", code: "sudo apt-get purge nginx" },
+            { description: "清理不再需要的依赖包", code: "sudo apt-get autoremove" },
+            { description: "查看帮助文档", code: "apt-get --help" }
+        ],
+        relatedCommands: ["apt", "dpkg", "aptitude", "synaptic"]
+    },
+    {
+        name: "yum",
+        categoryId: "package",
+        syntax: "yum [命令] [选项] [包名]",
+        simpleExplain: "CentOS/RHEL 的软件包管理器，就像 RedHat 系的应用商店",
+        detailExplain: "就像 RedHat/CentOS 系统上的应用商店——yum 是这些系统上的软件包管理工具，功能类似 apt。自动解决依赖关系，一条命令安装软件。在 CentOS 8+ 上已被 dnf 取代。",
+        helpOutput: `Usage: yum [options] COMMAND
 
 Commands:
   install PACKAGE     安装软件包
@@ -10524,22 +10489,22 @@ Options:
   -C                  完全从缓存运行
   --installroot PATH  设置安装根目录
   -x PACKAGE          排除包`,
-    examples: [
-      { description: "安装软件包", code: "sudo yum install nginx" },
-      { description: "更新所有软件", code: "sudo yum update" },
-      { description: "搜索软件包", code: "yum search httpd" },
-      { description: "卸载软件包", code: "sudo yum remove nginx" },
-      { description: "查看帮助文档", code: "yum --help" }
-    ],
-    relatedCommands: ["dnf", "rpm", "yum-config-manager", "repoquery"]
-  },
-  {
-    name: "dnf",
-    categoryId: "package",
-    syntax: "dnf [命令] [选项] [包名]",
-    simpleExplain: "新一代 RedHat 系包管理器",
-    detailExplain: "Fedora 和 CentOS 8+ 的默认包管理器，是 yum 的下一代替代品，解决了 yum 的性能和内存占用问题。语法与 yum 基本兼容，常用命令包括 dnf install、dnf update、dnf remove、dnf search。支持模块化仓库和更严格的依赖解析。",
-    helpOutput: `Usage: dnf [options] COMMAND
+        examples: [
+            { description: "安装软件包", code: "sudo yum install nginx" },
+            { description: "更新所有软件", code: "sudo yum update" },
+            { description: "搜索软件包", code: "yum search httpd" },
+            { description: "卸载软件包", code: "sudo yum remove nginx" },
+            { description: "查看帮助文档", code: "yum --help" }
+        ],
+        relatedCommands: ["dnf", "rpm", "yum-config-manager", "repoquery"]
+    },
+    {
+        name: "dnf",
+        categoryId: "package",
+        syntax: "dnf [命令] [选项] [包名]",
+        simpleExplain: "新一代 RedHat 包管理器，就像 yum 的升级版",
+        detailExplain: "就像 yum 的升级版——dnf 解决了 yum 的一些性能问题和设计缺陷，速度更快、内存占用更少。从 Fedora 18 和 CentOS 8 开始替代 yum 成为默认包管理器。",
+        helpOutput: `Usage: dnf [options] COMMAND
 
 Commands:
   install PACKAGE     安装软件包
@@ -10576,22 +10541,22 @@ Options:
   -C                  完全从缓存运行
   --best              尝试最佳版本
   --allowerasing      允许卸载以解决依赖`,
-    examples: [
-      { description: "安装软件包", code: "sudo dnf install nginx" },
-      { description: "更新所有软件", code: "sudo dnf upgrade" },
-      { description: "搜索软件包", code: "dnf search httpd" },
-      { description: "查看软件包信息", code: "dnf info nginx" },
-      { description: "查看帮助文档", code: "dnf --help" }
-    ],
-    relatedCommands: ["yum", "rpm", "microdnf", "dnf5"]
-  },
-  {
-    name: "pacman",
-    categoryId: "package",
-    syntax: "pacman [选项] [包名]",
-    simpleExplain: "Arch Linux 软件包管理器",
-    detailExplain: "Arch Linux 的包管理工具，负责下载、安装、升级和卸载软件包并自动处理依赖。常用命令：pacman -S 安装包，pacman -Syu 同步仓库并升级系统，pacman -R 卸载，pacman -Q 查询已安装包，pacman -Ss 搜索仓库。以速度快、设计简洁著称。",
-    helpOutput: `Usage: pacman <operation> [options] [targets]
+        examples: [
+            { description: "安装软件包", code: "sudo dnf install nginx" },
+            { description: "更新所有软件", code: "sudo dnf upgrade" },
+            { description: "搜索软件包", code: "dnf search httpd" },
+            { description: "查看软件包信息", code: "dnf info nginx" },
+            { description: "查看帮助文档", code: "dnf --help" }
+        ],
+        relatedCommands: ["yum", "rpm", "microdnf", "dnf5"]
+    },
+    {
+        name: "pacman",
+        categoryId: "package",
+        syntax: "pacman [选项] [包名]",
+        simpleExplain: "Arch Linux 的包管理器，就像极客专属的应用商店",
+        detailExplain: "就像 Arch Linux 极客专属的应用商店——pacman 以速度快、设计简洁著称，是 Arch Linux 的核心包管理工具。它同时处理包的下载、安装和依赖解决，一个命令搞定一切。",
+        helpOutput: `Usage: pacman <operation> [options] [targets]
 
 Operations:
   -S, --sync          从仓库安装/同步
@@ -10634,22 +10599,22 @@ Options:
   --overwrite GLOB    覆盖冲突文件
   --force             强制（已弃用）
   -v                  详细输出`,
-    examples: [
-      { description: "安装软件包", code: "sudo pacman -S nginx" },
-      { description: "更新所有软件", code: "sudo pacman -Syu" },
-      { description: "搜索软件包", code: "pacman -Ss text-editor" },
-      { description: "卸载软件包", code: "sudo pacman -R nginx" },
-      { description: "查看帮助文档", code: "pacman --help" }
-    ],
-    relatedCommands: ["yay", "paru", "makepkg", "pactree"]
-  },
-  {
-    name: "pip",
-    categoryId: "package",
-    syntax: "pip [命令] [选项] 包名",
-    simpleExplain: "Python 包管理器",
-    detailExplain: "Python 包管理工具，从 PyPI（Python Package Index）下载并安装第三方库和工具。常用命令：pip install 安装包，pip uninstall 卸载，pip list 列出已安装包，pip freeze 导出依赖列表，pip install -r requirements.txt 按文件批量安装。支持指定版本和虚拟环境。",
-    helpOutput: `
+        examples: [
+            { description: "安装软件包", code: "sudo pacman -S nginx" },
+            { description: "更新所有软件", code: "sudo pacman -Syu" },
+            { description: "搜索软件包", code: "pacman -Ss text-editor" },
+            { description: "卸载软件包", code: "sudo pacman -R nginx" },
+            { description: "查看帮助文档", code: "pacman --help" }
+        ],
+        relatedCommands: ["yay", "paru", "makepkg", "pactree"]
+    },
+    {
+        name: "pip",
+        categoryId: "package",
+        syntax: "pip [命令] [选项] 包名",
+        simpleExplain: "Python 包管理器，就像 Python 世界的应用商店",
+        detailExplain: "就像 Python 世界的应用商店——pip 用来安装和管理 Python 的第三方库和工具。从 PyPI（Python Package Index）下载安装包，一条命令就能装好各种 Python 库。",
+        helpOutput: `
 Usage:   
   pip <command> [options]
 
@@ -10704,22 +10669,22 @@ General Options:
                               connection. (default: 5)
   --timeout <sec>             Set the socket timeout (default 15 seconds).
 `,
-    examples: [
-      { description: "安装 Python 包", code: "pip install requests" },
-      { description: "卸载 Python 包", code: "pip uninstall flask" },
-      { description: "查看已安装的包", code: "pip list" },
-      { description: "升级包", code: "pip install --upgrade numpy" },
-      { description: "查看帮助文档", code: "pip --help" }
-    ],
-    relatedCommands: ["pip3", "conda", "poetry", "pipenv"]
-  },
-  {
-    name: "npm",
-    categoryId: "package",
-    syntax: "npm [命令] [包名]",
-    simpleExplain: "Node.js 包管理器",
-    detailExplain: "Node.js 的默认包管理器，从 npmjs.com 下载安装 JavaScript 包。常用命令：npm install 安装依赖（默认读 package.json），npm install <pkg> 安装指定包，npm run 运行脚本，npm update 升级依赖，npm publish 发布包。通过 package.json 和 package-lock.json 管理依赖。",
-    helpOutput: `npm <command>
+        examples: [
+            { description: "安装 Python 包", code: "pip install requests" },
+            { description: "卸载 Python 包", code: "pip uninstall flask" },
+            { description: "查看已安装的包", code: "pip list" },
+            { description: "升级包", code: "pip install --upgrade numpy" },
+            { description: "查看帮助文档", code: "pip --help" }
+        ],
+        relatedCommands: ["pip3", "conda", "poetry", "pipenv"]
+    },
+    {
+        name: "npm",
+        categoryId: "package",
+        syntax: "npm [命令] [包名]",
+        simpleExplain: "Node.js 包管理器，就像 JavaScript 世界的应用商店",
+        detailExplain: "就像 JavaScript/Node.js 世界的应用商店——npm 用来安装和管理 JavaScript 的第三方包。从 npmjs.com 下载安装包，是前端和 Node.js 开发者最常用的工具。",
+        helpOutput: `npm <command>
 
 Usage:
 
@@ -10753,22 +10718,22 @@ Configuration fields: npm help 7 config
 
 npm@11.4.2 /root/.nvm/versions/node/v24.15.0/lib/node_modules/npm
 `,
-    examples: [
-      { description: "初始化一个新项目", code: "npm init -y" },
-      { description: "安装依赖包", code: "npm install express" },
-      { description: "全局安装工具", code: "npm install -g typescript" },
-      { description: "运行项目脚本", code: "npm run build" },
-      { description: "查看帮助文档", code: "npm --help" }
-    ],
-    relatedCommands: ["yarn", "pnpm", "npx", "bun"]
-  },
-  {
-    name: "snap",
-    categoryId: "package",
-    syntax: "snap [命令] [包名]",
-    simpleExplain: "Snap 通用包管理器",
-    detailExplain: "Canonical 推出的跨发行版包管理工具，Snap 包自带所有依赖，在支持 Snap 的 Linux 上均可运行。常用命令：snap install 安装，snap remove 卸载，snap list 列出已安装，snap refresh 升级。缺点是启动较慢、占用空间较大，应用运行在沙箱中。",
-    helpOutput: `Usage: snap [OPTIONS] COMMAND
+        examples: [
+            { description: "初始化一个新项目", code: "npm init -y" },
+            { description: "安装依赖包", code: "npm install express" },
+            { description: "全局安装工具", code: "npm install -g typescript" },
+            { description: "运行项目脚本", code: "npm run build" },
+            { description: "查看帮助文档", code: "npm --help" }
+        ],
+        relatedCommands: ["yarn", "pnpm", "npx", "bun"]
+    },
+    {
+        name: "snap",
+        categoryId: "package",
+        syntax: "snap [命令] [包名]",
+        simpleExplain: "Snap 通用包管理器，就像跨发行版的应用商店",
+        detailExplain: "就像一个跨 Linux 发行版的通用应用商店——Snap 包自带所有依赖，在任何支持 Snap 的 Linux 上都能运行，不用担心兼容性问题。缺点是启动稍慢、占用空间稍大。",
+        helpOutput: `Usage: snap [OPTIONS] COMMAND
 
 Commands:
   install SNAP        安装 snap
@@ -10798,22 +10763,22 @@ Options:
   --help              显示帮助
   --no-wait           不等待操作完成
   --unicode=MODE      unicode 模式`,
-    examples: [
-      { description: "安装 Snap 包", code: "sudo snap install vlc" },
-      { description: "查看已安装的 Snap 包", code: "snap list" },
-      { description: "更新 Snap 包", code: "sudo snap refresh vlc" },
-      { description: "卸载 Snap 包", code: "sudo snap remove vlc" },
-      { description: "查看帮助文档", code: "snap --help" }
-    ],
-    relatedCommands: ["flatpak", "apt", "dpkg", "snapcraft"]
-  },
-  {
-    name: "flatpak",
-    categoryId: "package",
-    syntax: "flatpak [命令] [选项] [包名]",
-    simpleExplain: "Flatpak 沙箱化包管理器",
-    detailExplain: "跨发行版的 Linux 桌面应用打包和分发工具，将应用置于沙箱中运行以限制权限并提升安全性。常用命令：flatpak install 安装，flatpak run 运行，flatpak update 升级，flatpak uninstall 卸载。每个应用运行在独立运行时环境中，与 Snap 类似。",
-    helpOutput: `Usage: flatpak [OPTION...] COMMAND
+        examples: [
+            { description: "安装 Snap 包", code: "sudo snap install vlc" },
+            { description: "查看已安装的 Snap 包", code: "snap list" },
+            { description: "更新 Snap 包", code: "sudo snap refresh vlc" },
+            { description: "卸载 Snap 包", code: "sudo snap remove vlc" },
+            { description: "查看帮助文档", code: "snap --help" }
+        ],
+        relatedCommands: ["flatpak", "apt", "dpkg", "snapcraft"]
+    },
+    {
+        name: "flatpak",
+        categoryId: "package",
+        syntax: "flatpak [命令] [选项] [包名]",
+        simpleExplain: "Flatpak 沙箱化包管理器，就像在沙箱里运行的应用商店",
+        detailExplain: "就像一个在沙箱里运行的应用商店——Flatpak 把应用放在沙箱中运行，限制其权限，提高安全性。和 Snap 类似，Flatpak 也是跨发行版的通用包格式，在桌面 Linux 上很流行。",
+        helpOutput: `Usage: flatpak [OPTION...] COMMAND
 
 Commands:
   install REMOTE/APP  安装应用
@@ -10847,22 +10812,22 @@ Options:
   --branch=BRANCH     指定分支
   --help              显示帮助
   --version           显示版本`,
-    examples: [
-      { description: "安装 Flatpak 应用", code: "flatpak install flathub org.gimp.GIMP" },
-      { description: "运行 Flatpak 应用", code: "flatpak run org.gimp.GIMP" },
-      { description: "更新所有 Flatpak 应用", code: "flatpak update" },
-      { description: "卸载 Flatpak 应用", code: "flatpak uninstall org.gimp.GIMP" },
-      { description: "查看帮助文档", code: "flatpak --help" }
-    ],
-    relatedCommands: ["snap", "apt", "dnf", "flathub"]
-  },
-  {
-    name: "dpkg",
-    categoryId: "package",
-    syntax: "dpkg [选项] [包名/文件]",
-    simpleExplain: "Debian 底层包操作工具",
-    detailExplain: "Debian 系的底层包管理工具，直接操作 .deb 文件进行安装、卸载和查询，不自动解决依赖关系。常用命令：dpkg -i 安装 deb 包，dpkg -r 卸载，dpkg -l 列出已安装包，dpkg -L 查看包安装的文件列表。通常配合 apt 使用以处理依赖。",
-    helpOutput: `Usage: dpkg [<option>...] <command>
+        examples: [
+            { description: "安装 Flatpak 应用", code: "flatpak install flathub org.gimp.GIMP" },
+            { description: "运行 Flatpak 应用", code: "flatpak run org.gimp.GIMP" },
+            { description: "更新所有 Flatpak 应用", code: "flatpak update" },
+            { description: "卸载 Flatpak 应用", code: "flatpak uninstall org.gimp.GIMP" },
+            { description: "查看帮助文档", code: "flatpak --help" }
+        ],
+        relatedCommands: ["snap", "apt", "dnf", "flathub"]
+    },
+    {
+        name: "dpkg",
+        categoryId: "package",
+        syntax: "dpkg [选项] [包名/文件]",
+        simpleExplain: "Debian 底层包操作工具，就像手动安装应用的底层工具",
+        detailExplain: "就像手动安装应用的底层工具——dpkg 直接操作 .deb 包文件，安装、卸载、查询。它不自动解决依赖关系（那是 apt 的工作），所以通常配合 apt 一起使用。",
+        helpOutput: `Usage: dpkg [<option>...] <command>
 
 Commands:
   -i|--install       <.deb file name>... | -R|--recursive <directory>...
@@ -10915,22 +10880,22 @@ Options:
   --pre-invoke=<command>     Set a pre-invoke hook.
   --post-invoke=<command>    Set a post-invoke hook.
   --path-exclude=<pattern>   Do not install paths which match a shell pat`,
-    examples: [
-      { description: "安装 .deb 包文件", code: "sudo dpkg -i package.deb" },
-      { description: "查看已安装的包列表", code: "dpkg -l" },
-      { description: "查看包安装的文件列表", code: "dpkg -L nginx" },
-      { description: "卸载包", code: "sudo dpkg -r package-name" },
-      { description: "查看帮助文档", code: "dpkg --help" }
-    ],
-    relatedCommands: ["apt", "apt-get", "alien", "debsums"]
-  },
-  {
-    name: "rpm",
-    categoryId: "package",
-    syntax: "rpm [选项] [包名/文件]",
-    simpleExplain: "RedHat 底层包操作工具",
-    detailExplain: "RedHat 系的底层包管理工具，直接操作 .rpm 文件进行安装、卸载、查询和验证，不自动解决依赖关系。常用命令：rpm -i 安装，rpm -e 卸载，rpm -q 查询，rpm -V 验证，rpm -qa 列出所有已安装包。通常配合 yum/dnf 使用以处理依赖。",
-    helpOutput: `Usage: rpm [OPTION...]
+        examples: [
+            { description: "安装 .deb 包文件", code: "sudo dpkg -i package.deb" },
+            { description: "查看已安装的包列表", code: "dpkg -l" },
+            { description: "查看包安装的文件列表", code: "dpkg -L nginx" },
+            { description: "卸载包", code: "sudo dpkg -r package-name" },
+            { description: "查看帮助文档", code: "dpkg --help" }
+        ],
+        relatedCommands: ["apt", "apt-get", "alien", "debsums"]
+    },
+    {
+        name: "rpm",
+        categoryId: "package",
+        syntax: "rpm [选项] [包名/文件]",
+        simpleExplain: "RedHat 底层包操作工具，就像 dpkg 的 RedHat 版",
+        detailExplain: "就像 dpkg 的 RedHat 版——rpm 直接操作 .rpm 包文件，安装、卸载、查询。它不自动解决依赖关系（那是 yum/dnf 的工作），所以通常配合 yum/dnf 一起使用。",
+        helpOutput: `Usage: rpm [OPTION...]
 
 Query options:
   -q, --query         查询模式
@@ -10969,22 +10934,22 @@ Options:
   --checksig          检查签名
   --rebuilddb         重建数据库
   --initdb            初始化数据库`,
-    examples: [
-      { description: "安装 .rpm 包文件", code: "sudo rpm -ivh package.rpm" },
-      { description: "查看已安装的包列表", code: "rpm -qa" },
-      { description: "查看包安装的文件列表", code: "rpm -ql nginx" },
-      { description: "卸载包", code: "sudo rpm -e package-name" },
-      { description: "查看帮助文档", code: "rpm --help" }
-    ],
-    relatedCommands: ["yum", "dnf", "alien", "rpm2cpio"]
-  },
-  {
-    name: "brew",
-    categoryId: "package",
-    syntax: "brew [命令] [包名]",
-    simpleExplain: "Homebrew 包管理器",
-    detailExplain: "macOS（也支持 Linux，称 Linuxbrew）上的第三方包管理器，用于安装系统包管理器未提供的软件。常用命令：brew install 安装，brew uninstall 卸载，brew update 更新仓库，brew upgrade 升级包，brew search 搜索。语法简洁，社区维护大量 formula。",
-    helpOutput: `Usage: brew [command] [options] [formula ...]
+        examples: [
+            { description: "安装 .rpm 包文件", code: "sudo rpm -ivh package.rpm" },
+            { description: "查看已安装的包列表", code: "rpm -qa" },
+            { description: "查看包安装的文件列表", code: "rpm -ql nginx" },
+            { description: "卸载包", code: "sudo rpm -e package-name" },
+            { description: "查看帮助文档", code: "rpm --help" }
+        ],
+        relatedCommands: ["yum", "dnf", "alien", "rpm2cpio"]
+    },
+    {
+        name: "brew",
+        categoryId: "package",
+        syntax: "brew [命令] [包名]",
+        simpleExplain: "Homebrew 包管理器，就像 macOS/Linux 上的第三方应用商店",
+        detailExplain: "就像 macOS（也支持 Linux）上的第三方应用商店——Homebrew 让你轻松安装系统自带包管理器中没有的软件。语法简洁，社区活跃，是 macOS 开发者的必备工具，Linux 上叫 Linuxbrew。",
+        helpOutput: `Usage: brew [command] [options] [formula ...]
 
 Commands:
   install FORMULA     安装软件包
@@ -11023,22 +10988,22 @@ Options:
   --prefix            显示安装前缀
   --cache             显示缓存路径
   --no-quarantine     不隔离`,
-    examples: [
-      { description: "安装软件", code: "brew install git" },
-      { description: "搜索软件", code: "brew search node" },
-      { description: "更新 Homebrew 和所有软件", code: "brew update && brew upgrade" },
-      { description: "卸载软件", code: "brew uninstall git" },
-      { description: "查看帮助文档", code: "brew --help" }
-    ],
-    relatedCommands: ["apt", "npm", "pip", "nix"]
-  },
-  {
-    name: "cargo",
-    categoryId: "package",
-    syntax: "cargo [命令] [选项]",
-    simpleExplain: "Rust 包管理与构建工具",
-    detailExplain: "Rust 的官方包管理器和构建工具，集依赖管理、编译、测试、文档生成于一体。常用命令：cargo new 创建项目，cargo build 编译，cargo run 编译并运行，cargo test 运行测试，cargo add 添加依赖，cargo doc 生成文档。依赖声明在 Cargo.toml 中。",
-    helpOutput: `Rust's package manager
+        examples: [
+            { description: "安装软件", code: "brew install git" },
+            { description: "搜索软件", code: "brew search node" },
+            { description: "更新 Homebrew 和所有软件", code: "brew update && brew upgrade" },
+            { description: "卸载软件", code: "brew uninstall git" },
+            { description: "查看帮助文档", code: "brew --help" }
+        ],
+        relatedCommands: ["apt", "npm", "pip", "nix"]
+    },
+    {
+        name: "cargo",
+        categoryId: "package",
+        syntax: "cargo [命令] [选项]",
+        simpleExplain: "Rust 包管理器和构建工具，就像 Rust 世界的全能助手",
+        detailExplain: "就像 Rust 世界的全能助手——cargo 不仅是包管理器，还是构建工具、测试运行器、文档生成器。Rust 开发者几乎不需要其他工具，cargo 一把梭。",
+        helpOutput: `Rust's package manager
 
 [92m[1mUsage:[39m[22m [96m[1mcargo[39m[22m [36m[+toolchain] [OPTIONS] [COMMAND][39m
        [96m[1mcargo[39m[22m [36m[+toolchain] [OPTIONS][39m [96m[1m-Zscript[39m[22m [36m<MANIFEST_RS> [ARGS]...[39m
@@ -11079,22 +11044,22 @@ Options:
     [36m...[39m         See all commands with [96m[1m--list[39m[22m
 
 See '[96m[1mcargo help[39m[22m [36m<command>[3`,
-    examples: [
-      { description: "创建新项目", code: "cargo new my_project" },
-      { description: "构建项目", code: "cargo build" },
-      { description: "运行项目", code: "cargo run" },
-      { description: "安装二进制工具", code: "cargo install ripgrep" },
-      { description: "查看帮助文档", code: "cargo --help" }
-    ],
-    relatedCommands: ["rustup", "rustc", "npm", "pip"]
-  },
-  {
-    name: "gem",
-    categoryId: "package",
-    syntax: "gem [命令] [包名]",
-    simpleExplain: "Ruby 包管理器",
-    detailExplain: "Ruby 的包管理工具，用于安装和管理 Ruby 第三方库（称为 gem），从 rubygems.org 下载。常用命令：gem install 安装，gem uninstall 卸载，gem list 列出已安装，gem update 升级，gem search 搜索。通常配合 Bundler 管理项目依赖。",
-    helpOutput: `RubyGems is a package manager for Ruby.
+        examples: [
+            { description: "创建新项目", code: "cargo new my_project" },
+            { description: "构建项目", code: "cargo build" },
+            { description: "运行项目", code: "cargo run" },
+            { description: "安装二进制工具", code: "cargo install ripgrep" },
+            { description: "查看帮助文档", code: "cargo --help" }
+        ],
+        relatedCommands: ["rustup", "rustc", "npm", "pip"]
+    },
+    {
+        name: "gem",
+        categoryId: "package",
+        syntax: "gem [命令] [包名]",
+        simpleExplain: "Ruby 包管理器，就像 Ruby 世界的应用商店",
+        detailExplain: "就像 Ruby 世界的应用商店——gem 用来安装和管理 Ruby 的第三方库（称为 gem）。从 rubygems.org 下载安装包，是 Ruby 开发者最常用的工具。",
+        helpOutput: `RubyGems is a package manager for Ruby.
 
   Usage:
     gem -h/--help
@@ -11122,22 +11087,22 @@ See '[96m[1mcargo help[39m[22m [36m<command>[3`,
   Further information:
     https://guides.rubygems.org
 `,
-    examples: [
-      { description: "安装 Ruby gem", code: "gem install rails" },
-      { description: "查看已安装的 gem", code: "gem list" },
-      { description: "卸载 gem", code: "gem uninstall rails" },
-      { description: "更新所有 gem", code: "gem update" },
-      { description: "查看帮助文档", code: "gem --help" }
-    ],
-    relatedCommands: ["bundler", "ruby", "rvm", "rbenv"]
-  },
-  {
-    name: "conda",
-    categoryId: "package",
-    syntax: "conda [命令] [包名]",
-    simpleExplain: "Conda 包与环境管理器",
-    detailExplain: "跨语言包管理器和环境管理器，能创建隔离的虚拟环境并安装 Python 及其他语言的包，是数据科学和机器学习领域的标配。常用命令：conda create 创建环境，conda activate 激活，conda install 安装包，conda env list 列出环境，conda remove 卸载。不同项目可使用不同版本的 Python 和库互不干扰。",
-    helpOutput: `Usage: conda [COMMAND] [OPTIONS]
+        examples: [
+            { description: "安装 Ruby gem", code: "gem install rails" },
+            { description: "查看已安装的 gem", code: "gem list" },
+            { description: "卸载 gem", code: "gem uninstall rails" },
+            { description: "更新所有 gem", code: "gem update" },
+            { description: "查看帮助文档", code: "gem --help" }
+        ],
+        relatedCommands: ["bundler", "ruby", "rvm", "rbenv"]
+    },
+    {
+        name: "conda",
+        categoryId: "package",
+        syntax: "conda [命令] [包名]",
+        simpleExplain: "Conda 包和环境管理器，就像 Python 的虚拟环境管家",
+        detailExplain: "就像 Python 的虚拟环境管家——conda 不但能安装包，还能创建隔离的虚拟环境，让不同项目使用不同版本的 Python 和库互不干扰。是数据科学和机器学习领域的标配工具。",
+        helpOutput: `Usage: conda [COMMAND] [OPTIONS]
 
 Commands:
   create              创建新环境
@@ -11173,22 +11138,22 @@ Options:
   --only-deps         仅安装依赖
   -h, --help          显示帮助
   -V, --version       显示版本`,
-    examples: [
-      { description: "创建新的虚拟环境", code: "conda create -n myenv python=3.11" },
-      { description: "激活虚拟环境", code: "conda activate myenv" },
-      { description: "安装包", code: "conda install numpy pandas" },
-      { description: "查看所有环境", code: "conda env list" },
-      { description: "查看帮助文档", code: "conda --help" }
-    ],
-    relatedCommands: ["pip", "venv", "virtualenv", "mamba"]
-  },
-  {
-    name: "make",
-    categoryId: "package",
-    syntax: "make [选项] [目标]",
-    simpleExplain: "项目编译构建工具",
-    detailExplain: "根据 Makefile 中定义的规则自动判断哪些目标需要重新构建并执行对应命令的构建工具。常用参数：make 默认构建第一个目标，make <target> 构建指定目标，make -j<N> 并行编译，make clean 清理构建产物，make install 安装。是 C/C++ 项目编译的标准工具，也广泛用于其他语言的构建流程。",
-    helpOutput: `Usage: make [options] [target] ...
+        examples: [
+            { description: "创建新的虚拟环境", code: "conda create -n myenv python=3.11" },
+            { description: "激活虚拟环境", code: "conda activate myenv" },
+            { description: "安装包", code: "conda install numpy pandas" },
+            { description: "查看所有环境", code: "conda env list" },
+            { description: "查看帮助文档", code: "conda --help" }
+        ],
+        relatedCommands: ["pip", "venv", "virtualenv", "mamba"]
+    },
+    {
+        name: "make",
+        categoryId: "package",
+        syntax: "make [选项] [目标]",
+        simpleExplain: "编译构建工具，就像一个工头按照图纸指挥工人施工",
+        detailExplain: "就像一个工头按照图纸指挥工人施工——make 根据 Makefile 中定义的规则，自动判断哪些文件需要重新编译，然后只编译必要的部分。是 C/C++ 项目编译的标准工具，也广泛用于其他语言的构建流程。",
+        helpOutput: `Usage: make [options] [target] ...
 Options:
   -b, -m                      Ignored for compatibility.
   -B, --always-make           Unconditionally make all targets.
@@ -11236,22 +11201,22 @@ Options:
 This program built for x86_64-pc-linux-gnu
 Report bugs to <bug-make@gnu.org>
 `,
-    examples: [
-      { description: "编译项目", code: "make" },
-      { description: "使用 4 个并行任务编译", code: "make -j4" },
-      { description: "安装编译好的程序", code: "sudo make install" },
-      { description: "清理编译产物", code: "make clean" },
-      { description: "查看帮助文档", code: "make --help" }
-    ],
-    relatedCommands: ["cmake", "gcc", "nproc", "autoreconf"]
-  },
-  {
-    name: "cmake",
-    categoryId: "package",
-    syntax: "cmake [选项] 路径",
-    simpleExplain: "跨平台构建系统生成器",
-    detailExplain: "跨平台的构建系统生成器，根据 CMakeLists.txt 配置文件生成 Makefile、Ninja、Visual Studio 等构建文件，本身不直接编译代码。常用命令：cmake <dir> 生成构建文件，cmake --build 编译，cmake install 安装。通过变量和选项支持多平台、多编译器，是大型 C/C++ 项目的标配。",
-    helpOutput: `Usage
+        examples: [
+            { description: "编译项目", code: "make" },
+            { description: "使用 4 个并行任务编译", code: "make -j4" },
+            { description: "安装编译好的程序", code: "sudo make install" },
+            { description: "清理编译产物", code: "make clean" },
+            { description: "查看帮助文档", code: "make --help" }
+        ],
+        relatedCommands: ["cmake", "gcc", "nproc", "autoreconf"]
+    },
+    {
+        name: "cmake",
+        categoryId: "package",
+        syntax: "cmake [选项] 路径",
+        simpleExplain: "跨平台构建系统生成器，就像一个能根据不同工地生成不同施工图的建筑师",
+        detailExplain: "就像一个能根据不同工地生成不同施工图的建筑师——cmake 不直接编译代码，而是根据 CMakeLists.txt 配置文件生成 Makefile 或其他构建文件。它跨平台支持，是大型 C/C++ 项目的标配。",
+        helpOutput: `Usage
 
   cmake [options] <path-to-source>
   cmake [options] <path-to-existing-build>
@@ -11305,22 +11270,22 @@ Options
                                  CMakeGraphVizOptions.cmake for more.
   --system-information [file]  = Dump information about this system.
   --log-level=<ERROR|WARNING|NOTICE|STATUS|VERBOSE|DEBUG|TRA`,
-    examples: [
-      { description: "在 build 目录中生成 Makefile", code: "cmake -B build" },
-      { description: "指定安装路径", code: "cmake -DCMAKE_INSTALL_PREFIX=/usr/local .." },
-      { description: "生成后编译", code: "cmake --build build" },
-      { description: "安装编译结果", code: "cmake --install build" },
-      { description: "查看帮助文档", code: "cmake --help" }
-    ],
-    relatedCommands: ["make", "gcc", "pkg-config", "ninja"]
-  },
-  {
-    name: "nix",
-    categoryId: "package",
-    syntax: "nix [选项] 命令",
-    simpleExplain: "Nix 声明式包管理器",
-    detailExplain: "采用函数式思路的包管理器，每次安装都创建新的系统代（generation），互不干扰，支持一键回滚到任意历史版本。多个版本的软件可共存于不同 profile 中，从根本上避免依赖冲突。常用命令：nix-env 安装用户包，nix-shell 创建临时环境，nix-collect-garbage 清理旧代。配置声明在 configuration.nix 中。",
-    helpOutput: `Usage: nix [OPTIONS] COMMAND
+        examples: [
+            { description: "在 build 目录中生成 Makefile", code: "cmake -B build" },
+            { description: "指定安装路径", code: "cmake -DCMAKE_INSTALL_PREFIX=/usr/local .." },
+            { description: "生成后编译", code: "cmake --build build" },
+            { description: "安装编译结果", code: "cmake --install build" },
+            { description: "查看帮助文档", code: "cmake --help" }
+        ],
+        relatedCommands: ["make", "gcc", "pkg-config", "ninja"]
+    },
+    {
+        name: "nix",
+        categoryId: "package",
+        syntax: "nix [选项] 命令",
+        simpleExplain: "Nix包管理器，就像一个时光机可以随时回滚到任何版本",
+        detailExplain: "就像一个时光机可以随时回滚到任何版本——Nix 包管理器采用函数式思路，每次安装都创建新的系统快照，互不干扰。安装出错？一键回滚到之前的版本。多个版本的软件可以共存，彻底告别依赖地狱。",
+        helpOutput: `Usage: nix [OPTIONS] COMMAND
 
 Commands:
   build               构建 Nix 表达式
@@ -11358,22 +11323,22 @@ Options:
   --fallback          失败时回退到本地构建
   -j N                并行任务数
   --extra-experimental-features FEAT  启用实验特性`,
-    examples: [
-      { description: "安装一个包", code: "nix-env -iA nixpkgs.git" },
-      { description: "查看已安装的包", code: "nix-env -q" },
-      { description: "回滚到上一个系统状态", code: "nix-env --rollback" },
-      { description: "进入临时 Shell 环境", code: "nix-shell -p python3" },
-      { description: "查看帮助文档", code: "nix --help" }
-    ],
-    relatedCommands: ["apt", "yum", "guix", "docker"]
-  },
-  {
-    name: "guix",
-    categoryId: "package",
-    syntax: "guix [选项] 命令",
-    simpleExplain: "Guix 声明式包管理器",
-    detailExplain: "GNU 项目推出的包管理器，与 Nix 类似但用 Guile Scheme 编写配置，追求完全自由和可复现的构建。每个包的构建过程是确定性的，支持事务式升级和回滚。常用命令：guix install 安装，guix remove 卸载，guix upgrade 升级，guix environment 创建开发环境，guix pull 更新仓库。",
-    helpOutput: `Usage: guix [OPTION] COMMAND [ARGS...]
+        examples: [
+            { description: "安装一个包", code: "nix-env -iA nixpkgs.git" },
+            { description: "查看已安装的包", code: "nix-env -q" },
+            { description: "回滚到上一个系统状态", code: "nix-env --rollback" },
+            { description: "进入临时 Shell 环境", code: "nix-shell -p python3" },
+            { description: "查看帮助文档", code: "nix --help" }
+        ],
+        relatedCommands: ["apt", "yum", "guix", "docker"]
+    },
+    {
+        name: "guix",
+        categoryId: "package",
+        syntax: "guix [选项] 命令",
+        simpleExplain: "Guix包管理器，就像一个极其严谨的图书管理员",
+        detailExplain: "就像一个极其严谨的图书管理员——Guix 是 GNU 项目推出的包管理器，和 Nix 类似但用 Guile Scheme 编写配置。它追求完全自由和可复现的构建，每个包的构建过程都是确定性的。",
+        helpOutput: `Usage: guix [OPTION] COMMAND [ARGS...]
 
 Commands:
   package             管理 profile 中的包
@@ -11419,22 +11384,22 @@ Options:
   --keep-failed       保留失败构建
   --dry-run           仅预览
   --fallback          失败时回退`,
-    examples: [
-      { description: "安装一个包", code: "guix install git" },
-      { description: "查看可用的包", code: "guix package -A python" },
-      { description: "回滚到上一代配置", code: "guix package --roll-back" },
-      { description: "创建一个容器环境", code: "guix shell --container python numpy" },
-      { description: "查看帮助文档", code: "guix --help" }
-    ],
-    relatedCommands: ["nix", "apt", "conda", "docker"]
-  },
-  {
-    name: "yarn",
-    categoryId: "package",
-    syntax: "yarn [命令]",
-    simpleExplain: "快速可靠的 JavaScript 包管理器",
-    detailExplain: "Facebook 开发的 JavaScript 包管理器，与 npm 互为替代，通过 yarn.lock 锁文件保证依赖一致性。常用命令：yarn install 安装依赖，yarn add 添加包，yarn remove 移除包，yarn upgrade 升级，yarn workspace 管理多包仓库（monorepo）。支持离线安装和并行下载，速度较快。",
-    helpOutput: `Yarn Package Manager - 4.14.1
+        examples: [
+            { description: "安装一个包", code: "guix install git" },
+            { description: "查看可用的包", code: "guix package -A python" },
+            { description: "回滚到上一代配置", code: "guix package --roll-back" },
+            { description: "创建一个容器环境", code: "guix shell --container python numpy" },
+            { description: "查看帮助文档", code: "guix --help" }
+        ],
+        relatedCommands: ["nix", "apt", "conda", "docker"]
+    },
+    {
+        name: "yarn",
+        categoryId: "package",
+        syntax: "yarn [命令]",
+        simpleExplain: "快速可靠的JavaScript包管理器，就像npm的升级版快递服务",
+        detailExplain: "就像 npm 的升级版快递服务——yarn 是 Facebook 开发的 JavaScript 包管理器，安装速度比 npm 快，有锁文件保证依赖一致性，支持离线安装和工作区（monorepo）。现在和 npm 互为替代。",
+        helpOutput: `Yarn Package Manager - 4.14.1
 
   $ yarn <command>
 
@@ -11522,22 +11487,22 @@ General commands
     lock the Yarn version used by the project
 
   yarn set version from sources [--path #0] [--repository #0] [--branch #0] [--pl`,
-    examples: [
-      { description: "安装项目所有依赖", code: "yarn" },
-      { description: "添加一个依赖包", code: "yarn add lodash" },
-      { description: "添加开发依赖", code: "yarn add -D jest" },
-      { description: "运行脚本命令", code: "yarn run build" },
-      { description: "查看帮助文档", code: "yarn --help" }
-    ],
-    relatedCommands: ["npm", "pnpm", "node", "npx"]
-  },
-  {
-    name: "pnpm",
-    categoryId: "package",
-    syntax: "pnpm [命令]",
-    simpleExplain: "高效的 Node.js 包管理器",
-    detailExplain: "高性能的 JavaScript 包管理器，通过硬链接和符号链接在全局 store 中共享依赖，多个项目复用同一份包以节省磁盘空间。常用命令：pnpm install 安装依赖，pnpm add 添加包，pnpm remove 移除，pnpm update 升级。严格隔离依赖，避免幽灵依赖问题，支持 workspace 管理 monorepo。",
-    helpOutput: `Version 10.28.1 (compiled to binary; bundled Node.js v24.15.0)
+        examples: [
+            { description: "安装项目所有依赖", code: "yarn" },
+            { description: "添加一个依赖包", code: "yarn add lodash" },
+            { description: "添加开发依赖", code: "yarn add -D jest" },
+            { description: "运行脚本命令", code: "yarn run build" },
+            { description: "查看帮助文档", code: "yarn --help" }
+        ],
+        relatedCommands: ["npm", "pnpm", "node", "npx"]
+    },
+    {
+        name: "pnpm",
+        categoryId: "package",
+        syntax: "pnpm [命令]",
+        simpleExplain: "高效的Node包管理器，就像一个会共享工具的聪明仓库管理员",
+        detailExplain: "就像一个会共享工具的聪明仓库管理员——pnpm 用硬链接和符号链接的方式存储包，多个项目共享同一份依赖，大大节省磁盘空间。安装速度也很快，还严格隔离依赖，避免幽灵依赖问题。",
+        helpOutput: `Version 10.28.1 (compiled to binary; bundled Node.js v24.15.0)
 Usage: pnpm [command] [flags]
        pnpm [ -h | --help | -v | --version ]
 
@@ -11585,22 +11550,22 @@ Other:
 Options:
   -r, --recursive          Run the command for each project in the workspace.
 `,
-    examples: [
-      { description: "安装项目依赖", code: "pnpm install" },
-      { description: "添加一个依赖包", code: "pnpm add express" },
-      { description: "全局安装工具", code: "pnpm add -g typescript" },
-      { description: "运行脚本", code: "pnpm run dev" },
-      { description: "查看帮助文档", code: "pnpm --help" }
-    ],
-    relatedCommands: ["npm", "yarn", "node", "npx"]
-  },
-  {
-    name: "composer",
-    categoryId: "package",
-    syntax: "composer [命令]",
-    simpleExplain: "PHP 依赖管理工具",
-    detailExplain: "PHP 的标准包管理工具，根据 composer.json 声明项目依赖并自动下载安装所需的 PHP 库，通过 composer.lock 锁定版本。常用命令：composer install 安装依赖，composer require 添加包，composer update 升级依赖，composer create-project 创建项目。Laravel、Symfony 等主流框架均依赖它。",
-    helpOutput: `Description:
+        examples: [
+            { description: "安装项目依赖", code: "pnpm install" },
+            { description: "添加一个依赖包", code: "pnpm add express" },
+            { description: "全局安装工具", code: "pnpm add -g typescript" },
+            { description: "运行脚本", code: "pnpm run dev" },
+            { description: "查看帮助文档", code: "pnpm --help" }
+        ],
+        relatedCommands: ["npm", "yarn", "node", "npx"]
+    },
+    {
+        name: "composer",
+        categoryId: "package",
+        syntax: "composer [命令]",
+        simpleExplain: "PHP依赖管理工具，就像PHP项目的采购员",
+        detailExplain: "就像 PHP 项目的采购员——composer 是 PHP 的标准包管理工具，根据 composer.json 声明项目依赖，自动下载和安装所需的 PHP 库。Laravel、Symfony 等主流框架都依赖它。",
+        helpOutput: `Description:
   List commands
 
 Usage:
@@ -11642,22 +11607,22 @@ Help:
   
     /root/.phpenv/versions/8.5snapshot/bin/composer list --raw
 `,
-    examples: [
-      { description: "安装项目依赖", code: "composer install" },
-      { description: "添加一个依赖包", code: "composer require guzzlehttp/guzzle" },
-      { description: "更新所有依赖", code: "composer update" },
-      { description: "创建新项目", code: "composer create-project laravel/laravel myapp" },
-      { description: "查看帮助文档", code: "composer --help" }
-    ],
-    relatedCommands: ["php", "npm", "pip", "pecl"]
-  },
-  {
-    name: "gradle",
-    categoryId: "package",
-    syntax: "gradle [任务]",
-    simpleExplain: "Java 构建自动化工具",
-    detailExplain: "基于 Groovy 或 Kotlin DSL 的构建工具，比 Maven 更灵活、比 Ant 更规范，是 Android 项目的默认构建系统。常用命令：gradle build 构建项目，gradle test 运行测试，gradle clean 清理，gradle run 运行应用，gradle dependencies 查看依赖树。构建脚本为 build.gradle 或 build.gradle.kts。",
-    helpOutput: `
+        examples: [
+            { description: "安装项目依赖", code: "composer install" },
+            { description: "添加一个依赖包", code: "composer require guzzlehttp/guzzle" },
+            { description: "更新所有依赖", code: "composer update" },
+            { description: "创建新项目", code: "composer create-project laravel/laravel myapp" },
+            { description: "查看帮助文档", code: "composer --help" }
+        ],
+        relatedCommands: ["php", "npm", "pip", "pecl"]
+    },
+    {
+        name: "gradle",
+        categoryId: "package",
+        syntax: "gradle [任务]",
+        simpleExplain: "Java构建自动化工具，就像Java世界的施工队长",
+        detailExplain: "就像 Java 世界的施工队长——gradle 用 Groovy 或 Kotlin DSL 编写构建脚本，比 Maven 更灵活、比 Ant 更规范。Android 项目默认使用 Gradle 构建，是 Java/Kotlin 生态的主流构建工具。",
+        helpOutput: `
 To see help contextual to the project, use gradle help
 
 To see more detail about a task, run gradle help --task <task>
@@ -11695,13 +11660,13 @@ USAGE: gradle [option...] [task...]
 -m, --dry-run                      Run the builds with all task actions disabled.
 --max-workers                      Configure the number of concurrent workers Gradle is allowed to use.
 --offline                          Execute the build without accessi`,
-    examples: [
-      { description: "编译项目", code: "gradle build" },
-      { description: "运行测试", code: "gradle test" },
-      { description: "清理构建产物", code: "gradle clean" },
-      { description: "查看所有可用任务", code: "gradle tasks" },
-      { description: "查看帮助文档", code: "gradle --help" }
-    ],
-    relatedCommands: ["make", "maven", "java", "ant"]
-  }
+        examples: [
+            { description: "编译项目", code: "gradle build" },
+            { description: "运行测试", code: "gradle test" },
+            { description: "清理构建产物", code: "gradle clean" },
+            { description: "查看所有可用任务", code: "gradle tasks" },
+            { description: "查看帮助文档", code: "gradle --help" }
+        ],
+        relatedCommands: ["make", "maven", "java", "ant"]
+    }
 ];
