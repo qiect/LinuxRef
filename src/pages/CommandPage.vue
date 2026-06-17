@@ -71,6 +71,29 @@
         <p class="text-gray-300 leading-relaxed">{{ command.detailExplain }}</p>
       </div>
 
+      <div v-if="command.helpOutput" class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+            帮助文档 (--help)
+          </h2>
+          <button
+            @click="helpExpanded = !helpExpanded"
+            class="text-xs text-[#58A6FF] hover:text-[#7EE787] transition-colors flex items-center gap-1"
+          >
+            {{ helpExpanded ? '收起' : '展开全部' }}
+          </button>
+        </div>
+        <div class="relative bg-[#0D1117] border border-[#30363D] rounded-xl overflow-hidden">
+          <div class="absolute top-3 right-3 z-10">
+            <CopyButton :text="command.helpOutput" />
+          </div>
+          <pre
+            class="p-4 text-gray-400 text-xs font-mono overflow-x-auto whitespace-pre leading-relaxed"
+            :class="helpExpanded ? '' : 'max-h-80 overflow-y-auto'"
+          >{{ command.helpOutput }}</pre>
+        </div>
+      </div>
+
       <div class="mb-8">
         <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
           示例
@@ -125,7 +148,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowLeft, Terminal, Star, AlertTriangle } from 'lucide-vue-next'
 import { commands } from '@/data/commands'
@@ -137,6 +160,7 @@ const router = useRouter()
 
 const name = computed(() => route.params.name as string)
 const command = computed(() => commands.find((c) => c.name === name.value))
+const helpExpanded = ref(false)
 
 const { isFavorite, toggleFavorite } = useFavorites()
 
